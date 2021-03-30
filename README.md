@@ -1,39 +1,40 @@
 # base-app
 
-#### 介绍
-{**以下是 Gitee 平台说明，您可以替换此简介**
-Gitee 是 OSCHINA 推出的基于 Git 的代码托管平台（同时支持 SVN）。专为开发者提供稳定、高效、安全的云端软件开发协作平台
-无论是个人、团队、或是企业，都能够用 Gitee 实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
-
-#### 软件架构
-软件架构说明
+base-app是基于uni-app和uniCloud开发的云端一体项目模板，地址：https://gitee.com/dcloud/base-app.git
 
 
-#### 安装教程
+## 使用方式
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+### 导入/下载项目后，使用HBuilderX 打开即可运行体验。
 
-#### 使用说明
+### 用户需要绑定uniCloud服务空间，并运行云服务空间初始化向导。
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+## 特点
 
-#### 参与贡献
+### 兼容多平台
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+### app开发基础功能已完成，开发者只需要关心自己的业务部分。
 
+### 使用uniCloud云端一体化项目模板，使用openDB体系构建部分功能，方便开发者后续集成。
 
-#### 特技
+## 平台支持
 
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+### app
+
+### H5
+
+### 微信小程序
+
+### 百度小程序
+
+### 支付宝小程序
+
+### 头条小程序
+
+### QQ小程序
+
+## 注意事项
+
+### 用户需要自行开通一键登录功能
+
+*XMind - Trial Version*
