@@ -1,0 +1,313 @@
+<template>
+	<view class="warp">
+		<!-- 搜索 -->
+		<view class="search-container-bar">
+			<uni-search-bar ref="searchBar" style="flex:1;" radius="100" @click.native="searchClick" cancelButton="none"
+				disabled />
+		</view>
+		<!-- banner -->
+		<uni-clientdb ref="bannerdb" v-slot:default="{data, loading, error, options}" :collection="collection"
+			:field="field" @load="load">
+			<uni-swiper-dot class="uni-swiper-dot-box" @clickItem="clickItem" :info="bannerFormate(data)"
+				:current="current" :mode="mode" :dots-styles="dotsStyles" field="content">
+				<swiper class="swiper-box" @change="changeSwiper" :current="swiperDotIndex">
+					<swiper-item v-for="(item, index) in bannerFormate(data)" :key="item._id">
+						<view :draggable="false" class="swiper-item" @click="clickBannerItem(item)">
+							<image class="swiper-image" :src="item.bannerfile" mode="aspectFill" :draggable="false" />
+						</view>
+					</swiper-item>
+				</swiper>
+			</uni-swiper-dot>
+		</uni-clientdb>
+		<!-- 宫格 -->
+		<uni-section title="宫格组件" style="margin: 0;" type="line"></uni-section>
+		<view class="example-body">
+			<uni-grid :column="3" :highlight="true" @change="change">
+				<uni-grid-item v-for="(item, index) in list" :index="index" :key="index">
+					<view class="grid-item-box" style="background-color: #fff;">
+						<image :src="item.url" class="image" mode="aspectFill" />
+						<text class="text">{{ item.text }}</text>
+					</view>
+				</uni-grid-item>
+			</uni-grid>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		components: {},
+		data() {
+			return {
+				list: [{
+						url: '/static/c1.png',
+						text: 'Grid 1',
+						badge: '0',
+						type: "primary"
+					},
+					{
+						url: '/static/c2.png',
+						text: 'Grid 2',
+						badge: '1',
+						type: "success"
+					},
+					{
+						url: '/static/c3.png',
+						text: 'Grid 3',
+						badge: '99',
+						type: "warning"
+					},
+					{
+						url: '/static/c4.png',
+						text: 'Grid 4',
+						badge: '2',
+						type: "error"
+					},
+					{
+						url: '/static/c5.png',
+						text: 'Grid 5'
+					},
+					{
+						url: '/static/c6.png',
+						text: 'Grid 6'
+					},
+					{
+						url: '/static/c7.png',
+						text: 'Grid 7'
+					},
+					{
+						url: '/static/c8.png',
+						text: 'Grid 8'
+					},
+					{
+						url: '/static/c9.png',
+						text: 'Grid 9'
+					}
+				],
+
+				collection: 'opendb-banner',
+				// 查询字段，多个字段用 , 分割
+				field: '_id,bannerfile,open_url,title',
+				where: 'category_id==grid',
+				// info: [],
+				dotStyle: [{
+						backgroundColor: 'rgba(0, 0, 0, .3)',
+						border: '1px rgba(0, 0, 0, .3) solid',
+						color: '#fff',
+						selectedBackgroundColor: 'rgba(0, 0, 0, .9)',
+						selectedBorder: '1px rgba(0, 0, 0, .9) solid'
+					},
+					{
+						backgroundColor: 'rgba(255, 90, 95,0.3)',
+						border: '1px rgba(255, 90, 95,0.3) solid',
+						color: '#fff',
+						selectedBackgroundColor: 'rgba(255, 90, 95,0.9)',
+						selectedBorder: '1px rgba(255, 90, 95,0.9) solid'
+					},
+					{
+						backgroundColor: 'rgba(83, 200, 249,0.3)',
+						border: '1px rgba(83, 200, 249,0.3) solid',
+						color: '#fff',
+						selectedBackgroundColor: 'rgba(83, 200, 249,0.9)',
+						selectedBorder: '1px rgba(83, 200, 249,0.9) solid'
+					}
+				],
+				modeIndex: -1,
+				styleIndex: -1,
+				current: 0,
+				mode: 'default',
+				dotsStyles: {},
+				swiperDotIndex: 0
+			}
+		},
+		methods: {
+			change(e) {
+				let {
+					index
+				} = e.detail
+				this.list[index].badge && this.list[index].badge++
+
+				uni.showToast({
+					title: `点击第${index+1}个宫格`,
+					icon: 'none'
+				})
+			},
+			searchClick() {
+				uni.hideKeyboard();
+				uni.navigateTo({
+					url: '/pages/search/search',
+					animationType: 'fade-in'
+				});
+			},
+			/**
+			 * banner加载
+			 */
+			load(data) {
+				console.log('banner_', data);
+			},
+			changeSwiper(e) {
+				this.current = e.detail.current
+			},
+			selectStyle(index) {
+				this.dotsStyles = this.dotStyle[index]
+				this.styleIndex = index
+			},
+			selectMode(mode, index) {
+				this.mode = mode
+				this.modeIndex = index
+				this.styleIndex = -1
+				this.dotsStyles = this.dotStyle[0]
+			},
+			clickItem(e) {
+				this.swiperDotIndex = e
+			},
+			/**
+			 * 点击banner的处理
+			 */
+			clickBannerItem(item){
+				// 有外部链接-跳转url
+				if(item.open_url){
+					//#ifdef APP-PLUS
+					plus.runtime.openWeb(item.open_url);
+					//#endif
+					//#ifdef H5
+					window.open(item.open_url)
+					//#endif
+				}
+				// 其余业务处理
+			},
+			/**
+			 * banner数据过滤
+			 */
+			bannerFormate(bannerList) {
+				if (bannerList.length > 0) return bannerList;
+				// 无数据添加默认值
+				let list = [{
+					"_id": -1,
+					"bannerfile": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/094a9dc0-50c0-11eb-b680-7980c8a877b8.jpg",
+					"open_url": "https://www.dcloud.io/",
+					"title": "内容 A",
+				}]
+				return list;
+			}
+		}
+	}
+</script>
+
+<style>
+	@charset "UTF-8";
+
+	/* 头条小程序组件内不能引入字体 */
+	/* #ifdef MP-TOUTIAO */
+	@font-face {
+		font-family: uniicons;
+		font-weight: normal;
+		font-style: normal;
+		src: url("~@/static/uni.ttf") format("truetype");
+	}
+
+	/* #endif */
+	/* #ifndef APP-NVUE */
+	page {
+		display: flex;
+		flex-direction: column;
+		box-sizing: border-box;
+		background-color: #efeff4;
+		min-height: 100%;
+		height: auto;
+	}
+
+	view {
+		font-size: 14px;
+		line-height: inherit;
+	}
+
+	.example-body {
+		/* #ifndef APP-NVUE */
+		display: flex;
+		/* #endif */
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: center;
+		padding: 0;
+		font-size: 14px;
+		background-color: #ffffff;
+	}
+
+	/* #endif */
+
+	.example-body {
+		flex-direction: column;
+		padding: 15px;
+		background-color: #ffffff;
+	}
+
+	.image {
+		width: 50rpx;
+		height: 50rpx;
+	}
+
+	.text {
+		font-size: 26rpx;
+		margin-top: 10rpx;
+	}
+
+	.example-body {
+		/* #ifndef APP-NVUE */
+		display: block;
+		/* #endif */
+	}
+
+	.grid-item-box {
+		flex: 1;
+		/* #ifndef APP-NVUE */
+		display: flex;
+		/* #endif */
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding: 15px 0;
+	}
+
+	.swiper-image {
+		width: 750rpx;
+		height: 400rpx;
+	}
+
+	.swiper-box {
+		height: 400rpx;
+	}
+	
+	.search-icons {
+		padding: 16rpx;
+	}
+	
+	.search-container-bar {
+		/* #ifndef APP-NVUE */
+		display: flex;
+		/* #endif */
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		position: fixed;
+		left: 0;
+		right: 0;
+		z-index: 10;
+		background-color: #fff;
+	}
+	
+	/* #ifndef APP-NVUE */
+	/deep/
+	/* #endif */
+	.uni-searchbar__box {
+		border-width: 0;
+	}
+	
+	/* #ifndef APP-NVUE */
+	/deep/
+	/* #endif */
+	.uni-input-placeholder {
+		font-size: 28rpx;
+	}
+	
+</style>

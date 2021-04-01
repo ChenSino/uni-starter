@@ -1,0 +1,78 @@
+{
+	"pages": [{
+		"path": "pages/list/list",
+		"style": {
+			"enablePullDownRefresh": true,
+			"navigationBarTitleText": "列表"
+		}
+	}, {
+		"path":"pages/grid/grid",
+		"style":{
+			"navigationBarTitleText": "宫格"
+		}
+	}, {
+		"path": "pages/search/search",
+		"style": {
+			"navigationBarTitleText": ""
+		}
+	}, {
+		"path": "pages/list/detail",
+		"style": {
+			"app-plus": {
+				"titleNView": {
+					"buttons": [{
+						"type": "share"
+					}],
+					"type": "transparent"
+				}
+			},
+			"h5": {
+				"titleNView": {
+					"buttons": [],
+					"type": "transparent"
+				}
+			},
+			"navigationBarTitleText": "文章详情"
+		}
+
+	}, {
+		"path": "pages/ucenter/ucenter",
+		"style":{
+			"navigationBarTitleText": "个人中心",
+			"navigationBarBackgroundColor":"#2F85FC",
+			"navigationBarTextStyle":"white"
+		}
+	},{
+		"path":"pages/login/login",
+		"style":{
+			"navigationBarTitleText":"登录"
+		}
+	},{
+		"path":"pages/reg/reg",
+		"style":{
+			"navigationBarTitleText":"注册"
+		}
+	}],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "base-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#007AFF",
+		"borderStyle": "black",
+		"backgroundColor": "#F8F8F8",
+		"list": [{
+			"pagePath": "pages/list/list",
+			"text": "列表"
+		}, {
+			"pagePath": "pages/grid/grid",
+			"text": "宫格"
+		}, {
+			"pagePath": "pages/ucenter/ucenter",
+			"text": "我的"
+		}]
+	}
+}
