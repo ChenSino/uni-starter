@@ -1,7 +1,7 @@
 <template>
 	<view class="center">
 		<view class="logo" @click="goLogin" :hover-class="!login ? 'logo-hover' : ''">
-			<image class="logo-img" :src="login ? (userInfo.avatarUrl || avatarUrl) :avatarUrl"></image>
+			<image class="logo-img" :src="login ? (userInfo.avatar || avatarUrl) :avatarUrl"></image>
 			<view class="logo-title">
 				<text class="uer-name">Hi，{{login ? userInfo.username : '您未登录'}}</text>
 				<text class="go-login-navigat-arrow navigat-arrow" v-if="!login">&#xe65e;</text>
@@ -9,8 +9,8 @@
 		</view>
 		<uni-list class="center-list">
 			<template v-for="(sublist , index) in ucenterList">
-				<uni-list-item :title="item.title" :rightText="item.rightText" :link="item.link"
-					v-for="(item, subIndex) in sublist" :key="(index + '_' + subIndex)"></uni-list-item>
+				<uni-list-item :title="item.title" :rightText="item.rightText" :to="item.to"
+					v-for="(item, subIndex) in sublist" :key="(index + '_' + subIndex)" @click="ucenterListClick(item)" :clickable="true"></uni-list-item>
 				<!-- #ifdef APP-NVUE -->
 				<cell class="center-list-cell"></cell>
 				<!-- #endif -->
@@ -27,6 +27,7 @@
 		mapGetters,
 		mapMutations
 	} from 'vuex';
+	import checkUpdate from '@/uni_modules/uni-upgrade-center-app/utils/check-update';
 	export default {
 		data() {
 			return {
@@ -38,24 +39,27 @@
 						title: '我的积分'
 					}],
 					[{
-						title: '政策与协议'
+						title: '政策与协议',
+						to:'/pages/agree-list/agree-list'
 					}, {
 						title: '关于',
-						link: 'asd'
+						to: '/pages/about/about'
 					},
 					//#ifdef APP-PLUS
 					{
 						title: '检查更新',
-						rightText: `V${plus.runtime.version}_${plus.runtime.versionCode}`
+						rightText: `V${getApp().appVersion.finall.version}_${getApp().appVersion.finall.versionCode}`,
+						event:'checkVersion'
 					}
 					//#endif
 					],
 					[
 						{
-							title: '反馈'
+							title: '反馈',
+							to:'/pages/uni-feedback/uni-feedback'
 						},{
 							title: '设置',
-							link: './setting'
+							to: '/pages/settings/settings'
 						}
 					]
 				]
@@ -68,7 +72,7 @@
 			})
 		},
 		onReady() {
-			this.logout();
+			
 		},
 		onShow(){
 			console.log(this.userInfo);
@@ -77,6 +81,17 @@
 			...mapMutations({
 				logout:'user/logout'
 			}),
+			/**
+			 * 个人中心项目列表点击事件
+			 */
+			ucenterListClick(item){
+				if(!item.to && item.event){
+					this[item.event]();
+				}
+			},
+			checkVersion(){
+				checkUpdate();
+			},
 			goLogin() {
 				if (!this.login) {
 					console.log('点击前往登录');
@@ -86,6 +101,9 @@
 				}
 				else {
 					console.log('点击编辑信息');
+					uni.navigateTo({
+						url:'./edit/edit'
+					})
 				}
 			}
 		}

@@ -48,8 +48,10 @@
 			</view>
 		</view>
 		<view class="oauth-row" v-if="hasProvider && !hasAppleLogin && platform ==='ios'" v-bind:style="{top: (positionTop - 50) + 'px'}">
-			<text style="color: #C8C7CC;text-align: center;">暂无法使用苹果登录，请查阅&nbsp;&nbsp;
-				<text style="color: #C8C7CC;text-decoration: underline;" @click="openAppleLoginDoc">Apple登录集成教程</text>
+			<text style="color: #C8C7CC;text-align: center;font-size: 30rpx;">登录/注册即表示您同意
+				<text style="color: #C8C7CC;text-decoration: underline;" @click="toPrivacy">隐私政策</text>
+				<text>和</text>
+				<text style="color: #C8C7CC;text-decoration: underline;" @click="toService">服务协议</text>
 			</text>
 		</view>
 	</view>
@@ -122,6 +124,16 @@
 				login:'user/login',
 				logout:'user/logout'
 			}),
+			toPrivacy(){
+				uni.navigateTo({
+					url:'/pages/agree-list/privacy/privacy'
+				})
+			},
+			toService(){
+				uni.navigateTo({
+					url:'/pages/agree-list/service/service'
+				})
+			},
 			initProvider() {
 				const filters = ['weixin', 'qq', 'sinaweibo', 'univerify'];
 				uni.getProvider({

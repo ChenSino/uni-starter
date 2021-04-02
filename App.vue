@@ -1,7 +1,9 @@
 <script>
+	import initApp from '@/common/appInit.js';
 	export default {
 		globalData: {
-			searchText: ''
+			searchText: '',
+			appVersion:{}
 		},
 		onLaunch: function() {
 			//#ifdef APP-PLUS
@@ -11,6 +13,10 @@
 			});
 			//#endif
 			console.log('App Launch')
+			
+			initApp();
+			
+			
 		},
 		onShow: function() {
 			console.log('App Show')

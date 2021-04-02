@@ -52,7 +52,78 @@
 		"style":{
 			"navigationBarTitleText":"注册"
 		}
-	}],
+	},{
+		"path":"pages/uni-feedback/uni-feedback",
+		"style":{
+			"navigationBarTitleText":"问题反馈"
+		}
+	}    ,{
+            "path" : "pages/about/about",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "关于"
+            }
+            
+        },{
+            "path" : "pages/agree-list/agree-list",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "政策与协议"
+            }
+            
+        }
+        ,{
+            "path" : "pages/agree-list/privacy/privacy",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "隐私政策"
+            }
+            
+        }
+        ,{
+            "path" : "pages/agree-list/service/service",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "服务协议"
+            }
+            
+        },{
+			"path": "uni_modules/uni-upgrade-center-app/pages/upgrade-popup",
+			"style": {
+				"disableScroll": true,
+				"app-plus": {
+					"backgroundColorTop": "transparent",
+					"background": "transparent",
+					"titleNView": false,
+					"scrollIndicator": false,
+					"popGesture": "none",
+					"animationType": "fade-in",
+					"animationDuration": 200
+
+				}
+			}
+		}
+        ,{
+            "path" : "pages/settings/settings",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "设置"
+            }
+            
+        }
+        ,{
+            "path" : "pages/ucenter/edit/edit",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "编辑资料"
+            }
+        },{
+			"path":"pages/ucenter/edit/uploadCutImageToUnicloud",
+			"style":{
+				"navigationStyle":"custom"
+			}
+		}
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "base-app",
