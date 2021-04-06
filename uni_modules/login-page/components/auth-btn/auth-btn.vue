@@ -16,7 +16,6 @@
 		data() {
 			return {
 				providerList: [],
-				translateArr:[ -147, -49, 49, 147 ]
 			};
 		},
 		created() {
@@ -83,11 +82,17 @@
 					delay: 0 //ms
 				}, () => {});
 				let logo = this.$refs.logo;
+				
+				let logo_w = uni.upx2px(parseInt(logo[0].style.width));
+				let logo_m = logo_w/6;
+				let logo_l = logo.length;
+				let logo_c = (logo_l - 1)/2;
 				logo.forEach((item, index)=>{
+					let translateX = (logo_w + logo_m) * (index - logo_c);
 					animation.transition(item, {
 						styles: {
 							opacity: '1',
-							transform:`translateX(${uni.upx2px(this.translateArr[index])}px)`
+							transform:`translateX(${translateX}px)`
 						},
 						duration: 200, //ms
 						timingFunction: 'linear',
