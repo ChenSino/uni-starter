@@ -1,0 +1,79 @@
+<template>
+	<view class="flex flex-column flex-1 w-750 bg-white">
+		<!-- 登录主体 -->
+		<view class="flex flex-column flex-1 w-750 justify-center align-center">
+			<view class="flex justify-center align-center show-phone">
+				<text class="font-28">登陆后即可展示自己</text>
+				<text class="font-50">{{phoneNumberShow}}</text>
+				<text class="font-26 text-sub">认证服务由（某服务商）提供</text>
+			</view>
+			<view class="">
+				<button type="primary" class="w-630 round">本机号码一键登录</button>
+				<button type="default" class="w-630 round my-2" @click="toOtherPhone">其他手机号码登陆</button>
+			</view>
+			<view class="w-400 py-2 justify-center align-center flex">
+				<login-ikonw :link="link" text="登录即表示同意用户协议和隐私政策以及（某服务商）认证服务条款"></login-ikonw>
+			</view>
+		</view>
+		<!-- 第三方登陆 -->
+		<view class="py-2">
+			<auth-btn @login="authLogin"></auth-btn>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				phoneNumber:'',
+				link:[{
+					text:'用户协议',
+					to:'/baidu.com'
+				}, {
+					text:'隐私政策',
+					to:'baidu'
+				}, {
+					text:'（某服务商）认证服务条款',
+					to:'baidu'
+				}]
+			}
+		},
+		onLoad() {
+			this.phoneNumber = '17731252731';
+		},
+		computed:{
+			// 手机号中间隐藏
+			phoneNumberShow(){
+				let phone = this.phoneNumber;
+				if(phone == '')return '';
+				return phone.replace(/^(\d{3})\d{4}(\d{4})$/, '$1****$2');
+			}
+		},
+		methods: {
+			/**
+			 * @param {Object} auth 第三方登录回调
+			 * value
+			 * image
+			 */
+			authLogin(auth){
+				console.log('auth_', auth);
+			},
+			/**
+			 * 其他手机号码登陆
+			 */
+			toOtherPhone(){
+				uni.navigateTo({
+					url:'./phone-login'
+				})
+			}
+		}
+	}
+</script>
+
+<style>
+	@import url("../../common/myStyle.css");
+	.show-phone{
+		padding-bottom: 120rpx;
+	}
+</style>

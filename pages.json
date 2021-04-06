@@ -43,16 +43,6 @@
 			"navigationBarTextStyle":"white"
 		}
 	},{
-		"path":"pages/login/login",
-		"style":{
-			"navigationBarTitleText":"登录"
-		}
-	},{
-		"path":"pages/reg/reg",
-		"style":{
-			"navigationBarTitleText":"注册"
-		}
-	},{
 		"path":"pages/uni-feedback/uni-feedback",
 		"style":{
 			"navigationBarTitleText":"问题反馈"
@@ -121,6 +111,58 @@
 			"path":"pages/ucenter/edit/uploadCutImageToUnicloud",
 			"style":{
 				"navigationStyle":"custom"
+			}
+		},{
+			"path":"uni_modules/login-page/pages/index/index",
+			"style":{
+				"navigationBarTitleText":"",
+				"navigationBarBackgroundColor":"#FFFFFF",
+				"app-plus":{
+					"titleNView":{
+						"buttons":[{
+							"text":"帮助"
+						}]
+					}
+				}
+			}
+		},{
+			"path":"uni_modules/login-page/pages/index/phone-login",
+			"style":{
+				"navigationBarTitleText":"",
+				"navigationBarBackgroundColor":"#FFFFFF",
+				"app-plus":{
+					"titleNView":{
+						"buttons":[{
+							"text":"帮助"
+						}]
+					}
+				}
+			}
+		},{
+			"path":"uni_modules/login-page/pages/index/pwd-login",
+			"style":{
+				"navigationBarTitleText":"",
+				"navigationBarBackgroundColor":"#FFFFFF",
+				"app-plus":{
+					"titleNView":{
+						"buttons":[{
+							"text":"帮助"
+						}]
+					}
+				}
+			}
+		},{
+			"path":"uni_modules/login-page/pages/index/pwd-retrieve",
+			"style":{
+				"navigationBarTitleText":"",
+				"navigationBarBackgroundColor":"#FFFFFF",
+				"app-plus":{
+					"titleNView":{
+						"buttons":[{
+							"text":"帮助"
+						}]
+					}
+				}
 			}
 		}
     ],
