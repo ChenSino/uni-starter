@@ -96,7 +96,7 @@
 				if (!this.login) {
 					console.log('点击前往登录');
 					uni.navigateTo({
-						url: '../login/login'
+						url: '/uni_modules/login-page/pages/index/index'
 					});
 				}
 				else {
