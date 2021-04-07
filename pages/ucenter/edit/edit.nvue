@@ -77,7 +77,9 @@
 <style>
 .content{
 		width: 750rpx;
+		/* #ifndef APP-NVUE */
 		display: flex;
+		/* #endif */
 		flex-direction: column;
 		/* align-items: center; */
 		flex: 1;
@@ -85,7 +87,9 @@
 	.avatar-box{
 		width: 700rpx;
 		height: 200rpx;
+		/* #ifndef APP-NVUE */
 		display: flex;
+		/* #endif */
 		justify-content: center;
 		align-items: center;
 	}

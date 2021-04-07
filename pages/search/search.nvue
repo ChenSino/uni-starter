@@ -325,12 +325,12 @@
 </script>
 
 <style>
+	/* #ifndef APP-NVUE */
 	page {
-		/* #ifndef APP-NVUE */
 		height: 100%;
-		/* #endif */
 		flex: 1;
 	}
+	/* #endif */
 </style>
 
 <style lang="scss" scoped>
@@ -340,7 +340,6 @@
 		background-color: #fff;
 	}
 	.container {
-		padding-top: var(--status-bar-height);
 		/* #ifndef APP-NVUE */
 		height: 100%;
 		/* #endif */
