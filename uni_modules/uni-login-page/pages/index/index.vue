@@ -1,6 +1,6 @@
 <template>
-	<view class="flex flex-column flex-1 w-750 bg-white">
-		<view class="flex-1 flex flex-column justify-start align-center">
+	<view class="flex flex-column flex-1 w-750 bg-white" :class="{'hidden':!isShow}">
+		<view v-if="isShow" class="flex-1 flex flex-column justify-start align-center">
 			<view class="w-630 flex flex-column">
 				<!-- 顶部文字 -->
 				<text class="font-32 font-blod pt-5">登陆后即可展示自己</text>
@@ -33,7 +33,7 @@
 		</view>
 		<!-- 登录按钮弹窗 -->
 		<login-action-sheet ref="loginActionSheet"></login-action-sheet>
-		<uni-quick-login></uni-quick-login>
+		<uni-quick-login @univerifyEnd="isShow = 1"></uni-quick-login>
 	</view>
 </template>
 
@@ -41,6 +41,7 @@
 	export default {
 		data() {
 			return {
+				isShow:false,
 				link: [{
 					text: '用户协议',
 					to: '/baidu.com'
@@ -85,6 +86,9 @@
 </script>
 
 <style>
+	.hidden,page{
+		background-color: transparent;
+	}
 	@import url("../../common/myStyle.css");
 
 	.lgnin-iknow {
