@@ -142,10 +142,10 @@
 				});
 			},
 			/**
-			 * banner加载
+			 * banner加载后触发的回调
 			 */
 			load(data) {
-				console.log('banner_', data);
+				
 			},
 			changeSwiper(e) {
 				this.current = e.detail.current
