@@ -214,7 +214,7 @@
 		display: flex;
 		flex-direction: column;
 		box-sizing: border-box;
-		background-color: #efeff4;
+		background-color: #fff;
 		min-height: 100%;
 		height: auto;
 	}
@@ -236,6 +236,12 @@
 		background-color: #ffffff;
 	}
 
+	/* #endif */
+	
+	/* #ifdef APP-NVUE */
+	.warp{
+		background-color: #fff;
+	}
 	/* #endif */
 
 	.example-body {
