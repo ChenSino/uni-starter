@@ -19,7 +19,7 @@
 			},
 			link: {
 				type: Array,
-				default: []
+				default: ()=>[]
 			}
 		},
 		data() {
