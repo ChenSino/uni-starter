@@ -209,9 +209,12 @@ export default {
 </script>
 
 <style>
-page {
-	background-color: #efeff4;
-}
+	/* #ifndef APP-NVUE */
+	page {
+		background-color: #efeff4;
+	}
+	/* #endif */
+
 
 .input-view {
 	font-size: 28rpx;

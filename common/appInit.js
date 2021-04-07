@@ -6,8 +6,24 @@ export default function (){
 	
 	// 检查更新
 	checkUpdate();
+	
+	keepScreenOn();
 }
 
+/**
+ * 保持屏幕常亮
+ */
+function keepScreenOn(){
+	//#ifdef APP-PLUS
+	// 保持屏幕常亮
+	uni.setKeepScreenOn({
+	    keepScreenOn: true
+	});
+	//#endif
+}
+/**
+ * // 初始化appVersion
+ */
 function initAppVersion(){
 	// #ifdef APP-NVUE
 	let appid = plus.runtime.appid;

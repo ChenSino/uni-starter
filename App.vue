@@ -6,17 +6,8 @@
 			appVersion:{}
 		},
 		onLaunch: function() {
-			//#ifdef APP-PLUS
-			// 保持屏幕常亮
-			uni.setKeepScreenOn({
-			    keepScreenOn: true
-			});
-			//#endif
 			console.log('App Launch')
-			
-			initApp();
-			
-			
+			// initApp();
 		},
 		onShow: function() {
 			console.log('App Show')
@@ -29,4 +20,14 @@
 
 <style>
 	/*每个页面公共css */
+	.border-test{
+		/* #ifdef APP-NVUE */
+		border-width: 1rpx;
+		border-color: #DD524D;
+		/* #endif */
+		/* #ifndef APP-NVUE */
+		border: 1px solid #DD524D;
+		box-sizing: border-box;
+		/* #endif */
+	}
 </style>
