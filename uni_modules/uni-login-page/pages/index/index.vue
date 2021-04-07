@@ -5,14 +5,14 @@
 			<view class="content">
 				<!-- 顶部文字 -->
 				<text class="content-top-title">登陆后即可展示自己</text>
-				<login-ikonw class="lgnin-iknow" :link="link" text="登录即表示同意用户协议和隐私政策"></login-ikonw>
+				<login-ikonw class="login-iknow" :link="link" text="登录即表示同意用户协议和隐私政策"></login-ikonw>
 
 				<!-- 登录框 (选择手机号所属国家和地区需要另行实现) -->
 				<view class="phone-input-box">
 					<picker mode="selector" :range="phoneArea" @change="selectPhoneArea">
 						<text class="phone-area">{{currenPhoneArea}}</text>
 					</picker>
-					<input type="number" class="phone-input" placeholder="请输入手机号"
+					<input type="number" class="phone-input" maxlength="11" placeholder="请输入手机号"
 						v-model="phoneNumber" />
 				</view>
 
@@ -95,6 +95,7 @@
 </script>
 
 <style>
+<<<<<<< HEAD
 	page {
 		background: transparent;
 	}
@@ -131,11 +132,13 @@
 		width: 630rpx;
 		flex-direction: column;
 	}
+=======
+	@import url("../../common/loginPage.css");
+>>>>>>> 4102167b2d3d22ebf4994a07a5b8421d8539345c
 	.content-top-title{
-		font-size: 32rpx;
-		font-weight: 600;
-		padding-top: 50rpx;
+		text-align: center;
 	}
+<<<<<<< HEAD
 	@import url("../../common/myStyle.css");
 
 	.lgnin-iknow {
@@ -150,59 +153,9 @@
 		flex-direction: row;
 		flex-wrap: nowrap;
 		align-items: center;
+=======
+	.login-iknow{
+>>>>>>> 4102167b2d3d22ebf4994a07a5b8421d8539345c
 		justify-content: center;
-	}
-	.phone-area{
-		padding: 0 20rpx;
-		font-size: 30rpx;
-	}
-
-	.phone-input {
-		border-left-width: 1px;
-		border-left-color: #d7d9d8;
-		padding: 0 20rpx;
-		font-size: 30rpx;
-	}
-
-	.tip-text {
-		padding-top: 20rpx;
-		padding-bottom: 36rpx;
-		color: #8a8f8b;
-		font-size: 26rpx;
-	}
-
-	.send-btn-box {
-		height: 85rpx;
-		background-color: #d8d8da;
-		margin-bottom: 50rpx;
-		/* #ifndef APP-NVUE */
-		display: flex;
-		/* #endif */
-		flex-direction: column;
-		width: 630rpx;
-		justify-content: center;
-		align-items: center;
-		border-radius: 6rpx;
-	}
-	.send-btn-text{
-		color: #fff;
-	}
-
-	.send-btn-active {
-		background-color: #007aff;
-	}
-	
-	.auth-box{
-		width: 630rpx;
-		/* #ifndef APP-NVUE */
-		display: flex;
-		/* #endif */
-		flex-direction: row;
-		align-items: center;
-		justify-content: space-between;
-	}
-	.login-text {
-		color: #1c436e;
-		font-size: 26rpx;
 	}
 </style>

@@ -1,26 +1,26 @@
 <template>
-	<view class="flex flex-column flex-1 w-750 bg-white">
-		<view class="flex-1 flex flex-column justify-start align-center">
-			<view class="w-630 flex flex-column">
+	<view class="wrap">
+		<view class="wrap-content">
+			<view class="content">
 				<!-- 顶部文字 -->
-				<text class="font-32 font-blod pt-5">手机号密码登录</text>
-				<login-ikonw class="lgnin-iknow" :text="tipText"></login-ikonw>
+				<text class="content-top-title">手机号密码登录</text>
+				<login-ikonw class="login-iknow" :text="tipText"></login-ikonw>
 				<!-- 登录框 (选择手机号所属国家和地区需要另行实现) -->
-				<view class="phone-input-box round flex flex-row flex-nowrap align-center justify-center">
-					<input type="number" :maxlength="6" class="flex-1 phone-input px-2 font-30" placeholder="请输入验证码"
+				<view class="phone-input-box">
+					<input type="number" :maxlength="6" class="phone-input" placeholder="请输入验证码"
 						v-model="phoneCode" />
 					<login-short-code @getCode="getCode"></login-short-code>
 				</view>
 
-				<view class="phone-input-box round flex flex-row flex-nowrap align-center justify-center mt-2">
-					<input type="password" :password="true" class="flex-1 px-2 font-30" placeholder="请输入密码"
+				<view class="phone-input-box">
+					<input type="password" :password="true" class="phone-input" placeholder="请输入密码"
 						v-model="password" />
 				</view>
 
 				<!-- 发送按钮 -->
-				<view class="send-btn-box flex w-630 justify-center align-center round mt-5" hover-class="hover"
-					@click="pwdLogin" :class="canSubmit?'send-btn-active':''">
-					<text class="text-white">完成</text>
+				<view class="send-btn-box" hover-class="hover"
+					@click="submit" :class="canSubmit?'send-btn-active':''">
+					<text class="send-btn-text">完成</text>
 				</view>
 			</view>
 		</view>
@@ -69,42 +69,26 @@
 				});
 				// 发送成功后开启倒计时
 				done();
+			},
+			/**
+			 * 完成并提交
+			 */
+			submit(){
+				
 			}
 		}
 	}
 </script>
 
 <style>
-	@import url("../../common/myStyle.css");
-
-	.lgnin-iknow {
-		padding-top: 24rpx;
-		padding-bottom: 36rpx;
+	@import url("../../common/loginPage.css");
+	.phone-input-box{
+		margin-top: 20rpx;
 	}
-
-	.phone-input-box {
-		height: 85rpx;
-		background-color: #f9f9f9;
+	.phone-input{
+		border-left-width: 0;
 	}
-
-	.phone-input {}
-
-	.tip-text {
-		padding-top: 20rpx;
-		padding-bottom: 36rpx;
-	}
-
-	.send-btn-box {
-		height: 85rpx;
-		background-color: #d8d8da;
-		margin-bottom: 50rpx;
-	}
-
-	.send-btn-active {
-		background-color: #007aff;
-	}
-
-	.login-text {
-		color: #1c436e;
+	.send-btn-box{
+		margin-top: 50rpx;
 	}
 </style>

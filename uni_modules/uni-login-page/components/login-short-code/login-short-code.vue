@@ -1,6 +1,6 @@
 <template>
-	<view class="flex justify-center align-center short-code-btn" hover-class="hover" @click="clickBtn">
-		<text class="font-28">{{innerText}}</text>
+	<view class="short-code-btn" hover-class="hover" @click="clickBtn">
+		<text class="inner-text" :class="reverseNumber==0?'inner-text-active':''">{{innerText}}</text>
 	</view>
 </template>
 
@@ -70,11 +70,20 @@
 	}
 </script>
 
-<style>
-	@import url("../../common/myStyle.css");
-
+<style scoped>
 	.short-code-btn {
 		width: 200rpx;
 		height: 85rpx;
+		/* #ifndef APP-NVUE */
+		display: flex;
+		/* #endif */
+		justify-content: center;
+		align-items: center;
+	}
+	.inner-text{
+		font-size: 28rpx;
+	}
+	.inner-text-active{
+		color: #007aff;
 	}
 </style>
