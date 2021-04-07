@@ -98,9 +98,6 @@
 		onReady() {
 
 		},
-		onShow() {
-			console.log(this.userInfo);
-		},
 		methods: {
 			...mapMutations({
 				logout: 'user/logout'
