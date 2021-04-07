@@ -35,6 +35,7 @@
 	image,switch,navigator,icons {
 		display: flex;
 		box-sizing: border-box;
+		flex-direction: column;
 	}
 	scroll-view{
 		-webkit-overflow-scrolling: touch;

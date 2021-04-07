@@ -1,6 +1,6 @@
 <template>
 	<view class="center">
-		<view class="logo" @click="goLogin" :hover-class="!login ? 'logo-hover' : ''">
+		<view class="userInfo" @click="goLogin" :hover-class="!login ? 'logo-hover' : ''">
 			<image class="logo-img" :src="login ? (userInfo.avatar || avatarUrl) :avatarUrl"></image>
 			<view class="logo-title">
 				<text class="uer-name">Hi，{{login ? userInfo.username : '您未登录'}}</text>
@@ -168,12 +168,12 @@
 		background-color: #f8f8f8;
 	}
 
-	.logo {
-		width: 750upx;
-		height: 240upx;
-		padding: 20upx;
+	.userInfo {
+		width: 750rpx;
+		padding: 20rpx;
+		padding-top:50px;
 		background-color: #2F85FC;
-		flex-direction: row;
+		flex-direction: column;
 		align-items: center;
 	}
 
@@ -182,38 +182,39 @@
 	}
 
 	.logo-img {
-		width: 150upx;
-		height: 150upx;
-		border-radius: 150upx;
+		width: 150rpx;
+		height: 150rpx;
+		border-radius: 150rpx;
+		border: solid 1px #FFFFFF;
 	}
 
 	.logo-title {
-		height: 150upx;
+		height: 150rpx;
 		flex: 1;
 		align-items: center;
 		justify-content: space-between;
 		flex-direction: row;
-		margin-left: 20upx;
+		margin-left: 20rpx;
 	}
 
 	.uer-name {
-		height: 60upx;
-		line-height: 60upx;
-		font-size: 38upx;
+		height: 60rpx;
+		line-height: 60rpx;
+		font-size: 38rpx;
 		color: #FFFFFF;
 	}
 
 	.go-login-navigat-arrow {
-		font-size: 38upx;
+		font-size: 38rpx;
 		color: #FFFFFF;
 	}
 
 	.navigat-arrow {
-		height: 90upx;
-		width: 40upx;
-		line-height: 90upx;
-		font-size: 34upx;
-		color: #555;
+		height: 90rpx;
+		width: 40rpx;
+		line-height: 90rpx;
+		font-size: 34rpx;
+		color: #FFFFFF;
 		text-align: right;
 		font-family: texticons;
 	}
@@ -242,4 +243,16 @@
 		justify-content: center;
 		align-items: center;
 	}
+	
+
+/*修改边线粗细示例*/
+/* #ifndef APP-NVUE */
+	.center-list /deep/ .uni-list--border:after,
+	.center-list /deep/ .uni-list--border-top ,
+	.center-list /deep/ .uni-list--border-bottom{
+		-webkit-transform: scaleY(0.2);
+		transform: scaleY(0.2);
+	}
+/* #endif */
+	
 </style>

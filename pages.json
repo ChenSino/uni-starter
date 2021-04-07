@@ -70,9 +70,7 @@
 		}, {
 			"path": "pages/ucenter/ucenter",
 			"style": {
-				"navigationBarTitleText": "个人中心",
-				"navigationBarBackgroundColor": "#2F85FC",
-				"navigationBarTextStyle": "white"
+				"navigationStyle":"custom"
 			}
 		}, {
 			"path": "pages/uni-feedback/uni-feedback",
