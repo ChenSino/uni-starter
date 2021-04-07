@@ -42,47 +42,47 @@
 		data() {
 			return {
 				list: [{
-						url: '/static/c1.png',
+						url: '/static/grid/c1.png',
 						text: 'Grid 1',
 						badge: '0',
 						type: "primary"
 					},
 					{
-						url: '/static/c2.png',
+						url: '/static/grid/c2.png',
 						text: 'Grid 2',
 						badge: '1',
 						type: "success"
 					},
 					{
-						url: '/static/c3.png',
+						url: '/static/grid/c3.png',
 						text: 'Grid 3',
 						badge: '99',
 						type: "warning"
 					},
 					{
-						url: '/static/c4.png',
+						url: '/static/grid/c4.png',
 						text: 'Grid 4',
 						badge: '2',
 						type: "error"
 					},
 					{
-						url: '/static/c5.png',
+						url: '/static/grid/c5.png',
 						text: 'Grid 5'
 					},
 					{
-						url: '/static/c6.png',
+						url: '/static/grid/c6.png',
 						text: 'Grid 6'
 					},
 					{
-						url: '/static/c7.png',
+						url: '/static/grid/c7.png',
 						text: 'Grid 7'
 					},
 					{
-						url: '/static/c8.png',
+						url: '/static/grid/c8.png',
 						text: 'Grid 8'
 					},
 					{
-						url: '/static/c9.png',
+						url: '/static/grid/c9.png',
 						text: 'Grid 9'
 					}
 				],
@@ -186,7 +186,7 @@
 				// 无数据添加默认值
 				let list = [{
 					"_id": -1,
-					"bannerfile": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/094a9dc0-50c0-11eb-b680-7980c8a877b8.jpg",
+					"bannerfile": "/static/grid/empty.png",
 					"open_url": "https://www.dcloud.io/",
 					"title": "内容 A",
 				}]
