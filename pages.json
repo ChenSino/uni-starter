@@ -112,7 +112,7 @@
 				"navigationStyle":"custom"
 			}
 		},{
-			"path":"uni_modules/login-page/pages/index/index",
+			"path":"uni_modules/uni-login-page/pages/index/index",
 			"style":{
 				"navigationBarTitleText":"",
 				"navigationBarBackgroundColor":"#FFFFFF",
@@ -128,7 +128,7 @@
 				}
 			}
 		},{
-			"path":"uni_modules/login-page/pages/index/phone-login",
+			"path":"uni_modules/uni-login-page/pages/index/phone-login",
 			"style":{
 				"navigationBarTitleText":"",
 				"navigationBarBackgroundColor":"#FFFFFF",
@@ -144,7 +144,7 @@
 				}
 			}
 		},{
-			"path":"uni_modules/login-page/pages/index/pwd-login",
+			"path":"uni_modules/uni-login-page/pages/index/pwd-login",
 			"style":{
 				"navigationBarTitleText":"",
 				"navigationBarBackgroundColor":"#FFFFFF",
@@ -160,7 +160,7 @@
 				}
 			}
 		},{
-			"path":"uni_modules/login-page/pages/index/pwd-retrieve",
+			"path":"uni_modules/uni-login-page/pages/index/pwd-retrieve",
 			"style":{
 				"navigationBarTitleText":"",
 				"navigationBarBackgroundColor":"#FFFFFF",
