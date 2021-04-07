@@ -1,5 +1,5 @@
 .flex{
-	/* #ifndef APP-VUE */
+	/* #ifndef APP-NVUE */
 	display: flex;
 	/* #endif */
 }

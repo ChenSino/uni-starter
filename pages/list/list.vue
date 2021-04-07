@@ -1,63 +1,19 @@
 <template>
-	<!--
-	本页面模板教程：https://ext.dcloud.net.cn/plugin?id=2651
-	uni-list 文档：https://ext.dcloud.net.cn/plugin?id=24
-	uniCloud 文档：https://uniapp.dcloud.io/uniCloud/README
-	uni-clientDB 组件文档：https://uniapp.dcloud.net.cn/uniCloud/uni-clientdb-component
-	DB Schema 规范：https://uniapp.dcloud.net.cn/uniCloud/schema
-	 -->
 	<view style="overflow: hidden;">
-		<view class="search-container-bar">
-			<uni-search-bar ref="searchBar" style="flex:1;" radius="100" v-model="searchText"
-				@search-click="searchClick" cancelButton="none" disabled />
-		</view>
-		<view class="list">
-			<!-- 刷新页面后的顶部提示框 -->
-			<!-- 当前弹出内容没有实际逻辑 ，可根据当前业务修改弹出提示 -->
-			<view class="tips" :class="{ 'tips-ani': tipShow }">为您更新了10条内容</view>
-			<!-- 页面分类标题 -->
-			<uni-section style="margin:0;" v-if="searchText" :title="listTitle" type="line"></uni-section>
-			<unicloud-db ref="udb" v-slot:default="{data, loading, error, options}" :options="formData"
-				:collection="collection" :field="field" :where="where" @load="load">
-				<text v-if="error" class="list-info">{{error.message}}</text>
-				<!-- 基于 uni-list 的页面布局 -->
-				<uni-list :class="{ 'uni-list--waterfall': options.waterfall }">
-					<!-- 通过 uni-list--waterfall 类决定页面布局方向 -->
-					<!-- to 属性携带参数跳转详情页面，当前只为参考 -->
-					<uni-list-item :border="!options.waterfall" class="uni-list-item--waterfall" title="自定义商品列表"
-						v-for="item in data" :key="item._id">
-						<!-- 通过header插槽定义列表左侧图片 -->
-						<template v-slot:header>
-							<view class="uni-thumb shop-picture" :class="{ 'shop-picture-column': options.waterfall }">
-								<image :src="item.avatar" mode="aspectFill"></image>
-							</view>
-						</template>
-						<!-- 通过body插槽定义布局 -->
-						<view slot="body" class="shop">
-							<view>
-								<view class="uni-title">
-									<text class="uni-ellipsis-2">{{ item.title }}</text>
-								</view>
-							</view>
-							<view>
-								<view class="uni-note ellipsis">
-									<text class="uni-ellipsis-1">{{ item.author[0].username }}</text>
-									<text>{{ item.comment_count }}评论</text>
-									<uni-dateformat :date="item.last_modify_date" format="yyyy-MM-dd" :threshold="[60000, 2592000000]"/>
-								</view>
-							</view>
-						</view>
-					</uni-list-item>
-				</uni-list>
-				<!-- 通过 loadMore 组件实现上拉加载效果，如需自定义显示内容，可参考：https://ext.dcloud.net.cn/plugin?id=29 -->
-				<uni-load-more v-if="!error && (loading || options.status === 'noMore') " :status="options.status" />
-			</unicloud-db>
-		</view>
+		<status-bar></status-bar>
+		<!-- 页面主列表 -->
+		<news-list ref="newsList" :searchText="searchText"></news-list>
 	</view>
 </template>
 
 <script>
+	import newsList from './news-list.vue';
+	import statusBar from '@/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar.vue';
 	export default {
+		components:{
+			newsList,
+			statusBar
+		},
 		data() {
 			return {
 				searchText: '',
@@ -65,12 +21,6 @@
 					waterfall: false, // 布局方向切换
 					status: 'loading', // 加载状态
 				},
-				where: '',
-				// 数据表名
-				collection: 'opendb-news-articles,uni-id-users',
-				// 查询字段，多个字段用 , 分割
-				field: 'author{username, _id}, user_id,_id,avatar,title,excerpt,last_modify_date, comment_count, like_count',
-				tipShow: false // 是否显示顶部提示框
 			};
 		},
 		onShow(options) {
@@ -87,32 +37,13 @@
 			 * 下拉刷新回调函数
 			 */
 			onPullDownRefresh() {
-				this.tipShow = true
-				this.formData.status = 'more'
-				this.$refs.udb.loadData({
-					clear: true
-				}, () => {
-					this.tipShow = false
-					uni.stopPullDownRefresh()
-				})
+				this.$refs.newsList.onPullDownRefresh();
 			},
 			/**
 			 * 上拉加载回调函数
 			 */
 			onReachBottom() {
-				this.$refs.udb.loadMore()
-			},
-			load(data, ended) {
-				if (ended) {
-					this.formData.status = 'noMore'
-				}
-			},
-			searchClick() {
-				uni.hideKeyboard();
-				uni.navigateTo({
-					url: '/pages/search/search',
-					animationType: 'fade-in'
-				});
+				this.$refs.newsList.onReachBottom();
 			}
 		},
 		watch: {
