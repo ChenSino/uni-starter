@@ -24,7 +24,6 @@
 		 * 下拉刷新回调函数
 		 */
 		onPullDownRefresh() {
-			console.log('refresh');
 			this.$refs.newsList.refresh();
 		},
 		methods: {
@@ -38,7 +37,6 @@
 			 * 上拉加载回调函数
 			 */
 			onReachBottom() {
-				console.log('load_more');
 				this.$refs.newsList.loadMore();
 			}
 		},
