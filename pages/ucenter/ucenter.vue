@@ -1,0 +1,245 @@
+<template>
+	<view class="center">
+		<view class="logo" @click="goLogin" :hover-class="!login ? 'logo-hover' : ''">
+			<image class="logo-img" :src="login ? (userInfo.avatar || avatarUrl) :avatarUrl"></image>
+			<view class="logo-title">
+				<text class="uer-name">Hi，{{login ? userInfo.username : '您未登录'}}</text>
+				<text class="go-login-navigat-arrow navigat-arrow" v-if="!login">&#xe65e;</text>
+			</view>
+		</view>
+		<uni-grid class="grid" :column="5" :showBorder="false" :square="true">
+			<uni-grid-item class="item" v-for="({text,icon},index) in gridList" @click.native="tapGrid(index)">
+				<uni-icons class="icon" color="#5d5e64" :type="icon" size="28"></uni-icons>
+				<text class="text">{{text}}</text>
+			</uni-grid-item>
+		</uni-grid>
+		<uni-list class="center-list" v-for="(sublist , index) in ucenterList">
+			<uni-list-item v-for="item in sublist"
+				:title="item.title"
+				link :rightText="item.rightText"
+				:clickable="true"
+				:to="item.to"
+				@click="ucenterListClick(item)"
+			></uni-list-item>
+		</uni-list>
+	</view>
+</template>
+
+<script>
+	import {
+		mapGetters,
+		mapMutations
+	} from 'vuex';
+	import checkUpdate from '@/uni_modules/uni-upgrade-center-app/utils/check-update';
+	export default {
+		data() {
+			return {
+				avatarUrl: '/static/logo.png',
+				gridList: [{
+						"text": "文字1",
+						"icon": "chat"
+					},
+					{
+						"text": "文字2",
+						"icon": "cloud-upload"
+					},
+					{
+						"text": "文字3",
+						"icon": "contact"
+					},
+					{
+						"text": "文字4",
+						"icon": "download"
+					},
+					{
+						"text": "文字5",
+						"icon": "paperplane"
+					}
+				],
+				ucenterList: [
+					[{
+						title: '阅读过的文章',
+						to: '/pages/agree-list/agree-list'
+					}, {
+						title: '我的积分',
+						to: '/pages/agree-list/agree-list'
+					}],
+					[{
+							title: '政策与协议',
+							to: '/pages/agree-list/agree-list'
+						}, {
+							title: '关于',
+							to: '/pages/about/about'
+						},
+						//#ifdef APP-PLUS
+						// {
+						// 	title: '检查更新',
+						// 	rightText: `V${getApp().appVersion.finall.version}_${getApp().appVersion.finall.versionCode}`,
+						// 	event:'checkVersion'
+						// }
+						//#endif
+					],
+					[{
+						title: '反馈',
+						to: '/pages/uni-feedback/uni-feedback'
+					}, {
+						title: '设置',
+						to: '/pages/settings/settings'
+					}]
+				]
+			}
+		},
+		computed: {
+			...mapGetters({
+				userInfo: 'user/info',
+				login: 'user/hasLogin'
+			})
+		},
+		onReady() {
+
+		},
+		onShow() {
+			console.log(this.userInfo);
+		},
+		methods: {
+			...mapMutations({
+				logout: 'user/logout'
+			}),
+			/**
+			 * 个人中心项目列表点击事件
+			 */
+			ucenterListClick(item) {
+				if (!item.to && item.event) {
+					this[item.event]();
+				}
+			},
+			checkVersion() {
+				checkUpdate();
+			},
+			goLogin() {
+				if (!this.login) {
+					console.log('点击前往登录');
+					uni.navigateTo({
+						url: '/uni_modules/uni-login-page/pages/index/index'
+					});
+				} else {
+					console.log('点击编辑信息');
+					uni.navigateTo({
+						url: './edit/edit'
+					})
+				}
+			},
+			tapGrid(index){
+				uni.showToast({
+					title: '你点击了，第'+index+'个',
+					icon: 'none'
+				});
+			}
+		}
+	}
+</script>
+
+<style>
+	/* #ifndef APP-PLUS-NVUE */
+	@font-face {
+		font-family: texticons;
+		font-weight: normal;
+		font-style: normal;
+		src: url('~@/static/text-icon.ttf') format('truetype');
+	}
+
+	page {
+		background-color: #f8f8f8;
+	}
+
+	/* #endif*/
+
+	/* 解决头条小程序字体图标不显示问题，因为头条运行时自动插入了span标签，且有全局字体 */
+	/* #ifdef MP-TOUTIAO */
+	text :not(view) {
+		font-family: texticons;
+	}
+
+	/* #endif */
+
+	.center {
+		flex: 1;
+		flex-direction: column;
+		background-color: #f8f8f8;
+	}
+
+	.logo {
+		width: 750upx;
+		height: 240upx;
+		padding: 20upx;
+		background-color: #2F85FC;
+		flex-direction: row;
+		align-items: center;
+	}
+
+	.logo-hover {
+		opacity: 0.8;
+	}
+
+	.logo-img {
+		width: 150upx;
+		height: 150upx;
+		border-radius: 150upx;
+	}
+
+	.logo-title {
+		height: 150upx;
+		flex: 1;
+		align-items: center;
+		justify-content: space-between;
+		flex-direction: row;
+		margin-left: 20upx;
+	}
+
+	.uer-name {
+		height: 60upx;
+		line-height: 60upx;
+		font-size: 38upx;
+		color: #FFFFFF;
+	}
+
+	.go-login-navigat-arrow {
+		font-size: 38upx;
+		color: #FFFFFF;
+	}
+
+	.navigat-arrow {
+		height: 90upx;
+		width: 40upx;
+		line-height: 90upx;
+		font-size: 34upx;
+		color: #555;
+		text-align: right;
+		font-family: texticons;
+	}
+
+	.center-list {
+		margin-bottom: 30rpx;
+		background-color: #f9f9f9;
+	}
+
+	.center-list-cell {
+		width: 750rpx;
+		background-color: #007AFF;
+		height: 40rpx;
+	}
+	
+	.grid{
+		background-color: #FFFFFF;
+		margin:25rpx 0;
+	}
+	.uni-grid .text {
+		font-size: 26rpx;
+		color: #817f82;
+	}
+
+	.uni-grid .item /deep/ .uni-grid-item__box {
+		justify-content: center;
+		align-items: center;
+	}
+</style>

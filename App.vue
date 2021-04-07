@@ -30,4 +30,14 @@
 		box-sizing: border-box;
 		/* #endif */
 	}
+	/* #ifndef APP-NVUE */
+	view,scroll-view,text,
+	image,switch,navigator,icons {
+		display: flex;
+		box-sizing: border-box;
+	}
+	scroll-view{
+		-webkit-overflow-scrolling: touch;
+	}
+	/* #endif */
 </style>

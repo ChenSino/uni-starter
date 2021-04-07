@@ -22,15 +22,24 @@
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationBarBackgroundColor": "#FFFFFF",
+				"navigationStyle": "custom",
+				"backgroundColor": "transparent",
 				"app-plus": {
-					"titleNView": {
-						"buttons": [{
-							"text": "帮助",
-							"type": "none",
-							"fontSize": "16px",
-							"width": "60px"
-						}]
-					}
+					"animationType": "fade-in",
+					"background": "transparent",
+					"popGesture": "none",
+					"titleNView":false
+				// "navigationBarTitleText": "",
+				// "navigationBarBackgroundColor": "#FFFFFF",
+				// "app-plus": {
+				// 	"titleNView": {
+				// 		"buttons": [{
+				// 			"text": "帮助",
+				// 			"type": "none",
+				// 			"fontSize": "16px",
+				// 			"width": "60px"
+				// 		}]
+				// 	}
 				}
 			}
 		}, {
