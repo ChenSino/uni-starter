@@ -203,7 +203,7 @@
 	}
 </script>
 
-<style>
+<style scoped>
 	.header-content {
 		flex: 1;
 		display: flex;
