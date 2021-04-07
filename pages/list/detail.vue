@@ -3,11 +3,11 @@
 	 本页面模板教程：https://ext.dcloud.net.cn/plugin?id=2717
 	 uni-list 文档：https://ext.dcloud.net.cn/plugin?id=24
 	 uniCloud 文档：https://uniapp.dcloud.io/uniCloud/README
-	 uni-clientDB 组件文档：https://uniapp.dcloud.net.cn/uniCloud/uni-clientdb-component
+	 unicloud-db 组件文档：https://uniapp.dcloud.net.cn/uniCloud/unicloud-db-component
 	 DB Schema 规范：https://uniapp.dcloud.net.cn/uniCloud/schema
 	 -->
 	<view class="article">
-		<uni-clientdb v-slot:default="{data, loading, error, options}" :options="formData" :collection="collection" :field="field"
+		<unicloud-db v-slot:default="{data, loading, error, options}" :options="formData" :collection="collection" :field="field"
 		 :getone="true" :where="where" :manual="true" ref="detail" @load="loadData">
 			<template v-if="!loading && data">
 				<view class="article-title">{{title}}</view>
@@ -36,7 +36,7 @@
 					<u-parse :content="data.content" :noData="options.noData"></u-parse>
 				</view>
 			</template>
-		</uni-clientdb>
+		</unicloud-db>
 		<uni-popup ref="sharePopup" type="bottom">
 			<uni-popup-share @select="selectShareItem"></uni-popup-share>
 		</uni-popup>
@@ -71,7 +71,7 @@
 		},
 		computed:{
 			//拼接where条件
-			//查询条件 ,更多详见 ：https://uniapp.dcloud.net.cn/uniCloud/uni-clientDB?id=jsquery
+			//查询条件 ,更多详见 ：https://uniapp.dcloud.net.cn/uniCloud/unicloud-db?id=jsquery
 			where(){
 				return `_id =="${this.id}"`
 			}

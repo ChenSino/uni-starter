@@ -1,0 +1,14 @@
+// 本文件中的json内容将在云函数【运行】时作为参数传给云函数。
+// 配置教程参考：https://uniapp.dcloud.net.cn/uniCloud/quickstart?id=runparam
+{
+	"action": "quickLogin",
+	"params": {
+		"access_token": "43_Ga0tBbkdkFxu746Ub2njRpyR49M7kf4XxtV9InxFoCWOjyR9m7a43akiQyzuqverhi1qCfKj2j6SOOvDHwfyphSYcvIC7tUXe4bJRLZ7n7g",
+		"expires_in": 7200,
+		"refresh_token": "43_B7KJlMrcAnr2Hq6hMUgBVGSO8pgJpnAaFAANu7wP17FJC2chJ1tqdaeBrLDrDN1osRAf0RNBjv0yIp2muUOl9bqzrKeIp0TL4AfOcY1mdMM",
+		"openid": "oRrdQty-Zb6VwWjru6RV81_HwW4k",
+		"scope": "snsapi_userinfo",
+		"unionid": "oU5Yyt4zSdenNh8ZcwSNtzoXgAkM",
+		"type": "weixin"
+	}
+}

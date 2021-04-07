@@ -3,7 +3,7 @@
 	本页面模板教程：https://ext.dcloud.net.cn/plugin?id=2651
 	uni-list 文档：https://ext.dcloud.net.cn/plugin?id=24
 	uniCloud 文档：https://uniapp.dcloud.io/uniCloud/README
-	uni-clientDB 组件文档：https://uniapp.dcloud.net.cn/uniCloud/uni-clientdb-component
+	unicloud-db 组件文档：https://uniapp.dcloud.net.cn/uniCloud/unicloud-db-component
 	DB Schema 规范：https://uniapp.dcloud.net.cn/uniCloud/schema
 	 -->
 	<view style="overflow: hidden;">
@@ -19,7 +19,7 @@
 			<view class="tips" :class="{ 'tips-ani': tipShow }">为您更新了10条内容</view>
 			<!-- 页面分类标题 -->
 			<uni-section style="margin:0;" :title="listTitle" type="line"></uni-section>
-			<uni-clientdb ref="udb" :where="where" v-slot:default="{data, loading, error, options}" :options="formData" :collection="collection"
+			<unicloud-db ref="udb" :where="where" v-slot:default="{data, loading, error, options}" :options="formData" :collection="collection"
 			 :field="field" @load="load">
 				<!-- 基于 uni-list 的页面布局 -->
 				<uni-list>
@@ -53,7 +53,7 @@
 				</uni-list>
 				<!-- 通过 loadMore 组件实现上拉加载效果，如需自定义显示内容，可参考：https://ext.dcloud.net.cn/plugin?id=29 -->
 				<uni-load-more v-if="loading || options.status === 'noMore' " :status="options.status" />
-			</uni-clientdb>
+			</unicloud-db>
 		</view>
 	</view>
 </template>

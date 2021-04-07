@@ -12,8 +12,8 @@
 		"tokenExpiresIn": 2592000,
 		"oauth" : {
 			"weixin" : {
-				"appid" : "weixin appid",
-				"appsecret" : "weixin appsecret"
+				"appid": "wx0411fa6a39d61297",
+				"appsecret": "fdc6251421d3d688a563b4f00dd540e7"
 			}
 		}
 	},
@@ -39,6 +39,11 @@
 			"codeExpiresIn": 300,
 			"smsKey": "your sms key",
 			"smsSecret": "your sms secret"
+		},
+		"univerify":{
+			"appid": "__UNI__GameCat",
+			"apiKey":"c5f80ebad34aaf0ae22958d866287521",
+			"apiSecret":"f921890ca9c248273eadaf9b4137cf5c"
 		}
 	}
 }

@@ -7,7 +7,7 @@
 				disabled />
 		</template>
 		<!-- banner -->
-		<uni-clientdb ref="bannerdb" v-slot:default="{data, loading, error, options}" :collection="collection"
+		<unicloud-db ref="bannerdb" v-slot:default="{data, loading, error, options}" :collection="collection"
 			:field="field" @load="load">
 			<uni-swiper-dot class="uni-swiper-dot-box" @clickItem="clickItem" :info="bannerFormate(data)"
 				:current="current" :mode="mode" :dots-styles="dotsStyles" field="content">
@@ -19,7 +19,7 @@
 					</swiper-item>
 				</swiper>
 			</uni-swiper-dot>
-		</uni-clientdb>
+		</unicloud-db>
 		<!-- 宫格 -->
 		<uni-section title="宫格组件" style="margin: 0;" type="line"></uni-section>
 		<view class="example-body">

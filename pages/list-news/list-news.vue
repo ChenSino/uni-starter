@@ -3,13 +3,13 @@
 	 本页面模板教程：https://ext.dcloud.net.cn/plugin?id=2584
 	 uni-list 文档：https://ext.dcloud.net.cn/plugin?id=24
 	 uniCloud 文档：https://uniapp.dcloud.io/uniCloud/README
-	 uni-clientDB 组件文档：https://uniapp.dcloud.net.cn/uniCloud/uni-clientdb-component
+	 unicloud-db 组件文档：https://uniapp.dcloud.net.cn/uniCloud/unicloud-db-component
 	 DB Schema 规范：https://uniapp.dcloud.net.cn/uniCloud/schema
 	 -->
 	<view>
 		<!-- 刷新页面后的顶部提示框 -->
 		<view class="tips" :class="{ 'tips-ani': tipShow }">为您更新了10条最新新闻动态</view>
-		<uni-clientdb ref="udb" v-slot:default="{data, loading, error, options}" :options="formData" :collection="collection"
+		<unicloud-db ref="udb" v-slot:default="{data, loading, error, options}" :options="formData" :collection="collection"
 		 :field="field" @load="load">
 			<!-- 基于 uni-list 的页面布局 -->
 			<uni-list>
@@ -48,7 +48,7 @@
 			
 			<!-- 通过 loadMore 组件实现上拉加载效果，如需自定义显示内容，可参考：https://ext.dcloud.net.cn/plugin?id=29 -->
 			<uni-load-more v-if="loading || options.status === 'noMore' " :status="options.status" />
-		</uni-clientdb>
+		</unicloud-db>
 	</view>
 </template>
 

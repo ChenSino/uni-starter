@@ -9,6 +9,7 @@ export default function (){
 }
 
 function initAppVersion(){
+	// #ifdef APP-NVUE
 	let appid = plus.runtime.appid;
 	plus.runtime.getProperty(appid ,(wgtInfo) => {
 		 wgtInfo.version 
@@ -20,4 +21,5 @@ function initAppVersion(){
 			 finall:appVersion.versionCode > wgtInfo.versionCode ? appVersion : wgtInfo
 		 }
 	});
+	// #endif
 }

@@ -34,10 +34,10 @@
 ┌─cloudfunctions    云函数
 │  ├─common         公共模块
 |  │  └─uni-curd    数据库查询通用公共模块
-|  ├─uni-clientDB   在云函数中控制权限，并调用uni-curd完成查询
+|  ├─unicloud-db   在云函数中控制权限，并调用uni-curd完成查询
 |  └─db_init.json   初始化数据库
 ├─js_sdk            前端公共js目录
-|  └─uni-clientDB   前端的js库，封装了查询语法
+|  └─unicloud-db   前端的js库，封装了查询语法
 ├─pages             业务页面文件存放的目录
 │  ├─index
 │  │  └─index.vue   index示例页面
@@ -48,8 +48,8 @@
 	</code>
 </pre>
 
-- 云函数里包括一个公共模块`uni-curd`和一个云函数`uni-clientDB`
-- 前端包括一个js sdk`uni-clientDB`，然后就是index.vue里的示例调用
+- 云函数里包括一个公共模块`uni-curd`和一个云函数`unicloud-db`
+- 前端包括一个js sdk`unicloud-db`，然后就是index.vue里的示例调用
 - index示例页面，里面包含两个示例一个简单查询一个分页查询
 
 ## 客户端公共模块
@@ -60,12 +60,12 @@
 
 ```js
 // 引入公共模块
-import db from '@/js_sdk/uni-clientDB/index.js'
+import db from '@/js_sdk/unicloud-db/index.js'
 const dbCmd = db.command
 
-// 使用uni-clientDB
+// 使用unicloud-db
 uniCloud.callFunction({
-	name: 'uni-clientDB',
+	name: 'unicloud-db',
 	data: {
 		command: db.collection('list').where({
 			name: new RegExp('龚','g'),

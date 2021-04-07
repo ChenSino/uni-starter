@@ -17,7 +17,7 @@
 		"pages/uni-list-news-title-image/uni-list-news-title-image.vue"
 	],
 	"bundledFiles": [ // 插件依赖的文件列表，通常是依赖的三方插件的 files 合并
-		"cloudfunctions/uni-clientDB",
+		"cloudfunctions/unicloud-db",
 		"cloudfunctions/common/uni-id",
 		"js_sdk"
 	]

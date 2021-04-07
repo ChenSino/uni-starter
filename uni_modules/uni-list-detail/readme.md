@@ -22,7 +22,7 @@ uniCloud 是 DCloud 联合阿里云、腾讯云，为开发者提供的基于 se
 本模版有如下特征：
 
 - 遵循 `openDB` 的 [opendb-mall-goods](https://gitee.com/dcloud/opendb/tree/master/collection/opendb-mall-goods)结构
-- 基于 [uni-clientDB](https://ext.dcloud.net.cn/plugin?id=2314) 操作数据库
+- 基于 [unicloud-db](https://ext.dcloud.net.cn/plugin?id=2314) 操作数据库
 
 **Tips**
 - 暂不支持 nvue 页面

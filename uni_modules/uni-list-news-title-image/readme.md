@@ -25,7 +25,7 @@ uniCloud 是 DCloud 联合阿里云、腾讯云，为开发者提供的基于 se
 当前模板做了四个事情：
 
 - 通过 `openDB` 的 [opendb-news-articles](https://gitee.com/dcloud/opendb/tree/master/collection/opendb-news-articles)表规范表结构
-- 通过 [uni-clientDB](https://ext.dcloud.net.cn/plugin?id=2314) 在本地操作数据库获取数据
+- 通过 [unicloud-db](https://ext.dcloud.net.cn/plugin?id=2314) 在本地操作数据库获取数据
 - 实现常见的六种新闻列表排版，减少实现同类需求构建代码的工作量
 - 实现简单的下拉刷新，上拉加载
 
@@ -34,7 +34,7 @@ uniCloud 是 DCloud 联合阿里云、腾讯云，为开发者提供的基于 se
 
 ## 使用说明
 
-当前模板是在 uni-list 组件基础上，通过插槽的方式实现了不同的新闻列表排版，同时使用了 [uni-clientDB](https://ext.dcloud.net.cn/plugin?id=2314) 完成了云端一体化。大大减少了大家的的代码开发时间。
+当前模板是在 uni-list 组件基础上，通过插槽的方式实现了不同的新闻列表排版，同时使用了 [unicloud-db](https://ext.dcloud.net.cn/plugin?id=2314) 完成了云端一体化。大大减少了大家的的代码开发时间。
 
 1. 在 `cloudfunctions` 目录，右键上传所有云函数及公共模块
 2. 在 `cloudfunctions` > `db_init.json` 文件，右键初始化数据库，数据结构参考 `openDB` 的[opendb-news-articles](https://gitee.com/dcloud/opendb/tree/master/collection/opendb-news-articles)表结构
