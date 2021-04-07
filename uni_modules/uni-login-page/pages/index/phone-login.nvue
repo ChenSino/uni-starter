@@ -33,6 +33,7 @@
 		</view>
 		<!-- 登录按钮弹窗 -->
 		<login-action-sheet ref="loginActionSheet"></login-action-sheet>
+		<uni-quick-login></uni-quick-login>
 	</view>
 </template>
 

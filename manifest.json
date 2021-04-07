@@ -1,5 +1,5 @@
 {
-    "name" : "云端一体搜索模板",
+    "name" : "base-app",
     "appid" : "__UNI__BC54A00",
     "description" : "",
     "versionName" : "1.0.0",
@@ -15,29 +15,63 @@
             "autoclose" : true,
             "delay" : 0
         },
-        "modules" : {},
+        "modules" : {
+            "OAuth" : {},
+            "Share" : {}
+        },
         "distribute" : {
             "android" : {
                 "permissions" : [
-                    "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
-                    "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
-                    "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
-                    "<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
-                    "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
+                    "<uses-feature android:name=\"android.hardware.camera\"/>",
                     "<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
                     "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
                     "<uses-permission android:name=\"android.permission.CAMERA\"/>",
-                    "<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
-                    "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
                     "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
-                    "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
                     "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
-                    "<uses-feature android:name=\"android.hardware.camera\"/>",
+                    "<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>",
+                    "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
+                    "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
                     "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
                 ]
             },
-            "ios" : {},
-            "sdkConfigs" : {}
+            /* ios打包配置 */
+            "ios" : {
+                "capabilities" : {
+                    "plists" : {
+                        "DCloudConfig" : {
+                            "miniServer" : true
+                        }
+                    },
+                    "entitlements" : {
+                        "com.apple.developer.associated-domains" : [ "applinks:uniapp.dcloud.io" ]
+                    }
+                },
+                "privacyDescription" : {
+                    "NSLocalNetworkUsageDescription" : "展示游戏页面"
+                }
+            },
+            "sdkConfigs" : {
+                "oauth" : {
+                    "apple" : {},
+                    "weixin" : {
+                        "appid" : "wx0411fa6a39d61297",
+                        "appsecret" : "",
+                        "UniversalLinks" : "https://uniapp.dcloud.io/ulink-catgame/"
+                    }
+                },
+                "share" : {
+                    "weixin" : {
+                        "appid" : "wx0411fa6a39d61297",
+                        "UniversalLinks" : "https://uniapp.dcloud.io/ulink-catgame/"
+                    }
+                },
+                "payment" : {}
+            }
         }
     },
     "quickapp" : {},
