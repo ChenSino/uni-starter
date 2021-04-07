@@ -95,67 +95,12 @@
 </script>
 
 <style>
-<<<<<<< HEAD
-	page {
-		background: transparent;
-	}
-	/* #ifndef APP-NVUE */
-	page{
-		display: flex;
-		flex-direction: column;
-		flex: 1;
-		height: 100%;
-	}
-	/* #endif */
-	.wrap{
-		/* #ifndef APP-NVUE */
-		display: flex;
-		/* #endif */
-		flex-direction: column;
-		flex:1;
-		width: 750rpx;
-		background-color: #fff;
-	}
-	.wrap-content{
-		/* #ifndef APP-NVUE */
-		display: flex;
-		/* #endif */
-		flex: 1;
-		flex-direction: column;
-		justify-content: flex-start;
-		align-items: center;
-	}
-	.content{
-		/* #ifndef APP-NVUE */
-		display: flex;
-		/* #endif */
-		width: 630rpx;
-		flex-direction: column;
-	}
-=======
 	@import url("../../common/loginPage.css");
->>>>>>> 4102167b2d3d22ebf4994a07a5b8421d8539345c
 	.content-top-title{
 		text-align: center;
 	}
-<<<<<<< HEAD
-	@import url("../../common/myStyle.css");
-
-	.lgnin-iknow {
-		padding-top: 24rpx;
-		padding-bottom: 48rpx;
-	}
-
-	.phone-input-box {
-		height: 85rpx;
-		background-color: #f9f9f9;
-		border-radius: 6rpx;
-		flex-direction: row;
-		flex-wrap: nowrap;
-		align-items: center;
-=======
+	
 	.login-iknow{
->>>>>>> 4102167b2d3d22ebf4994a07a5b8421d8539345c
 		justify-content: center;
 	}
 </style>

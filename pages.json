@@ -131,22 +131,6 @@
 				"navigationStyle": "custom"
 			}
 		}, {
-			"path": "uni_modules/uni-login-page/pages/index/phone-login",
-			"style": {
-				"navigationBarTitleText": "",
-				"navigationBarBackgroundColor": "#FFFFFF",
-				"app-plus": {
-					"titleNView": {
-						"buttons": [{
-							"text": "帮助",
-							"type": "none",
-							"fontSize": "16px",
-							"width": "60px"
-						}]
-					}
-				}
-			}
-		}, {
 			"path": "uni_modules/uni-login-page/pages/index/pwd-login",
 			"style": {
 				"navigationBarTitleText": "",
