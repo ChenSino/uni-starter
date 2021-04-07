@@ -6,31 +6,30 @@
 				<text class="content-top-title">手机号密码登录</text>
 
 				<!-- 登录框 (选择手机号所属国家和地区需要另行实现) -->
-				<view class="phone-input-box round flex flex-row flex-nowrap align-center justify-center mt-5">
+				<view class="phone-input-box">
 					<picker mode="selector" :range="phoneArea" @change="selectPhoneArea">
-						<text class="px-2 font-30">{{currenPhoneArea}}</text>
+						<text class="phone-area">{{currenPhoneArea}}</text>
 					</picker>
-					<input type="number" class="flex-1 phone-input px-2 font-30" placeholder="请输入手机号"
-						v-model="phoneNumber" />
+					<input type="number" class="phone-input" placeholder="请输入手机号" maxlength="11" v-model="phoneNumber" />
 				</view>
 
-				<view class="phone-input-box round flex flex-row flex-nowrap align-center justify-center mt-2">
-					<input type="password" :password="true" class="flex-1 px-2 font-30" placeholder="请输入密码"
+				<view class="phone-input-box">
+					<input type="password" :password="true" class="phone-input pwd-input" placeholder="请输入密码"
 						v-model="password" />
 				</view>
 
-				<login-ikonw class="lgnin-iknow" :link="link" text="登录即表示同意用户协议和隐私政策"></login-ikonw>
+				<login-ikonw class="login-iknow" :link="link" text="登录即表示同意用户协议和隐私政策"></login-ikonw>
 
 				<!-- 发送按钮 -->
-				<view class="send-btn-box flex w-630 justify-center align-center round" hover-class="hover"
+				<view class="send-btn-box" hover-class="hover"
 					@click="pwdLogin" :class="canLogin?'send-btn-active':''">
-					<text class="text-white">登录</text>
+					<text class="send-btn-text">登录</text>
 				</view>
 
 				<!-- 忘记密码 -->
-				<view class="flex flex-row flex-nowrap">
-					<text class="font-26 text-sub">忘记了?</text>
-					<text class="font-26 login-text" @click="toRetrievePwd">找回密码</text>
+				<view class="auth-box">
+					<text class="login-text login-text-sub">忘记了?</text>
+					<text class="login-text" @click="toRetrievePwd">找回密码</text>
 				</view>
 			</view>
 		</view>
@@ -96,23 +95,25 @@
 
 <style>
 	/* #ifndef APP-NVUE */
-	page{
+	page {
 		display: flex;
 		flex-direction: column;
 		flex: 1;
 		height: 100%;
 	}
+
 	/* #endif */
-	.wrap{
+	.wrap {
 		/* #ifndef APP-NVUE */
 		display: flex;
 		/* #endif */
 		flex-direction: column;
-		flex:1;
+		flex: 1;
 		width: 750rpx;
 		background-color: #fff;
 	}
-	.wrap-content{
+
+	.wrap-content {
 		/* #ifndef APP-NVUE */
 		display: flex;
 		/* #endif */
@@ -121,20 +122,22 @@
 		justify-content: flex-start;
 		align-items: center;
 	}
-	.content{
+
+	.content {
 		/* #ifndef APP-NVUE */
 		display: flex;
 		/* #endif */
 		width: 630rpx;
 		flex-direction: column;
 	}
-	.content-top-title{
+
+	.content-top-title {
 		font-size: 32rpx;
 		font-weight: 600;
 		padding-top: 50rpx;
 	}
 
-	.lgnin-iknow {
+	.login-iknow {
 		padding-top: 24rpx;
 		padding-bottom: 36rpx;
 	}
@@ -142,29 +145,88 @@
 	.phone-input-box {
 		height: 85rpx;
 		background-color: #f9f9f9;
+		border-radius: 6rpx;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.phone-area {
+		padding: 0 20rpx;
+		font-size: 30rpx;
 	}
 
 	.phone-input {
+		flex: 1;
 		border-left-width: 1px;
 		border-left-color: #d7d9d8;
+		padding: 0 20rpx;
+		font-size: 30rpx;
 	}
+
+	.pwd-input {
+		border-left-width: 0px;
+	}
+
 
 	.tip-text {
 		padding-top: 20rpx;
 		padding-bottom: 36rpx;
+		color: #8a8f8b;
+		font-size: 26rpx;
 	}
 
 	.send-btn-box {
 		height: 85rpx;
 		background-color: #d8d8da;
 		margin-bottom: 50rpx;
+		/* #ifndef APP-NVUE */
+		display: flex;
+		/* #endif */
+		flex-direction: column;
+		width: 630rpx;
+		justify-content: center;
+		align-items: center;
+		border-radius: 6rpx;
+	}
+
+	.send-btn-text {
+		color: #fff;
 	}
 
 	.send-btn-active {
 		background-color: #007aff;
 	}
 
+	.auth-box {
+		width: 630rpx;
+		/* #ifndef APP-NVUE */
+		display: flex;
+		/* #endif */
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+	}
+
 	.login-text {
 		color: #1c436e;
+		font-size: 26rpx;
+	}
+
+	.hover {
+		opacity: 0.8;
+	}
+	
+	
+	/* 密码登录 */
+	.phone-input-box{
+		margin-top: 20rpx;
+	}
+	.auth-box{
+		justify-content: flex-start;
+	}
+	.login-text-sub{
+		color: #8a8f8b;
 	}
 </style>
