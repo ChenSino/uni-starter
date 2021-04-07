@@ -7,11 +7,15 @@
 	DB Schema 规范：https://uniapp.dcloud.net.cn/uniCloud/schema
 	 -->
 	<view style="overflow: hidden;">
-		<view class="search-container-bar">
-			<uni-search-bar ref="searchBar" style="flex:1;" radius="100" v-model="searchText"
-				@search-click="searchClick" cancelButton="none" disabled />
+		<view class="search-box">
+			<status-bar></status-bar>
+			<view class="search-container-bar">
+				<uni-search-bar ref="searchBar" style="flex:1;" radius="100" v-model="searchText"
+					@search-click="searchClick" cancelButton="none" disabled />
+			</view>
 		</view>
 		<view class="list">
+			<status-bar></status-bar>
 			<!-- 刷新页面后的顶部提示框 -->
 			<!-- 当前弹出内容没有实际逻辑 ，可根据当前业务修改弹出提示 -->
 			<view class="tips" :class="{ 'tips-ani': tipShow }">为您更新了10条内容</view>
@@ -57,7 +61,11 @@
 </template>
 
 <script>
+	import statusBar from '@/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar.vue';
 	export default {
+		components:{
+			statusBar
+		},
 		props:{
 			searchText:{
 				type:String,
@@ -210,7 +218,7 @@
 
 	// 默认加入 scoped ，所以外面加一层提升权重
 	.list {
-		// margin-top: 52px;
+		margin-top: 52px;
 
 		.uni-list--waterfall {
 
@@ -248,6 +256,20 @@
 	.search-icons {
 		padding: 16rpx;
 	}
+	
+	.search-box{
+		/* #ifndef APP-NVUE */
+		display: flex;
+		/* #endif */
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		position: fixed;
+		left: 0;
+		right: 0;
+		z-index: 10;
+		background-color: #fff;
+	}
 
 	.search-container-bar {
 		/* #ifndef APP-NVUE */
@@ -256,11 +278,6 @@
 		flex-direction: row;
 		justify-content: center;
 		align-items: center;
-		// position: fixed;
-		// left: 0;
-		// right: 0;
-		// z-index: 10;
-		background-color: #fff;
 	}
 
 	/* #ifndef APP-NVUE */
