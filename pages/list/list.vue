@@ -1,6 +1,7 @@
 <template>
 	<view style="overflow: hidden;">
-		<status-bar></status-bar>
+		<!-- 搜索栏 -->
+		<news-search-title></news-search-title>
 		<!-- 页面主列表 -->
 		<news-list ref="newsList" :searchText="searchText"></news-list>
 	</view>
@@ -8,11 +9,11 @@
 
 <script>
 	import newsList from './news-list.vue';
-	import statusBar from '@/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar.vue';
+	import newsSearchTitle from './news-search-title.vue';
 	export default {
 		components:{
 			newsList,
-			statusBar
+			newsSearchTitle
 		},
 		data() {
 			return {
@@ -26,6 +27,13 @@
 		onShow(options) {
 			this.searchText = getApp().globalData.searchText;
 		},
+		/**
+		 * 下拉刷新回调函数
+		 */
+		onPullDownRefresh() {
+			console.log('refresh');
+			this.$refs.newsList.refresh();
+		},
 		methods: {
 			/**
 			 * 切换商品列表布局方向
@@ -34,16 +42,11 @@
 				this.formData.waterfall = !this.formData.waterfall;
 			},
 			/**
-			 * 下拉刷新回调函数
-			 */
-			onPullDownRefresh() {
-				this.$refs.newsList.onPullDownRefresh();
-			},
-			/**
 			 * 上拉加载回调函数
 			 */
 			onReachBottom() {
-				this.$refs.newsList.onReachBottom();
+				console.log('load_more');
+				this.$refs.newsList.loadMore();
 			}
 		},
 		watch: {

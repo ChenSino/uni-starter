@@ -89,7 +89,7 @@
 			/**
 			 * 下拉刷新回调函数
 			 */
-			onPullDownRefresh() {
+			refresh() {
 				this.tipShow = true
 				this.formData.status = 'more'
 				this.$refs.udb.loadData({
@@ -102,7 +102,7 @@
 			/**
 			 * 上拉加载回调函数
 			 */
-			onReachBottom() {
+			loadMore() {
 				this.$refs.udb.loadMore()
 			},
 			load(data, ended) {
