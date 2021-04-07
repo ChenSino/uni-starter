@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<uni-list class="content">
-			<uni-list-item v-for="(item , index) in agreeList" :key="index" :title="item.title" :to="item.to" :clickable="true" @click="itemClick(item)" :showSwitch="item.showSwitch" :switchChecked="item.isChecked"></uni-list-item>
+			<uni-list-item v-for="(item,index) in agreeList" :key="index" :title="item.title" :to="item.to" :clickable="true" @click="itemClick(item)" :showSwitch="item.showSwitch" :switchChecked="item.isChecked" link></uni-list-item>
 		</uni-list>
 		<button class="bottom-back" @click="clickLogout"><text class="bottom-back-text">退出登录</text></button>
 	</view>

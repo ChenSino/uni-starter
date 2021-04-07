@@ -73,7 +73,8 @@
                         "UniversalLinks" : "https://uniapp.dcloud.io/ulink-catgame/"
                     }
                 },
-                "payment" : {}
+                "payment" : {},
+                "ad" : {}
             }
         }
     },
