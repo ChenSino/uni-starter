@@ -2,13 +2,12 @@
 	"pages": [{
 		"path": "pages/list/list",
 		"style": {
-			"enablePullDownRefresh": true,
-			"navigationBarTitleText": "列表"
+			"navigationStyle":"custom"
 		}
 	}, {
 		"path":"pages/grid/grid",
 		"style":{
-			"navigationBarTitleText": "宫格"
+			"navigationStyle":"custom"
 		}
 	}, {
 		"path": "pages/search/search",

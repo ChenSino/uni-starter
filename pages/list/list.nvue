@@ -7,10 +7,12 @@
 	DB Schema 规范：https://uniapp.dcloud.net.cn/uniCloud/schema
 	 -->
 	<view style="overflow: hidden;">
-		<view class="search-container-bar">
-			<uni-search-bar ref="searchBar" style="flex:1;" radius="100" v-model="searchText" @search-click="searchClick" @clear="clear" @click.native="searchClick"
+		<!-- 搜索栏 -->
+		<template>
+			<status-bar/>
+			<uni-search-bar ref="searchBar" radius="100" v-model="searchText" @search-click="searchClick" @clear="clear" @click.native="searchClick"
 			 @cancel="search" cancelButton="none" disabled />
-		</view>
+		</template>
 		<view class="list">
 			<!-- 刷新页面后的顶部提示框 -->
 			<!-- 当前弹出内容没有实际逻辑 ，可根据当前业务修改弹出提示 -->
@@ -58,7 +60,11 @@
 
 <script>
 	import { friendlyDate } from '@/common/utils.js';
+	import statusBar from "@/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar";
 	export default {
+		components:{
+			statusBar
+		},
 		data() {
 			return {
 				searchText: '',
@@ -233,8 +239,6 @@
 
 	// 默认加入 scoped ，所以外面加一层提升权重
 	.list {
-		margin-top: 52px;
-
 		.uni-list--waterfall {
 
 			/* #ifndef H5 || APP-VUE */
