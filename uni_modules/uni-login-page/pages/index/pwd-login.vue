@@ -1,9 +1,9 @@
 <template>
-	<view class="flex flex-column flex-1 w-750 bg-white">
-		<view class="flex-1 flex flex-column justify-start align-center">
-			<view class="w-630 flex flex-column">
+	<view class="wrap">
+		<view class="wrap-content">
+			<view class="content">
 				<!-- 顶部文字 -->
-				<text class="font-32 font-blod pt-5">手机号密码登录</text>
+				<text class="content-top-title">手机号密码登录</text>
 
 				<!-- 登录框 (选择手机号所属国家和地区需要另行实现) -->
 				<view class="phone-input-box round flex flex-row flex-nowrap align-center justify-center mt-5">
@@ -95,7 +95,44 @@
 </script>
 
 <style>
-	@import url("../../common/myStyle.css");
+	/* #ifndef APP-NVUE */
+	page{
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+		height: 100%;
+	}
+	/* #endif */
+	.wrap{
+		/* #ifndef APP-NVUE */
+		display: flex;
+		/* #endif */
+		flex-direction: column;
+		flex:1;
+		width: 750rpx;
+		background-color: #fff;
+	}
+	.wrap-content{
+		/* #ifndef APP-NVUE */
+		display: flex;
+		/* #endif */
+		flex: 1;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: center;
+	}
+	.content{
+		/* #ifndef APP-NVUE */
+		display: flex;
+		/* #endif */
+		width: 630rpx;
+		flex-direction: column;
+	}
+	.content-top-title{
+		font-size: 32rpx;
+		font-weight: 600;
+		padding-top: 50rpx;
+	}
 
 	.lgnin-iknow {
 		padding-top: 24rpx;

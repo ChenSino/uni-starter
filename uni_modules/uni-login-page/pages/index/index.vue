@@ -5,14 +5,14 @@
 			<view class="content">
 				<!-- 顶部文字 -->
 				<text class="content-top-title">登陆后即可展示自己</text>
-				<login-ikonw class="lgnin-iknow" :link="link" text="登录即表示同意用户协议和隐私政策"></login-ikonw>
+				<login-ikonw class="login-iknow" :link="link" text="登录即表示同意用户协议和隐私政策"></login-ikonw>
 
 				<!-- 登录框 (选择手机号所属国家和地区需要另行实现) -->
 				<view class="phone-input-box">
 					<picker mode="selector" :range="phoneArea" @change="selectPhoneArea">
 						<text class="phone-area">{{currenPhoneArea}}</text>
 					</picker>
-					<input type="number" class="phone-input" placeholder="请输入手机号"
+					<input type="number" class="phone-input" maxlength="11" placeholder="请输入手机号"
 						v-model="phoneNumber" />
 				</view>
 
@@ -128,9 +128,8 @@
 	.hidden,page{
 		background-color: transparent;
 	}
-	@import url("../../common/myStyle.css");
 
-	.lgnin-iknow {
+	.login-iknow {
 		padding-top: 24rpx;
 		padding-bottom: 48rpx;
 	}
@@ -150,6 +149,7 @@
 	}
 
 	.phone-input {
+		flex: 1;
 		border-left-width: 1px;
 		border-left-color: #d7d9d8;
 		padding: 0 20rpx;
@@ -196,5 +196,16 @@
 	.login-text {
 		color: #1c436e;
 		font-size: 26rpx;
+	}
+	.hover{
+		opacity: 0.8;
+	}
+	
+	/* 首页独有 */
+	.content-top-title{
+		text-align: center;
+	}
+	.login-iknow{
+		justify-content: center;
 	}
 </style>
