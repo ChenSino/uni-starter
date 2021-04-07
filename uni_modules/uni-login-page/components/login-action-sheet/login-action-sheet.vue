@@ -1,14 +1,14 @@
 <template>
 	<uni-popup ref="actionSheet" type="bottom">
-		<view class="flex w-750 action-sheet-box bg-white">
-			<view class="flex flex-row flex-nowrap align-center justify-center auth-item" @click="clickItem(item)"
+		<view class="action-sheet-box">
+			<view class="auth-wrap auth-item" @click="clickItem(item)"
 				hover-class="hover" v-for="(item, index) in providerList" :key="index">
 				<image :src="item.image" class="login-logo"></image>
-				<text class="px-1 font-28">{{providerName[item.value]}}</text>
+				<text class="auth-text">{{providerName[item.value]}}</text>
 			</view>
 			<view class="cancel-line"></view>
-			<view class="flex flex-row flex-nowrap align-center justify-center cancel-item" @click="clickItem(item)">
-				<text class="font-28">取消</text>
+			<view class="auth-wrap cancel-item" @click="clickItem(item)">
+				<text class="auth-text">取消</text>
 			</view>
 		</view>
 	</uni-popup>
@@ -88,19 +88,32 @@
 	}
 </script>
 
-<style>
-	@import url("../../common/myStyle.css");
-
+<style scoped>
 	.action-sheet-box {
 		border-top-left-radius: 20rpx;
 		border-top-right-radius: 20rpx;
+		/* #ifndef APP-NVUE */
+		display: flex;
+		/* #endif */
+		width: 750rpx;
+		background-color: #fff;
 	}
 
 	.login-logo {
 		width: 42rpx;
 		height: 42rpx;
 	}
-
+	
+	.auth-wrap{
+		/* #ifndef APP-NVUE */
+		display: flex;
+		/* #endif */
+		flex-direction: row;
+		flex-wrap: nowrap;
+		align-items: center;
+		justify-content: center;
+	}
+	
 	.auth-item {
 		border-bottom-width: 1px;
 		border-bottom-color: #F1F1F1;
@@ -115,5 +128,9 @@
 		width: 750rpx;
 		height: 10rpx;
 		background-color: #F1F1F1;
+	}
+	.auth-text{
+		padding: 0 10rpx;
+		font-size: 28rpx;
 	}
 </style>

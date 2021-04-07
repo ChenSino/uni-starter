@@ -1,6 +1,6 @@
 <template>
-	<view class="flex flex-row flex-wrap">
-		<text class="text-sub font-26" v-for="(t, i) in innerText" :key="i" :class="t.to?'link-color':''"
+	<view class="login-iknow-wrap">
+		<text class="text-sub" v-for="(t, i) in innerText" :key="i" :class="t.to?'link-color':''"
 			@click="clickLink(t)">{{t.text || t}}</text>
 	</view>
 </template>
@@ -69,9 +69,18 @@
 	}
 </script>
 
-<style>
-	@import url("../../common/myStyle.css");
-
+<style scoped>
+	.login-iknow-wrap{
+		/* #ifndef APP-NVUE */
+		display: flex;
+		/* #endif */
+		flex-direction: row;
+		flex-wrap: wrap;
+	}
+	.text-sub{
+		color: #8a8f8b;
+		font-size: 26rpx;
+	}
 	.link-color {
 		color: #04498c;
 	}
