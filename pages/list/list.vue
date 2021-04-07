@@ -28,7 +28,7 @@
 		},
 		methods: {
 			/**
-			 * 切换商品列表布局方向
+			 * 切换商品列表布局方向（未实现）
 			 */
 			select() {
 				this.formData.waterfall = !this.formData.waterfall;
@@ -38,17 +38,6 @@
 			 */
 			onReachBottom() {
 				this.$refs.newsList.loadMore();
-			}
-		},
-		watch: {
-			searchText(value) {
-				this.search(value);
-			}
-		},
-		computed: {
-			listTitle() {
-				if (this.searchText) return '搜索结果';
-				return '';
 			}
 		}
 	};
