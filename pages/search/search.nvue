@@ -1,5 +1,6 @@
 <template>
 	<view class="container">
+		<view class="status-bar" :style="{height:statusBarHeight}"></view>
 		<view class="search-container">
 			<!-- 搜索框 -->
 			<view class="search-container-bar">
@@ -8,7 +9,7 @@
 				<!-- #endif -->
 				<!-- :cancelText="keyBoardPopup ? '取消' : '搜索'" -->
 				<uni-search-bar ref="searchBar" style="flex:1;" radius="100" v-model="searchText" :focus="focus" :placeholder="hotWorld"
-				 clearButton="auto" cancelButton="always" @clear="clear" @confirm="confirm" @cancel="cancel" />
+				 clearButton="auto" cancelButton="always" @clear="clear" @confirm="confirm" @cancel="backPage" />
 			</view>
 		</view>
 		<view class="search-body">
@@ -61,7 +62,7 @@
 			</view>
 		</view>
 		<!-- 搜索联想 -->
-		<view class="search-associative" v-if="associativeShow">
+		<view class="search-associative" :style="{marginTop:statusBarHeight}" v-if="associativeShow">
 			<uni-list>
 				<template v-for="(item,index) in associativeList">
 					<uni-list-item :key="item._id" :ellipsis="1" :title="item.title" @click="associativeClick(item)" show-extra-icon
@@ -133,7 +134,7 @@
 			return {
 				mallGoodsDbName,
 				searchLogDbName,
-
+				statusBarHeight:'0px',
 				localSearchList: uni.getStorageSync(localSearchListKey),
 				localSearchListDel: false,
 				netHotListIsHide: false,
@@ -157,6 +158,9 @@
 			})
 
 			this.searchText = getApp().globalData.searchText;
+		},
+		onLoad() {
+			this.statusBarHeight = `${uni.getSystemInfoSync().statusBarHeight}px`;
 		},
 		methods: {
 			clear(res) {
@@ -290,10 +294,12 @@
 			},
 			loadList(text = '') {
 				getApp().globalData.searchText = text;
-				// uni.navigateBack()
-				uni.switchTab({
-					url:'../list/list'
+				uni.navigateTo({
+					url:'../list/news-list'
 				})
+			},
+			backPage(){
+				uni.navigateBack();
 			}
 		},
 		computed: {
@@ -330,8 +336,11 @@
 <style lang="scss" scoped>
 	$search-bar-height:52px;
 	$word-container_header-height:72rpx;
-
+	.status-bar{
+		background-color: #fff;
+	}
 	.container {
+		padding-top: var(--status-bar-height);
 		/* #ifndef APP-NVUE */
 		height: 100%;
 		/* #endif */

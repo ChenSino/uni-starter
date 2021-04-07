@@ -1,25 +1,20 @@
 <template>
 	<view style="overflow: hidden;">
 		<!-- 页面主列表 -->
-		<news-list ref="newsList" :searchText="searchText"></news-list>
+		<news-list ref="newsList" :canSearch="canSearch" :currentText="searchText"></news-list>
 	</view>
 </template>
 
 <script>
 	import newsList from './news-list.vue';
-	import newsSearchTitle from './news-search-title.vue';
 	export default {
 		components:{
-			newsList,
-			newsSearchTitle
+			newsList
 		},
 		data() {
 			return {
 				searchText: '',
-				formData: {
-					waterfall: false, // 布局方向切换
-					status: 'loading', // 加载状态
-				},
+				canSearch:true
 			};
 		},
 		onShow(options) {

@@ -8,10 +8,9 @@
 	 -->
 	<view style="overflow: hidden;">
 		<view class="search-box">
-			<status-bar></status-bar>
+			<status-bar class="status-bar"></status-bar>
 			<view class="search-container-bar">
-				<uni-search-bar ref="searchBar" style="flex:1;" radius="100" v-model="searchText"
-					@search-click="searchClick" cancelButton="none" disabled />
+				<uni-search-bar ref="searchBar" style="flex:1;" radius="100" v-model="searchText" @click.native="searchClick" cancelButton="none" disabled />
 			</view>
 		</view>
 		<view class="list">
@@ -28,7 +27,7 @@
 				<uni-list :class="{ 'uni-list--waterfall': options.waterfall }">
 					<!-- 通过 uni-list--waterfall 类决定页面布局方向 -->
 					<!-- to 属性携带参数跳转详情页面，当前只为参考 -->
-					<uni-list-item :border="!options.waterfall" class="uni-list-item--waterfall" title="自定义商品列表"
+					<uni-list-item :border="!options.waterfall" :to="'./detail?id='+item._id+'&title='+item.title" class="uni-list-item--waterfall" title="自定义商品列表"
 						v-for="item in data" :key="item._id">
 						<!-- 通过header插槽定义列表左侧图片 -->
 						<template v-slot:header>
@@ -67,14 +66,18 @@
 			statusBar
 		},
 		props:{
-			searchText:{
+			currentText:{
 				type:String,
 				default:''
+			},
+			canSearch:{
+				type:Boolean,
+				default:false
 			}
 		},
 		data() {
 			return {
-				// searchText: '',
+				searchText: this.currentText || '',
 				formData: {
 					waterfall: false, // 布局方向切换
 					status: 'loading', // 加载状态
@@ -86,6 +89,21 @@
 				field: 'author{username, _id}, user_id,_id,avatar,title,excerpt,last_modify_date, comment_count, like_count',
 				tipShow: false // 是否显示顶部提示框
 			};
+		},
+		/**
+		 * 作为页面出现时的生命周期
+		 */
+		onShow(options) {
+			this.searchText = getApp().globalData.searchText;
+		},
+		/**
+		 * 下拉刷新回调函数
+		 */
+		onPullDownRefresh() {
+			this.refresh();
+		},
+		onReachBottom() {
+			this.loadMore();
 		},
 		methods: {
 			/**
@@ -120,15 +138,16 @@
 			},
 			searchClick() {
 				uni.hideKeyboard();
-				uni.navigateTo({
-					url: '/pages/search/search',
-					animationType: 'fade-in'
-				});
-			}
-		},
-		watch: {
-			searchText(value) {
-				this.search(value);
+				
+				
+				if(this.canSearch){
+					uni.navigateTo({
+						url: '/pages/search/search',
+						animationType: 'fade-in'
+					});
+				}else {
+					uni.navigateBack();
+				}
 			}
 		},
 		computed: {
@@ -278,6 +297,7 @@
 		flex-direction: row;
 		justify-content: center;
 		align-items: center;
+		width: 750rpx;
 	}
 
 	/* #ifndef APP-NVUE */

@@ -5,6 +5,12 @@
 				"navigationStyle": "custom",
 				"enablePullDownRefresh":true
 			}
+		},{
+			"path": "pages/list/news-list",
+			"style": {
+				"navigationStyle": "custom",
+				"enablePullDownRefresh":true
+			}
 		},
 		{
 			"path": "pages/grid/grid",
@@ -30,7 +36,7 @@
 		}, {
 			"path": "pages/search/search",
 			"style": {
-				"navigationBarTitleText": ""
+				"navigationStyle": "custom"
 			}
 		}, {
 			"path": "pages/list/detail",
