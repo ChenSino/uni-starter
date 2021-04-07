@@ -64,7 +64,8 @@
                         "appid" : "wx0411fa6a39d61297",
                         "appsecret" : "",
                         "UniversalLinks" : "https://uniapp.dcloud.io/ulink-catgame/"
-                    }
+                    },
+                    "univerify" : {}
                 },
                 "share" : {
                     "weixin" : {
