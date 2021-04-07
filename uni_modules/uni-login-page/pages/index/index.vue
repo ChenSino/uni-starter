@@ -1,7 +1,7 @@
 <template>
-	<view class="wrap" :class="{'hidden':!isShow}">
-		<uni-nav-bar left-icon="back" right-text="帮助" :statusBar="true" :border="false"></uni-nav-bar>
-		<view v-if="isShow" class="wrap-content">
+	<view class="wrap" v-show="isShow">
+		<uni-nav-bar @clickLeft="back" left-icon="back" right-text="帮助" :statusBar="true" :border="false"></uni-nav-bar>
+		<view class="wrap-content">
 			<view class="content">
 				<!-- 顶部文字 -->
 				<text class="content-top-title">登陆后即可展示自己</text>
@@ -34,7 +34,7 @@
 		</view>
 		<!-- 登录按钮弹窗 -->
 		<login-action-sheet ref="loginActionSheet"></login-action-sheet>
-		<uni-quick-login @univerifyEnd="isShow = 1"></uni-quick-login>
+		<uni-quick-login></uni-quick-login>
 	</view>
 </template>
 
@@ -42,7 +42,7 @@
 	export default {
 		data() {
 			return {
-				isShow:true,
+				isShow:false,
 				link: [{
 					text: '用户协议',
 					to: '/baidu.com'
@@ -54,6 +54,11 @@
 				currenPhoneArea: '+86',
 				phoneNumber: ''
 			}
+		},
+		onReady() {
+			setTimeout(()=>{
+				this.isShow = true
+			},1500);
 		},
 		computed: {
 			canGetShortMsg() {
@@ -81,17 +86,76 @@
 			},
 			openLoginList() {
 				this.$refs.loginActionSheet.open();
+			},
+			back(){
+				uni.navigateBack()
 			}
 		}
 	}
 </script>
 
 <style>
+<<<<<<< HEAD
+	page {
+		background: transparent;
+	}
+	/* #ifndef APP-NVUE */
+	page{
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+		height: 100%;
+	}
+	/* #endif */
+	.wrap{
+		/* #ifndef APP-NVUE */
+		display: flex;
+		/* #endif */
+		flex-direction: column;
+		flex:1;
+		width: 750rpx;
+		background-color: #fff;
+	}
+	.wrap-content{
+		/* #ifndef APP-NVUE */
+		display: flex;
+		/* #endif */
+		flex: 1;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: center;
+	}
+	.content{
+		/* #ifndef APP-NVUE */
+		display: flex;
+		/* #endif */
+		width: 630rpx;
+		flex-direction: column;
+	}
+=======
 	@import url("../../common/loginPage.css");
+>>>>>>> 4102167b2d3d22ebf4994a07a5b8421d8539345c
 	.content-top-title{
 		text-align: center;
 	}
+<<<<<<< HEAD
+	@import url("../../common/myStyle.css");
+
+	.lgnin-iknow {
+		padding-top: 24rpx;
+		padding-bottom: 48rpx;
+	}
+
+	.phone-input-box {
+		height: 85rpx;
+		background-color: #f9f9f9;
+		border-radius: 6rpx;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		align-items: center;
+=======
 	.login-iknow{
+>>>>>>> 4102167b2d3d22ebf4994a07a5b8421d8539345c
 		justify-content: center;
 	}
 </style>
