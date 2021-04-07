@@ -1,0 +1,158 @@
+<template>
+	<view class="quick-login-box">
+		<view class="item" v-for="({text,logo,name},index) in providerList" :key="index" @click="login(name)">
+			<image class="logo" :src="logo" mode="widthFix"></image>
+			<text class="login-title">{{text}}</text>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				config: {
+					"weixin": {
+						"text": "微信登陆",
+						"logo": "../../static/login/img/weixin.png"
+					},
+					"qq": {
+						"text": "QQ登陆",
+						"logo": "../../static/login/img/qq.png"
+					},
+					"xiaomi": {
+						"text": "小米登陆",
+						"logo": "../../static/login/img/qq.png"
+					},
+					"apple": {
+						"text": "苹果登陆",
+						"logo": "../../static/login/img/apple.png"
+					},
+					"sinaweibo": {
+						"text": "微博登录",
+						"logo": "../../static/login/img/sinaweibo.png"
+					},
+					"univerify": {
+						"text": "一键登陆",
+						"logo": "../../static/login/img/univerify.png"
+					}
+				},
+				providerList: [],
+				univerifyStyle: {
+					"fullScreen": false, // 是否全屏显示，true表示全屏模式，false表示非全屏模式，默认值为false。
+					"backgroundColor": "#ffffff", // 授权页面背景颜色，默认值：#ffffff  
+				}
+			}
+		},
+		mounted() {
+			uni.getProvider({
+				"service": "oauth",
+				success: res => {
+					this.providerList = res.provider.map((name) => {
+						return {...this.config[name],name}
+					})
+					this.login('univerify')
+				},
+				fail: (err) => {
+					console.error('获取服务供应商失败：' + JSON.stringify(err));
+				}
+			})
+		},
+		methods: {
+			login(type) {
+				uni.showLoading({mask: true});
+				uni.login({
+					"provider": type,
+					"univerifyStyle":this.univerifyStyle,
+					success:async e => {
+						console.log(e);
+						if(type=='apple'){
+							let res = await this.getUserInfo({provider:"apple"})
+							Object.assign(e.authResult,res.userInfo)
+						}
+						this.quickLogin(e.authResult,type)
+					},
+					fail: (err) => {
+						uni.hideLoading()
+						console.log(err);
+						if(err.errCode===30002){
+							console.log('你手动关闭了，一键登陆');
+						}
+					}
+				})
+			},
+			quickLogin(authResult,type){
+				//请勿直接使用authResult中的unionid或openid直接用于登陆，前端的数据都是不可靠的
+				console.log({...authResult,type});
+				
+				uniCloud.callFunction({//联网验证登陆
+					"name": "user",
+					"data": {
+						"action": "quickLogin",
+						"params": {...authResult,type}
+					},
+					success: (e) => {
+						console.log(e.result);
+						uni.showModal({
+							content: JSON.stringify(e.result),
+							showCancel: false
+						});
+						if(type=='univerify'){
+							uni.closeAuthView()
+						}
+					},
+					fail: (err) => {
+						console.log(err);
+						if(err.errCode===30002){
+							
+						}
+					},
+					complete: () => {
+						uni.hideLoading()
+					}
+				})
+			},
+			async getUserInfo(e){
+				return new Promise((resolve, reject)=>{
+					uni.getUserInfo({
+						...e,
+						success: (res) => {
+							resolve(res);
+						},
+						fail: (err) => {
+							uni.showModal({
+								content: JSON.stringify(err),
+								showCancel: false
+							});
+							reject(err);
+						}
+					})
+				})
+			}
+		}
+	}
+</script>
+
+<style scoped>
+	.quick-login-box {
+		flex-direction: row;
+		width: 750rpx;
+		justify-content: space-around;
+	}
+
+	.item {
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		height: 200rpx;
+	}
+
+	.logo {
+		width: 60rpx;
+		height: 60rpx;
+	}
+
+	.login-title {
+		font-size: 26rpx;
+	}
+</style>

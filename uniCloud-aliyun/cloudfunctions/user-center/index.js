@@ -1,13 +1,10 @@
 'use strict';
-
 const uniID = require('uni-id')
 const uniCaptcha = require('uni-captcha')
 const db = uniCloud.database()
 const dbCmd = db.command
-
 exports.main = async (event, context) => {
 	let params = event.params || {}
-	
 	// 登录记录
 	const loginLog = async (res = {}, type = 'login') => {
 		const now = Date.now()

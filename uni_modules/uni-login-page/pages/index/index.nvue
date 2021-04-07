@@ -1,24 +1,39 @@
 <template>
 	<view class="flex flex-column flex-1 w-750 bg-white">
-		<!-- 登录主体 -->
-		<view class="flex flex-column flex-1 w-750 justify-center align-center">
-			<view class="flex justify-center align-center show-phone">
-				<text class="font-28">登陆后即可展示自己</text>
-				<text class="font-50">{{phoneNumberShow}}</text>
-				<text class="font-26 text-sub">认证服务由（某服务商）提供</text>
-			</view>
-			<view class="">
-				<button type="primary" class="w-630 round">本机号码一键登录</button>
-				<button type="default" class="w-630 round my-2" @click="toOtherPhone">其他手机号码登陆</button>
-			</view>
-			<view class="w-400 py-2 justify-center align-center flex">
-				<login-ikonw :link="link" text="登录即表示同意用户协议和隐私政策以及（某服务商）认证服务条款"></login-ikonw>
+		<view class="flex-1 flex flex-column justify-start align-center">
+			<view class="w-630 flex flex-column">
+				<!-- 顶部文字 -->
+				<text class="font-32 font-blod pt-5">登陆后即可展示自己</text>
+				<login-ikonw class="lgnin-iknow" :link="link" text="登录即表示同意用户协议和隐私政策"></login-ikonw>
+
+				<!-- 登录框 (选择手机号所属国家和地区需要另行实现) -->
+				<view class="phone-input-box round flex flex-row flex-nowrap align-center justify-center">
+					<picker mode="selector" :range="phoneArea" @change="selectPhoneArea">
+						<text class="px-2 font-30">{{currenPhoneArea}}</text>
+					</picker>
+					<input type="number" class="flex-1 phone-input px-2 font-30" placeholder="请输入手机号"
+						v-model="phoneNumber" />
+				</view>
+
+				<!-- tip -->
+				<text class="text-sub font-26 tip-text">未注册的手机号验证通过后蒋自动注册</text>
+
+				<!-- 发送按钮 -->
+				<view class="send-btn-box flex w-630 justify-center align-center round" hover-class="hover"
+					@click="sendShortMsg" :class="canGetShortMsg?'send-btn-active':''">
+					<text class="text-white">获取短信验证码</text>
+				</view>
+
+				<!-- 其他登录方式 -->
+				<view class="w-630 flex flex-row align-center justify-between">
+					<text class="font-26 login-text" hover-class="hover" @click="toPwdLogin">密码登录</text>
+					<text class="font-26 login-text" hover-class="hover" @click="openLoginList">其他登录方式</text>
+				</view>
 			</view>
 		</view>
-		<!-- 第三方登陆 -->
-		<view class="py-2">
-			<auth-btn @login="authLogin"></auth-btn>
-		</view>
+		<!-- 登录按钮弹窗 -->
+		<login-action-sheet ref="loginActionSheet"></login-action-sheet>
+		<uni-quick-login></uni-quick-login>
 	</view>
 </template>
 
@@ -26,46 +41,44 @@
 	export default {
 		data() {
 			return {
-				phoneNumber:'',
-				link:[{
-					text:'用户协议',
-					to:'/baidu.com'
+				link: [{
+					text: '用户协议',
+					to: '/baidu.com'
 				}, {
-					text:'隐私政策',
-					to:'baidu'
-				}, {
-					text:'（某服务商）认证服务条款',
-					to:'baidu'
-				}]
+					text: '隐私政策',
+					to: 'baidu'
+				}],
+				phoneArea: ['+86', '+87'],
+				currenPhoneArea: '+86',
+				phoneNumber: ''
 			}
 		},
-		onLoad() {
-			this.phoneNumber = '17731252731';
-		},
-		computed:{
-			// 手机号中间隐藏
-			phoneNumberShow(){
-				let phone = this.phoneNumber;
-				if(phone == '')return '';
-				return phone.replace(/^(\d{3})\d{4}(\d{4})$/, '$1****$2');
+		computed: {
+			canGetShortMsg() {
+				let reg = /^1\d{10}$/;
+				return reg.test(this.phoneNumber);
 			}
 		},
 		methods: {
-			/**
-			 * @param {Object} auth 第三方登录回调
-			 * value
-			 * image
-			 */
-			authLogin(auth){
-				console.log('auth_', auth);
+			selectPhoneArea(event) {
+				this.currenPhoneArea = this.phoneArea[event.detail.value];
+			},
+			sendShortMsg() {
+				if (!this.canGetShortMsg) return;
+				/**
+				 * 发送验证吗
+				 */
 			},
 			/**
-			 * 其他手机号码登陆
+			 * 去密码登录页
 			 */
-			toOtherPhone(){
+			toPwdLogin() {
 				uni.navigateTo({
-					url:'./phone-login'
+					url: './pwd-login'
 				})
+			},
+			openLoginList() {
+				this.$refs.loginActionSheet.open();
 			}
 		}
 	}
@@ -73,7 +86,38 @@
 
 <style>
 	@import url("../../common/myStyle.css");
-	.show-phone{
-		padding-bottom: 120rpx;
+
+	.lgnin-iknow {
+		padding-top: 24rpx;
+		padding-bottom: 48rpx;
+	}
+
+	.phone-input-box {
+		height: 85rpx;
+		background-color: #f9f9f9;
+	}
+
+	.phone-input {
+		border-left-width: 1px;
+		border-left-color: #d7d9d8;
+	}
+
+	.tip-text {
+		padding-top: 20rpx;
+		padding-bottom: 36rpx;
+	}
+
+	.send-btn-box {
+		height: 85rpx;
+		background-color: #d8d8da;
+		margin-bottom: 50rpx;
+	}
+
+	.send-btn-active {
+		background-color: #007aff;
+	}
+
+	.login-text {
+		color: #1c436e;
 	}
 </style>
