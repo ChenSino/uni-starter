@@ -20,28 +20,26 @@
 		}, {
 			"path": "uni_modules/uni-login-page/pages/index/index",
 			"style": {
-				"navigationBarTitleText": "",
-				"navigationBarBackgroundColor": "#FFFFFF",
 				"navigationStyle": "custom",
-				// "backgroundColor": "transparent",
+				"backgroundColor": "transparent",
 				"app-plus": {
 					"animationType": "fade-in",
-					 "background": "transparent",
-					"popGesture": "none",
-					"titleNView":false
-				// "navigationBarTitleText": "",
-				// "navigationBarBackgroundColor": "#FFFFFF",
-				// "app-plus": {
-				// 	"titleNView": {
-				// 		"buttons": [{
-				// 			"text": "帮助",
-				// 			"type": "none",
-				// 			"fontSize": "16px",
-				// 			"width": "60px"
-				// 		}]
-				// 	}
+					"background": "transparent",
+					"popGesture": "none"
 				}
 			}
+			// "navigationBarTitleText": "",
+			// "navigationBarBackgroundColor": "#FFFFFF",
+			// "app-plus": {
+			// 	"titleNView": {
+			// 		"buttons": [{
+			// 			"text": "帮助",
+			// 			"type": "none",
+			// 			"fontSize": "16px",
+			// 			"width": "60px"
+			// 		}]
+			// 	}
+			
 		}, {
 			"path": "pages/search/search",
 			"style": {

@@ -1,5 +1,5 @@
 <template>
-	<view class="quick-login-box" v-if="isShow">
+	<view class="quick-login-box">
 		<view class="item" v-for="({text,logo,name},index) in providerList" :key="index" @click="login(name)">
 			<image class="logo" :src="logo" mode="widthFix"></image>
 			<text class="login-title">{{text}}</text>
@@ -11,7 +11,6 @@
 	export default {
 		data() {
 			return {
-				isShow:false,
 				config: {
 					"weixin": {
 						"text": "微信登陆",
@@ -78,8 +77,6 @@
 						console.log(err);
 						if(err.errCode===30002){
 							console.log('你手动关闭了，一键登陆');
-							this.isShow = 1
-							this.$emit('univerifyEnd')
 						}
 					}
 				})

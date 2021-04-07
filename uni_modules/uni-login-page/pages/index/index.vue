@@ -1,7 +1,7 @@
 <template>
-	<view class="wrap" :class="{'hidden':!isShow}">
-		<uni-nav-bar left-icon="back" right-text="帮助" :statusBar="true" :border="false"></uni-nav-bar>
-		<view v-if="isShow" class="wrap-content">
+	<view class="wrap" v-show="isShow">
+		<uni-nav-bar @clickLeft="back" left-icon="back" right-text="帮助" :statusBar="true" :border="false"></uni-nav-bar>
+		<view class="wrap-content">
 			<view class="content">
 				<!-- 顶部文字 -->
 				<text class="content-top-title">登陆后即可展示自己</text>
@@ -34,7 +34,7 @@
 		</view>
 		<!-- 登录按钮弹窗 -->
 		<login-action-sheet ref="loginActionSheet"></login-action-sheet>
-		<uni-quick-login @univerifyEnd="isShow = 1"></uni-quick-login>
+		<uni-quick-login></uni-quick-login>
 	</view>
 </template>
 
@@ -42,7 +42,7 @@
 	export default {
 		data() {
 			return {
-				isShow:true,
+				isShow:false,
 				link: [{
 					text: '用户协议',
 					to: '/baidu.com'
@@ -54,6 +54,11 @@
 				currenPhoneArea: '+86',
 				phoneNumber: ''
 			}
+		},
+		onReady() {
+			setTimeout(()=>{
+				this.isShow = true
+			},1500);
 		},
 		computed: {
 			canGetShortMsg() {
@@ -81,12 +86,18 @@
 			},
 			openLoginList() {
 				this.$refs.loginActionSheet.open();
+			},
+			back(){
+				uni.navigateBack()
 			}
 		}
 	}
 </script>
 
 <style>
+	page {
+		background: transparent;
+	}
 	/* #ifndef APP-NVUE */
 	page{
 		display: flex;
@@ -124,9 +135,6 @@
 		font-size: 32rpx;
 		font-weight: 600;
 		padding-top: 50rpx;
-	}
-	.hidden,page{
-		background-color: transparent;
 	}
 	@import url("../../common/myStyle.css");
 
