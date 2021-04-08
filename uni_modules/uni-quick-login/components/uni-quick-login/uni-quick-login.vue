@@ -60,6 +60,7 @@
 		},
 		methods: {
 			login(type) {
+				// #ifndef H5
 				uni.showLoading({mask: true});
 				uni.login({
 					"provider": type,
@@ -80,6 +81,7 @@
 						}
 					}
 				})
+				// #endif
 			},
 			quickLogin(authResult,type){
 				//请勿直接使用authResult中的unionid或openid直接用于登陆，前端的数据都是不可靠的
