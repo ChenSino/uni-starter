@@ -1,5 +1,5 @@
 <template>
-	<view class="short-code-btn" hover-class="hover" @click="clickBtn">
+	<view class="short-code-btn" hover-class="hover" @click="start">
 		<text class="inner-text" :class="reverseNumber==0?'inner-text-active':''">{{innerText}}</text>
 	</view>
 </template>
@@ -47,7 +47,7 @@
 		},
 		methods: {
 			initClick() {
-				this.clickBtn = debounce(() => {
+				this.start = debounce(() => {
 					if (this.reverseNumber != 0) return;
 					this.$emit('getCode', () => {
 						this.reverseNumber = Number(this.count);

@@ -1,6 +1,5 @@
 <template>
 	<view class="wrap" v-show="isShow">
-		<uni-nav-bar @clickLeft="back" left-icon="back" right-text="帮助" :statusBar="true" :border="false"></uni-nav-bar>
 		<view class="wrap-content">
 			<view class="content">
 				<!-- 顶部文字 -->
@@ -101,6 +100,10 @@
 				/**
 				 * 发送验证吗
 				 */
+				// 发送成功后跳转页面
+				uni.navigateTo({
+					url:'./phone-code?phoneNumber='+this.formData.phone+'&phoneArea='+this.currenPhoneArea
+				})
 			},
 			/**
 			 * 去密码登录页
@@ -112,9 +115,6 @@
 			},
 			openLoginList() {
 				this.$refs.loginActionSheet.open();
-			},
-			back() {
-				uni.navigateBack()
 			}
 		}
 	}

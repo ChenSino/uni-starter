@@ -3,7 +3,7 @@
 		<view class="wrap-content">
 			<view class="content">
 				<!-- 顶部文字 -->
-				<text class="content-top-title">重置密码</text>
+				<text class="content-top-title">请输入验证码</text>
 				<login-ikonw class="login-iknow" :text="tipText"></login-ikonw>
 				<!-- 登录框 (选择手机号所属国家和地区需要另行实现) -->
 				<uni-forms ref="form" :value="formData" :rules="rules">
@@ -11,14 +11,12 @@
 						<uni-easyinput type="number" class="phone-input-box" :inputBorder="false"
 							v-model="formData.code" maxlength="6" placeholder="请输入验证码">
 							<template slot="right">
-								<login-short-code @getCode="getCode"></login-short-code>
+								<login-short-code ref="shortCode" @getCode="getCode"></login-short-code>
 							</template>
 						</uni-easyinput>
-						<uni-easyinput type="number" class="phone-input-box" :inputBorder="false"
-							v-model="formData.pwd" placeholder="请输入新密码"></uni-easyinput>
 					</uni-forms-item>
 					<button class="send-btn-box" :disabled="!canSubmit" :type="canSubmit?'primary':'default'"
-						@click="submit">完成</button>
+						@click="submit">登录</button>
 				</uni-forms>
 			</view>
 		</view>
@@ -31,12 +29,9 @@
 			return {
 				phoneNumber: '',
 				phoneCode: '',
-				password: '',
 				currenPhoneArea: '',
-				
 				formData:{
-					code:'',
-					pwd:''
+					code:''
 				},
 				rules: {
 					code: {
@@ -49,33 +44,20 @@
 								errorMessage: '请输入6位验证码',
 							}
 						]
-					},
-					pwd:{
-						rules: [{
-								required: true,
-								errorMessage: '请输入密码',
-							},
-							{
-								pattern: /^.{6,20}$/,
-								errorMessage: '密码应为6到20位',
-							}
-						]
 					}
 				}
 			}
 		},
 		computed: {
 			tipText() {
-				return `验证码已通过短信发送至${this.currenPhoneArea} ${this.phoneNumber}。密码为6 - 20位`
+				return `验证码已通过短信发送至${this.currenPhoneArea} ${this.phoneNumber}。`;
 			},
 			canSubmit() {
 				let reg_phone = /^1\d{10}$/;
-				let reg_pwd = /^.{6,20}$/;
 				let reg_code = /^\d{6}$/;
 				let isPhone = reg_phone.test(this.phoneNumber);
-				let isPwd = reg_pwd.test(this.formData.pwd);
 				let isCode = reg_code.test(this.formData.code);
-				return isPhone && isPwd && isCode;
+				return isPhone && isCode;
 			}
 		},
 		onLoad(event) {
@@ -83,6 +65,9 @@
 				this.phoneNumber = event.phoneNumber;
 				this.currenPhoneArea = '+' + Number(event.phoneArea);
 			}
+		},
+		onReady() {
+			this.$refs.shortCode.start();
 		},
 		methods: {
 			/**
