@@ -1,6 +1,6 @@
 <template>
 	<view class="wrap" v-show="isShow">
-		<uni-nav-bar left-icon="back" @clickLeft="back" right-text="帮助"></uni-nav-bar>
+		<uni-nav-bar left-icon="back" @clickLeft="back" right-text="帮助" :statusBar="true" :border="false"></uni-nav-bar>
 		<view class="wrap-content">
 			<view class="content">
 				<!-- 顶部文字 -->
