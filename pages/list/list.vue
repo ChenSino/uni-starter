@@ -19,6 +19,19 @@
 		},
 		onShow(options) {
 			this.searchText = getApp().globalData.searchText;
+			
+			plus.oauth.getServices(services=>{
+				console.log(services);
+				services.forEach(item=>{
+					if(item.id=='qq'){
+						item.authorize(e=>{
+							console.log(e);
+						},e=>{
+							console.log(e);
+						})
+					}
+				})
+			})
 		},
 		/**
 		 * 下拉刷新回调函数

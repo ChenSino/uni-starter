@@ -21,7 +21,7 @@
 					<button class="send-btn-box" :disabled="!canGetShortMsg" :type="canGetShortMsg?'primary':'default'"
 						@click="sendShortMsg">获取短信验证码</button>
 				</uni-forms>
-				
+
 				<!-- tip -->
 				<text class="tip-text">未注册的手机号验证通过后将自动注册</text>
 
@@ -101,6 +101,36 @@
 				/**
 				 * 发送验证吗
 				 */
+				uni.showLoading();
+				uniCloud.callFunction({
+					"name": "user",
+					"data": {
+						"action": "sendSmsCode",
+						"params": {
+							"mobile": this.formData.phone,
+							"type": "login"
+						}
+					},
+					success: (e) => {
+						console.log(e);
+						uni.showToast({
+							title: JSON.stringify(e.result),
+							icon: 'none'
+						});
+						uni.navigateTo({
+							url: '',
+							success: res => {},
+							fail: () => {},
+							complete: () => {}
+						});
+					},
+					fail: (err) => {
+						console.log(err);
+					},
+					complete: () => {
+						uni.hideLoading()
+					}
+				})
 			},
 			/**
 			 * 去密码登录页

@@ -16,7 +16,7 @@ class User {
 					data:{ access_token,openid}
 				});
 				return userinfo_res.data//根据access_token,openid得到userinfo
-				//检查是否已经注册...
+				//检查是否已经注册...待续...
 				break;
 			case 'univerify':
 				return uniID.loginByUniverify({access_token,openid})

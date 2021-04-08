@@ -16,9 +16,9 @@
             "delay" : 0
         },
         "modules" : {
-            "OAuth" : {},
             "Share" : {},
-            "Fingerprint" : {}
+            "Fingerprint" : {},
+            "OAuth" : {}
         },
         "distribute" : {
             "android" : {
@@ -50,7 +50,10 @@
                         }
                     },
                     "entitlements" : {
-                        "com.apple.developer.associated-domains" : [ "applinks:uniapp.dcloud.io" ]
+                        "com.apple.developer.associated-domains" : [
+                            "applinks:uniapp.dcloud.io",
+                            "applinks:static-7827e38b-7f40-4421-bca7-58331dcddc00.bspapp.com"
+                        ]
                     }
                 },
                 "privacyDescription" : {
@@ -63,17 +66,22 @@
                     "weixin" : {
                         "appid" : "wx0411fa6a39d61297",
                         "appsecret" : "",
-                        "UniversalLinks" : "https://uniapp.dcloud.io/ulink-catgame/"
+                        "UniversalLinks" : "https://static-7827e38b-7f40-4421-bca7-58331dcddc00.bspapp.com/uni-universallinks/__UNI__BC54A00"
                     },
                     "univerify" : {}
                 },
                 "share" : {
                     "weixin" : {
                         "appid" : "wx0411fa6a39d61297",
-                        "UniversalLinks" : "https://uniapp.dcloud.io/ulink-catgame/"
+                        "UniversalLinks" : "https://static-7827e38b-7f40-4421-bca7-58331dcddc00.bspapp.com/uni-universallinks/__UNI__BC54A00",
+                        "_spaceID" : "7827e38b-7f40-4421-bca7-58331dcddc00"
                     }
                 },
-                "payment" : {},
+                "payment" : {
+                    "weixin" : {
+                        "UniversalLinks" : "https://static-7827e38b-7f40-4421-bca7-58331dcddc00.bspapp.com/uni-universallinks/__UNI__BC54A00"
+                    }
+                },
                 "ad" : {}
             }
         }
