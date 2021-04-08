@@ -1,6 +1,5 @@
 <template>
-	<view class="wrap" v-show="isShow">
-		<uni-nav-bar left-icon="back" @clickLeft="back" right-text="帮助" :statusBar="true" :border="false"></uni-nav-bar>
+	<view class="wrap">
 		<view class="wrap-content">
 			<view class="content">
 				<!-- 顶部文字 -->
@@ -39,10 +38,10 @@
 </template>
 
 <script>
+	var currentPage;
 	export default {
 		data() {
 			return {
-				isShow: false,
 				link: [{
 					text: '用户协议',
 					to: '/baidu.com'
@@ -73,9 +72,18 @@
 				}
 			}
 		},
+		onLoad() {
+			let pages = getCurrentPages();
+			currentPage = pages[pages.length - 1];
+			currentPage.$getAppWebview().setStyle({
+				top:"1000px"
+			})
+		},
 		onReady() {
 			setTimeout(() => {
-				this.isShow = true;
+				currentPage.$getAppWebview().setStyle({
+					top:"0"
+				})
 			}, 1500);
 		},
 		computed: {
@@ -118,7 +126,8 @@
 							icon: 'none'
 						});
 						uni.navigateTo({
-							url:'./phone-code?phoneNumber='+this.formData.phone+'&phoneArea='+this.currenPhoneArea,
+							url: './phone-code?phoneNumber=' + this.formData.phone + '&phoneArea=' +
+								this.currenPhoneArea,
 							success: res => {},
 							fail: () => {},
 							complete: () => {}
@@ -143,7 +152,7 @@
 			openLoginList() {
 				this.$refs.loginActionSheet.open();
 			},
-			back(){
+			back() {
 				uni.navigateBack()
 			}
 		}

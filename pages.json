@@ -21,27 +21,21 @@
 			"path": "uni_modules/uni-login-page/pages/index/index",
 			"style": {
 				"navigationBarTitleText": "",
-				"navigationStyle":"custom",
-				"backgroundColor": "transparent",
 				"app-plus": {
-					"animationType": "fade-in",
-					"background": "transparent",
+					"animationType": "none",
 					"popGesture": "none",
-					"titleNView": false
+					"titleNView": {
+						"buttons": [{
+							"text": "帮助",
+							"type": "none",
+							"fontSize": "16px",
+							"width": "60px"
+						}]
+					}
 				}
 			}
 			// "navigationBarTitleText": "",
 			// "navigationBarBackgroundColor": "#FFFFFF",
-			// "app-plus": {
-			// 	"titleNView": {
-			// 		"buttons": [{
-			// 			"text": "帮助",
-			// 			"type": "none",
-			// 			"fontSize": "16px",
-			// 			"width": "60px"
-			// 		}]
-			// 	}
-
 		}, {
 			"path": "pages/search/search",
 			"style": {
