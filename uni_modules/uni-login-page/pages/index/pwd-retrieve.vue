@@ -6,22 +6,20 @@
 				<text class="content-top-title">手机号密码登录</text>
 				<login-ikonw class="login-iknow" :text="tipText"></login-ikonw>
 				<!-- 登录框 (选择手机号所属国家和地区需要另行实现) -->
-				<view class="phone-input-box">
-					<input type="number" :maxlength="6" class="phone-input" placeholder="请输入验证码"
-						v-model="phoneCode" />
-					<login-short-code @getCode="getCode"></login-short-code>
-				</view>
-
-				<view class="phone-input-box">
-					<input type="password" :password="true" class="phone-input" placeholder="请输入密码"
-						v-model="password" />
-				</view>
-
-				<!-- 发送按钮 -->
-				<view class="send-btn-box" hover-class="hover"
-					@click="submit" :class="canSubmit?'send-btn-active':''">
-					<text class="send-btn-text">完成</text>
-				</view>
+				<uni-forms ref="form" :value="formData" :rules="rules">
+					<uni-forms-item name="phone">
+						<uni-easyinput type="number" class="phone-input-box" :inputBorder="false"
+							v-model="formData.code" maxlength="6" placeholder="请输入验证码">
+							<template slot="right">
+								<login-short-code @getCode="getCode"></login-short-code>
+							</template>
+						</uni-easyinput>
+						<uni-easyinput type="number" class="phone-input-box" :inputBorder="false"
+							v-model="formData.pwd" placeholder="请输入密码"></uni-easyinput>
+					</uni-forms-item>
+					<button class="send-btn-box" :disabled="!canSubmit" :type="canSubmit?'primary':'default'"
+						@click="submit">完成</button>
+				</uni-forms>
 			</view>
 		</view>
 	</view>
@@ -35,6 +33,35 @@
 				phoneCode: '',
 				password: '',
 				currenPhoneArea: '',
+				
+				formData:{
+					code:'',
+					pwd:''
+				},
+				rules: {
+					code: {
+						rules: [{
+								required: true,
+								errorMessage: '请输入验证码',
+							},
+							{
+								legn: /^.{6}$/,
+								errorMessage: '请输入6位验证码',
+							}
+						]
+					},
+					pwd:{
+						rules: [{
+								required: true,
+								errorMessage: '请输入密码',
+							},
+							{
+								pattern: /^.{6,20}$/,
+								errorMessage: '密码应为6到20位',
+							}
+						]
+					}
+				}
 			}
 		},
 		computed: {
@@ -46,15 +73,19 @@
 				let reg_pwd = /^.{6,20}$/;
 				let reg_code = /^\d{6}$/;
 				let isPhone = reg_phone.test(this.phoneNumber);
-				let isPwd = reg_pwd.test(this.password);
-				let isCode = reg_code.test(this.phoneCode);
+				let isPwd = reg_pwd.test(this.formData.pwd);
+				let isCode = reg_code.test(this.formData.code);
 				return isPhone && isPwd && isCode;
 			}
 		},
 		onLoad(event) {
-			if (event) {
+			if (event && event.phoneNumber) {
 				this.phoneNumber = event.phoneNumber;
 				this.currenPhoneArea = '+' + Number(event.phoneArea);
+			}
+			else {
+				this.phoneNumber = '17731252731';
+				this.currenPhoneArea = '+86';
 			}
 		},
 		methods: {
@@ -84,11 +115,5 @@
 	@import url("../../common/loginPage.css");
 	.phone-input-box{
 		margin-top: 20rpx;
-	}
-	.phone-input{
-		border-left-width: 0;
-	}
-	.send-btn-box{
-		margin-top: 50rpx;
 	}
 </style>

@@ -4,27 +4,24 @@
 			<view class="content">
 				<!-- 顶部文字 -->
 				<text class="content-top-title">手机号密码登录</text>
-
-				<!-- 登录框 (选择手机号所属国家和地区需要另行实现) -->
-				<view class="phone-input-box">
-					<picker mode="selector" :range="phoneArea" @change="selectPhoneArea">
-						<text class="phone-area">{{currenPhoneArea}}</text>
-					</picker>
-					<input type="number" class="phone-input" placeholder="请输入手机号" maxlength="11" v-model="phoneNumber" />
-				</view>
-
-				<view class="phone-input-box">
-					<input type="password" :password="true" class="phone-input pwd-input" placeholder="请输入密码"
-						v-model="password" />
-				</view>
-
 				<login-ikonw class="login-iknow" :link="link" text="登录即表示同意用户协议和隐私政策"></login-ikonw>
-
-				<!-- 发送按钮 -->
-				<view class="send-btn-box" hover-class="hover"
-					@click="pwdLogin" :class="canLogin?'send-btn-active':''">
-					<text class="send-btn-text">登录</text>
-				</view>
+				<!-- 登录框 (选择手机号所属国家和地区需要另行实现) -->
+				<uni-forms ref="form" :value="formData" :rules="rules">
+					<uni-forms-item name="phone">
+						<uni-easyinput type="number" class="phone-input-box" :inputBorder="false"
+							v-model="formData.phone" maxlength="11" placeholder="请输入手机号">
+							<template slot="left">
+								<picker mode="selector" :range="phoneArea" @change="selectPhoneArea">
+									<text class="phone-area">{{currenPhoneArea}}</text>
+								</picker>
+							</template>
+						</uni-easyinput>
+						<uni-easyinput type="number" class="phone-input-box" :inputBorder="false"
+							v-model="formData.pwd" placeholder="请输入密码"></uni-easyinput>
+					</uni-forms-item>
+					<button class="send-btn-box" :disabled="!canLogin" :type="canLogin?'primary':'default'"
+						@click="pwdLogin">登录</button>
+				</uni-forms>
 
 				<!-- 忘记密码 -->
 				<view class="auth-box">
@@ -51,15 +48,44 @@
 				}],
 				phoneArea: ['+86', '+87'],
 				currenPhoneArea: '+86',
+				
+				formData: {
+					phone: '',
+					pwd:''
+				},
+				rules: {
+					phone: {
+						rules: [{
+								required: true,
+								errorMessage: '请输入手机号',
+							},
+							{
+								pattern: /^1\d{10}$/,
+								errorMessage: '手机号格式不正确',
+							}
+						]
+					},
+					pwd:{
+						rules: [{
+								required: true,
+								errorMessage: '请输入密码',
+							},
+							{
+								pattern: /^.{6,20}$/,
+								errorMessage: '密码应为6到20位',
+							}
+						]
+					}
+				}
 			}
 		},
 		computed: {
 			canLogin() {
 				let reg_phone = /^1\d{10}$/;
 				let reg_pwd = /^.{6,20}$/;
-				let isPhone = reg_phone.test(this.phoneNumber);
+				let isPhone = reg_phone.test(this.formData.phone);
 
-				let isPwd = reg_pwd.test(this.password);
+				let isPwd = reg_pwd.test(this.formData.pwd);
 				return isPhone && isPwd;
 			}
 		},
@@ -69,14 +95,14 @@
 			 */
 			toRetrievePwd() {
 				let reg_phone = /^1\d{10}$/;
-				let isPhone = reg_phone.test(this.phoneNumber);
+				let isPhone = reg_phone.test(this.formData.phone);
 				if (!isPhone) return uni.showToast({
 					title: '请输入正确的手机号',
 					icon: 'none'
 				});
 
 				uni.navigateTo({
-					url: './pwd-retrieve?phoneNumber=' + this.phoneNumber + '&phoneArea=' + this.currenPhoneArea
+					url: './pwd-retrieve?phoneNumber=' + this.formData.phone + '&phoneArea=' + this.currenPhoneArea
 				})
 			},
 			/**
@@ -95,13 +121,17 @@
 
 <style>
 	@import url("../../common/loginPage.css");
-	.phone-input-box{
+
+	.phone-input-box {
 		margin-top: 20rpx;
 	}
-	.auth-box{
+
+	.auth-box {
 		justify-content: flex-start;
+		margin-top: 20rpx;
 	}
-	.login-text-sub{
+
+	.login-text-sub {
 		color: #8a8f8b;
 	}
 </style>

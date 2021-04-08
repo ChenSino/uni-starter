@@ -105,7 +105,7 @@
 </script>
 
 <style>
-	@import url("../../common/myStyle.css");
+	/* @import url("../../common/myStyle.css"); */
 	.auth-logo {
 		width: 84rpx;
 		height: 84rpx;

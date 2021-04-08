@@ -6,24 +6,24 @@
 				<!-- 顶部文字 -->
 				<text class="content-top-title">登陆后即可展示自己</text>
 				<login-ikonw class="login-iknow" :link="link" text="登录即表示同意用户协议和隐私政策"></login-ikonw>
-
 				<!-- 登录框 (选择手机号所属国家和地区需要另行实现) -->
-				<view class="phone-input-box">
-					<picker mode="selector" :range="phoneArea" @change="selectPhoneArea">
-						<text class="phone-area">{{currenPhoneArea}}</text>
-					</picker>
-					<input type="number" class="phone-input" maxlength="11" placeholder="请输入手机号"
-						v-model="phoneNumber" />
-				</view>
-
+				<uni-forms ref="form" :value="formData" :rules="rules">
+					<uni-forms-item name="phone">
+						<uni-easyinput type="number" class="phone-input-box" :inputBorder="false"
+							v-model="formData.phone" maxlength="11" placeholder="请输入手机号">
+							<template slot="left">
+								<picker mode="selector" :range="phoneArea" @change="selectPhoneArea">
+									<text class="phone-area">{{currenPhoneArea}}</text>
+								</picker>
+							</template>
+						</uni-easyinput>
+					</uni-forms-item>
+					<button class="send-btn-box" :disabled="!canGetShortMsg" :type="canGetShortMsg?'primary':'default'"
+						@click="sendShortMsg">获取短信验证码</button>
+				</uni-forms>
+				
 				<!-- tip -->
-				<text class="tip-text">未注册的手机号验证通过后蒋自动注册</text>
-
-				<!-- 发送按钮 -->
-				<view class="send-btn-box" hover-class="hover"
-					@click="sendShortMsg" :class="canGetShortMsg?'send-btn-active':''">
-					<text class="send-btn-text">获取短信验证码</text>
-				</view>
+				<text class="tip-text">未注册的手机号验证通过后将自动注册</text>
 
 				<!-- 其他登录方式 -->
 				<view class="auth-box">
@@ -42,7 +42,7 @@
 	export default {
 		data() {
 			return {
-				isShow:false,
+				isShow: false,
 				link: [{
 					text: '用户协议',
 					to: '/baidu.com'
@@ -52,21 +52,47 @@
 				}],
 				phoneArea: ['+86', '+87'],
 				currenPhoneArea: '+86',
-				phoneNumber: ''
+				phoneNumber: '',
+
+				formData: {
+					phone: ''
+				},
+				rules: {
+					// 对phone字段进行必填验证
+					phone: {
+						rules: [{
+								required: true,
+								errorMessage: '请输入手机号',
+							},
+							{
+								pattern: /^1\d{10}$/,
+								errorMessage: '手机号格式不正确',
+							}
+						]
+					}
+				}
 			}
 		},
 		onReady() {
-			setTimeout(()=>{
+			setTimeout(() => {
 				this.isShow = true
-			},1500);
+			}, 1500);
 		},
 		computed: {
 			canGetShortMsg() {
 				let reg = /^1\d{10}$/;
-				return reg.test(this.phoneNumber);
+				return reg.test(this.formData.phone);
 			}
 		},
 		methods: {
+			// 触发提交表单
+			submit() {
+				this.$refs.form.submit().then(res => {
+					console.log('表单数据信息：', res);
+				}).catch(err => {
+					console.log('表单错误信息：', err);
+				})
+			},
 			selectPhoneArea(event) {
 				this.currenPhoneArea = this.phoneArea[event.detail.value];
 			},
@@ -87,7 +113,7 @@
 			openLoginList() {
 				this.$refs.loginActionSheet.open();
 			},
-			back(){
+			back() {
 				uni.navigateBack()
 			}
 		}
@@ -96,11 +122,22 @@
 
 <style>
 	@import url("../../common/loginPage.css");
-	.content-top-title{
+
+	.content-top-title {
 		text-align: center;
 	}
-	
-	.login-iknow{
+
+	.login-iknow {
 		justify-content: center;
+	}
+
+	.phone-area {
+		/* #ifdef APP-NVUE */
+		border-right-width: 1rpx;
+		border-right-color: #d7d9d8;
+		/* #endif */
+		/* #ifndef APP-NVUE */
+		border-right: 1rpx solid #d7d9d8;
+		/* #endif */
 	}
 </style>
