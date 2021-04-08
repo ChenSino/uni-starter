@@ -1,5 +1,6 @@
 <template>
 	<view class="wrap" v-show="isShow">
+		<uni-nav-bar left-icon="back" @clickLeft="back" right-text="帮助"></uni-nav-bar>
 		<view class="wrap-content">
 			<view class="content">
 				<!-- 顶部文字 -->
@@ -74,7 +75,7 @@
 		},
 		onReady() {
 			setTimeout(() => {
-				this.isShow = true
+				this.isShow = true;
 			}, 1500);
 		},
 		computed: {
@@ -117,7 +118,7 @@
 							icon: 'none'
 						});
 						uni.navigateTo({
-							url:'./phone-code?phoneNumber='+this.formData.phone+'&phoneArea='+this.currenPhoneArea
+							url:'./phone-code?phoneNumber='+this.formData.phone+'&phoneArea='+this.currenPhoneArea,
 							success: res => {},
 							fail: () => {},
 							complete: () => {}
@@ -141,6 +142,9 @@
 			},
 			openLoginList() {
 				this.$refs.loginActionSheet.open();
+			},
+			back(){
+				uni.navigateBack()
 			}
 		}
 	}
