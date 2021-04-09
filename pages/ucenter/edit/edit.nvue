@@ -68,7 +68,7 @@
 				userTable.doc(this.userInfo._id)
 				.update(data)
 				.then(res=>{
-					console.log(res);
+					this.login(data)
 				})
 				.catch(err=>{
 					console.log(err);

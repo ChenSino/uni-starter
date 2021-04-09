@@ -19,7 +19,8 @@ let state = {
 	},
 	mutations = {
 		login(state, info) {
-			state.info = info;
+			let _info = state.info;
+			state.info = Object.assign({}, _info, info);
 			state.hasLogin = true;
 			uni.setStorageSync('userInfo', info);
 		},
