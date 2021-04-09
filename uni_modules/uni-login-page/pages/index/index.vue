@@ -75,10 +75,12 @@
 			}
 		},
 		onLoad() {
+			//#ifdef APP-PLUS
 			let pages = getCurrentPages();
 			currentPage = pages[pages.length - 1];
 			currentPage.$getAppWebview().setStyle({
 				top:"1000px"
+<<<<<<< HEAD
 			})
 		},
 		onReady() {
@@ -89,6 +91,21 @@
 				})
 			}, 1500);
 		},
+=======
+			})
+			//#endif
+		},
+		onReady() {
+			this.$refs.uniQuickLogin.login('univerify')
+			//#ifdef APP-PLUS
+			setTimeout(() => {
+				currentPage.$getAppWebview().setStyle({
+					top:"0"
+				})
+			}, 1500);
+			//#endif
+		},
+>>>>>>> 148172bb1d4257605d106e690cdf5ab6917c2bb9
 		
 		computed: {
 			canGetShortMsg() {
