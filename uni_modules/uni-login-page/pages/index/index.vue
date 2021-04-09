@@ -38,8 +38,10 @@
 </template>
 
 <script>
+	import mixin from '../../common/loginPage.mixin.js';
 	var currentPage;
 	export default {
+		mixins:[mixin],
 		data() {
 			return {
 				link: [{
@@ -86,6 +88,7 @@
 				})
 			}, 1500);
 		},
+		
 		computed: {
 			canGetShortMsg() {
 				let reg = /^1\d{10}$/;

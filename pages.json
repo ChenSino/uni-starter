@@ -175,6 +175,13 @@
 				}
 			}
 
+		}, {
+			"path": "pages/ucenter/help",
+			"style": {
+				"navigationBarTitleText": "帮助",
+				"enablePullDownRefresh": false
+			}
+
 		}
 	],
 	"globalStyle": {
