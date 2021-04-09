@@ -28,7 +28,7 @@
 				<!-- 其他登录方式 -->
 				<view class="auth-box">
 					<text class="login-text" hover-class="hover" @click="toPwdLogin">密码登录</text>
-					<text class="login-text" hover-class="hover" @click="openLoginList">其他登录方式</text>
+					<!-- <text class="login-text" hover-class="hover" @click="openLoginList">其他登录方式</text> -->
 				</view>
 			</view>
 		</view>
@@ -54,7 +54,6 @@
 				}],
 				phoneArea: ['+86'],
 				currenPhoneArea: '+86',
-				phoneNumber: '',
 
 				formData: {
 					phone: '17777777777'

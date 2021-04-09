@@ -117,8 +117,8 @@
 					"data":{
 						"action":"login",
 						"params":{
-							"username":formData.phone,
-							"password":formData.pwd
+							"username":this.formData.phone,
+							"password":this.formData.pwd
 						}
 					},
 					success:async (e) => {

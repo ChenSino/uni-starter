@@ -96,8 +96,36 @@ import mixin from '../../common/loginPage.mixin.js';
 					title: '请填写手机号',
 					icon: 'none'
 				});
-				// 发送成功后开启倒计时
-				done();
+				uniCloud.callFunction({
+					"name": "user-center",
+					"data": {
+						"action": "sendSmsCode",
+						"params": {
+							"mobile": this.phoneNumber,
+							"type": "login"
+						}
+					},
+					success: (e) => {
+						console.log(e);
+						// uni.showToast({
+						// 	title: JSON.stringify(e.result),
+						// 	icon: 'none'
+						// });
+						uni.showModal({
+							content: JSON.stringify(e.result),
+							showCancel: false,
+							confirmText: '知道了'
+						});
+						// 发送成功后开启倒计时
+						done();
+					},
+					fail: (err) => {
+						console.log(err);
+					},
+					complete: () => {
+						uni.hideLoading()
+					}
+				})
 			},
 			/**
 			 * 完成并提交
