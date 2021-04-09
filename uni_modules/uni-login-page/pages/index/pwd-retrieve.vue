@@ -16,7 +16,7 @@
 								<login-short-code ref="shortCode" @getCode="getCode"></login-short-code>
 							</template>
 						</uni-easyinput>
-						<uni-easyinput type="text" class="phone-input-box" :inputBorder="false"
+						<uni-easyinput type="password" class="phone-input-box" :inputBorder="false"
 							v-model="formData.pwd" placeholder="请输入新密码"></uni-easyinput>
 					</uni-forms-item>
 					<button class="send-btn-box" :disabled="!canSubmit" :type="canSubmit?'primary':'default'"
@@ -109,8 +109,8 @@ import mixin from '../../common/loginPage.mixin.js';
 			 * 倒计时期间不会触发该方法
 			 */
 			getCode(done) {
-				if (this.formData.phone == '') return uni.showToast({
-					title: '请填写手机号',
+				if (this.formData.phone == '' || this.formData.phone.length!=11) return uni.showToast({
+					title: '手机号格式不正确',
 					icon: 'none'
 				});
 				uniCloud.callFunction({

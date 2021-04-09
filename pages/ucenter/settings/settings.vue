@@ -68,6 +68,7 @@
 				logout: 'user/logout'
 			}),
 			toEdit(){
+				
 				uni.navigateTo({
 					url: '../edit/edit'
 				});
