@@ -44,13 +44,9 @@
 			"smsSecret": "d6c424b702d73baa3b6e1a1452469213"
 		},
 		"univerify":{
-			// "appid": "__UNI__GameCat",
-			// "apiKey":"c5f80ebad34aaf0ae22958d866287521",
-			// "apiSecret":"f921890ca9c248273eadaf9b4137cf5c"
-			
-			"appid": "__UNI__BC54A00",
-			"apiKey":"d1e36bcd497b3795434d900dcfdd44dc",
-			"apiSecret":"2feb378ff1114362b20ac179b572293e"
+			"appid": "__UNI__GameCat",
+			"apiKey":"c5f80ebad34aaf0ae22958d866287521",
+			"apiSecret":"f921890ca9c248273eadaf9b4137cf5c"
 		}
 	}
 }

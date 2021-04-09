@@ -3,7 +3,7 @@
 	"permission": {
 		"read": true,
 		"create": false,
-		"update": "doc.uid == auth.uid",
+		"update": "doc._id == auth.uid",
 		"delete": false
 	},
 	"properties": {

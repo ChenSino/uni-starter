@@ -4,8 +4,51 @@ const uniCaptcha = require('uni-captcha')
 const db = uniCloud.database()
 const dbCmd = db.command
 exports.main = async (event, context) => {
+	//event为客户端上传的参数
+	console.log('event : ' + event)
 	let params = event.params || {}
-	// 登录记录
+	
+	//防止黑客恶意破解登陆，连续登陆失败一定次数后，需要用户提供验证码
+	const getNeedCaptcha = async () => {
+		//当用户最近“2小时内(recordDate)”登陆失败达到2次(recordSize)时。要求用户提交验证码
+		const now = Date.now(),
+			  recordDate = 120 * 60 * 1000,
+			  recordSize = 2;
+		const uniIdLogCollection = db.collection('uni-id-log')
+		let recentRecord = await uniIdLogCollection.where({
+				deviceId: params.deviceId || context.DEVICEID,
+				create_date: dbCmd.gt(now - recordDate),
+				type: 'login'
+			})
+			.orderBy('create_date', 'desc')
+			.limit(recordSize)
+			.get();
+		return recentRecord.data.filter(item => item.state === 0).length === recordSize;
+	}
+	
+	//设置某些模块不需要token（也就是登陆成功后）才能操作,如果需要token就获取当前操作账户的uid
+	let noCheckAction = [
+		'register', 'checkToken','login', 'logout', 'sendSmsCode',
+		'createCaptcha', 'verifyCaptcha','refreshCaptcha', 'inviteLogin',
+		'login_by_weixin','login_by_univerify','login_by_apple','loginBySms'
+	]
+	console.log(event.action);
+	if (!noCheckAction.includes(event.action)) {
+		if (!event.uniIdToken) {
+			return {
+				code: 403,
+				msg: '缺少token'
+			}
+		}
+		let payload = await uniID.checkToken(event.uniIdToken)
+		if (payload.code && payload.code > 0) {
+			return payload
+		}
+		params.uid = payload.uid
+	}
+	
+	
+	//记录成功登陆的日志
 	const loginLog = async (res = {}, type = 'login') => {
 		const now = Date.now()
 		const uniIdLogCollection = db.collection('uni-id-log')
@@ -16,7 +59,7 @@ exports.main = async (event, context) => {
 			ua: context.CLIENTUA,
 			create_date: now
 		};
-
+	
 		Object.assign(logData,
 			res.code === 0 ? {
 				user_id: res.uid,
@@ -24,57 +67,13 @@ exports.main = async (event, context) => {
 			} : {
 				state: 0
 			})
-
+	
 		return uniIdLogCollection.add(logData)
 	}
 
-	const getNeedCaptcha = async () => {
-		const now = Date.now()
-		// 查询是否在 {2小时} 内 {前2条} 有 {登录失败} 数据，来确定是否需要验证码
-		const recordSize = 2;
-		const recordDate = 120 * 60 * 1000;
 
-		const uniIdLogCollection = db.collection('uni-id-log')
-		let recentRecord = await uniIdLogCollection.where({
-				deviceId: params.deviceId || context.DEVICEID,
-				create_date: dbCmd.gt(now - recordDate),
-				type: 'login'
-			})
-			.orderBy('create_date', 'desc')
-			.limit(recordSize)
-			.get();
-
-		return recentRecord.data.filter(item => item.state === 0).length === recordSize;
-	}
-	
-	//event为客户端上传的参数
-	console.log('event : ' + event)
-
-	let payload = {}
-	let noCheckAction = [
-		'register', 'loginByWeixin', 'checkToken',
-		'login', 'logout', 'sendSmsCode',
-		'loginBySms', 'inviteLogin', 'loginByUniverify',
-		'loginByApple', 'createCaptcha', 'verifyCaptcha',
-		'refreshCaptcha'
-	]
-
-	if (noCheckAction.indexOf(event.action) === -1) {
-		if (!event.uniIdToken) {
-			return {
-				code: 403,
-				msg: '缺少token'
-			}
-		}
-		payload = await uniID.checkToken(event.uniIdToken)
-		if (payload.code && payload.code > 0) {
-			return payload
-		}
-		params.uid = payload.uid
-	}
 
 	let res = {}
-
 	switch (event.action) {
 		case 'register':
 			res = await uniID.register(params);
@@ -96,8 +95,15 @@ exports.main = async (event, context) => {
 			
 			res.needCaptcha = needCaptcha;
 			break;
-		case 'loginByWeixin':
+		case 'login_by_weixin':
 			res = await uniID.loginByWeixin(params);
+			loginLog(res)
+			break;
+		case 'login_by_univerify':
+			res = await uniID.loginByUniverify(params)
+			break;
+		case 'login_by_apple':
+			res = await uniID.loginByApple(params)
 			loginLog(res)
 			break;
 		case 'checkToken':
@@ -174,13 +180,6 @@ exports.main = async (event, context) => {
 			break;
 		case 'getInvitedUser':
 			res = await uniID.getInvitedUser(params)
-			break;
-		case 'loginByUniverify':
-			res = await uniID.loginByUniverify(params)
-			break;
-		case 'loginByApple':
-			res = await uniID.loginByApple(params)
-			loginLog(res)
 			break;
 		case 'updatePwd':
 			res = await uniID.updatePwd({
