@@ -4,10 +4,11 @@
 			<uni-list-item>
 				<template v-slot:body>
 					<view class="avatar-box">
-						<image class="avatar-img" :src="userInfo.avatar || '/static/uni-center/logo.png'" @click="chooseImg" mode="aspectFill"></image>
+						<image class="avatar-img" :src="(userInfo && userInfo.avatar) || '/static/uni-center/logo.png'" @click="chooseImg" mode="aspectFill"></image>
 					</view>
 				</template>
 			</uni-list-item>
+			<uni-list-item title="姓名" :right-text="userInfo && userInfo.name"></uni-list-item>
 		</uni-list>
 	</view>
 </template>
@@ -31,7 +32,7 @@
 			})
 		},
 		onLoad() {
-			console.log(this.userInfo);
+			if(!this.userInfo)console.error('判断登录状态,如果没有登录则没有userinfo,页面报错');
 		},
 		methods: {
 			...mapMutations({
