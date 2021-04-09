@@ -188,6 +188,9 @@
 	.code {
 		color: #e96900;
 		background-color: #f8f8f8;
+		/* #ifndef APP-NVUE */
+		display: inline-block;
+		/* #endif */
 	}
 
 	button {
