@@ -80,18 +80,6 @@
 			currentPage = pages[pages.length - 1];
 			currentPage.$getAppWebview().setStyle({
 				top:"1000px"
-<<<<<<< HEAD
-			})
-		},
-		onReady() {
-			this.$refs.uniQuickLogin.login('univerify')
-			setTimeout(() => {
-				currentPage.$getAppWebview().setStyle({
-					top:"0"
-				})
-			}, 1500);
-		},
-=======
 			})
 			//#endif
 		},
@@ -105,8 +93,6 @@
 			}, 1500);
 			//#endif
 		},
->>>>>>> 148172bb1d4257605d106e690cdf5ab6917c2bb9
-		
 		computed: {
 			canGetShortMsg() {
 				let reg = /^1\d{10}$/;
