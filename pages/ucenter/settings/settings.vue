@@ -30,10 +30,11 @@
 					{
 						title: '修改密码',
 						event:'changePwd'
-					}, {
-						title: '注销用户',
-						event: ''
 					},
+					// {
+					// 	title: '注销用户',
+					// 	event: ''
+					// },
 					//#ifdef APP-PLUS
 					{
 						title: '推送功能',
@@ -42,10 +43,10 @@
 						isChecked: false,
 						showSwitch: true
 					},
-					{
-						title: '清理缓存',
-						event: ''
-					},
+					// {
+					// 	title: '清理缓存',
+					// 	event: ''
+					// },
 					//#endif
 
 				]
