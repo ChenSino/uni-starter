@@ -11,7 +11,7 @@
 						<uni-easyinput type="number" class="phone-input-box" :inputBorder="false"
 							v-model="formData.code" maxlength="6" placeholder="请输入验证码">
 							<template slot="right">
-								<login-short-code @getCode="getCode"></login-short-code>
+								<login-short-code ref="shortCode" @getCode="getCode"></login-short-code>
 							</template>
 						</uni-easyinput>
 						<uni-easyinput type="number" class="phone-input-box" :inputBorder="false"
@@ -86,6 +86,9 @@ import mixin from '../../common/loginPage.mixin.js';
 				this.currenPhoneArea = '+' + Number(event.phoneArea);
 			}
 		},
+		onReady() {
+			this.$refs.shortCode.start();
+		},
 		methods: {
 			/**
 			 * 获取验证码倒计时
@@ -136,8 +139,8 @@ import mixin from '../../common/loginPage.mixin.js';
 					"data":{
 						"action":"login",
 						"params":{
-							"username":formData.phone,
-							"password":formData.pwd
+							"username":this.formData.phone,
+							"password":this.formData.pwd
 						}
 					},
 					success:async (e) => {
