@@ -11,9 +11,10 @@
 						<uni-easyinput type="number" class="phone-input-box" :inputBorder="false"
 							v-model="formData.phone" maxlength="11" placeholder="请输入手机号">
 							<template slot="left">
-								<picker mode="selector" :range="phoneArea" @change="selectPhoneArea">
-									<text class="phone-area">{{currenPhoneArea}}</text>
-								</picker>
+								<!-- 当前仅支持中国大陆手机号 -->
+								<!-- <picker mode="selector" :range="phoneArea" @change="selectPhoneArea"> -->
+									<text class="phone-area" @click="selectPhoneArea">{{currenPhoneArea}}</text>
+								<!-- </picker> -->
 							</template>
 						</uni-easyinput>
 						<uni-easyinput type="number" class="phone-input-box" :inputBorder="false"
@@ -39,21 +40,19 @@
 		mixins:[mixin],
 		data() {
 			return {
-				phoneNumber: '',
-				password: '',
 				link: [{
 					text: '用户协议',
-					to: '/baidu.com'
+					to: '/pages/ucenter/agree-list/service/service'
 				}, {
 					text: '隐私政策',
-					to: 'baidu'
+					to: '/pages/ucenter/agree-list/privacy/privacy'
 				}],
-				phoneArea: ['+86', '+87'],
+				phoneArea: ['+86'],
 				currenPhoneArea: '+86',
 				
 				formData: {
-					phone: '',
-					pwd:''
+					phone: '17777777777',
+					pwd:'123456'
 				},
 				rules: {
 					phone: {
@@ -113,9 +112,62 @@
 			pwdLogin() {
 				if (!this.canLogin) return;
 				// 下边是可以登录
+				uniCloud.callFunction({
+					name:"user-center",
+					"data":{
+						"action":"login",
+						"params":{
+							"username":formData.phone,
+							"password":formData.pwd
+						}
+					},
+					success:async (e) => {
+						uni.hideLoading()
+						console.log(e.result);
+						if(e.result.code === 0){
+							uni.setStorageSync('uni_id_uid', e.result.uid)
+							uni.setStorageSync('uni_id_token', e.result.token)
+							uni.setStorageSync('uni_id_token_expired', e.result.tokenExpired)
+							// console.log('66666=',e.result.uid,e.result.token,e.result.tokenExpired);
+							delete e.result.userInfo.token
+							this.setUserInfo(e.result.userInfo)
+							uni.showToast({
+								title: '登陆成功',
+								icon: 'none'
+							});
+							uni.navigateBack()
+						}else{
+							uni.showModal({
+								title: '错误',
+								content: e.result.msg,
+								showCancel: false,
+								confirmText: '知道了',
+							});
+						}
+					},
+					fail: (err) => {
+						console.log(err);
+						uni.showModal({
+							title: '错误',
+							content: JSON.stringify(err),
+							showCancel: false,
+							confirmText: '知道了',
+						});
+						if(err.errCode===30002){
+							
+						}
+					},
+					complete: () => {
+						uni.hideLoading()
+					}
+				})
 			},
 			selectPhoneArea(event) {
-				this.currenPhoneArea = this.phoneArea[event.detail.value];
+				uni.showToast({
+					title: '当前仅支持中国大陆手机号',
+					icon: 'none'
+				});
+				// this.currenPhoneArea = this.phoneArea[event.detail.value];
 			},
 		}
 	}

@@ -103,7 +103,55 @@ import mixin from '../../common/loginPage.mixin.js';
 			 * 完成并提交
 			 */
 			submit(){
-				
+				uniCloud.callFunction({
+					name:"user-center",
+					"data":{
+						"action":"login",
+						"params":{
+							"username":formData.phone,
+							"password":formData.pwd
+						}
+					},
+					success:async (e) => {
+						uni.hideLoading()
+						console.log(e.result);
+						if(e.result.code === 0){
+							uni.setStorageSync('uni_id_uid', e.result.uid)
+							uni.setStorageSync('uni_id_token', e.result.token)
+							uni.setStorageSync('uni_id_token_expired', e.result.tokenExpired)
+							// console.log('66666=',e.result.uid,e.result.token,e.result.tokenExpired);
+							delete e.result.userInfo.token
+							this.setUserInfo(e.result.userInfo)
+							uni.showToast({
+								title: '登陆成功',
+								icon: 'none'
+							});
+							uni.navigateBack()
+						}else{
+							uni.showModal({
+								title: '错误',
+								content: e.result.msg,
+								showCancel: false,
+								confirmText: '知道了',
+							});
+						}
+					},
+					fail: (err) => {
+						console.log(err);
+						uni.showModal({
+							title: '错误',
+							content: JSON.stringify(err),
+							showCancel: false,
+							confirmText: '知道了',
+						});
+						if(err.errCode===30002){
+							
+						}
+					},
+					complete: () => {
+						uni.hideLoading()
+					}
+				})
 			}
 		}
 	}

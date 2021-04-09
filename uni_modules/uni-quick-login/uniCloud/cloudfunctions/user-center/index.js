@@ -88,7 +88,7 @@ exports.main = async (event, context) => {
 			}
 			
 			if (!needCaptcha || passed) {
-				res = await uniID.login(params);
+				res = await uniID.login({...params,"queryField":['username','email','mobile']});
 				await loginLog(res);
 				needCaptcha = await getNeedCaptcha();
 			}
