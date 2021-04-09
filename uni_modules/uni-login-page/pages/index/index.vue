@@ -56,7 +56,7 @@
 				currenPhoneArea: '+86',
 
 				formData: {
-					phone: '17769516081'
+					phone: ''
 				},
 				rules: {
 					// 对phone字段进行必填验证

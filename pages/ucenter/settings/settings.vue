@@ -25,7 +25,7 @@
 			return {
 				agreeList: [{
 						title: '个人资料',
-						to: '../edit/edit'
+						event:'toEdit'
 					},
 					{
 						title: '修改密码',
@@ -67,8 +67,13 @@
 			...mapMutations({
 				logout: 'user/logout'
 			}),
+			toEdit(){
+				uni.navigateTo({
+					url: '../edit/edit'
+				});
+			},
 			changePwd(){
-				if(this.userInfo && this.userInfo.phone){
+				if(this.userInfo){
 					uni.navigateTo({
 						url:'/uni_modules/uni-login-page/pages/index/pwd-retrieve?phoneNumber='+ this.userInfo.phone +'&phoneArea=+86'
 					});

@@ -9,12 +9,14 @@
 				<uni-forms ref="form" :value="formData" :rules="rules">
 					<uni-forms-item name="phone">
 						<uni-easyinput type="number" class="phone-input-box" :inputBorder="false"
+							v-model="formData.phone" placeholder="请输入手机号"></uni-easyinput>
+						<uni-easyinput type="number" class="phone-input-box" :inputBorder="false"
 							v-model="formData.code" maxlength="6" placeholder="请输入验证码">
 							<template slot="right">
 								<login-short-code ref="shortCode" @getCode="getCode"></login-short-code>
 							</template>
 						</uni-easyinput>
-						<uni-easyinput type="number" class="phone-input-box" :inputBorder="false"
+						<uni-easyinput type="text" class="phone-input-box" :inputBorder="false"
 							v-model="formData.pwd" placeholder="请输入新密码"></uni-easyinput>
 					</uni-forms-item>
 					<button class="send-btn-box" :disabled="!canSubmit" :type="canSubmit?'primary':'default'"
@@ -31,23 +33,33 @@ import mixin from '../../common/loginPage.mixin.js';
 		mixins:[mixin],
 		data() {
 			return {
-				phoneNumber: '',
-				phoneCode: '',
 				password: '',
 				currenPhoneArea: '',
 				
 				formData:{
+					phone:'',
 					code:'',
 					pwd:''
 				},
 				rules: {
+					phone:{
+						rules:[{
+								required: true,
+								errorMessage: '请输入手机号',
+							},
+							{
+								pattern: /^1\d{10}$/,
+								errorMessage: '手机号格式不正确',
+							}
+						]
+					},
 					code: {
 						rules: [{
 								required: true,
 								errorMessage: '请输入验证码',
 							},
 							{
-								legn: /^.{6}$/,
+								pattern: /^.{6}$/,
 								errorMessage: '请输入6位验证码',
 							}
 						]
@@ -68,13 +80,13 @@ import mixin from '../../common/loginPage.mixin.js';
 		},
 		computed: {
 			tipText() {
-				return `验证码已通过短信发送至${this.currenPhoneArea} ${this.phoneNumber}。密码为6 - 20位`
+				return `验证码已通过短信发送至${this.currenPhoneArea} ${this.formData.phone}。密码为6 - 20位`
 			},
 			canSubmit() {
 				let reg_phone = /^1\d{10}$/;
 				let reg_pwd = /^.{6,20}$/;
 				let reg_code = /^\d{6}$/;
-				let isPhone = reg_phone.test(this.phoneNumber);
+				let isPhone = reg_phone.test(this.formData.phone);
 				let isPwd = reg_pwd.test(this.formData.pwd);
 				let isCode = reg_code.test(this.formData.code);
 				return isPhone && isPwd && isCode;
@@ -82,12 +94,14 @@ import mixin from '../../common/loginPage.mixin.js';
 		},
 		onLoad(event) {
 			if (event && event.phoneNumber) {
-				this.phoneNumber = event.phoneNumber;
+				this.formData.phone = event.phoneNumber;
 				this.currenPhoneArea = '+' + Number(event.phoneArea);
 			}
 		},
 		onReady() {
-			this.$refs.shortCode.start();
+			if(this.formData.phone){
+				this.$refs.shortCode.start();
+			}
 		},
 		methods: {
 			/**
@@ -95,7 +109,7 @@ import mixin from '../../common/loginPage.mixin.js';
 			 * 倒计时期间不会触发该方法
 			 */
 			getCode(done) {
-				if (this.phoneNumber == '') return uni.showToast({
+				if (this.formData.phone == '') return uni.showToast({
 					title: '请填写手机号',
 					icon: 'none'
 				});
@@ -104,7 +118,7 @@ import mixin from '../../common/loginPage.mixin.js';
 					"data": {
 						"action": "sendSmsCode",
 						"params": {
-							"mobile": this.phoneNumber,
+							"mobile": this.formData.phone,
 							"type": "login"
 						}
 					},
@@ -136,7 +150,7 @@ import mixin from '../../common/loginPage.mixin.js';
 					"data": {
 						"action": "loginBySms",
 						"params":{
-							"mobile":this.phoneNumber,
+							"mobile":this.formData.phone,
 							"code":this.formData.code
 						}
 					},

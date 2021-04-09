@@ -43,7 +43,7 @@
 								errorMessage: '请输入验证码',
 							},
 							{
-								legn: /^.{6}$/,
+								pattern: /^.{6}$/,
 								errorMessage: '请输入6位验证码',
 							}
 						]

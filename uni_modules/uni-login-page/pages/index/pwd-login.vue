@@ -51,8 +51,8 @@
 				currenPhoneArea: '+86',
 				
 				formData: {
-					phone: '17769516081',
-					pwd:'123456'
+					phone: '',
+					pwd:''
 				},
 				rules: {
 					phone: {
@@ -135,9 +135,7 @@
 								title: '登陆成功',
 								icon: 'none'
 							});
-							uni.switchTab({
-								url:"/pages/list/list"
-							})
+							uni.navigateBack()
 						}else{
 							uni.showModal({
 								title: '错误',
