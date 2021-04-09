@@ -34,7 +34,9 @@
 </template>
 
 <script>
+	import mixin from '../../common/loginPage.mixin.js';
 	export default {
+		mixins:[mixin],
 		data() {
 			return {
 				phoneNumber: '',
