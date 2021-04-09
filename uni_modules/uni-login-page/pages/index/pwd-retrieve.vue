@@ -18,7 +18,7 @@
 							v-model="formData.pwd" placeholder="请输入新密码"></uni-easyinput>
 					</uni-forms-item>
 					<button class="send-btn-box" :disabled="!canSubmit" :type="canSubmit?'primary':'default'"
-						@click="submit">完成</button>
+						@click="checkCode(submit)">完成</button>
 				</uni-forms>
 			</view>
 		</view>
@@ -130,17 +130,14 @@ import mixin from '../../common/loginPage.mixin.js';
 					}
 				})
 			},
-			/**
-			 * 完成并提交
-			 */
-			submit(){
-				uniCloud.callFunction({
-					name:"user-center",
-					"data":{
-						"action":"login",
+			checkCode(callback){
+				uniCloud.callFunction({//联网验证登陆
+					"name": "user-center",
+					"data": {
+						"action": "loginBySms",
 						"params":{
-							"username":this.formData.phone,
-							"password":this.formData.pwd
+							"mobile":this.phoneNumber,
+							"code":this.formData.code
 						}
 					},
 					success:async (e) => {
@@ -150,14 +147,11 @@ import mixin from '../../common/loginPage.mixin.js';
 							uni.setStorageSync('uni_id_uid', e.result.uid)
 							uni.setStorageSync('uni_id_token', e.result.token)
 							uni.setStorageSync('uni_id_token_expired', e.result.tokenExpired)
-							// console.log('66666=',e.result.uid,e.result.token,e.result.tokenExpired);
-							delete e.result.userInfo.token
-							this.setUserInfo(e.result.userInfo)
-							uni.showToast({
-								title: '登陆成功',
-								icon: 'none'
-							});
-							uni.navigateBack()
+							// uni.showToast({
+							// 	title: '登陆成功',
+							// 	icon: 'none'
+							// });
+							callback()
 						}else{
 							uni.showModal({
 								title: '错误',
@@ -165,6 +159,46 @@ import mixin from '../../common/loginPage.mixin.js';
 								showCancel: false,
 								confirmText: '知道了',
 							});
+						}
+					},
+					fail: (err) => {
+						console.log(err);
+						uni.showModal({
+							title: '错误',
+							content: JSON.stringify(err),
+							showCancel: false,
+							confirmText: '知道了',
+						});
+						if(err.errCode===30002){
+							
+						}
+					},
+					complete: () => {
+						uni.hideLoading()
+					}
+				})
+			},
+			/**
+			 * 完成并提交
+			 */
+			submit(){
+				uniCloud.callFunction({
+					name:"user-center",
+					"data":{
+						"action":"resetPwd",
+						"params":{
+							"password":this.formData.pwd
+						}
+					},
+					success:async (e) => {
+						uni.hideLoading()
+						console.log(e.result);
+						uni.showToast({
+							title: e.result.msg,
+							icon: 'none'
+						});
+						if(e.result.code === 0){
+							uni.navigateBack()
 						}
 					},
 					fail: (err) => {

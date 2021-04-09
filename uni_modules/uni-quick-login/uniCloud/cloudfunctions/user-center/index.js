@@ -32,6 +32,7 @@ exports.main = async (event, context) => {
 		'createCaptcha', 'verifyCaptcha','refreshCaptcha', 'inviteLogin',
 		'login_by_weixin','login_by_univerify','login_by_apple','loginBySms'
 	]
+	let payload;
 	console.log(event.action);
 	if (!noCheckAction.includes(event.action)) {
 		if (!event.uniIdToken) {
@@ -40,7 +41,7 @@ exports.main = async (event, context) => {
 				msg: '缺少token'
 			}
 		}
-		let payload = await uniID.checkToken(event.uniIdToken)
+		payload = await uniID.checkToken(event.uniIdToken)
 		if (payload.code && payload.code > 0) {
 			return payload
 		}
@@ -88,7 +89,10 @@ exports.main = async (event, context) => {
 			}
 			
 			if (!needCaptcha || passed) {
-				res = await uniID.login({...params,"queryField":['username','email','mobile']});
+				res = await uniID.login({
+					...params,
+					queryField: ['username', 'email', 'mobile']
+				});
 				await loginLog(res);
 				needCaptcha = await getNeedCaptcha();
 			}
@@ -124,7 +128,7 @@ exports.main = async (event, context) => {
 					msg: '请求过于频繁'
 				}
 			}
-			const templateId = '' // 替换为自己申请的模板id
+			const templateId = '11753' // 替换为自己申请的模板id
 			if (!templateId) {
 				return {
 					code: 500,
@@ -192,6 +196,9 @@ exports.main = async (event, context) => {
 			break;
 		case 'refreshCaptcha':
 			res = await uniCaptcha.refresh(params)
+			break;
+		case 'resetPwd':
+			res = await uniID.resetPwd({...params,"uid":payload.uid})
 			break;
 		default:
 			res = {

@@ -51,7 +51,7 @@
 				currenPhoneArea: '+86',
 				
 				formData: {
-					phone: '17777777777',
+					phone: '17769516081',
 					pwd:'123456'
 				},
 				rules: {
