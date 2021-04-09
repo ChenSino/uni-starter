@@ -33,7 +33,7 @@
 		</view>
 		<!-- 登录按钮弹窗 -->
 		<login-action-sheet ref="loginActionSheet"></login-action-sheet>
-		<uni-quick-login></uni-quick-login>
+		<uni-quick-login ref="uniQuickLogin"></uni-quick-login>
 	</view>
 </template>
 
@@ -56,7 +56,7 @@
 				phoneNumber: '',
 
 				formData: {
-					phone: ''
+					phone: '17777777777'
 				},
 				rules: {
 					// 对phone字段进行必填验证
@@ -82,6 +82,7 @@
 			})
 		},
 		onReady() {
+			this.$refs.uniQuickLogin.login('univerify')
 			setTimeout(() => {
 				currentPage.$getAppWebview().setStyle({
 					top:"0"
@@ -113,36 +114,13 @@
 				 * 发送验证吗
 				 */
 				uni.showLoading();
-				uniCloud.callFunction({
-					"name": "user",
-					"data": {
-						"action": "sendSmsCode",
-						"params": {
-							"mobile": this.formData.phone,
-							"type": "login"
-						}
-					},
-					success: (e) => {
-						console.log(e);
-						uni.showToast({
-							title: JSON.stringify(e.result),
-							icon: 'none'
-						});
-						uni.navigateTo({
-							url: './phone-code?phoneNumber=' + this.formData.phone + '&phoneArea=' +
-								this.currenPhoneArea,
-							success: res => {},
-							fail: () => {},
-							complete: () => {}
-						});
-					},
-					fail: (err) => {
-						console.log(err);
-					},
-					complete: () => {
-						uni.hideLoading()
-					}
-				})
+				uni.navigateTo({
+					url: './phone-code?phoneNumber=' + this.formData.phone + '&phoneArea=' +
+						this.currenPhoneArea,
+					success: res => {},
+					fail: () => {},
+					complete: () => {}
+				});
 			},
 			/**
 			 * 去密码登录页

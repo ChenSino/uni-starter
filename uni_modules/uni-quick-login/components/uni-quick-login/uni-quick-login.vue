@@ -59,10 +59,13 @@
 		mounted() {
 			//获取当前环境能用的快捷登陆方式
 			// #ifdef APP-PLUS
+			uni.showLoading();
 				plus.oauth.getServices(oauthServices=>{
 					this.oauthServices = oauthServices
 					console.log(oauthServices);
+					uni.hideLoading()
 				},err=>{
+					uni.hideLoading()
 					uni.showModal({
 						title: '获取服务供应商失败：' +JSON.stringify(err),
 						showCancel: false,

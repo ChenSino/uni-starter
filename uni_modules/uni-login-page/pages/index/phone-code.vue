@@ -20,6 +20,7 @@
 				</uni-forms>
 			</view>
 		</view>
+		<uni-quick-login></uni-quick-login>
 	</view>
 </template>
 
@@ -62,11 +63,9 @@
 				return isPhone && isCode;
 			}
 		},
-		onLoad(event) {
-			if (event && event.phoneNumber) {
-				this.phoneNumber = event.phoneNumber;
-				this.currenPhoneArea = '+' + Number(event.phoneArea);
-			}
+		onLoad({phoneNumber,phoneArea}) {
+			this.phoneNumber = phoneNumber;
+			this.currenPhoneArea = '+' + Number(phoneArea);
 		},
 		onReady() {
 			this.$refs.shortCode.start();
@@ -81,14 +80,90 @@
 					title: '请填写手机号',
 					icon: 'none'
 				});
-				// 发送成功后开启倒计时
-				done();
+				uniCloud.callFunction({
+					"name": "user-center",
+					"data": {
+						"action": "sendSmsCode",
+						"params": {
+							"mobile": this.phoneNumber,
+							"type": "login"
+						}
+					},
+					success: (e) => {
+						console.log(e);
+						// uni.showToast({
+						// 	title: JSON.stringify(e.result),
+						// 	icon: 'none'
+						// });
+						uni.showModal({
+							content: JSON.stringify(e.result),
+							showCancel: false,
+							confirmText: '知道了'
+						});
+						// 发送成功后开启倒计时
+						done();
+					},
+					fail: (err) => {
+						console.log(err);
+					},
+					complete: () => {
+						uni.hideLoading()
+					}
+				})
 			},
 			/**
 			 * 完成并提交
 			 */
 			submit(){
-				
+				uniCloud.callFunction({//联网验证登陆
+					"name": "user-center",
+					"data": {
+						"action": "loginBySms",
+						"params":{
+							"mobile":this.phoneNumber,
+							"code":this.formData.code
+						}
+					},
+					success:async (e) => {
+						uni.hideLoading()
+						console.log(e.result);
+						if(e.result.code === 0){
+							uni.setStorageSync('uni_id_uid', e.result.uid)
+							uni.setStorageSync('uni_id_token', e.result.token)
+							uni.setStorageSync('uni_id_token_expired', e.result.tokenExpired)
+							// console.log('66666=',e.result.uid,e.result.token,e.result.tokenExpired);
+							delete e.result.userInfo.token
+							this.setUserInfo(e.result.userInfo)
+							uni.showToast({
+								title: '登陆成功',
+								icon: 'none'
+							});
+							uni.navigateBack()
+						}else{
+							uni.showModal({
+								title: '错误',
+								content: e.result.msg,
+								showCancel: false,
+								confirmText: '知道了',
+							});
+						}
+					},
+					fail: (err) => {
+						console.log(err);
+						uni.showModal({
+							title: '错误',
+							content: JSON.stringify(err),
+							showCancel: false,
+							confirmText: '知道了',
+						});
+						if(err.errCode===30002){
+							
+						}
+					},
+					complete: () => {
+						uni.hideLoading()
+					}
+				})
 			}
 		}
 	}
