@@ -8,6 +8,10 @@
 </template>
 
 <script>
+	import {
+		mapGetters,
+		mapMutations
+	} from 'vuex';
 	export default {
 		data() {
 			return {
@@ -84,10 +88,15 @@
 			*/
 		},
 		methods: {
+			...mapMutations({
+				setUserInfo: 'user/login'
+			}),
 			login(type) {
 				let oauthService = this.oauthServices.find((service) => service.id == type)
 				// #ifdef APP-PLUS
 				uni.showLoading({mask: true});
+				
+				//请勿直接使用前端获取的unionid或openid直接用于登陆，前端的数据都是不可靠的
 				if(type=='weixin'){
 					oauthService.authorize(({code})=>{
 						console.log(code);
@@ -120,23 +129,35 @@
 				// #endif
 			},
 			quickLogin(params,type){
-				//请勿直接使用authResult中的unionid或openid直接用于登陆，前端的数据都是不可靠的
 				console.log({params,type});
-				
 				uniCloud.callFunction({//联网验证登陆
 					"name": "user-center",
 					"data": {
 						"action": "login_by_"+type,
 						params
 					},
-					success: (e) => {
+					success:async (e) => {
+						uni.hideLoading()
 						console.log(e.result);
-						uni.showModal({
-							content: JSON.stringify(e.result),
-							showCancel: false
-						});
-						if(type=='univerify'){
-							uni.closeAuthView()
+						// uni.showModal({
+						// 	content: JSON.stringify(e.result),
+						// 	showCancel: false
+						// });
+						if(e.result.code === 0){
+							uni.setStorageSync('uni_id_uid', e.result.uid)
+							uni.setStorageSync('uni_id_token', e.result.token)
+							uni.setStorageSync('uni_id_token_expired', e.result.tokenExpired)
+							console.log('66666=',e.result.uid,e.result.token,e.result.tokenExpired);
+							delete e.result.userInfo.token
+							this.setUserInfo(e.result.userInfo)
+							if(type=='univerify'){
+								uni.closeAuthView()
+							}
+							uni.showToast({
+								title: '登陆成功',
+								icon: 'none'
+							});
+							uni.navigateBack()
 						}
 					},
 					fail: (err) => {
