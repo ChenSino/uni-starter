@@ -4,7 +4,6 @@ const PACKAGE_INFO_KEY = '__package_info__'
 export default function() {
 	// #ifdef APP-PLUS
 	
-	return '先关了'
 	
 	plus.runtime.getProperty(plus.runtime.appid, function(widgetInfo) {
 		uniCloud.callFunction({

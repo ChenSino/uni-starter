@@ -27,7 +27,7 @@
 			 */
 			count: {
 				type: [String, Number],
-				default: 3
+				default: 60
 			}
 		},
 		data() {

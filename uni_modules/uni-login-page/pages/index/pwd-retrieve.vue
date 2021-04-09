@@ -125,7 +125,7 @@ import mixin from '../../common/loginPage.mixin.js';
 					success: (e) => {
 						console.log(e);
 						uni.showToast({
-							title: JSON.stringify(e.result),
+							title: "短信验证码发送成功",
 							icon: 'none'
 						});
 						// uni.showModal({
