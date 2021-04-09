@@ -59,10 +59,10 @@
 				ucenterList: [
 					[{
 						title: '阅读过的文章',
-						to: '/pages/ucenter/agree-list/agree-list'
+						to: ''
 					}, {
 						title: '我的积分',
-						to: '/pages/ucenter/agree-list/agree-list'
+						to: ''
 					}],
 					[{
 							title: '政策与协议',
@@ -114,11 +114,6 @@
 				checkUpdate();
 			},
 			goLogin() {
-				uni.navigateTo({
-					url: './edit/edit'
-				})
-				
-				return;
 				if (!this.login) {
 					console.log('点击前往登录');
 					uni.navigateTo({
