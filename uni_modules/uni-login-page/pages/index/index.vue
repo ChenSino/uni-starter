@@ -75,19 +75,23 @@
 			}
 		},
 		onLoad() {
+			//#ifdef APP-PLUS
 			let pages = getCurrentPages();
 			currentPage = pages[pages.length - 1];
 			currentPage.$getAppWebview().setStyle({
 				top:"1000px"
 			})
+			//#endif
 		},
 		onReady() {
 			this.$refs.uniQuickLogin.login('univerify')
+			//#ifdef APP-PLUS
 			setTimeout(() => {
 				currentPage.$getAppWebview().setStyle({
 					top:"0"
 				})
 			}, 1500);
+			//#endif
 		},
 		
 		computed: {
