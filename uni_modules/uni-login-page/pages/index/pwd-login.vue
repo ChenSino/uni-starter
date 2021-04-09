@@ -17,7 +17,7 @@
 								<!-- </picker> -->
 							</template>
 						</uni-easyinput>
-						<uni-easyinput type="number" class="phone-input-box" :inputBorder="false"
+						<uni-easyinput type="password" class="phone-input-box" :inputBorder="false"
 							v-model="formData.pwd" placeholder="请输入密码"></uni-easyinput>
 					</uni-forms-item>
 					<button class="send-btn-box" :disabled="!canLogin" :type="canLogin?'primary':'default'"
