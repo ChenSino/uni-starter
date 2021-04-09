@@ -43,10 +43,10 @@
 				password: '',
 				link: [{
 					text: '用户协议',
-					to: '/baidu.com'
+					to: '/pages/ucenter/agree-list/service/service'
 				}, {
 					text: '隐私政策',
-					to: 'baidu'
+					to: '/pages/ucenter/agree-list/privacy/privacy'
 				}],
 				phoneArea: ['+86', '+87'],
 				currenPhoneArea: '+86',
