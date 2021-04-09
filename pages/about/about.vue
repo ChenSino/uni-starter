@@ -200,6 +200,7 @@
 		line-height: 80rpx;
 		justify-content: center;
 		color: #ccc;
+		text-align: center;
 	}
 
 	.source {

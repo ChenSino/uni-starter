@@ -4,7 +4,7 @@
 			<uni-list-item>
 				<template v-slot:body>
 					<view class="avatar-box">
-						<image class="avatar-img" :src="userInfo.avatar || '/static/logo.png'" @click="chooseImg" mode="aspectFill"></image>
+						<image class="avatar-img" :src="userInfo.avatar || '/static/uni-center/logo.png'" @click="chooseImg" mode="aspectFill"></image>
 					</view>
 				</template>
 			</uni-list-item>

@@ -34,7 +34,7 @@
 	export default {
 		data() {
 			return {
-				avatarUrl: '/static/logo.png',
+				avatarUrl: '/static/uni-center/logo.png',
 				gridList: [{
 						"text": "文字1",
 						"icon": "chat"

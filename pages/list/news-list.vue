@@ -160,7 +160,7 @@
 </script>
 
 <style lang="scss" scoped>
-	// @import '@/common/uni-ui.scss';
+	@import '@/common/uni-ui.scss';
 
 	page {
 		display: flex;

@@ -8,10 +8,6 @@
 		</uni-list>
 		<!-- 退出按钮 -->
 		<button class="bottom-back" @click="clickLogout"><text class="bottom-back-text">退出登录</text></button>
-		<!-- 弹窗 -->
-		<uni-popup type="center" ref="dialog">
-			<uni-popup-dialog type="warning" content="是否退出登录？" @confirm="confirm"></uni-popup-dialog>
-		</uni-popup>
 	</view>
 </template>
 
@@ -21,7 +17,8 @@
 		setting
 	} from './dc-push/push.js';
 	import {
-		mapMutations
+		mapMutations,
+		mapGetters
 	} from 'vuex';
 	export default {
 		data() {
@@ -32,7 +29,7 @@
 					},
 					{
 						title: '修改密码',
-						to: ''
+						event:'changePwd'
 					}, {
 						title: '注销用户',
 						event: ''
@@ -54,6 +51,11 @@
 				]
 			}
 		},
+		computed:{
+			...mapGetters({
+				'userInfo':'user/info'
+			})
+		},
 		onLoad() {
 			this.initSoterAuthentication();
 		},
@@ -64,6 +66,18 @@
 			...mapMutations({
 				logout: 'user/logout'
 			}),
+			changePwd(){
+				if(this.userInfo.phone){
+					uni.navigateTo({
+						url:'/uni_modules/uni-login-page/pages/index/pwd-retrieve?phoneNumber='+ this.userInfo.phone +'&phoneArea=+86'
+					});
+				} else {
+					uni.showToast({
+						title: '请先登录',
+						icon: 'none'
+					});
+				}
+			},
 			checkPush(){
 				// 手机端获取推送是否开启
 				//#ifdef APP-PLUS
@@ -112,7 +126,7 @@
 						requestAuthModes: [item.name],
 						challenge: '123456',	// 微信端挑战因子
 						authContent: `请用${item.title}`,
-						success(res) {
+						success:(res)=> {
 							if(res.errCode == 0){
 								/**
 								 * 验证成功后开启自己的业务逻辑
@@ -131,7 +145,7 @@
 								icon: 'none'
 							});
 						},
-						fail(err) {
+						fail:(err)=> {
 							uni.showToast({
 								title: `认证失败:${err.errCode}`,
 								icon: 'none'
@@ -149,14 +163,14 @@
 								return resolve(res);
 							}
 							uni.showToast({
-								title: `设备未开启${item.title}`,
+								title: `设备未开启${mode.title}`,
 								icon: 'none'
 							});
 							reject(res);
 						},
 						fail: (err) => {
 							uni.showToast({
-								title: `${item.title}失败`,
+								title: `${mode.title}失败`,
 								icon: 'none'
 							});
 							reject(err);
@@ -165,11 +179,21 @@
 				})
 			},
 			clickLogout() {
-				this.$refs.dialog.open();
-			},
-			confirm(){
-				this.logout();
-				uni.navigateBack();
+				
+				uni.showModal({
+					title: '提示',
+					content: '是否退出登录',
+					cancelText: '取消',
+					confirmText: '确定',
+					success: res => {
+						if(res.confirm){
+							this.logout();
+							uni.navigateBack();
+						}
+					},
+					fail: () => {},
+					complete: () => {}
+				});
 			},
 			itemClick(item) {
 				if (!item.to && item.event) {

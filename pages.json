@@ -130,7 +130,6 @@
 			"path": "uni_modules/uni-login-page/pages/index/pwd-login",
 			"style": {
 				"navigationBarTitleText": "",
-				"navigationBarBackgroundColor": "#FFFFFF",
 				"app-plus": {
 					"titleNView": {
 						"buttons": [{
@@ -146,7 +145,6 @@
 			"path": "uni_modules/uni-login-page/pages/index/pwd-retrieve",
 			"style": {
 				"navigationBarTitleText": "",
-				"navigationBarBackgroundColor": "#FFFFFF",
 				"app-plus": {
 					"titleNView": {
 						"buttons": [{
@@ -162,7 +160,6 @@
 			"path": "uni_modules/uni-login-page/pages/index/phone-code",
 			"style": {
 				"navigationBarTitleText": "",
-				"navigationBarBackgroundColor": "#FFFFFF",
 				"app-plus": {
 					"titleNView": {
 						"buttons": [{
@@ -187,14 +184,14 @@
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "base-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
+		"navigationBarBackgroundColor": "#FFFFFF",
 		"backgroundColor": "#F8F8F8"
 	},
 	"tabBar": {
 		"color": "#7A7E83",
 		"selectedColor": "#007AFF",
 		"borderStyle": "black",
-		"backgroundColor": "#F8F8F8",
+		"backgroundColor": "#FFFFFF",
 		"list": [{
 			"pagePath": "pages/list/list",
 			"iconPath": "static/tabbar/list.png",

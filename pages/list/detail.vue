@@ -16,7 +16,7 @@
 						<!-- 通过body插槽定义作者信息内容 -->
 						<view slot="body" class="header-content">
 							<view class="uni-title">{{data.author && data.author[0].username}}</view>
-							<view class="uni-note">更新于 {{data.last_modify_date | beforTime}} </view>
+							<view class="uni-note">更新于 <uni-dateformat :date="data.last_modify_date" format="yyyy-MM-dd" :threshold="[60000, 2592000000]" /> </view>
 						</view>
 						<view slot="footer" class="footer">
 							<button @click="followClick" class="footer-button">关注</button>
@@ -45,7 +45,6 @@
 
 <script>
 	import uParse from '@/components/u-parse/parse.vue';
-	import { friendlyDate } from '@/common/utils.js';
 	export default {
 		components: {
 			uParse
@@ -62,11 +61,6 @@
 				formData: {
 					noData: '<p style="text-align:center;color:#666">详情加载中...</p>'
 				}, 
-			}
-		},filters:{
-			beforTime(number){
-				if(number)return friendlyDate(+number);
-				return '';
 			}
 		},
 		computed:{
