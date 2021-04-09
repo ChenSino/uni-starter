@@ -59,17 +59,17 @@
 				ucenterList: [
 					[{
 						title: '阅读过的文章',
-						to: '/pages/agree-list/agree-list'
+						to: '/pages/ucenter/agree-list/agree-list'
 					}, {
 						title: '我的积分',
-						to: '/pages/agree-list/agree-list'
+						to: '/pages/ucenter/agree-list/agree-list'
 					}],
 					[{
 							title: '政策与协议',
-							to: '/pages/agree-list/agree-list'
+							to: '/pages/ucenter/agree-list/agree-list'
 						}, {
 							title: '关于',
-							to: '/pages/about/about'
+							to: '/pages/ucenter/about/about'
 						},
 						//#ifdef APP-PLUS
 						{
@@ -81,10 +81,10 @@
 					],
 					[{
 						title: '反馈',
-						to: '/pages/uni-feedback/uni-feedback'
+						to: '/pages/ucenter/uni-feedback/uni-feedback'
 					}, {
 						title: '设置',
-						to: '/pages/settings/settings'
+						to: '/pages/ucenter/settings/settings'
 					}]
 				]
 			}

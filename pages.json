@@ -37,7 +37,7 @@
 			// "navigationBarTitleText": "",
 			// "navigationBarBackgroundColor": "#FFFFFF",
 		}, {
-			"path": "pages/search/search",
+			"path": "pages/list/search/search",
 			"style": {
 				"navigationStyle": "custom"
 			}
@@ -72,7 +72,7 @@
 				"navigationBarTitleText": "问题反馈"
 			}
 		}, {
-			"path": "pages/about/about",
+			"path": "pages/ucenter/about/about",
 			"style": {
 				"navigationBarTitleText": "关于"
 			}
@@ -111,7 +111,7 @@
 				}
 			}
 		}, {
-			"path": "pages/settings/settings",
+			"path": "pages/ucenter/settings/settings",
 			"style": {
 				"navigationBarTitleText": "设置"
 			}
@@ -173,7 +173,7 @@
 			}
 
 		}, {
-			"path": "pages/ucenter/help",
+			"path": "pages/ucenter/help/help",
 			"style": {
 				"navigationBarTitleText": "帮助",
 				"enablePullDownRefresh": false

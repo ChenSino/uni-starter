@@ -142,7 +142,7 @@
 				
 				if(this.canSearch){
 					uni.navigateTo({
-						url: '/pages/search/search',
+						url: '/pages/list/search/search',
 						animationType: 'fade-in'
 					});
 				}else {
