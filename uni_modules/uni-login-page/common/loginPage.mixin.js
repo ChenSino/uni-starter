@@ -1,4 +1,4 @@
-const helpPage = '/pages/ucenter/help';	// 帮助页面
+const helpPage = '/pages/ucenter/help/help';	// 帮助页面
 
 let mixin = {
 	// 监听帮助按钮
