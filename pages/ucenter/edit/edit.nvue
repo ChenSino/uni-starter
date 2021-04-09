@@ -20,6 +20,7 @@
 	} from 'vuex';
 	
 	const db = uniCloud.database();
+	const userTable = db.collection('uni-id-users')
 	export default {
 		data() {
 			return {
@@ -60,9 +61,7 @@
 			 * value 更新后的用户字段值
 			 */
 			uploadUserInfo(data){
-				db.collection('uni-id-users').where({
-					_id: this.userInfo._id
-				})
+				userTable.doc(this.userInfo._id)
 				.update(data)
 				.then(res=>{
 					console.log(res);

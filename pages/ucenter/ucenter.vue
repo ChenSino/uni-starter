@@ -114,11 +114,10 @@
 				checkUpdate();
 			},
 			goLogin() {
-				uni.navigateTo({
-					url: './edit/edit'
-				})
+				// uni.navigateTo({
+				// 	url: './edit/edit'
+				// })
 				
-				return;
 				if (!this.login) {
 					console.log('点击前往登录');
 					uni.navigateTo({
