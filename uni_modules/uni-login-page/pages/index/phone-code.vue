@@ -138,7 +138,9 @@
 								title: '登陆成功',
 								icon: 'none'
 							});
-							uni.navigateBack()
+							uni.switchTab({
+								url:"/pages/list/list"
+							})
 						}else{
 							uni.showModal({
 								title: '错误',
