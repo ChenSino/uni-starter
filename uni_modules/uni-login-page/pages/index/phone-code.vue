@@ -91,15 +91,16 @@
 					},
 					success: (e) => {
 						console.log(e);
-						// uni.showToast({
-						// 	title: JSON.stringify(e.result),
-						// 	icon: 'none'
-						// });
-						uni.showModal({
-							content: JSON.stringify(e.result),
-							showCancel: false,
-							confirmText: '知道了'
+						uni.showToast({
+							title: JSON.stringify(e.result),
+							icon: 'none'
 						});
+						
+						// uni.showModal({
+						// 	content: JSON.stringify(e.result),
+						// 	showCancel: false,
+						// 	confirmText: '知道了'
+						// });
 						// 发送成功后开启倒计时
 						done();
 					},

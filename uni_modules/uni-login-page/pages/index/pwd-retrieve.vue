@@ -4,7 +4,7 @@
 			<view class="content">
 				<!-- 顶部文字 -->
 				<text class="content-top-title">重置密码</text>
-				<login-ikonw class="login-iknow" :text="tipText"></login-ikonw>
+				<login-ikonw v-show="formData.phone" class="login-iknow" :text="tipText"></login-ikonw>
 				<!-- 登录框 (选择手机号所属国家和地区需要另行实现) -->
 				<uni-forms ref="form" :value="formData" :rules="rules">
 					<uni-forms-item name="phone">
@@ -124,15 +124,15 @@ import mixin from '../../common/loginPage.mixin.js';
 					},
 					success: (e) => {
 						console.log(e);
-						// uni.showToast({
-						// 	title: JSON.stringify(e.result),
-						// 	icon: 'none'
-						// });
-						uni.showModal({
-							content: JSON.stringify(e.result),
-							showCancel: false,
-							confirmText: '知道了'
+						uni.showToast({
+							title: JSON.stringify(e.result),
+							icon: 'none'
 						});
+						// uni.showModal({
+						// 	content: JSON.stringify(e.result),
+						// 	showCancel: false,
+						// 	confirmText: '知道了'
+						// });
 						// 发送成功后开启倒计时
 						done();
 					},

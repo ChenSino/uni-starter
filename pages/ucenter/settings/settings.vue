@@ -75,7 +75,7 @@
 			changePwd(){
 				if(this.userInfo){
 					uni.navigateTo({
-						url:'/uni_modules/uni-login-page/pages/index/pwd-retrieve?phoneNumber='+ this.userInfo.phone +'&phoneArea=+86'
+						url:'/uni_modules/uni-login-page/pages/index/pwd-retrieve?phoneNumber='+ (this.userInfo.phone||'') +'&phoneArea=+86'
 					});
 				} else {
 					uni.showToast({
