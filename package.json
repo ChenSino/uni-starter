@@ -1,9 +1,12 @@
 {
 	"id": "uni-search-template",
-	"displayName": "云端一体搜索模板",
+	"displayName": "baseApp",
 	"version": "0.1.4",
-	"description": "uniCloud云端一体搜索模板，自带下拉候选、历史搜索、热搜。无需再开发服务器代码",
+	"description": "uniCloud云端一体项目模板，无需再开发服务器代码",
 	"keywords": [
+		"baseApp",
+		"login",
+		"登录模版",
         "uniCloud",
         "搜索",
         "search",

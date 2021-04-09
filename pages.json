@@ -67,7 +67,7 @@
 				"navigationStyle": "custom"
 			}
 		}, {
-			"path": "pages/uni-feedback/uni-feedback",
+			"path": "pages/ucenter/uni-feedback/uni-feedback",
 			"style": {
 				"navigationBarTitleText": "问题反馈"
 			}
@@ -78,19 +78,19 @@
 			}
 
 		}, {
-			"path": "pages/agree-list/agree-list",
+			"path": "pages/ucenter/agree-list/agree-list",
 			"style": {
 				"navigationBarTitleText": "政策与协议"
 			}
 
 		}, {
-			"path": "pages/agree-list/privacy/privacy",
+			"path": "pages/ucenter/agree-list/privacy/privacy",
 			"style": {
 				"navigationBarTitleText": "隐私政策"
 			}
 
 		}, {
-			"path": "pages/agree-list/service/service",
+			"path": "pages/ucenter/agree-list/service/service",
 			"style": {
 				"navigationBarTitleText": "服务协议"
 			}
