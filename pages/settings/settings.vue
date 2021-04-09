@@ -19,7 +19,7 @@
 	import {
 		isOn,
 		setting
-	} from '@/common/dc-push/push.js';
+	} from './dc-push/push.js';
 	import {
 		mapMutations
 	} from 'vuex';

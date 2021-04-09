@@ -25,7 +25,7 @@ function keepScreenOn(){
  * // 初始化appVersion
  */
 function initAppVersion(){
-	// #ifdef APP-NVUE
+	// #ifdef APP-PLUS
 	let appid = plus.runtime.appid;
 	plus.runtime.getProperty(appid ,(wgtInfo) => {
 		 wgtInfo.version 

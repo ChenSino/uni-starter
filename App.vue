@@ -7,7 +7,7 @@
 		},
 		onLaunch: function() {
 			console.log('App Launch')
-			// initApp();
+			 initApp();
 		},
 		onShow: function() {
 			console.log('App Show')

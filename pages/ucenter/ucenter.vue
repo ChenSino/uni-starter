@@ -72,11 +72,11 @@
 							to: '/pages/about/about'
 						},
 						//#ifdef APP-PLUS
-						// {
-						// 	title: '检查更新',
-						// 	rightText: `V${getApp().appVersion.finall.version}_${getApp().appVersion.finall.versionCode}`,
-						// 	event:'checkVersion'
-						// }
+						{
+							title: '检查更新',
+							rightText: `V${getApp().appVersion.finall.version}_${getApp().appVersion.finall.versionCode}`,
+							event:'checkVersion'
+						}
 						//#endif
 					],
 					[{
