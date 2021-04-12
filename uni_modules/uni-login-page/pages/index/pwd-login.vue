@@ -40,13 +40,6 @@
 		mixins:[mixin],
 		data() {
 			return {
-				link: [{
-					text: '用户协议',
-					to: '/pages/ucenter/agree-list/service/service'
-				}, {
-					text: '隐私政策',
-					to: '/pages/ucenter/agree-list/privacy/privacy'
-				}],
 				phoneArea: ['+86'],
 				currenPhoneArea: '+86',
 			}
