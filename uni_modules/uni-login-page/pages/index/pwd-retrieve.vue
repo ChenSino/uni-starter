@@ -41,13 +41,7 @@ import mixin from '../../common/loginPage.mixin.js';
 				return `验证码已通过短信发送至${this.currenPhoneArea} ${this.formData.phone}。密码为6 - 20位`
 			},
 			canSubmit() {
-				let reg_phone = /^1\d{10}$/;
-				let reg_pwd = /^.{6,20}$/;
-				let reg_code = /^\d{6}$/;
-				let isPhone = reg_phone.test(this.formData.phone);
-				let isPwd = reg_pwd.test(this.formData.pwd);
-				let isCode = reg_code.test(this.formData.code);
-				return isPhone && isPwd && isCode;
+				return this.isPhone && this.isPwd && this.isCode;
 			}
 		},
 		onLoad(event) {

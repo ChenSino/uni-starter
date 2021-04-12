@@ -38,11 +38,7 @@
 				return `验证码已通过短信发送至${this.currenPhoneArea} ${this.formData.phone}。`;
 			},
 			canSubmit() {
-				let reg_phone = /^1\d{10}$/;
-				let reg_code = /^\d{6}$/;
-				let isPhone = reg_phone.test(this.formData.phone);
-				let isCode = reg_code.test(this.formData.code);
-				return isPhone && isCode;
+				return this.isPhone && this.isCode;
 			}
 		},
 		onLoad({phoneNumber,phoneArea}) {

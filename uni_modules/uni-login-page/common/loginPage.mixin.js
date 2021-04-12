@@ -62,6 +62,23 @@ let mixin = {
 			}
 		}
 	},
+	computed: {
+		isPhone(){
+			let reg_phone = /^1\d{10}$/;
+			let isPhone = reg_phone.test(this.formData.phone);
+			return isPhone;
+		},
+		isPwd(){
+			let reg_pwd = /^.{6,20}$/;
+			let isPwd = reg_pwd.test(this.formData.pwd);
+			return isPwd;
+		},
+		isCode(){
+			let reg_code = /^\d{6}$/;
+			let isCode = reg_code.test(this.formData.code);
+			return isCode;
+		}
+	},
 	methods:{
 		...mapMutations({
 			setUserInfo: 'user/login'

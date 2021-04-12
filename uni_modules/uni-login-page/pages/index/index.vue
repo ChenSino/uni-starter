@@ -70,19 +70,10 @@
 		},
 		computed: {
 			canGetShortMsg() {
-				let reg = /^1\d{10}$/;
-				return reg.test(this.formData.phone);
+				return this.isPhone;
 			}
 		},
 		methods: {
-			// 触发提交表单
-			submit() {
-				this.$refs.form.submit().then(res => {
-					console.log('表单数据信息：', res);
-				}).catch(err => {
-					console.log('表单错误信息：', err);
-				})
-			},
 			selectPhoneArea(event) {
 				uni.showToast({
 					title: '当前仅支持中国大陆手机号',
@@ -91,7 +82,6 @@
 				// this.currenPhoneArea = this.phoneArea[event.detail.value];
 			},
 			sendShortMsg() {
-				if (!this.canGetShortMsg) return;
 				/**
 				 * 发送验证吗
 				 */
