@@ -11,7 +11,7 @@
 						<uni-easyinput type="number" class="phone-input-box" :inputBorder="false"
 							v-model="formData.code" maxlength="6" placeholder="请输入验证码">
 							<template slot="right">
-								<login-short-code ref="shortCode" @getCode="getCode"></login-short-code>
+								<login-short-code :phone="phoneNumber" ref="shortCode"></login-short-code>
 							</template>
 						</uni-easyinput>
 					</uni-forms-item>
@@ -71,47 +71,6 @@
 			this.$refs.shortCode.start();
 		},
 		methods: {
-			/**
-			 * 获取验证码倒计时
-			 * 倒计时期间不会触发该方法
-			 */
-			getCode(done) {
-				if (this.phoneNumber == '') return uni.showToast({
-					title: '请填写手机号',
-					icon: 'none'
-				});
-				uniCloud.callFunction({
-					"name": "user-center",
-					"data": {
-						"action": "sendSmsCode",
-						"params": {
-							"mobile": this.phoneNumber,
-							"type": "login"
-						}
-					},
-					success: (e) => {
-						console.log(e);
-						uni.showToast({
-							title: "短信验证码发送成功",
-							icon: 'none'
-						});
-						
-						// uni.showModal({
-						// 	content: JSON.stringify(e.result),
-						// 	showCancel: false,
-						// 	confirmText: '知道了'
-						// });
-						// 发送成功后开启倒计时
-						done();
-					},
-					fail: (err) => {
-						console.log(err);
-					},
-					complete: () => {
-						uni.hideLoading()
-					}
-				})
-			},
 			/**
 			 * 完成并提交
 			 */

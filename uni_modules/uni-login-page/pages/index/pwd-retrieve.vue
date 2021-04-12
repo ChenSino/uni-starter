@@ -13,7 +13,7 @@
 						<uni-easyinput type="number" class="phone-input-box" :inputBorder="false"
 							v-model="formData.code" maxlength="6" placeholder="请输入验证码">
 							<template slot="right">
-								<login-short-code ref="shortCode" @getCode="getCode"></login-short-code>
+								<login-short-code ref="shortCode" :phone="formData.phone"></login-short-code>
 							</template>
 						</uni-easyinput>
 						<uni-easyinput type="password" class="phone-input-box" :inputBorder="false"
@@ -104,46 +104,6 @@ import mixin from '../../common/loginPage.mixin.js';
 			}
 		},
 		methods: {
-			/**
-			 * 获取验证码倒计时
-			 * 倒计时期间不会触发该方法
-			 */
-			getCode(done) {
-				if (this.formData.phone == '' || this.formData.phone.length!=11) return uni.showToast({
-					title: '手机号格式不正确',
-					icon: 'none'
-				});
-				uniCloud.callFunction({
-					"name": "user-center",
-					"data": {
-						"action": "sendSmsCode",
-						"params": {
-							"mobile": this.formData.phone,
-							"type": "login"
-						}
-					},
-					success: (e) => {
-						console.log(e);
-						uni.showToast({
-							title: "短信验证码发送成功",
-							icon: 'none'
-						});
-						// uni.showModal({
-						// 	content: JSON.stringify(e.result),
-						// 	showCancel: false,
-						// 	confirmText: '知道了'
-						// });
-						// 发送成功后开启倒计时
-						done();
-					},
-					fail: (err) => {
-						console.log(err);
-					},
-					complete: () => {
-						uni.hideLoading()
-					}
-				})
-			},
 			checkCode(callback){
 				uniCloud.callFunction({//联网验证登陆
 					"name": "user-center",

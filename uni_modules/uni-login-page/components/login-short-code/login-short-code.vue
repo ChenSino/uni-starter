@@ -28,6 +28,13 @@
 			count: {
 				type: [String, Number],
 				default: 60
+			},
+			/**
+			 * 手机号码
+			 */
+			phone: {
+				type: [String, Number],
+				default: ''
 			}
 		},
 		data() {
@@ -49,10 +56,43 @@
 			initClick() {
 				this.start = debounce(() => {
 					if (this.reverseNumber != 0) return;
-					this.$emit('getCode', () => {
+					this.sendMsg();
+				})
+			},
+			sendMsg() {
+				let reg_phone = /^1\d{10}$/;
+				if(!reg_phone.test(this.phone))return uni.showToast({
+					title: '手机号格式错误',
+					icon: 'none'
+				});
+				uniCloud.callFunction({
+					"name": "user-center",
+					"data": {
+						"action": "sendSmsCode",
+						"params": {
+							"mobile": this.phone,
+							"type": "login"
+						}
+					},
+					success: (e) => {
+						uni.showToast({
+							title: "短信验证码发送成功",
+							icon: 'none'
+						});
 						this.reverseNumber = Number(this.count);
 						this.getCode();
-					});
+						this.$emit('getCode');
+					},
+					fail: (err) => {
+						console.log(err);
+						uni.showToast({
+							title: '短信验证码发送失败',
+							icon: 'none'
+						});
+					},
+					complete: () => {
+						uni.hideLoading()
+					}
 				})
 			},
 			getCode() {
@@ -80,10 +120,12 @@
 		justify-content: center;
 		align-items: center;
 	}
-	.inner-text{
+
+	.inner-text {
 		font-size: 28rpx;
 	}
-	.inner-text-active{
+
+	.inner-text-active {
 		color: #007aff;
 	}
 </style>
