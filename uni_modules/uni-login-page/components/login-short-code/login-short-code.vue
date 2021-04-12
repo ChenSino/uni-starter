@@ -65,16 +65,13 @@
 					title: '手机号格式错误',
 					icon: 'none'
 				});
-				uniCloud.callFunction({
-					"name": "user-center",
-					"data": {
-						"action": "sendSmsCode",
-						"params": {
-							"mobile": this.phone,
-							"type": "login"
-						}
-					},
-					success: (e) => {
+				
+				this.request('user-center/sendSmsCode',
+					{
+						"mobile": this.phone,
+						"type": "login"
+					},(data,result)=>{
+						console.log(data,result);
 						uni.showToast({
 							title: "短信验证码发送成功",
 							icon: 'none'
@@ -82,18 +79,37 @@
 						this.reverseNumber = Number(this.count);
 						this.getCode();
 						this.$emit('getCode');
-					},
-					fail: (err) => {
-						console.log(err);
-						uni.showToast({
-							title: '短信验证码发送失败',
-							icon: 'none'
-						});
-					},
-					complete: () => {
-						uni.hideLoading()
-					}
-				})
+					})
+				
+				// uniCloud.callFunction({
+				// 	"name": "user-center",
+				// 	"data": {
+				// 		"action": "sendSmsCode",
+				// 		"params": {
+				// 			"mobile": this.phone,
+				// 			"type": "login"
+				// 		}
+				// 	},
+				// 	success: (e) => {
+				// 		uni.showToast({
+				// 			title: "短信验证码发送成功",
+				// 			icon: 'none'
+				// 		});
+				// 		this.reverseNumber = Number(this.count);
+				// 		this.getCode();
+				// 		this.$emit('getCode');
+				// 	},
+				// 	fail: (err) => {
+				// 		console.log(err);
+				// 		uni.showToast({
+				// 			title: '短信验证码发送失败',
+				// 			icon: 'none'
+				// 		});
+				// 	},
+				// 	complete: () => {
+				// 		uni.hideLoading()
+				// 	}
+				// })
 			},
 			getCode() {
 				if (this.reverseNumber == 0) {

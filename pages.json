@@ -207,17 +207,17 @@
 		"navigationBarBackgroundColor": "#FFFFFF",
 		"backgroundColor": "#F8F8F8"
 	},
-	"condition": {
-		"list": [
-			{
-				"path": "uni_modules/uni-login-page/pages/index/index"
-			},
-			{
-				"path": "pages/test/test"
-			}
-		],
-		"current":0
-	},
+	// "condition": {
+	// 	"list": [
+	// 		{
+	// 			"path": "uni_modules/uni-login-page/pages/index/index"
+	// 		},
+	// 		{
+	// 			"path": "pages/test/test"
+	// 		}
+	// 	],
+	// 	"current":0
+	// },
 	"tabBar": {
 		"color": "#7A7E83",
 		"selectedColor": "#007AFF",

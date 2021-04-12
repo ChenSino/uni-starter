@@ -6,7 +6,7 @@
 	3.2 处理因token过期等问题自动更新本地token，或token无效跳转至登陆页面
 */
 const debug = true;//开启后，会alert错误信息
-export default function request(name,params,callback,{showLoading=false,loadText='',fail=()=>{}}={}){
+export default function request(name,params,callback=false,{showLoading=false,loadText='',fail=()=>{}}={}){
 	console.log('request');
 	showLoading||loadText? uni.showLoading({title:loadText}):'';
 	
@@ -16,21 +16,26 @@ export default function request(name,params,callback,{showLoading=false,loadText
 		name = routers[0]
 		action =  routers[1]
 	}
-	console.log({name,data: {action,params}})
-	return uniCloud.callFunction({name,data: {action,params},
-		success(e){
-			console.log(e);
-			if(showLoading || loadText) uni.hideLoading()
-			const res = e.result
-			if (res.code === 0 ) {
-				return callback(res.data, e.result, e)
+	// console.log({name,data: {action,params}})
+	return new Promise((resolve,reject)=>{
+		uniCloud.callFunction({name,data: {action,params},
+			success(e){
+				// console.log(e);
+				if(showLoading || loadText) uni.hideLoading()
+				const {result:{data,code}} = e
+				console.log(data,code);
+				if (code === 0 ) {
+					resolve(e)
+					return callback(data,e.result,e)
+				}
+				debug? uni.showModal({content: JSON.stringify(e)}) :'';
+			},
+			fail(err){
+				reject(err)
+				console.log(err);
+				debug? uni.showModal({content: JSON.stringify(err)}) :'';
+				fail(err)
 			}
-			debug? uni.showModal({content: JSON.stringify(e)}) :'';
-		},
-		fail(err){
-			console.log(err);
-			debug? uni.showModal({content: JSON.stringify(err)}) :'';
-			fail(err)
-		}
+		})
 	})
 }
