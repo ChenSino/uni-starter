@@ -11,7 +11,7 @@
 						<uni-easyinput type="number" class="phone-input-box" :inputBorder="false"
 							v-model="formData.code" maxlength="6" placeholder="请输入验证码">
 							<template slot="right">
-								<login-short-code :phone="phoneNumber" ref="shortCode"></login-short-code>
+								<login-short-code :phone="formData.phone" ref="shortCode"></login-short-code>
 							</template>
 						</uni-easyinput>
 					</uni-forms-item>
@@ -30,41 +30,23 @@
 		mixins:[mixin],
 		data() {
 			return {
-				phoneNumber: '',
-				phoneCode: '',
 				currenPhoneArea: '',
-				formData:{
-					code:''
-				},
-				rules: {
-					code: {
-						rules: [{
-								required: true,
-								errorMessage: '请输入验证码',
-							},
-							{
-								pattern: /^.{6}$/,
-								errorMessage: '请输入6位验证码',
-							}
-						]
-					}
-				}
 			}
 		},
 		computed: {
 			tipText() {
-				return `验证码已通过短信发送至${this.currenPhoneArea} ${this.phoneNumber}。`;
+				return `验证码已通过短信发送至${this.currenPhoneArea} ${this.formData.phone}。`;
 			},
 			canSubmit() {
 				let reg_phone = /^1\d{10}$/;
 				let reg_code = /^\d{6}$/;
-				let isPhone = reg_phone.test(this.phoneNumber);
+				let isPhone = reg_phone.test(this.formData.phone);
 				let isCode = reg_code.test(this.formData.code);
 				return isPhone && isCode;
 			}
 		},
 		onLoad({phoneNumber,phoneArea}) {
-			this.phoneNumber = phoneNumber;
+			this.formData.phone = phoneNumber;
 			this.currenPhoneArea = '+' + Number(phoneArea);
 		},
 		onReady() {
@@ -80,7 +62,7 @@
 					"data": {
 						"action": "loginBySms",
 						"params":{
-							"mobile":this.phoneNumber,
+							"mobile":this.formData.phone,
 							"code":this.formData.code
 						}
 					},

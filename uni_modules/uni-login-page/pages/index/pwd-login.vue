@@ -49,35 +49,6 @@
 				}],
 				phoneArea: ['+86'],
 				currenPhoneArea: '+86',
-				
-				formData: {
-					phone: '',
-					pwd:''
-				},
-				rules: {
-					phone: {
-						rules: [{
-								required: true,
-								errorMessage: '请输入手机号',
-							},
-							{
-								pattern: /^1\d{10}$/,
-								errorMessage: '手机号格式不正确',
-							}
-						]
-					},
-					pwd:{
-						rules: [{
-								required: true,
-								errorMessage: '请输入密码',
-							},
-							{
-								pattern: /^.{6,20}$/,
-								errorMessage: '密码应为6到20位',
-							}
-						]
-					}
-				}
 			}
 		},
 		computed: {

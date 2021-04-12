@@ -45,33 +45,8 @@
 		mixins:[mixin],
 		data() {
 			return {
-				link: [{
-					text: '用户协议',
-					to: '/pages/ucenter/agree-list/service/service'
-				}, {
-					text: '隐私政策',
-					to: '/pages/ucenter/agree-list/privacy/privacy'
-				}],
 				phoneArea: ['+86'],
 				currenPhoneArea: '+86',
-
-				formData: {
-					phone: ''
-				},
-				rules: {
-					// 对phone字段进行必填验证
-					phone: {
-						rules: [{
-								required: true,
-								errorMessage: '请输入手机号',
-							},
-							{
-								pattern: /^1\d{10}$/,
-								errorMessage: '手机号格式不正确',
-							}
-						]
-					}
-				}
 			}
 		},
 		onLoad() {

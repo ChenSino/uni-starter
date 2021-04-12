@@ -33,49 +33,7 @@ import mixin from '../../common/loginPage.mixin.js';
 		mixins:[mixin],
 		data() {
 			return {
-				password: '',
 				currenPhoneArea: '',
-				
-				formData:{
-					phone:'',
-					code:'',
-					pwd:''
-				},
-				rules: {
-					phone:{
-						rules:[{
-								required: true,
-								errorMessage: '请输入手机号',
-							},
-							{
-								pattern: /^1\d{10}$/,
-								errorMessage: '手机号格式不正确',
-							}
-						]
-					},
-					code: {
-						rules: [{
-								required: true,
-								errorMessage: '请输入验证码',
-							},
-							{
-								pattern: /^.{6}$/,
-								errorMessage: '请输入6位验证码',
-							}
-						]
-					},
-					pwd:{
-						rules: [{
-								required: true,
-								errorMessage: '请输入密码',
-							},
-							{
-								pattern: /^.{6,20}$/,
-								errorMessage: '密码应为6到20位',
-							}
-						]
-					}
-				}
 			}
 		},
 		computed: {
