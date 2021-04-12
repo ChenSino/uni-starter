@@ -123,13 +123,13 @@
 				db.collection(dbCollectionName).add(value).then((res) => {
 					uni.showToast({
 						icon: 'none',
-						title: '新增成功'
+						title: '反馈成功'
 					})
 					this.getOpenerEventChannel().emit('refreshData')
 					setTimeout(() => uni.navigateBack(), 500)
 				}).catch((err) => {
 					uni.showModal({
-						content: err.message || '请求服务失败',
+						content: err.message || '反馈失败',
 						showCancel: false
 					})
 				}).finally(() => {
