@@ -67,7 +67,18 @@
 				"navigationStyle": "custom"
 			}
 		}, {
-			"path": "pages/ucenter/uni-feedback/uni-feedback",
+			"path": "uni_modules/opendb-feedback/pages/opendb-feedback/list",
+			"style": {
+				"navigationBarTitleText": "反馈列表",
+				"enablePullDownRefresh":true
+			}
+		}, {
+			"path": "uni_modules/opendb-feedback/pages/opendb-feedback/add",
+			"style": {
+				"navigationBarTitleText": "问题反馈"
+			}
+		}, {
+			"path": "uni_modules/opendb-feedback/pages/opendb-feedback/detail",
 			"style": {
 				"navigationBarTitleText": "问题反馈"
 			}

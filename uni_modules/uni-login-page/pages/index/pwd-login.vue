@@ -40,25 +40,13 @@
 		mixins:[mixin],
 		data() {
 			return {
-				link: [{
-					text: '用户协议',
-					to: '/pages/ucenter/agree-list/service/service'
-				}, {
-					text: '隐私政策',
-					to: '/pages/ucenter/agree-list/privacy/privacy'
-				}],
 				phoneArea: ['+86'],
 				currenPhoneArea: '+86',
 			}
 		},
 		computed: {
 			canLogin() {
-				let reg_phone = /^1\d{10}$/;
-				let reg_pwd = /^.{6,20}$/;
-				let isPhone = reg_phone.test(this.formData.phone);
-
-				let isPwd = reg_pwd.test(this.formData.pwd);
-				return isPhone && isPwd;
+				return this.isPhone && this.isPwd;
 			}
 		},
 		methods: {
@@ -66,9 +54,7 @@
 			 * 页面跳转，找回密码
 			 */
 			toRetrievePwd() {
-				let reg_phone = /^1\d{10}$/;
-				let isPhone = reg_phone.test(this.formData.phone);
-				if (!isPhone) return uni.showToast({
+				if (!this.isPhone) return uni.showToast({
 					title: '请输入正确的手机号',
 					icon: 'none'
 				});
@@ -81,7 +67,6 @@
 			 * 密码登录
 			 */
 			pwdLogin() {
-				if (!this.canLogin) return;
 				// 下边是可以登录
 				uniCloud.callFunction({
 					name:"user-center",

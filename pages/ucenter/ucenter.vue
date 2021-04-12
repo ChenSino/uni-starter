@@ -81,7 +81,7 @@
 					],
 					[{
 						title: '反馈',
-						to: '/pages/ucenter/uni-feedback/uni-feedback'
+						to: '/uni_modules/opendb-feedback/pages/opendb-feedback/list'	// /pages/ucenter/uni-feedback/uni-feedback uni_modules/opendb-feedback/pages/opendb-feedback/list
 					}, {
 						title: '设置',
 						to: '/pages/ucenter/settings/settings'
