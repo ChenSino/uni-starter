@@ -1,9 +1,15 @@
 'use strict';
-const uniID = require('uni-id')
+let uniID = require('uni-id')
 const uniCaptcha = require('uni-captcha')
 const db = uniCloud.database()
 const dbCmd = db.command
 exports.main = async (event, context) => {
+	/**
+	 * UNI_WYQ:这里的uniID换成新的，保证多人访问不会冲突
+	 */
+	uniID = uniID.createInstance({
+		context
+	})
 	//event为客户端上传的参数
 	console.log('event : ' + event)
 	let params = event.params || {}

@@ -97,7 +97,7 @@
 			login(type) {
 				let oauthService = this.oauthServices.find((service) => service.id == type)
 				// #ifdef APP-PLUS
-				uni.showLoading({mask: true});
+				//uni.showLoading({mask: true});
 				
 				//请勿直接使用前端获取的unionid或openid直接用于登陆，前端的数据都是不可靠的
 				if(type=='weixin'){
@@ -131,46 +131,25 @@
 				})
 				// #endif
 			},
-			quickLogin(params,type){
-				console.log({params,type});
-				uniCloud.callFunction({//联网验证登陆
-					"name": "user-center",
-					"data": {
-						"action": "login_by_"+type,
-						params
-					},
-					success:async (e) => {
-						uni.hideLoading()
-						console.log(e.result);
-						// uni.showModal({
-						// 	content: JSON.stringify(e.result),
-						// 	showCancel: false
-						// });
-						if(e.result.code === 0){
-							uni.setStorageSync('uni_id_uid', e.result.uid)
-							uni.setStorageSync('uni_id_token', e.result.token)
-							uni.setStorageSync('uni_id_token_expired', e.result.tokenExpired)
-							// console.log('66666=',e.result.uid,e.result.token,e.result.tokenExpired);
-							delete e.result.userInfo.token
-							this.setUserInfo(e.result.userInfo)
-							if(type=='univerify'){
-								uni.closeAuthView()
-							}
-							uni.showToast({
-								title: '登陆成功',
-								icon: 'none'
-							});
-							uni.navigateBack()
+			quickLogin(params,type){//联网验证登陆
+				console.log(params,type);
+				this.request('user-center/login_by_'+type,params,(data,result)=>{
+					console.log(result);
+					if(result.code === 0){
+						uni.setStorageSync('uni_id_uid', result.uid)
+						uni.setStorageSync('uni_id_token', result.token)
+						uni.setStorageSync('uni_id_token_expired', result.tokenExpired)
+
+						delete result.userInfo.token
+						this.setUserInfo(result.userInfo)
+						if(type=='univerify'){
+							uni.closeAuthView()
 						}
-					},
-					fail: (err) => {
-						console.log(err);
-						if(err.errCode===30002){
-							
-						}
-					},
-					complete: () => {
-						uni.hideLoading()
+						uni.showToast({
+							title: '登陆成功',
+							icon: 'none'
+						});
+						uni.navigateBack()
 					}
 				})
 			},
