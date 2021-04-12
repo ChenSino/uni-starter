@@ -191,7 +191,16 @@
 			}
 
 		}
-	],
+	    ,{
+            "path" : "pages/test/test",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "base-app",
@@ -199,10 +208,15 @@
 		"backgroundColor": "#F8F8F8"
 	},
 	"condition": {
-		"list": [{
-			"path": "uni_modules/opendb-feedback/pages/opendb-feedback/list"
-		}],
-		"current": 0
+		"list": [
+			{
+				"path": "uni_modules/uni-login-page/pages/index/index"
+			},
+			{
+				"path": "pages/test/test"
+			}
+		],
+		"current":0
 	},
 	"tabBar": {
 		"color": "#7A7E83",

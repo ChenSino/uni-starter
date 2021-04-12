@@ -5,7 +5,7 @@ export default function (){
 	initAppVersion();
 	
 	// 检查更新
-	checkUpdate();
+	// checkUpdate();
 	
 }
 /**
