@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}" collection="opendb-feedback"
-			field="content, title" where="is_reply == false">
+			field="content, title" where="is_reply == false" @load="isLoading == false" @error="isLoading == false">
 			<view v-if="data && data.length">
 				<uni-collapse :accordion="true">
 					<uni-collapse-item v-for="(item, index) in data" :key="index" :title="item.title" :show-animation="true">
@@ -9,7 +9,7 @@
 					</uni-collapse-item>
 				</uni-collapse>
 			</view>
-			<uni-nodata v-else @retry="refreshData"></uni-nodata>
+			<uni-nodata v-else :isLoading="isLoading" @retry="refreshData"></uni-nodata>
 		</unicloud-db>
 		<uni-fab ref="fab" horizontal="right" vertical="bottom" :pop-menu="false" @fabClick="fabClick" />
 	</view>
@@ -19,7 +19,7 @@
 	export default {
 		data() {
 			return {
-				
+				isLoading:true,
 			}
 		},
 		methods: {

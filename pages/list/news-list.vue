@@ -21,7 +21,7 @@
 			<!-- 页面分类标题 -->
 			<uni-section style="margin:0;" v-if="searchText" :title="listTitle" type="line"></uni-section>
 			<unicloud-db ref="udb" v-slot:default="{data, loading, error, options}" :options="formData"
-				:collection="collection" :field="field" :where="where" @load="load">
+				:collection="collection" :field="field" :where="where" @load="load($event);isLoading = false;" @error="isLoading = false">
 				<text v-if="error" class="list-info">{{error.message}}</text>
 				<!-- 基于 uni-list 的页面布局 -->
 				<uni-list :class="{ 'uni-list--waterfall': options.waterfall }">
@@ -54,7 +54,7 @@
 				</uni-list>
 				<!-- 通过 loadMore 组件实现上拉加载效果，如需自定义显示内容，可参考：https://ext.dcloud.net.cn/plugin?id=29 -->
 				<uni-load-more v-if="!error && (loading || options.status === 'noMore') " :status="options.status" />
-				<uni-nodata v-if="data.length == 0" @retry="refresh"></uni-nodata>
+				<uni-nodata v-if="data.length == 0" :isLoading="isLoading" @retry="refresh"></uni-nodata>
 			</unicloud-db>
 		</view>
 	</view>
@@ -88,7 +88,8 @@
 				collection: 'opendb-news-articles,uni-id-users',
 				// 查询字段，多个字段用 , 分割
 				field: 'author{username, _id}, user_id,_id,avatar,title,excerpt,last_modify_date, comment_count, like_count',
-				tipShow: false // 是否显示顶部提示框
+				tipShow: false ,// 是否显示顶部提示框
+				isLoading:true
 			};
 		},
 		/**
