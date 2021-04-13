@@ -59,11 +59,10 @@
 		mounted() {
 			//获取当前环境能用的快捷登陆方式
 			// #ifdef APP-PLUS
-			uni.showLoading();
+				uni.showLoading();
 				plus.oauth.getServices(oauthServices=>{
 					this.oauthServices = oauthServices
 					console.log(oauthServices);
-					uni.hideLoading()
 				},err=>{
 					uni.hideLoading()
 					uni.showModal({
@@ -152,6 +151,7 @@
 							title: '登陆成功',
 							icon: 'none'
 						});
+						uni.hideLoading()
 						uni.navigateBack()
 					}
 				})

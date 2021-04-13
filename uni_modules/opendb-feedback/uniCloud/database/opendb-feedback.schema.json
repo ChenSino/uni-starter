@@ -1,7 +1,7 @@
 {
 	"bsonType": "object",
 	"permission": {
-		"read": "!doc.is_reply",
+		"read": "doc.is_reply == false",
 		"create": true,
 		"update": false,
 		"delete": false
@@ -18,7 +18,7 @@
 				"$env": "uid"
 			}
 		},
-		"title":{
+		"title": {
 			"description": "反馈标题（用于列表展示）"
 		},
 		"ip": {

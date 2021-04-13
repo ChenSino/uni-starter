@@ -39,6 +39,7 @@
 </template>
 
 <script>
+const univerify_first = true
 	import mixin from '../../common/loginPage.mixin.js';
 	var currentPage;
 	export default {
@@ -47,25 +48,30 @@
 			return {
 				phoneArea: ['+86'],
 				currenPhoneArea: '+86',
+				
 			}
 		},
 		onLoad() {
 			//#ifdef APP-PLUS
-			let pages = getCurrentPages();
-			currentPage = pages[pages.length - 1];
-			currentPage.$getAppWebview().setStyle({
-				top:"1000px"
-			})
+			if(univerify_first){
+				let pages = getCurrentPages();
+				currentPage = pages[pages.length - 1];
+				currentPage.$getAppWebview().setStyle({
+					top:"1000px"
+				})
+			}
 			//#endif
 		},
 		onReady() {
-			this.$refs.uniQuickLogin.login('univerify')
 			//#ifdef APP-PLUS
-			setTimeout(() => {
-				currentPage.$getAppWebview().setStyle({
-					top:"0"
-				})
-			}, 1500);
+			if(univerify_first){
+				this.$refs.uniQuickLogin.login('univerify')
+				setTimeout(() => {
+					currentPage.$getAppWebview().setStyle({
+						top:"0"
+					})
+				}, 1500);
+			}
 			//#endif
 		},
 		computed: {
