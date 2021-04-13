@@ -97,6 +97,8 @@
 					.then(imgs=>{
 						res.imgs = imgs;
 						res.create_date = Date.now();
+						
+						res.is_reply = true;
 						this.submitForm(res)
 					});
 				}).catch((errors) => {
