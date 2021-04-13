@@ -34,7 +34,7 @@
 			isChoose:{
 				type:Boolean,
 				default:false
-			}
+			},
 		},
 		methods:{
 			/**

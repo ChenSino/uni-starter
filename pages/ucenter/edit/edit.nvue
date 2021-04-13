@@ -50,11 +50,12 @@
 							this.uploadUserInfo({avatar:url});
 						})
 						let options = {
-							width:uni.upx2px(700),
-							height:uni.upx2px(700)
+							width:600,
+							height:600
 						}
 						uni.navigateTo({
 							url:'./uploadCutImageToUnicloud?path=' + res.tempFilePaths[0] + `&options=${JSON.stringify(options)}`,
+							animationType:"fade-in"
 						});
 					}
 				})
@@ -65,9 +66,11 @@
 			 * value 更新后的用户字段值
 			 */
 			uploadUserInfo(data){
+				console.log(this.userInfo._id)
 				userTable.doc(this.userInfo._id)
 				.update(data)
 				.then(res=>{
+					console.log(data)
 					this.login(data)
 				})
 				.catch(err=>{

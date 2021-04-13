@@ -1,7 +1,7 @@
 {
 	"bsonType": "object",
 	"permission": {
-		"read": "'read' in auth.permission",
+		"read": true,
 		"create": false,
 		"update": "doc._id == auth.uid",
 		"delete": false
