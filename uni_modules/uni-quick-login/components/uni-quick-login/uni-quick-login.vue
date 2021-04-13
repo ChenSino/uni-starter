@@ -98,12 +98,15 @@
 				let oauthService = this.oauthServices.find((service) => service.id == type)
 				// #ifdef APP-PLUS
 				//uni.showLoading({mask: true});
-				
+				console.log(type,231);
 				//请勿直接使用前端获取的unionid或openid直接用于登陆，前端的数据都是不可靠的
 				if(type=='weixin'){
 					oauthService.authorize(({code})=>{
 						console.log(code);
 						this.quickLogin({code},type)
+					},
+					err=>{
+						console.log(err);
 					})
 				}
 				

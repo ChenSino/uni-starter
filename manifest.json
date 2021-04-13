@@ -77,15 +77,15 @@
                 "oauth" : {
                     "apple" : {},
                     "weixin" : {
-                        "appid" : "wx0411fa6a39d61297",
-                        "appsecret" : "",
+                        "appid" : "wxffdd8fa6ec4ef2a0",
+                        "appsecret" : "6c9119430d7be0a147bcbbb73ef33acf",
                         "UniversalLinks" : "https://static-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e.bspapp.com/uni-universallinks/__UNI__03B096E"
                     },
                     "univerify" : {}
                 },
                 "share" : {
                     "weixin" : {
-                        "appid" : "wx0411fa6a39d61297",
+                        "appid" : "wxffdd8fa6ec4ef2a0",
                         "UniversalLinks" : "https://static-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e.bspapp.com/uni-universallinks/__UNI__03B096E",
                         "_spaceID" : "76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e"
                     }

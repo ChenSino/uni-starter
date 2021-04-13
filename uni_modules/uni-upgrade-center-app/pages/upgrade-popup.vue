@@ -20,31 +20,38 @@
 					</scroll-view>
 				</view>
 				<view class="footer flex-center">
-					<template v-if="!downloadSuccess">
-						<view class="progress-box flex-column" v-if="downloading">
-							<progress class="progress" border-radius="35" :percent="downLoadPercent"
-								activeColor="#3DA7FF" show-info stroke-width="10" />
-							<view style="width:100%;font-size: 28rpx;display: flex;justify-content: space-around;">
-								<text>{{downLoadingText}}</text>
-								<text>({{downloadedSize}}/{{packageFileSize}}M)</text>
-							</view>
-						</view>
-
-						<button v-else class="content-button" style="border: none;color: #fff;" plain
-							@click="downloadPackage">
-							{{downLoadBtnText}}
+					<template v-if="isiOS">
+						<button class="content-button" style="border: none;color: #fff;" plain @click="jumpToAppStore">
+							{{downLoadBtnTextiOS}}
 						</button>
 					</template>
-					<button v-else-if="downloadSuccess && !installed" class="content-button"
-						style="border: none;color: #fff;" plain :loading="installing" :disabled="installing"
-						@click="installPackage">
-						{{installing ? '正在安装……' : '下载完成，立即安装'}}
-					</button>
+					<template v-else>
+						<template v-if="!downloadSuccess">
+							<view class="progress-box flex-column" v-if="downloading">
+								<progress class="progress" border-radius="35" :percent="downLoadPercent"
+									activeColor="#3DA7FF" show-info stroke-width="10" />
+								<view style="width:100%;font-size: 28rpx;display: flex;justify-content: space-around;">
+									<text>{{downLoadingText}}</text>
+									<text>({{downloadedSize}}/{{packageFileSize}}M)</text>
+								</view>
+							</view>
 
-					<button v-if="installed && isWGT" class="content-button" style="border: none;color: #fff;" plain
-						@click="restart">
-						安装完毕，点击重启
-					</button>
+							<button v-else class="content-button" style="border: none;color: #fff;" plain
+								@click="downloadPackage">
+								{{downLoadBtnText}}
+							</button>
+						</template>
+						<button v-else-if="downloadSuccess && !installed" class="content-button"
+							style="border: none;color: #fff;" plain :loading="installing" :disabled="installing"
+							@click="installPackage">
+							{{installing ? '正在安装……' : '下载完成，立即安装'}}
+						</button>
+
+						<button v-if="installed && isWGT" class="content-button" style="border: none;color: #fff;" plain
+							@click="restart">
+							安装完毕，点击重启
+						</button>
+					</template>
 				</view>
 			</view>
 
@@ -56,19 +63,50 @@
 
 <script>
 	const localFilePathKey = '__localFilePath__'
+	const platform_iOS = 'iOS';
 	let downloadTask = null;
 
 	/**
 	 * 对比版本号，如需要，请自行修改判断规则
+	 * 支持比对	("3.0.0.0.0.1.0.1", "3.0.0.0.0.1")	("3.0.0.1", "3.0")	("3.1.1", "3.1.1.1") 之类的
 	 * @param {Object} v1
 	 * @param {Object} v2
 	 * v1 > v2 return 1
 	 * v1 < v2 return -1
 	 * v1 == v2 return 0
 	 */
-	function compare(v1 = 0, v2 = 0) {
-		// '1.2.5' > '1.2.4' 类似的版本号可以直接对比
-		return v1 > v2 ? 1 : v1 < v2 ? -1 : 0;
+	function compare(v1 = '0', v2 = '0') {
+		v1 = String(v1).split('.')
+		v2 = String(v2).split('.')
+		const minVersionLens = Math.min(v1.length, v2.length);
+
+		let result = 0;
+		for (let i = 0; i < minVersionLens; i++) {
+			const curV1 = Number(v1[i])
+			const curV2 = Number(v2[i])
+
+			if (curV1 > curV2) {
+				result = 1
+				break;
+			} else if(curV1 < curV2) {
+				result = -1
+				break;
+			}
+		}
+
+		if (result === 0 && (v1.length !== v2.length)) {
+			const v1BiggerThenv2 = v1.length > v2.length;
+			const maxLensVersion = v1BiggerThenv2 ? v1 : v2;
+			for (let i = minVersionLens; i < maxLensVersion.length; i++) {
+				const curVersion = Number(maxLensVersion[i])
+				if (curVersion > 0) {
+					v1BiggerThenv2 ? result = 1 : result = -1
+					break;
+				}
+			}
+		}
+
+		return result;
 	}
 
 	export default {
@@ -98,8 +136,9 @@
 
 				// 可自定义属性
 				subTitle: '发现新版本',
+				downLoadBtnTextiOS: '立即跳转更新',
 				downLoadBtnText: '立即下载更新',
-				downLoadingText: '安装包下载中，请稍后'
+				downLoadingText: '安装包下载中，请稍后…'
 			}
 		},
 		onLoad({
@@ -141,6 +180,9 @@
 		computed: {
 			isWGT() {
 				return this.type === 'wgt'
+			},
+			isiOS() {
+				return !this.isWGT ? this.platform.includes(platform_iOS) : false;
 			}
 		},
 		methods: {
@@ -205,7 +247,6 @@
 						if (res.statusCode == 200) {
 							this.downloadSuccess = true;
 							this.tempFilePath = res.tempFilePath
-							console.log("res.tempFilePath: ", res.tempFilePath);
 
 							// 强制更新，直接安装
 							if (this.is_mandatory) {
@@ -276,7 +317,7 @@
 						await this.deleteSavedFile(this.installForBeforeFilePath)
 						this.installForBeforeFilePath = '';
 					}
-					
+
 					// 安装失败需要重新下载安装包
 					this.installed = false;
 
@@ -286,7 +327,7 @@
 						showCancel: false
 					});
 				});
-				
+
 				// 非wgt包，安装跳出覆盖安装，此处直接返回上一页
 				if (!this.isWGT) {
 					uni.navigateBack()
@@ -317,6 +358,9 @@
 				return uni.removeSavedFile({
 					filePath
 				})
+			},
+			jumpToAppStore() {
+				plus.runtime.openURL(this.url);
 			}
 		}
 	}

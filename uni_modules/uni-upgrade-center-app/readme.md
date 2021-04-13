@@ -43,6 +43,8 @@
 
 7. 将`/uni_modules/uni-upgrade-center-app/utils/check-update`import到需要用到的地方，调用一下即可
 
+8. 升级弹框可自行编写，也可以使用`uni.showModal`，或使用现有的升级弹框样式，如果不满足UI需求请自行替换资源文件。在`utils/check-update.js`中都有实例。
+
 ### 更新下载安装`check-update.js`
 
 *该函数在utils目录下*
@@ -67,8 +69,7 @@
 
 5. `check-version`云函数内部会自动获取 App 平台
 
-6. 检查更新前端使用示例：`uni_modules/uni-upgrade-center-app/utils/check-update.js`，在要用的地方导入调用即可
-
+6. 检查更新前端使用示例：`uni_modules/uni-upgrade-center-app/utils/check-update.js`，在要检查更新的地方导入调用即可
 
 ## 项目代码说明
 

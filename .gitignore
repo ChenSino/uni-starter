@@ -2,3 +2,4 @@ unpackage/
 .hbuilderx
 node_modules
 .DS_Store
+uni_modules/uni-id/uniCloud/cloudfunctions/common/uni-id/config.json

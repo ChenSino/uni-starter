@@ -1,6 +1,6 @@
 <template>
 	<view class="content" >
-		<limeClipper :width="options.width" :scale-ratio="2" :is-lock-width="true" :is-lock-height="true" :height="options.height" :image-url="path"  
+		<limeClipper :width="options.width" :scale-ratio="2" :is-lock-width="false" :is-lock-height="false" :height="options.height" :image-url="path"  
 			@success="successFn" @cancel="cancel"  />
 	</view>
 </template>
