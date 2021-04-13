@@ -1,17 +1,13 @@
 <template>
 	<view class="container">
 		<unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}" collection="opendb-feedback"
-			field="user_id,create_date,content,imgs,is_reply,feedback_id,contact,mobile,reply_count">
+			field="content, title" where="is_reply == false">
 			<view v-if="data && data.length">
-				<uni-list>
-					<uni-list-item v-for="(item, index) in data" :key="index" showArrow :clickable="true"
-						@click="handleItemClick(item._id)">
-						<view slot="body">
-							<!-- 此处默认显示为_id，请根据需要自行修改为其他字段 -->
-							{{item.content}}
-						</view>
-					</uni-list-item>
-				</uni-list>
+				<uni-collapse :accordion="true">
+					<uni-collapse-item v-for="(item, index) in data" :key="index" :title="item.title" :show-animation="true">
+						<text class="content">{{ item.content }}</text>
+					</uni-collapse-item>
+				</uni-collapse>
 			</view>
 			<uni-nodata v-else @retry="refreshData"></uni-nodata>
 		</unicloud-db>
@@ -23,22 +19,15 @@
 	export default {
 		data() {
 			return {
-				loadMore: {
-					contentdown: '',
-					contentrefresh: '',
-					contentnomore: ''
-				}
+				
 			}
 		},
 		methods: {
 			refreshData() {
 				this.$refs.udb.loadData({
 					clear: true
-				}, (res) => {})
-			},
-			handleItemClick(id) {
-				uni.navigateTo({
-					url: './detail?id=' + id
+				}, (res) => {
+					console.log(res);
 				})
 			},
 			fabClick() {
@@ -60,4 +49,7 @@
 </script>
 
 <style>
+	.content{
+		padding: 20rpx;
+	}
 </style>

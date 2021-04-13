@@ -34,8 +34,6 @@
 					}
 				}
 			}
-			// "navigationBarTitleText": "",
-			// "navigationBarBackgroundColor": "#FFFFFF",
 		}, {
 			"path": "pages/list/search/search",
 			"style": {
@@ -69,7 +67,7 @@
 		}, {
 			"path": "uni_modules/opendb-feedback/pages/opendb-feedback/list",
 			"style": {
-				"navigationBarTitleText": "反馈列表"
+				"navigationBarTitleText": "常见问题"
 			}
 		}, {
 			"path": "uni_modules/opendb-feedback/pages/opendb-feedback/add",
