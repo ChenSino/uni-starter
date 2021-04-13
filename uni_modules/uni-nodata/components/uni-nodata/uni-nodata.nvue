@@ -5,9 +5,14 @@
 				<text class="title">{{textTypes[networkType]}}</text>
 			</view>
 			<view class="icon-view">
-				<image src="/uni_modules/uni-nodata/static/nodata.png" class="icon-image"></image>
+				<!-- 无数据 icon -->
+				<image v-if="!isLoading" src="/uni_modules/uni-nodata/static/nodata.png" class="icon-image"></image>
+				
+				<!-- 加载中 icon -->
+				<image v-else src="/uni_modules/uni-nodata/static/loading.png" class="icon-loading"></image>
+				<text class="title">{{isLoading ? '加载中...' : ''}}</text>
 			</view>
-			<view class="opera-view">
+			<view class="opera-view" v-if="!isLoading">
 				<view class="btn btn-default" v-if="networkType!='none'" @click="retry">
 					<text class="btn-text">重试</text>
 				</view>
@@ -22,6 +27,12 @@
 <script>
 	export default {
 		name: 'uni-nodata',
+		props:{
+			isLoading:{
+				type:Boolean,
+				default:false
+			}
+		},
 		data() {
 			return {
 				textTypes: {
@@ -205,6 +216,11 @@
 		align-items: center;
 		border-width: 1rpx;
 		border-color: #DD524D;
+	}
+	
+	.icon-loading{
+		width: 500rpx;
+		height: 300rpx;
 	}
 	
 	.icon-image{
