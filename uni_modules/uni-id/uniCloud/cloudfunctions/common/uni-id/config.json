@@ -10,29 +10,29 @@
 	"forceInviteCode": false,
 	"app-plus": {
 		"tokenExpiresIn": 2592000,
-		"oauth" : {
-			"weixin" : {
+		"oauth": {
+			"weixin": {
 				"appid": "wx0411fa6a39d61297",
-				"appsecret": "fdc6251421d3d688a563b4f00dd540e7"
+				"appsecret": "6c9119430d7be0a147bcbbb73ef33acf"
 			},
-			"apple": { 
+			"apple": {
 				"bundleId": "io.dcloud.game.cat"
 			}
 		}
 	},
 	"mp-weixin": {
-		"oauth" : {
-			"weixin" : {
-				"appid" : "weixin appid",
-				"appsecret" : "weixin appsecret"
+		"oauth": {
+			"weixin": {
+				"appid": "wx999bf02c8e05dfc9",
+				"appsecret": "b5f608afd332b2c0ded7e6b98ca4ccd3"
 			}
 		}
 	},
 	"mp-alipay": {
-		"oauth" : {
-			"alipay" : {
-				"appid" : "alipay appid",
-				"privateKey" : "alipay privateKey"
+		"oauth": {
+			"alipay": {
+				"appid": "alipay appid",
+				"privateKey": "alipay privateKey"
 			}
 		}
 	},
@@ -43,10 +43,10 @@
 			"smsKey": "71a19f38c954f7d768d68a050486bf15",
 			"smsSecret": "d6c424b702d73baa3b6e1a1452469213"
 		},
-		"univerify":{
+		"univerify": {
 			"appid": "__UNI__BC54A00",
-			"apiKey":"d1e36bcd497b3795434d900dcfdd44dc",
-			"apiSecret":"2feb378ff1114362b20ac179b572293e"
+			"apiKey": "d1e36bcd497b3795434d900dcfdd44dc",
+			"apiSecret": "2feb378ff1114362b20ac179b572293e"
 		}
 	}
 }

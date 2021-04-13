@@ -139,7 +139,7 @@
 						uni.setStorageSync('uni_id_uid', result.uid)
 						uni.setStorageSync('uni_id_token', result.token)
 						uni.setStorageSync('uni_id_token_expired', result.tokenExpired)
-
+				
 						delete result.userInfo.token
 						this.setUserInfo(result.userInfo)
 						if(type=='univerify'){
