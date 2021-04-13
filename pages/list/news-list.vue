@@ -27,7 +27,7 @@
 				<uni-list :class="{ 'uni-list--waterfall': options.waterfall }">
 					<!-- 通过 uni-list--waterfall 类决定页面布局方向 -->
 					<!-- to 属性携带参数跳转详情页面，当前只为参考 -->
-					<uni-list-item :border="!options.waterfall" :to="'./detail?id='+item._id+'&title='+item.title" class="uni-list-item--waterfall" title="自定义商品列表"
+					<uni-list-item :border="!options.waterfall" :to="'./detail?id='+item._id+'&title='+item.title" class="uni-list-item--waterfall" title="自定义列表"
 						v-for="item in data" :key="item._id">
 						<!-- 通过header插槽定义列表左侧图片 -->
 						<template v-slot:header>
@@ -54,6 +54,7 @@
 				</uni-list>
 				<!-- 通过 loadMore 组件实现上拉加载效果，如需自定义显示内容，可参考：https://ext.dcloud.net.cn/plugin?id=29 -->
 				<uni-load-more v-if="!error && (loading || options.status === 'noMore') " :status="options.status" />
+				<uni-nodata v-if="data.length == 0" @retry="refresh"></uni-nodata>
 			</unicloud-db>
 		</view>
 	</view>
@@ -107,7 +108,7 @@
 		},
 		methods: {
 			/**
-			 * 切换商品列表布局方向
+			 * 切换列表布局方向
 			 */
 			select() {
 				this.formData.waterfall = !this.formData.waterfall;
