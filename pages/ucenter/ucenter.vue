@@ -3,7 +3,8 @@
 		<view class="userInfo" @click="goLogin" :hover-class="!login ? 'logo-hover' : ''">
 			<image class="logo-img" :src="login ? (userInfo.avatar || avatarUrl) :avatarUrl"></image>
 			<view class="logo-title">
-				<text class="uer-name">Hi，{{login ? userInfo.username : '您未登录'}}</text>
+				{{JSON.stringify(userInfo)}}
+				<text class="uer-name">{{login ? userInfo.nickname||userInfo.mobile : '您未登录'}}</text>
 				<text class="go-login-navigat-arrow navigat-arrow" v-if="!login">&#xe65e;</text>
 			</view>
 		</view>
