@@ -45,8 +45,7 @@
 						"text": "微博登录",
 						"logo": "../../static/login/img/sinaweibo.png",
 						"isChecked":false //暂未提供该登陆方式的接口示例
-					},
-					
+					}
 				},
 				providerList: [],
 				oauthServices:[],

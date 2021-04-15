@@ -5,10 +5,10 @@ export default function() {
 	initAppVersion();
 
 	// 检查更新
-	 checkUpdate();
+	checkUpdate();
 
 	//自定义路由拦截
-	// setRouter()
+	setRouter()
 	
 	//提示网络变化
 	eventListenerNetwork()
@@ -36,7 +36,7 @@ function initAppVersion() {
 }
 
 //用于拦截路由
-import baseappConfig from '@/baseapp.config.json';
+const baseappConfig = require('@/baseapp.config.json')
 const {"router":{needLogin}} = baseappConfig //需要登陆的页面
 function setRouter() {
 	let before_action = e => {
