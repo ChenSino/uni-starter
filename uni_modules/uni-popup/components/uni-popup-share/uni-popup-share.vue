@@ -34,11 +34,6 @@
 						name: 'wx'
 					},
 					{
-						text: '支付宝',
-						icon: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/d684ae40-50be-11eb-8ff1-d5dcf8779628.png',
-						name: 'wx'
-					},
-					{
 						text: 'QQ',
 						icon: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/e7a79520-50be-11eb-b997-9918a5dda011.png',
 						name: 'qq'
@@ -49,12 +44,7 @@
 						name: 'sina'
 					},
 					{
-						text: '百度',
-						icon: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/1ec6e920-50bf-11eb-8a36-ebb87efcf8c0.png',
-						name: 'copy'
-					},
-					{
-						text: '其他',
+						text: '复制链接',
 						icon: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/2e0fdfe0-50bf-11eb-b997-9918a5dda011.png',
 						name: 'more'
 					}
