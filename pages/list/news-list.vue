@@ -21,7 +21,7 @@
 			<!-- 页面分类标题 -->
 			<uni-section style="margin:0;" v-if="searchText" :title="listTitle" type="line"></uni-section>
 			<unicloud-db ref="udb" v-slot:default="{data, loading, error, options}" :options="formData"
-				:collection="collection" :field="field" :where="where" @load="load($event);isLoading = false;" @error="isLoading = false">
+				:collection="collection" :field="field" :where="where" @load="load" @error="isLoading = false">
 				<text v-if="error" class="list-info">{{error.message}}</text>
 				<!-- 基于 uni-list 的页面布局 -->
 				<uni-list :class="{ 'uni-list--waterfall': options.waterfall }">
@@ -120,10 +120,12 @@
 			refresh() {
 				this.tipShow = true
 				this.formData.status = 'more'
+				this.isLoading = true
 				this.$refs.udb.loadData({
 					clear: true
 				}, () => {
 					this.tipShow = false
+					this.isLoading = false
 					uni.stopPullDownRefresh()
 				})
 			},
@@ -134,6 +136,7 @@
 				this.$refs.udb.loadMore()
 			},
 			load(data, ended) {
+				this.isLoading = false
 				if (ended) {
 					this.formData.status = 'noMore'
 				}
