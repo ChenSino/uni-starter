@@ -9,22 +9,23 @@
 			console.log('App Launch')
 			initApp();
 			// #ifdef APP-PLUS
-				plus.oauth.getServices(oauthServices=>{
-					oauthServices.forEach(({_id},item)=>{
-						if(_id=='provider'){
-							uni.preLogin({
-								provider:item,
-								complete:e=>{
-									console.log(e);
-								}
-							})
-						}
-					})
+			//预加载一键登录
+				// plus.oauth.getServices(oauthServices=>{
+				// 	oauthServices.forEach(({_id},item)=>{
+				// 		if(_id=='provider'){
+				// 			uni.preLogin({
+				// 				provider:item,
+				// 				complete:e=>{
+				// 					console.log(e);
+				// 				}
+				// 			})
+				// 		}
+				// 	})
 					
-					uni.preloadPage({url: "/uni_modules/uni-login-page/pages/index/index"});
-				},err=>{
-					console.error('获取服务供应商失败：' + JSON.stringify(err));
-				})
+				// 	uni.preloadPage({url: "/uni_modules/uni-login-page/pages/index/index"});
+				// },err=>{
+				// 	console.error('获取服务供应商失败：' + JSON.stringify(err));
+				// })
 			// #endif
 		},
 		onShow: function() {

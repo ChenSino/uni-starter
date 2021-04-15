@@ -36,13 +36,13 @@ function initAppVersion() {
 }
 
 //用于拦截路由
+import baseappConfig from '@/baseapp.config.json';
+const {"router":{needLogin}} = baseappConfig //需要登陆的页面
 function setRouter() {
 	let before_action = e => {
 		let res = true
-		//需要登陆的页面
-		let needLoginUrls = ['/pages/grid/grid']
 		let token = uni.getStorageSync('uni-id-token')
-		if (needLoginUrls.includes(e.url) && token == '') {
+		if (needLogin.includes(e.url) && token == '') {
 			res = false
 			console.log('该页面需要登陆，即将跳转到login页面');
 		}

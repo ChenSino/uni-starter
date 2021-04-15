@@ -1,0 +1,8 @@
+{
+	"router":{
+		"needLogin":[
+			"/pages/grid/grid"
+		]
+	},
+	""
+}
