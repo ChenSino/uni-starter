@@ -157,7 +157,7 @@
 				
 				//#ifdef APP-PLUS
 				if(item.name == 'more'){
-					// "其他"选项
+					// "复制链接"选项
 					uni.setClipboardData({
 					    data: 'http://uniapp.dcloud.io/',
 					    success: function () {
@@ -169,7 +169,7 @@
 					});
 				} else {
 					uni.share({
-					    provider: "weixin",
+					    provider: item.name,
 					    scene: "WXSceneSession",
 					    type: 0,
 					    href: "http://uniapp.dcloud.io/",

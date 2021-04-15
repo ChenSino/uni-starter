@@ -171,12 +171,12 @@
 			clickBannerItem(item) {
 				// 有外部链接-跳转url
 				if (item.open_url) {
-					//#ifdef APP-PLUS
-					plus.runtime.openWeb(item.open_url);
-					//#endif
-					//#ifdef H5
-					window.open(item.open_url)
-					//#endif
+					uni.navigateTo({
+						url: '/pages/common/webview/webview?url='+item.open_url+'&title='+item.title,
+						success: res => {},
+						fail: () => {},
+						complete: () => {}
+					});
 				}
 				// 其余业务处理
 			},

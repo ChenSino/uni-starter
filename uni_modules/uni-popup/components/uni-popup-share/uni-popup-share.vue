@@ -31,7 +31,7 @@
 				bottomData: [{
 						text: '微信',
 						icon: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/c2b17470-50be-11eb-b680-7980c8a877b8.png',
-						name: 'wx'
+						name: 'weixin'
 					},
 					{
 						text: 'QQ',
@@ -41,12 +41,12 @@
 					{
 						text: '新浪',
 						icon: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/0dacdbe0-50bf-11eb-8ff1-d5dcf8779628.png',
-						name: 'sina'
+						name: 'sinaweibo'
 					},
 					{
 						text: '复制链接',
 						icon: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/2e0fdfe0-50bf-11eb-b997-9918a5dda011.png',
-						name: 'more'
+						name: 'copy'
 					}
 				]
 			}
