@@ -7,9 +7,6 @@ export default function() {
 	// 初始化appVersion
 	initAppVersion();
 
-	// 检查更新
-	checkUpdate();
-
 	//自定义路由拦截
 	setRouter()
 	
@@ -44,6 +41,9 @@ function initAppVersion() {
 			}
 		})
 	});
+	
+	// 检查更新
+	checkUpdate();
 	// #endif
 }
 
