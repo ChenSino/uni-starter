@@ -96,7 +96,7 @@
 				let oauthService = this.oauthServices.find((service) => service.id == type)
 				// #ifdef APP-PLUS
 				//uni.showLoading({mask: true});
-				console.log(type,231);
+				console.log(type);
 				//请勿直接使用前端获取的unionid或openid直接用于登陆，前端的数据都是不可靠的
 				if(type=='weixin'){
 					oauthService.authorize(({code})=>{
@@ -104,6 +104,7 @@
 						this.quickLogin({code},type)
 					},
 					err=>{
+						uni.hideLoading()
 						console.log(err);
 					})
 				}
@@ -122,11 +123,24 @@
 					fail: (err) => {
 						uni.hideLoading()
 						console.log(err);
-						if(err.errCode===30002){
-							console.log('在一键登陆界面，点击其他登陆方式');
-						}
-						if(err.errCode===30003){
-							uni.navigateBack()
+						switch (err.errCode){
+							case 30002:
+								console.log('在一键登陆界面，点击其他登陆方式');
+								break;
+							case 30003:
+								console.log('关闭了登陆');
+								uni.navigateBack()
+								break;
+							case 30006:
+								uni.showModal({
+									title: "登陆服务初始化错误",
+									content:err.metadata.error_data,
+									showCancel: false,
+									confirmText: '知道了',
+								});
+								break;
+							default:
+								break;
 						}
 					}
 				})

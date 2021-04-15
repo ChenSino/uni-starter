@@ -22,6 +22,26 @@
 			}
 		},
 		onLoad() {
+			uni.addInterceptor('showToast',{
+				invoke(e){// 调用前拦截 
+					console.log(e)
+					e.title = "645"
+				},
+				success(e){// 成功回调拦截 
+					console.log(e)
+				},
+				fail(e){// 失败回调拦截 
+					console.log(e)
+				},
+				complete(e){
+					console.log(e)
+				},
+				returnValue(e){// 返回结果拦截 
+					console.log(e)
+				}
+			})
+			
+			return 
 			/*
 				当某个权限调用失败
 				1.先检测手机的该模块是否打开

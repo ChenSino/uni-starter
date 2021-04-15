@@ -157,5 +157,25 @@
 				}
 			}
 		}
+	},
+	"opendb-app-versions":{
+		"data":[
+			{
+				"is_silently": false,
+				"is_mandatory": false,
+				"appid": "__UNI__03B096E",
+				"name": "base-app",
+				"title": "新增升级中心",
+				"contents": "新增升级中心",
+				"platform": [
+					"Android"
+				],
+				"version": "1.0.1",
+				"url": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-3469aac7-a663-4c5d-8ee8-94275f8c09ab/3128d010-01c5-4121-a1d6-f3f919944a23.apk",
+				"stable_publish": false,
+				"type": "native_app",
+				"create_date": 1616771628150
+			}
+		]
 	}
 }

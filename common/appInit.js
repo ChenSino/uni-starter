@@ -10,20 +10,45 @@ export default function() {
 
 	//自定义路由拦截
 	const {"router":{needLogin}} = baseappConfig //需要登陆的页面
-	changeAction(["navigateTo", "redirectTo", "reLaunch", "switchTab"], {
-		before_action: e => {
-			let token = uni.getStorageSync('uni-id-token')
-			if (needLogin.includes(e.url) && token == '') {
-				console.log('该页面需要登陆，即将跳转到login页面');
-				uni.showToast({title:'该页面需要登陆，即将跳转到login页面',icon:'none'})
-				uni.redirectTo({
-					url:"/uni_modules/uni-login-page/pages/index/index"
-				})
-				return false
+	
+	// changeAction(["navigateTo", "redirectTo", "reLaunch", "switchTab"], {
+	// 	before_action: e => {
+	// 		let token = uni.getStorageSync('uni-id-token')
+	// 		let url = e.url.split('?')[0]
+	// 		if (needLogin.includes(url) && token == '') {
+	// 			console.log('该页面需要登陆，即将跳转到login页面');
+	// 			uni.showToast({title:'该页面需要登陆，即将跳转到login页面',icon:'none'})
+	// 			uni.navigateTo({
+	// 				url:"/uni_modules/uni-login-page/pages/index/index"
+	// 			})
+	// 			return false
+	// 		}
+	// 		return true
+	// 	}
+	// })
+	
+	//uni.addInterceptor的写法
+	
+	let list = ["navigateTo", "redirectTo", "reLaunch", "switchTab"];
+	list.forEach(item=>{
+		uni.addInterceptor(item,{
+			invoke(e){// 调用前拦截
+				//console.log(e);
+				let token = uni.getStorageSync('uni-id-token')
+				let url = e.url.split('?')[0]
+				if (needLogin.includes(url) && token == '') {
+					console.log('该页面需要登陆，即将跳转到login页面');
+					uni.showToast({title:'该页面需要登陆，即将跳转到login页面',icon:'none'})
+					uni.navigateTo({
+						url:"/uni_modules/uni-login-page/pages/index/index"
+					})
+					return false
+				}
+				return true
 			}
-			return true
-		}
+		})
 	})
+	
 	
 	//提示网络变化
 	eventListenerNetwork()
@@ -128,7 +153,7 @@ function changeAction(actions, {before_action,after_action}) {
 		let old_action = uni[action]
 		uni[action] = e => {
 			if (before_action(e)) {
-				console.log(after_action);
+			//	console.log(after_action);
 				if (after_action) {
 					var compose = function(f, g) {
 						return function(x) {

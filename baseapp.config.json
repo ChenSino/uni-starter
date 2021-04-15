@@ -5,13 +5,19 @@
 			"/uni_modules/uni-login-page/pages/index/pwd-retrieve"
 		]
 	},
-	"aboutus":{
+	"about":{
 		"appName":"base-app",
 		"company":"数字天堂（北京）网络技术有限公司",
 		"slogan":"为开发而生",
-		"agreement":{
-			"privacy":"https://uniapp.dcloud.io/",
-			"business":"https://uniapp.dcloud.io/"
-		}
+		"agreements":[
+			{
+				"title":"用户服务协议",
+				"url":"https://uniapp.dcloud.io/"
+			},
+			{
+				"title":"隐私政策",
+				"url":"https://uniapp.dcloud.io/"
+			}
+		]
 	}
 }

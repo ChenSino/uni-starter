@@ -41,10 +41,12 @@ page {
 	padding-top: 50rpx;
 }
 
+/* #ifndef APP-NVUE */
 .hidden,
 page {
 	background-color: transparent;
 }
+/* #endif */
 
 .login-iknow {
 	padding-top: 24rpx;

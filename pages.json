@@ -23,15 +23,15 @@
 				"navigationBarTitleText": "",
 				"app-plus": {
 					"animationType": "none",
-					"popGesture": "none",
-					"titleNView": {
-						"buttons": [{
-							"text": "帮助",
-							"type": "none",
-							"fontSize": "16px",
-							"width": "60px"
-						}]
-					}
+					"popGesture": "none"
+					// "titleNView": {
+					// 	"buttons": [{
+					// 		"text": "帮助",
+					// 		"type": "none",
+					// 		"fontSize": "16px",
+					// 		"width": "60px"
+					// 	}]
+					// }
 				}
 			}
 		}, {
@@ -139,14 +139,14 @@
 			"style": {
 				"navigationBarTitleText": "",
 				"app-plus": {
-					"titleNView": {
-						"buttons": [{
-							"text": "帮助",
-							"type": "none",
-							"fontSize": "16px",
-							"width": "60px"
-						}]
-					}
+					// "titleNView": {
+					// 	"buttons": [{
+					// 		"text": "帮助",
+					// 		"type": "none",
+					// 		"fontSize": "16px",
+					// 		"width": "60px"
+					// 	}]
+					// }
 				}
 			}
 		}, {
@@ -154,14 +154,14 @@
 			"style": {
 				"navigationBarTitleText": "",
 				"app-plus": {
-					"titleNView": {
-						"buttons": [{
-							"text": "帮助",
-							"type": "none",
-							"fontSize": "16px",
-							"width": "60px"
-						}]
-					}
+					// "titleNView": {
+					// 	"buttons": [{
+					// 		"text": "帮助",
+					// 		"type": "none",
+					// 		"fontSize": "16px",
+					// 		"width": "60px"
+					// 	}]
+					// }
 				}
 			}
 		}, {
@@ -169,14 +169,14 @@
 			"style": {
 				"navigationBarTitleText": "",
 				"app-plus": {
-					"titleNView": {
-						"buttons": [{
-							"text": "帮助",
-							"type": "none",
-							"fontSize": "16px",
-							"width": "60px"
-						}]
-					}
+					// "titleNView": {
+					// 	"buttons": [{
+					// 		"text": "帮助",
+					// 		"type": "none",
+					// 		"fontSize": "16px",
+					// 		"width": "60px"
+					// 	}]
+					// }
 				}
 			}
 

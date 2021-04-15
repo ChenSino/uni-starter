@@ -28,12 +28,24 @@ export default function request(name,params,callback=false,{showLoading=false,lo
 					resolve(e)
 					return callback(data,e.result,e)
 				}
-				debug? uni.showModal({content: JSON.stringify(e)}) :'';
+				if(debug){
+					uni.showModal({
+						content: JSON.stringify(e),
+						showCancel: false,
+						confirmText: '知道了'
+					})
+				}
 			},
 			fail(err){
 				reject(err)
 				console.log(err);
-				debug? uni.showModal({content: JSON.stringify(err)}) :'';
+				if(debug){
+					uni.showModal({
+						content: JSON.stringify(err),
+						showCancel: false,
+						confirmText: '知道了'
+					})
+				}
 				fail(err)
 			}
 		})

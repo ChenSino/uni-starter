@@ -7,10 +7,10 @@
 				:link="!item.showSwitch"></uni-list-item>
 		</uni-list>
 		<!-- 退出按钮 -->
-		<button class="bottom-back" @click="clickLogout">
+		<view class="bottom-back" @click="clickLogout">
 			<text class="bottom-back-text" v-if="userInfo">退出登录</text>
 			<text class="bottom-back-text" v-else>登录</text>
-		</button>
+		</view>
 	</view>
 </template>
 

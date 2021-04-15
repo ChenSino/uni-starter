@@ -1,12 +1,12 @@
 <template>
 	<view class="center">
-		<navigator url="/pages/ucenter/settings/settings"  class="userInfo">
+		<view class="userInfo" @click="toSettings">
 			<image class="logo-img" :src="login ? (userInfo.avatar || avatarUrl) :avatarUrl"></image>
 			<view class="logo-title">
 				<text class="uer-name">{{login ? userInfo.username||userInfo.mobile : '未登录'}}</text>
 				<text class="go-login-navigat-arrow navigat-arrow" v-if="!login">&#xe65e;</text>
 			</view>
-		</navigator>
+		</view>
 		<uni-grid class="grid" :column="5" :showBorder="false" :square="true">
 			<uni-grid-item class="item" v-for="({text,icon},index) in gridList" @click.native="tapGrid(index)">
 				<uni-icons class="icon" color="#5d5e64" :type="icon" size="28"></uni-icons>
@@ -14,13 +14,8 @@
 			</uni-grid-item>
 		</uni-grid>
 		<uni-list class="center-list" v-for="(sublist , index) in ucenterList">
-			<uni-list-item v-for="item in sublist"
-				:title="item.title"
-				link :rightText="item.rightText"
-				:clickable="true"
-				:to="item.to"
-				@click="ucenterListClick(item)"
-			>
+			<uni-list-item v-for="item in sublist" :title="item.title" link :rightText="item.rightText"
+				:clickable="true" :to="item.to" @click="ucenterListClick(item)">
 				<view v-if="item.showBadge" class="item-footer" slot="footer">
 					<text class="item-footer-text">{{item.rightText}}</text>
 					<view class="item-footer-badge"></view>
@@ -69,29 +64,23 @@
 						title: '我的积分',
 						to: ''
 					}],
-					[{
-							title: '政策与协议',
-							to: '/pages/ucenter/agree-list/agree-list'
-						}, {
-							title: '关于',
-							to: '/pages/ucenter/about/about'
-						},
+					[
 						//#ifdef APP-PLUS
 						{
 							title: '检查更新',
 							rightText: `V${getApp().appVersion.version}_${getApp().appVersion.versionCode}`,
-							event:'checkVersion',
-							showBadge:true
-						}
+							event: 'checkVersion',
+							showBadge: true
+						},
 						//#endif
-					],
-					[{
-						title: '反馈',
-						to: '/uni_modules/opendb-feedback/pages/opendb-feedback/list'	// /pages/ucenter/uni-feedback/uni-feedback uni_modules/opendb-feedback/pages/opendb-feedback/list
-					}, {
-						title: '设置',
-						to: '/pages/ucenter/settings/settings'
-					}]
+						{
+							title: '反馈',
+							to: '/uni_modules/opendb-feedback/pages/opendb-feedback/list' // /pages/ucenter/uni-feedback/uni-feedback uni_modules/opendb-feedback/pages/opendb-feedback/list
+						},{
+							title: '关于',
+							to: '/pages/ucenter/about/about'
+						}
+					]
 				]
 			}
 		},
@@ -108,6 +97,11 @@
 			...mapMutations({
 				logout: 'user/logout'
 			}),
+			toSettings(){
+				uni.navigateTo({
+					url:"/pages/ucenter/settings/settings"
+				})
+			},
 			/**
 			 * 个人中心项目列表点击事件
 			 */
@@ -132,9 +126,9 @@
 					})
 				}
 			},
-			tapGrid(index){
+			tapGrid(index) {
 				uni.showToast({
-					title: '你点击了，第'+index+'个',
+					title: '你点击了，第' + index + '个',
 					icon: 'none'
 				});
 			}
@@ -174,7 +168,7 @@
 	.userInfo {
 		width: 750rpx;
 		padding: 20rpx;
-		padding-top:50px;
+		padding-top: 50px;
 		background-color: #2F85FC;
 		flex-direction: column;
 		align-items: center;
@@ -232,11 +226,12 @@
 		background-color: #007AFF;
 		height: 40rpx;
 	}
-	
-	.grid{
+
+	.grid {
 		background-color: #FFFFFF;
-		margin:25rpx 0;
+		margin: 25rpx 0;
 	}
+
 	.uni-grid .text {
 		font-size: 26rpx;
 		color: #817f82;
@@ -246,36 +241,38 @@
 		justify-content: center;
 		align-items: center;
 	}
-	
 
-/*修改边线粗细示例*/
-/* #ifndef APP-NVUE */
+
+	/*修改边线粗细示例*/
+	/* #ifndef APP-NVUE */
 	.center-list /deep/ .uni-list--border:after,
-	.center-list /deep/ .uni-list--border-top ,
-	.center-list /deep/ .uni-list--border-bottom{
+	.center-list /deep/ .uni-list--border-top,
+	.center-list /deep/ .uni-list--border-bottom {
 		-webkit-transform: scaleY(0.2);
 		transform: scaleY(0.2);
 	}
-/* #endif */
-.item-footer{
-	flex-direction: row;
-	align-items: center;
-}
-.item-footer-text{
-	color: #999;
-	font-size: 24rpx;
-	padding-right: 10rpx;
-}
-.item-footer-badge{
-	width: 20rpx;
-	height: 20rpx;
-	/* #ifndef APP-NVUE */
-	border-radius: 50%;
+
 	/* #endif */
-	/* #ifdef APP-NVUE */
-	border-radius: 10rpx;
-	/* #endif */
-	background-color: #DD524D;
-}
-	
+	.item-footer {
+		flex-direction: row;
+		align-items: center;
+	}
+
+	.item-footer-text {
+		color: #999;
+		font-size: 24rpx;
+		padding-right: 10rpx;
+	}
+
+	.item-footer-badge {
+		width: 20rpx;
+		height: 20rpx;
+		/* #ifndef APP-NVUE */
+		border-radius: 50%;
+		/* #endif */
+		/* #ifdef APP-NVUE */
+		border-radius: 10rpx;
+		/* #endif */
+		background-color: #DD524D;
+	}
 </style>

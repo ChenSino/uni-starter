@@ -8,24 +8,31 @@
 		onLaunch: function() {
 			console.log('App Launch')
 			initApp();
+			//预加载设置页面
+			uni.preloadPage({
+				url: "/pages/ucenter/settings/settings",
+				complete:e=>{
+					console.log(e);
+				}
+			});
 			// #ifdef APP-PLUS
 			//预加载一键登录
-				// plus.oauth.getServices(oauthServices=>{
-				// 	oauthServices.forEach(({_id},item)=>{
-				// 		if(_id=='provider'){
-				// 			uni.preLogin({
-				// 				provider:item,
-				// 				complete:e=>{
-				// 					console.log(e);
-				// 				}
-				// 			})
-				// 		}
-				// 	})
-					
-				// 	uni.preloadPage({url: "/uni_modules/uni-login-page/pages/index/index"});
-				// },err=>{
-				// 	console.error('获取服务供应商失败：' + JSON.stringify(err));
-				// })
+				plus.oauth.getServices(oauthServices=>{
+					console.log(oauthServices);
+					oauthServices.forEach(({_id},item)=>{
+						if(_id=='provider'){
+							uni.preLogin({
+								provider:item,
+								complete:e=>{
+									console.log(e);
+								}
+							})
+						}
+					})
+					uni.preloadPage({url: "/uni_modules/uni-login-page/pages/index/index"});
+				},err=>{
+					console.error('获取服务供应商失败：' + JSON.stringify(err));
+				})
 			// #endif
 		},
 		onShow: function() {

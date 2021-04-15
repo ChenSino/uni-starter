@@ -4,12 +4,12 @@ import {
 		mapMutations
 	} from 'vuex';
 let mixin = {
-	// 监听帮助按钮
-	onNavigationBarButtonTap(event) {
-		uni.navigateTo({
-			url:helpPage
-		})
-	},
+	// // 监听帮助按钮
+	// onNavigationBarButtonTap(event) {
+	// 	uni.navigateTo({
+	// 		url:helpPage
+	// 	})
+	// },
 	data(){
 		return {
 			// 用户协议页面跳转
