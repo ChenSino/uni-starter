@@ -36,7 +36,8 @@ function initAppVersion() {
 }
 
 //用于拦截路由
-const baseappConfig = require('@/baseapp.config.json')
+import baseappConfig from '@/baseapp.config.json';
+console.log('baseappConfig',baseappConfig);
 const {"router":{needLogin}} = baseappConfig //需要登陆的页面
 function setRouter() {
 	let before_action = e => {
