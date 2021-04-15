@@ -1,4 +1,7 @@
+// #ifdef APP-PLUS
 import checkUpdate from '@/uni_modules/uni-upgrade-center-app/utils/check-update';
+import callCheckVersion from '@/uni_modules/uni-upgrade-center-app/utils/call-check-version';
+// #endif
 export default function() {
 
 	// 初始化appVersion
@@ -21,16 +24,25 @@ function initAppVersion() {
 	// #ifdef APP-PLUS
 	let appid = plus.runtime.appid;
 	plus.runtime.getProperty(appid, (wgtInfo) => {
-		wgtInfo.version
 		let appVersion = plus.runtime;
+		let currentVersion = appVersion.versionCode > wgtInfo.versionCode ? appVersion : wgtInfo;
 		getApp({
 			allowDefault: true
 		}).appVersion = {
+			...currentVersion,
 			appid,
-			version: appVersion,
-			wgtVersion: wgtInfo,
-			finall: appVersion.versionCode > wgtInfo.versionCode ? appVersion : wgtInfo
+			hasNew:true
 		}
+		// 检查更新小红点
+		callCheckVersion()
+		.then(res=>{
+			if(res.result.code>0){
+				// 有新版本
+				getApp({
+					allowDefault: true
+				}).appVersion.hasNew = true;
+			}
+		})
 	});
 	// #endif
 }
