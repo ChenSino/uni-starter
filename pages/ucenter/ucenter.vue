@@ -20,7 +20,12 @@
 				:clickable="true"
 				:to="item.to"
 				@click="ucenterListClick(item)"
-			></uni-list-item>
+			>
+				<view v-if="item.showBadge" class="item-footer" slot="footer">
+					<text class="item-footer-text">{{item.rightText}}</text>
+					<view class="item-footer-badge"></view>
+				</view>
+			</uni-list-item>
 		</uni-list>
 	</view>
 </template>
@@ -74,8 +79,9 @@
 						//#ifdef APP-PLUS
 						{
 							title: '检查更新',
-							rightText: `V${getApp().appVersion.finall.version}_${getApp().appVersion.finall.versionCode}`,
-							event:'checkVersion'
+							rightText: `V${getApp().appVersion.version}_${getApp().appVersion.versionCode}`,
+							event:'checkVersion',
+							showBadge:true
 						}
 						//#endif
 					],
@@ -251,5 +257,25 @@
 		transform: scaleY(0.2);
 	}
 /* #endif */
+.item-footer{
+	flex-direction: row;
+	align-items: center;
+}
+.item-footer-text{
+	color: #999;
+	font-size: 24rpx;
+	padding-right: 10rpx;
+}
+.item-footer-badge{
+	width: 20rpx;
+	height: 20rpx;
+	/* #ifndef APP-NVUE */
+	border-radius: 50%;
+	/* #endif */
+	/* #ifdef APP-NVUE */
+	border-radius: 10rpx;
+	/* #endif */
+	background-color: #DD524D;
+}
 	
 </style>
