@@ -2,12 +2,15 @@
 	<view class="content">
 		<!-- 功能列表 -->
 		<uni-list class="content">
-			<uni-list-item v-for="(item,index) in agreeList" :key="index" :title="item.title" :to="item.to"
+			<uni-list-item v-for="(item,index) in agreeList" :key="index" :title="item.title"
 				:clickable="true" @click="itemClick(item)" :showSwitch="item.showSwitch" :switchChecked="item.isChecked"
-				:link="item.to"></uni-list-item>
+				:link="!item.showSwitch"></uni-list-item>
 		</uni-list>
 		<!-- 退出按钮 -->
-		<button class="bottom-back" @click="clickLogout"><text class="bottom-back-text">退出登录</text></button>
+		<button class="bottom-back" @click="clickLogout">
+			<text class="bottom-back-text" v-if="userInfo">退出登录</text>
+			<text class="bottom-back-text" v-else>登录</text>
+		</button>
 	</view>
 </template>
 
@@ -68,22 +71,24 @@
 				logout: 'user/logout'
 			}),
 			toEdit(){
-				
 				uni.navigateTo({
-					url: '../edit/edit'
+					url: '/pages/ucenter/edit/edit'
 				});
 			},
 			changePwd(){
-				if(this.userInfo){
-					uni.navigateTo({
-						url:'/uni_modules/uni-login-page/pages/index/pwd-retrieve?phoneNumber='+ (this.userInfo.phone||'') +'&phoneArea=+86'
-					});
-				} else {
-					uni.showToast({
-						title: '请先登录',
-						icon: 'none'
-					});
-				}
+				uni.navigateTo({
+					url:'/uni_modules/uni-login-page/pages/index/pwd-retrieve?phoneNumber='+ (this.userInfo.phone||'') +'&phoneArea=+86'
+				});
+				// if(this.userInfo){
+				// 	uni.navigateTo({
+				// 		url:'/uni_modules/uni-login-page/pages/index/pwd-retrieve?phoneNumber='+ (this.userInfo.phone||'') +'&phoneArea=+86'
+				// 	});
+				// } else {
+				// 	uni.showToast({
+				// 		title: '请先登录',
+				// 		icon: 'none'
+				// 	});
+				// }
 			},
 			checkPush(){
 				// 手机端获取推送是否开启
@@ -186,21 +191,26 @@
 				})
 			},
 			clickLogout() {
-				
-				uni.showModal({
-					title: '提示',
-					content: '是否退出登录',
-					cancelText: '取消',
-					confirmText: '确定',
-					success: res => {
-						if(res.confirm){
-							this.logout();
-							uni.navigateBack();
-						}
-					},
-					fail: () => {},
-					complete: () => {}
-				});
+				if(this.userInfo){
+					uni.showModal({
+						title: '提示',
+						content: '是否退出登录',
+						cancelText: '取消',
+						confirmText: '确定',
+						success: res => {
+							if(res.confirm){
+								this.logout();
+								uni.navigateBack();
+							}
+						},
+						fail: () => {},
+						complete: () => {}
+					});
+				}else{
+					uni.navigateTo({
+						url: '/uni_modules/uni-login-page/pages/index/index'
+					});
+				}
 			},
 			itemClick(item) {
 				if (!item.to && item.event) {
@@ -253,10 +263,11 @@
 		/* #endif */
 		border-width: 0;
 		border-radius: 0;
+		background-color: #007AFF;
 	}
 
 	.bottom-back-text {
 		font-size: 40rpx;
-		color: #DD524D;
+		color: #FFFFFF;
 	}
 </style>

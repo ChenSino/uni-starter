@@ -7,7 +7,7 @@
 */
 const debug = true;//开启后，会alert错误信息
 export default function request(name,params,callback=false,{showLoading=false,loadText='',fail=()=>{}}={}){
-	console.log('request');
+	// console.log('request');
 	showLoading||loadText? uni.showLoading({title:loadText}):'';
 	
 	let routers =  name.split('/');
@@ -16,7 +16,7 @@ export default function request(name,params,callback=false,{showLoading=false,lo
 		name = routers[0]
 		action =  routers[1]
 	}
-	// console.log({name,data: {action,params}})
+	console.log({name,data: {action,params}})
 	return new Promise((resolve,reject)=>{
 		uniCloud.callFunction({name,data: {action,params},
 			success(e){

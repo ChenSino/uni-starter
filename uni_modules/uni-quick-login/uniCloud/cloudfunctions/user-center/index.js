@@ -11,7 +11,7 @@ exports.main = async (event, context) => {
 		context
 	})
 	//event为客户端上传的参数
-	console.log('event : ' + event)
+	console.log('event : ' + JSON.stringify(event))
 	let params = event.params || {}
 	
 	//防止黑客恶意破解登陆，连续登陆失败一定次数后，需要用户提供验证码
@@ -107,6 +107,11 @@ exports.main = async (event, context) => {
 			break;
 		case 'login_by_weixin':
 			res = await uniID.loginByWeixin(params);
+			await uniID.updateUser({
+				uid: params.uid,
+				username:"微信用户"
+			});
+			res.userInfo.username = "微信用户"
 			loginLog(res)
 			break;
 		case 'login_by_univerify':

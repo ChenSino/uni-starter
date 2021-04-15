@@ -104,8 +104,6 @@
 		width: 150rpx;
 		height: 150rpx;
 		border-radius: 75rpx;
-		
-		border-width: 1rpx;
-		border-color: #999999;
+		border: #F8F8F8 solid 1px;
 	}
 </style>

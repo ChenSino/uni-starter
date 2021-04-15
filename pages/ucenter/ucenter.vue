@@ -1,12 +1,12 @@
 <template>
 	<view class="center">
-		<view class="userInfo" @click="goLogin" :hover-class="!login ? 'logo-hover' : ''">
+		<navigator url="/pages/ucenter/settings/settings"  class="userInfo">
 			<image class="logo-img" :src="login ? (userInfo.avatar || avatarUrl) :avatarUrl"></image>
 			<view class="logo-title">
-				<text class="uer-name">{{login ? userInfo.nickname||userInfo.mobile : '未登录'}}</text>
+				<text class="uer-name">{{login ? userInfo.username||userInfo.mobile : '未登录'}}</text>
 				<text class="go-login-navigat-arrow navigat-arrow" v-if="!login">&#xe65e;</text>
 			</view>
-		</view>
+		</navigator>
 		<uni-grid class="grid" :column="5" :showBorder="false" :square="true">
 			<uni-grid-item class="item" v-for="({text,icon},index) in gridList" @click.native="tapGrid(index)">
 				<uni-icons class="icon" color="#5d5e64" :type="icon" size="28"></uni-icons>
@@ -180,9 +180,9 @@
 		align-items: center;
 	}
 
-	.logo-hover {
+	/* .logo-hover {
 		opacity: 0.8;
-	}
+	} */
 
 	.logo-img {
 		width: 150rpx;
