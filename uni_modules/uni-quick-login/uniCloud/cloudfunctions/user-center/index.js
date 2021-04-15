@@ -107,6 +107,11 @@ exports.main = async (event, context) => {
 			break;
 		case 'login_by_weixin':
 			res = await uniID.loginByWeixin(params);
+			await uniID.updateUser({
+				uid: params.uid,
+				username:"微信用户"
+			});
+			res.userInfo.username = "微信用户"
 			loginLog(res)
 			break;
 		case 'login_by_univerify':

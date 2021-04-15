@@ -1,4 +1,5 @@
 import checkUpdate from '@/uni_modules/uni-upgrade-center-app/utils/check-update';
+import baseappConfig from '@/baseapp.config.json';
 export default function() {
 
 	// 初始化appVersion
@@ -8,11 +9,50 @@ export default function() {
 	checkUpdate();
 
 	//自定义路由拦截
-	setRouter()
+	const {"router":{needLogin}} = baseappConfig //需要登陆的页面
+	changeAction(["navigateTo", "redirectTo", "reLaunch", "switchTab"], {
+		before_action: e => {
+			let token = uni.getStorageSync('uni-id-token')
+			if (needLogin.includes(e.url) && token == '') {
+				console.log('该页面需要登陆，即将跳转到login页面');
+				uni.showToast({title:'该页面需要登陆，即将跳转到login页面',icon:'none'})
+				uni.redirectTo({
+					url:"/uni_modules/uni-login-page/pages/index/index"
+				})
+				return false
+			}
+			return true
+		}
+	})
 	
 	//提示网络变化
 	eventListenerNetwork()
 	
+	
+	/*
+		当某个权限调用失败
+		1.先检测手机的该模块是否打开
+		2.检测当前应用是否被授权了该模块对应的权限
+		提示，并点击跳转到设置
+	*/
+   // #ifndef H5
+   // changeAction('chooseImage', {
+   // 	after_action: e => {
+   // 		console.log('changeAction', e);
+   // 		if(e.errCode === 11){
+   // 			uni.showModal({
+   // 				content: '无权限',
+   // 				confirmText:"前往设置",
+   // 				success(e) {
+   // 					if(e.confirm){
+   // 						permision.gotoAppPermissionSetting()
+   // 					}
+   // 				}
+   // 			});
+   // 		}
+   // 	}
+   // })
+   // #endif
 }
 /**
  * // 初始化appVersion
@@ -33,44 +73,6 @@ function initAppVersion() {
 		}
 	});
 	// #endif
-}
-
-//用于拦截路由
-import baseappConfig from '@/baseapp.config.json';
-console.log('baseappConfig',baseappConfig);
-const {"router":{needLogin}} = baseappConfig //需要登陆的页面
-function setRouter() {
-	let before_action = e => {
-		let res = true
-		let token = uni.getStorageSync('uni-id-token')
-		if (needLogin.includes(e.url) && token == '') {
-			res = false
-			console.log('该页面需要登陆，即将跳转到login页面');
-			uni.redirectTo({
-				url:"/uni_modules/uni-login-page/pages/index/index"
-			})
-		}
-		return res
-	}
-	
-	let before_after = e => {
-		console.log('跳转之后');
-	}
-
-	let actions = ["navigateTo", "redirectTo", "reLaunch", "switchTab"]
-	actions.forEach(action => {
-		let old_action = uni[action]
-		uni[action] = e => {
-			//console.log(e);
-			if (before_action(e)) {
-				old_action(e)
-				before_after(e)
-			}
-		}
-	})
-	uni.reLaunch({
-		url: '/pages/grid/grid'
-	})
 }
 
 // 设备网络状态变化事件
@@ -100,4 +102,31 @@ function eventListenerNetwork () {
 			});
 		}
 	});
+}
+
+
+function changeAction(actions, {before_action,after_action}) {
+	if(typeof actions == 'string'){
+		actions = [actions]
+	}
+	if (!before_action) {
+		before_action = () => true
+	}
+	actions.forEach(action=>{
+		let old_action = uni[action]
+		uni[action] = e => {
+			if (before_action(e)) {
+				console.log(after_action);
+				if (after_action) {
+					var compose = function(f, g) {
+						return function(x) {
+							return f(x,g(x));
+						};
+					};
+					e.complete = compose(e.complete,after_action)
+				}
+				old_action(e)
+			}
+		}
+	})
 }

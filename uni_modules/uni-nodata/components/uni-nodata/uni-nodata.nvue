@@ -165,6 +165,7 @@
 		bottom: 0;
 		/* #ifndef APP-NVUE */
 		margin: auto;
+		z-index:9;
 		/* #endif */
 	}
 

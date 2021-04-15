@@ -1,7 +1,17 @@
 {
 	"router":{
 		"needLogin":[
-			"/pages/ucenter/edit/edit"
+			"/pages/ucenter/edit/edit",
+			"/uni_modules/uni-login-page/pages/index/pwd-retrieve"
 		]
+	},
+	"aboutus":{
+		"appName":"base-app",
+		"company":"数字天堂（北京）网络技术有限公司",
+		"slogan":"为开发而生",
+		"agreement":{
+			"privacy":"https://uniapp.dcloud.io/",
+			"business":"https://uniapp.dcloud.io/"
+		}
 	}
 }
