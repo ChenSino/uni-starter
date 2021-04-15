@@ -1,7 +1,7 @@
 {
 	"router":{
 		"needLogin":[
-			"/pages/grid/grid"
+			"/pages/ucenter/edit/edit"
 		]
 	}
 }

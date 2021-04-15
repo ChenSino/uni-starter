@@ -46,6 +46,9 @@ function setRouter() {
 		if (needLogin.includes(e.url) && token == '') {
 			res = false
 			console.log('该页面需要登陆，即将跳转到login页面');
+			uni.redirectTo({
+				url:"/uni_modules/uni-login-page/pages/index/index"
+			})
 		}
 		return res
 	}

@@ -11,7 +11,7 @@ exports.main = async (event, context) => {
 		context
 	})
 	//event为客户端上传的参数
-	console.log('event : ' + event)
+	console.log('event : ' + JSON.stringify(event))
 	let params = event.params || {}
 	
 	//防止黑客恶意破解登陆，连续登陆失败一定次数后，需要用户提供验证码
