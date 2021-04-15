@@ -8,7 +8,7 @@
 	 -->
 	<view class="article">
 		<unicloud-db v-slot:default="{data, loading, error, options}" :options="formData" :collection="collection" :field="field"
-		 :getone="true" :where="where" :manual="true" ref="detail" @load="loadData">
+		 :getone="true" :where="where" :manual="true" ref="detail" foreignKey="opendb-news-articles.author" @load="loadData">
 			<template v-if="!loading && data">
 				<view class="article-title">{{title}}</view>
 				<uni-list :border="false">
