@@ -138,49 +138,19 @@
 				"navigationStyle": "custom"
 			}
 		}, {
-			"path": "uni_modules/uni-login-page/pages/index/pwd-login",
+			"path": "uni_modules/uni-login-page/pages/pwd-login/pwd-login",
 			"style": {
-				"navigationBarTitleText": "",
-				"app-plus": {
-					// "titleNView": {
-					// 	"buttons": [{
-					// 		"text": "帮助",
-					// 		"type": "none",
-					// 		"fontSize": "16px",
-					// 		"width": "60px"
-					// 	}]
-					// }
-				}
+				"navigationBarTitleText": ""
 			}
 		}, {
-			"path": "uni_modules/uni-login-page/pages/index/pwd-retrieve",
+			"path": "uni_modules/uni-login-page/pages/pwd-retrieve/pwd-retrieve",
 			"style": {
-				"navigationBarTitleText": "",
-				"app-plus": {
-					// "titleNView": {
-					// 	"buttons": [{
-					// 		"text": "帮助",
-					// 		"type": "none",
-					// 		"fontSize": "16px",
-					// 		"width": "60px"
-					// 	}]
-					// }
-				}
+				"navigationBarTitleText": ""
 			}
 		}, {
-			"path": "uni_modules/uni-login-page/pages/index/phone-code",
+			"path": "uni_modules/uni-login-page/pages/phone-code/phone-code",
 			"style": {
-				"navigationBarTitleText": "",
-				"app-plus": {
-					// "titleNView": {
-					// 	"buttons": [{
-					// 		"text": "帮助",
-					// 		"type": "none",
-					// 		"fontSize": "16px",
-					// 		"width": "60px"
-					// 	}]
-					// }
-				}
+				"navigationBarTitleText": ""
 			}
 
 		}, {
