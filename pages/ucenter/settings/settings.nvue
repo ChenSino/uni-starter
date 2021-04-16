@@ -66,7 +66,7 @@
 			}),
 			toEdit(){
 				uni.navigateTo({
-					url: '/pages/ucenter/edit/edit'
+					url: '/uni_modules/uni-id-users/pages/uni-id-users/edit'
 				});
 			},
 			changePwd(){
@@ -142,8 +142,9 @@
 							});
 						},
 						fail:(err)=> {
+							console.log(`认证失败:${err.errCode}`);
 							uni.showToast({
-								title: `认证失败:${err.errCode}`,
+								title: `认证失败`,
 								icon: 'none'
 							});
 						}

@@ -127,7 +127,8 @@
 			}
 
 		}, {
-			"path": "pages/ucenter/edit/edit",
+			"path": "uni_modules/uni-id-users/pages/uni-id-users/edit",
+			// "path": "pages/ucenter/edit/edit",
 			"style": {
 				"navigationBarTitleText": "编辑资料"
 			}
