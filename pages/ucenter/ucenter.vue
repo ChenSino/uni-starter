@@ -72,10 +72,14 @@
 							event: 'checkVersion',
 							showBadge: true
 						},
+						{
+							title:'去评分',
+							event:'gotoMarket'
+						},
 						//#endif
 						{
 							title: '问题与反馈',
-							to: '/uni_modules/opendb-feedback/pages/opendb-feedback/list' // /pages/ucenter/uni-feedback/uni-feedback uni_modules/opendb-feedback/pages/opendb-feedback/list
+							to: '/uni_modules/uni-feedback/pages/opendb-feedback/list' // /pages/ucenter/uni-feedback/uni-feedback uni_modules/uni-feedback/pages/opendb-feedback/list
 						},{
 							title: '关于',
 							to: '/pages/ucenter/about/about'
@@ -131,6 +135,26 @@
 					title: '你点击了，第' + (index+1) + '个',
 					icon: 'none'
 				});
+			},
+			/**
+			 * 去应用市场评分
+			 */
+			gotoMarket(){
+				// #ifdef APP-PLUS
+				if (uni.getSystemInfoSync().platform == "ios") {
+					// 这里填写appstore应用id
+					let appstoreid = 'id1417078253';
+					plus.runtime.openURL("itms-apps://" + 'itunes.apple.com/cn/app/wechat/'+appstoreid+'?mt=8');
+				}
+				if (uni.getSystemInfoSync().platform == "android") {
+					var Uri = plus.android.importClass("android.net.Uri");
+					var uri = Uri.parse("market://details?id=" + plus.runtime.appid );  
+					var Intent = plus.android.importClass('android.content.Intent');  
+					var intent = new Intent(Intent.ACTION_VIEW, uri);  
+					var main = plus.android.runtimeMainActivity();  
+					main.startActivity(intent);  
+				}
+				// #endif
 			}
 		}
 	}

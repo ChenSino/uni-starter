@@ -1,34 +1,18 @@
 <template>
 	<view class="uni-container">
 		<uni-forms ref="form" :value="formData" :rules="rules" validate-trigger="submit" err-show-type="toast">
-			<!-- <uni-forms-item name="user_id" label="">
-				<uni-easyinput placeholder="留言反馈用户ID/回复留言用户ID，参考uni-id-users表" v-model="formData.user_id" />
-			</uni-forms-item> -->
-			<!-- <uni-forms-item name="create_date" label="">
-				<uni-datetime-picker return-type="timestamp" :value="formData.create_date" />
-			</uni-forms-item> -->
-			<uni-forms-item name="content" label="反馈内容">
+			<uni-forms-item name="content" label="反馈内容" required>
 				<uni-easyinput placeholder="请输入反馈内容" type="textarea" v-model="formData.content" trim="right" />
 			</uni-forms-item>
 			<uni-forms-item name="imgs" label="反馈截图">
-				<!-- <uni-data-checkbox :multiple="true" v-model="formData.imgs" /> -->
 				<feedback-imgs :isChoose="true" :imgs="formData.imgs" @close="close" @chooseImg="chooseImg"></feedback-imgs>
 			</uni-forms-item>
-			<!-- <uni-forms-item name="is_reply" label="">
-				<switch @change="binddata('is_reply', $event.detail.value)" :checked="formData.is_reply" />
-			</uni-forms-item> -->
-			<!-- <uni-forms-item name="feedback_id" label="">
-				<uni-easyinput placeholder="被回复留言ID" v-model="formData.feedback_id" />
-			</uni-forms-item> -->
-			<uni-forms-item name="contact" label="联系人">
+			<uni-forms-item name="contact" label="联系人" required>
 				<uni-easyinput placeholder="请输入联系人" v-model="formData.contact" trim="both" />
 			</uni-forms-item>
-			<uni-forms-item name="mobile" label="联系方式">
+			<uni-forms-item name="mobile" label="联系方式" required>
 				<uni-easyinput placeholder="请输入手机号/邮箱" v-model="formData.mobile" trim="both" />
 			</uni-forms-item>
-			<!-- <uni-forms-item name="reply_count" label="">
-				<uni-easyinput placeholder="被回复条数" type="number" v-model="formData.reply_count" />
-			</uni-forms-item> -->
 
 			<view class="uni-button-group">
 				<button type="primary" class="uni-button" @click="submit">提交</button>
@@ -123,12 +107,13 @@
 			submitForm(value) {
 				// 使用 clientDB 提交数据
 				db.collection(dbCollectionName).add(value).then((res) => {
-					uni.showToast({
-						icon: 'none',
-						title: '反馈成功'
-					})
-					this.getOpenerEventChannel().emit('refreshData')
-					setTimeout(() => uni.navigateBack(), 500)
+					uni.showModal({
+						title: '您的反馈已经提交成功，请耐心等待。',
+						showCancel: false,
+						success: res => {
+							uni.navigateBack()
+						},
+					});
 				}).catch((err) => {
 					uni.showModal({
 						content: err.message || '反馈失败',
