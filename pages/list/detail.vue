@@ -7,6 +7,7 @@
 	 DB Schema 规范：https://uniapp.dcloud.net.cn/uniCloud/schema
 	 -->
 	<view class="article">
+		<uni-nav-bar :statusBar="true" :border="false"></uni-nav-bar>
 		<unicloud-db v-slot:default="{data, loading, error, options}" :options="formData" :collection="collection" :field="field"
 		 :getone="true" :where="where" :manual="true" ref="detail" foreignKey="opendb-news-articles.author" @load="loadData">
 			<template v-if="!loading && data">
