@@ -74,7 +74,7 @@
 						},
 						//#endif
 						{
-							title: '反馈',
+							title: '问题与反馈',
 							to: '/uni_modules/opendb-feedback/pages/opendb-feedback/list' // /pages/ucenter/uni-feedback/uni-feedback uni_modules/opendb-feedback/pages/opendb-feedback/list
 						},{
 							title: '关于',
