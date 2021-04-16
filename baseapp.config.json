@@ -3,7 +3,8 @@
 		"needLogin":[
 			"/pages/ucenter/edit/edit",
 			"/uni_modules/uni-login-page/pages/index/pwd-retrieve"
-		]
+		],
+		"login":["univerify","password","weixin","apple","code"]
 	},
 	"about":{
 		"appName":"base-app",
@@ -18,6 +19,7 @@
 				"title":"隐私政策",
 				"url":"https://uniapp.dcloud.io/"
 			}
-		]
+		],
+		"下载地址":""
 	}
 }

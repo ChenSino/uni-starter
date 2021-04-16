@@ -1,5 +1,6 @@
 <template>
 	<view class="wrap">
+		<!-- <uni-nav-bar left-icon="back" left-text="返回" right-text="菜单" title="导航栏组件"></uni-nav-bar> -->
 		<view class="wrap-content">
 			<view class="content">
 				<!-- 顶部文字 -->
@@ -38,8 +39,8 @@
 	</view>
 </template>
 
-<script>
-const univerify_first = true
+<script>	
+var univerify_first,currentWebview;//是否一键登陆优先
 	import mixin from '../../common/loginPage.mixin.js';
 	var currentPage;
 	export default {
@@ -48,17 +49,15 @@ const univerify_first = true
 			return {
 				phoneArea: ['+86'],
 				currenPhoneArea: '+86',
-				
 			}
 		},
-		onLoad() {
+		onLoad(e) {
+			univerify_first = e.univerify_first
 			//#ifdef APP-PLUS
 			if(univerify_first){
-				let pages = getCurrentPages();
-				currentPage = pages[pages.length - 1];
-				currentPage.$getAppWebview().setStyle({
-					top:"1000px"
-				})
+				const pages = getCurrentPages();
+				currentWebview = pages[pages.length - 1].$getAppWebview();
+				currentWebview.hide();
 			}
 			//#endif
 		},
@@ -67,9 +66,13 @@ const univerify_first = true
 			if(univerify_first){
 				this.$refs.uniQuickLogin.login('univerify')
 				setTimeout(() => {
-					currentPage.$getAppWebview().setStyle({
-						top:"0"
+					currentWebview.setStyle({
+						titleNView:{
+							autoBackButton:true,
+							backgroundColor:"#FFFFFF"
+						}
 					})
+					currentWebview.show()
 				}, 1500);
 			}
 			//#endif

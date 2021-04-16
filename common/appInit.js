@@ -9,7 +9,7 @@ export default function() {
 	initAppVersion();
 
 	//自定义路由拦截
-	const {"router":{needLogin}} = baseappConfig //需要登陆的页面
+	const {"router":{needLogin,login}} = baseappConfig //需要登陆的页面
 	
 	// changeAction(["navigateTo", "redirectTo", "reLaunch", "switchTab"], {
 	// 	before_action: e => {
@@ -33,9 +33,11 @@ export default function() {
 	list.forEach(item=>{
 		uni.addInterceptor(item,{
 			invoke(e){// 调用前拦截
-				//console.log(e);
-				let token = uni.getStorageSync('uni-id-token')
-				let url = e.url.split('?')[0]
+				console.log(e);
+				const token = uni.getStorageSync('uni_id_token')
+				console.log(token);
+				const url = e.url.split('?')[0]
+				//拦截强制登陆页面
 				if (needLogin.includes(url) && token == '') {
 					console.log('该页面需要登陆，即将跳转到login页面');
 					uni.showToast({title:'该页面需要登陆，即将跳转到login页面',icon:'none'})
@@ -44,9 +46,34 @@ export default function() {
 					})
 					return false
 				}
+				//控制登陆优先级
+				if(url=='/uni_modules/uni-login-page/pages/index/index'){
+					//一键登录（univerify）、密码登陆（password）、快捷登录&验证码登陆（!univerify&password）
+					if(login[0]=='univerify'){
+						console.log(e.url,url);
+						if(e.url==url){ e.url+= '?' }
+						e.url += "univerify_first=true"
+					}else if(login[0]=='password'){
+						e.url = "/uni_modules/uni-login-page/pages/index/pwd-login"
+					}else{
+						//默认即是
+					}
+				}
 				return true
+			},
+			success(){	// 成功回调拦截 
+				
+			},
+			fail(){		// 失败回调拦截 
+				
+			},
+			complete(e){	// 完成回调拦截 
+				console.log(e);
+			},
+			returnValue(){// 返回结果拦截 
+				
 			}
-		})
+		})// 移除拦截器API removeInterceptor('request')
 	})
 	
 	

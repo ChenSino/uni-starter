@@ -15,6 +15,12 @@
 					console.log(e);
 				}
 			});
+			uni.preloadPage({
+				url: "uni_modules/uni-login-page/pages/index/index",
+				complete:e=>{
+					console.log(e);
+				}
+			});
 			// #ifdef APP-PLUS
 			//预加载一键登录
 				plus.oauth.getServices(oauthServices=>{

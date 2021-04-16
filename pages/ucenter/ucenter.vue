@@ -128,7 +128,7 @@
 			},
 			tapGrid(index) {
 				uni.showToast({
-					title: '你点击了，第' + index + '个',
+					title: '你点击了，第' + (index+1) + '个',
 					icon: 'none'
 				});
 			}
