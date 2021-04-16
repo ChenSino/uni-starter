@@ -4,6 +4,8 @@ import callCheckVersion from './call-check-version'
 const PACKAGE_INFO_KEY = '__package_info__'
 
 export default function() {
+	
+	return
 	// #ifdef APP-PLUS
 	callCheckVersion().then(async (e) => {
 		if (!e.result) return;

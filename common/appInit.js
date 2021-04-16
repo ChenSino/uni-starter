@@ -33,9 +33,9 @@ export default function() {
 	list.forEach(item=>{
 		uni.addInterceptor(item,{
 			invoke(e){// 调用前拦截
-				console.log(e);
+				//console.log(e);
 				const token = uni.getStorageSync('uni_id_token')
-				console.log(token);
+				// console.log(token);
 				const url = e.url.split('?')[0]
 				//拦截强制登陆页面
 				if (needLogin.includes(url) && token == '') {
@@ -68,7 +68,7 @@ export default function() {
 				
 			},
 			complete(e){	// 完成回调拦截 
-				console.log(e);
+				//console.log(e);
 			},
 			returnValue(){// 返回结果拦截 
 				

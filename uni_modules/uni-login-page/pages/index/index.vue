@@ -27,7 +27,7 @@
 				<text class="tip-text">未注册的手机号验证通过后将自动注册</text>
 
 				<!-- 其他登录方式 -->
-				<view class="auth-box">
+				<view class="auth-box" v-if="loginList.includes('password')">
 					<text class="login-text" hover-class="hover" @click="toPwdLogin">密码登录</text>
 					<!-- <text class="login-text" hover-class="hover" @click="openLoginList">其他登录方式</text> -->
 				</view>
@@ -41,6 +41,7 @@
 
 <script>	
 var univerify_first,currentWebview;//是否一键登陆优先
+import baseappConfig from '@/baseapp.config.json';
 	import mixin from '../../common/loginPage.mixin.js';
 	var currentPage;
 	export default {
@@ -49,9 +50,11 @@ var univerify_first,currentWebview;//是否一键登陆优先
 			return {
 				phoneArea: ['+86'],
 				currenPhoneArea: '+86',
+				loginList:[]
 			}
 		},
 		onLoad(e) {
+			this.loginList = baseappConfig.router.login
 			univerify_first = e.univerify_first
 			//#ifdef APP-PLUS
 			if(univerify_first){
@@ -64,6 +67,7 @@ var univerify_first,currentWebview;//是否一键登陆优先
 		onReady() {
 			//#ifdef APP-PLUS
 			if(univerify_first){
+				console.log('开始一键登陆');
 				this.$refs.uniQuickLogin.login('univerify')
 				setTimeout(() => {
 					currentWebview.setStyle({

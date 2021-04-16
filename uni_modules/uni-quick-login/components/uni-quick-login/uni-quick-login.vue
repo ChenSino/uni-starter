@@ -58,10 +58,9 @@
 		mounted() {
 			//获取当前环境能用的快捷登陆方式
 			// #ifdef APP-PLUS
-				uni.showLoading();
 				plus.oauth.getServices(oauthServices=>{
 					this.oauthServices = oauthServices
-					console.log(oauthServices);
+					// console.log(oauthServices);
 				},err=>{
 					uni.hideLoading()
 					uni.showModal({

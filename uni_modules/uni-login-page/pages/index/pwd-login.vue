@@ -31,6 +31,7 @@
 				</view>
 			</view>
 		</view>
+		<uni-quick-login ref="uniQuickLogin"></uni-quick-login>
 	</view>
 </template>
 
