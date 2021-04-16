@@ -186,7 +186,6 @@
 		"navigationBarBackgroundColor": "#FFFFFF",
 		"backgroundColor": "#F8F8F8"
 	},
-<<<<<<< HEAD
 	// "condition": {
 	// 	"list": [
 	// 		{
@@ -201,22 +200,6 @@
 	// 	],
 	// 	"current":1
 	// },
-=======
-	"condition": {
-		"list": [
-			{
-				"path": "uni_modules/uni-login-page/pages/index/index"
-			},
-			{
-				"path": "pages/test/test"
-			},
-			{
-				"path":"pages/ucenter/settings/settings"
-			}
-		],
-		"current":2
-	},
->>>>>>> 82ef1c53dc0aebef37985e23752a43c7aab5b82e
 	"tabBar": {
 		"color": "#7A7E83",
 		"selectedColor": "#007AFF",
