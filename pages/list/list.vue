@@ -2,6 +2,8 @@
 	<view style="overflow: hidden;">
 		<!-- 页面主列表 -->
 		<news-list ref="newsList" :canSearch="canSearch" :currentText="searchText"></news-list>
+		
+		<uni-agree></uni-agree>
 	</view>
 </template>
 

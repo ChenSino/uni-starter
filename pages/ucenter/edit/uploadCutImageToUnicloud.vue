@@ -17,15 +17,15 @@ export default {
 	},
 	methods:{
 		successFn(e){
-			uni.getImageInfo({
-				src:e.url,
-				complete: (e) => {
-					console.log(e);
-				}
-			})
+			// uni.getImageInfo({
+			// 	src:e.url,
+			// 	complete: (e) => {
+			// 		console.log(e);
+			// 	}
+			// })
 			this.uploadImgToUnicloud(e.url,(url)=>{
 				//console.log(url);
-				uni.$emit('uploadAvatarAfter', {url});
+				this.getOpenerEventChannel().emit('uploadAvatarAfter', {url})
 				uni.navigateBack()
 			})
 		},

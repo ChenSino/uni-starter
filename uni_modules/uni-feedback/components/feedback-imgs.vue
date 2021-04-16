@@ -222,6 +222,7 @@
 
 	.feedback-uploader {
 		padding: 22rpx 20rpx;
+		padding-left: 0;
 	}
 
 	.feedback-star {
@@ -251,5 +252,11 @@
 		color: #FFFFFF;
 		margin: 20rpx;
 	}
-
+	
+	.uni-uploader-title{
+		text-align: right;
+		flex: 1;
+		color: #B2B2B2;
+		padding-right: 10rpx;
+	}
 </style>

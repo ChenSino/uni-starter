@@ -67,17 +67,17 @@
 				"navigationStyle": "custom"
 			}
 		}, {
-			"path": "uni_modules/opendb-feedback/pages/opendb-feedback/list",
+			"path": "uni_modules/uni-feedback/pages/opendb-feedback/list",
 			"style": {
 				"navigationBarTitleText": "常见问题"
 			}
 		}, {
-			"path": "uni_modules/opendb-feedback/pages/opendb-feedback/add",
+			"path": "uni_modules/uni-feedback/pages/opendb-feedback/add",
 			"style": {
 				"navigationBarTitleText": "问题反馈"
 			}
 		}, {
-			"path": "uni_modules/opendb-feedback/pages/opendb-feedback/detail",
+			"path": "uni_modules/uni-feedback/pages/opendb-feedback/detail",
 			"style": {
 				"navigationBarTitleText": "问题反馈"
 			}
@@ -127,7 +127,8 @@
 			}
 
 		}, {
-			"path": "pages/ucenter/edit/edit",
+			"path": "uni_modules/uni-id-users/pages/uni-id-users/edit",
+			// "path": "pages/ucenter/edit/edit",
 			"style": {
 				"navigationBarTitleText": "编辑资料"
 			}
@@ -137,49 +138,19 @@
 				"navigationStyle": "custom"
 			}
 		}, {
-			"path": "uni_modules/uni-login-page/pages/index/pwd-login",
+			"path": "uni_modules/uni-login-page/pages/pwd-login/pwd-login",
 			"style": {
-				"navigationBarTitleText": "",
-				"app-plus": {
-					// "titleNView": {
-					// 	"buttons": [{
-					// 		"text": "帮助",
-					// 		"type": "none",
-					// 		"fontSize": "16px",
-					// 		"width": "60px"
-					// 	}]
-					// }
-				}
+				"navigationBarTitleText": ""
 			}
 		}, {
-			"path": "uni_modules/uni-login-page/pages/index/pwd-retrieve",
+			"path": "uni_modules/uni-login-page/pages/pwd-retrieve/pwd-retrieve",
 			"style": {
-				"navigationBarTitleText": "",
-				"app-plus": {
-					// "titleNView": {
-					// 	"buttons": [{
-					// 		"text": "帮助",
-					// 		"type": "none",
-					// 		"fontSize": "16px",
-					// 		"width": "60px"
-					// 	}]
-					// }
-				}
+				"navigationBarTitleText": ""
 			}
 		}, {
-			"path": "uni_modules/uni-login-page/pages/index/phone-code",
+			"path": "uni_modules/uni-login-page/pages/phone-code/phone-code",
 			"style": {
-				"navigationBarTitleText": "",
-				"app-plus": {
-					// "titleNView": {
-					// 	"buttons": [{
-					// 		"text": "帮助",
-					// 		"type": "none",
-					// 		"fontSize": "16px",
-					// 		"width": "60px"
-					// 	}]
-					// }
-				}
+				"navigationBarTitleText": ""
 			}
 
 		}, {
@@ -215,6 +186,7 @@
 		"navigationBarBackgroundColor": "#FFFFFF",
 		"backgroundColor": "#F8F8F8"
 	},
+<<<<<<< HEAD
 	// "condition": {
 	// 	"list": [
 	// 		{
@@ -229,6 +201,22 @@
 	// 	],
 	// 	"current":1
 	// },
+=======
+	"condition": {
+		"list": [
+			{
+				"path": "uni_modules/uni-login-page/pages/index/index"
+			},
+			{
+				"path": "pages/test/test"
+			},
+			{
+				"path":"pages/ucenter/settings/settings"
+			}
+		],
+		"current":2
+	},
+>>>>>>> 82ef1c53dc0aebef37985e23752a43c7aab5b82e
 	"tabBar": {
 		"color": "#7A7E83",
 		"selectedColor": "#007AFF",
