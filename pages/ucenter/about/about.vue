@@ -16,7 +16,7 @@
 	</view>
 </template>
 <script>
-import baseappConfig from '@/baseapp.config.json';
+import baseappConfig from '@/baseapp.config.js';
 	export default {
 		onLoad() {
 			// #ifdef APP-PLUS

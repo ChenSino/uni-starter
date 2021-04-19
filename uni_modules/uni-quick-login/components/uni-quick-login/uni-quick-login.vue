@@ -1,17 +1,14 @@
 <template>
 	<view class="quick-login-box">
-		<view class="item" v-for="({id},index) in oauthServices" :key="index" @click="login(id)" v-if="config[id].isChecked">
-			<image class="logo" :src="config[id].logo" mode="widthFix"></image>
-			<text class="login-title">{{config[id].text}}</text>
+		<view class="item" v-for="({id,logo,text,path},index) in servicesList" :key="index" @click="path?to(path):login(id,false)">
+			<image class="logo" :src="logo" mode="widthFix"></image>
+			<text class="login-title">{{text}}</text>
 		</view>
 	</view>
 </template>
-
 <script>
-	import {
-		mapGetters,
-		mapMutations
-	} from 'vuex';
+	import {mapGetters,mapMutations} from 'vuex';
+	//前一个窗口的页面地址。控制点击切换快捷登陆方式是创建还是返回
 	export default {
 		data() {
 			return {
@@ -47,11 +44,30 @@
 						"isChecked":false //暂未提供该登陆方式的接口示例
 					}
 				},
-				providerList: [],
-				oauthServices:[],
-				univerifyStyle: {
+				servicesList:[
+					{
+						"text": "账号登陆",
+						"logo": "../../static/login/img/username.png",
+						"path":"/uni_modules/uni-login-page/pages/pwd-login/pwd-login"
+					},
+					{
+						"text": "短信登陆",
+						"logo": "../../static/login/img/smsCode.png",
+						"path":"/uni_modules/uni-login-page/pages/index/index"
+					}
+				],
+				univerifyStyle: { //一键登陆弹出窗的样式配置参数
 					"fullScreen": true, // 是否全屏显示，true表示全屏模式，false表示非全屏模式，默认值为false。
 					"backgroundColor": "#ffffff", // 授权页面背景颜色，默认值：#ffffff  
+				}
+			}
+		},
+		created() {
+			let servicesList = this.servicesList
+			//去掉当前页面对应的登陆选项
+			for (var i = 0; i < servicesList.length; i++) {
+				if(servicesList[i].path == this.getRoute(1)){
+					servicesList.splice(i,1)
 				}
 			}
 		},
@@ -60,6 +76,11 @@
 			// #ifdef APP-PLUS
 				plus.oauth.getServices(oauthServices=>{
 					this.oauthServices = oauthServices
+					oauthServices.forEach(({id})=>{
+						if(this.config[id].isChecked){
+							this.servicesList.push({...this.config[id],id})
+						}
+					})
 					// console.log(oauthServices);
 				},err=>{
 					uni.hideLoading()
@@ -71,27 +92,28 @@
 					console.error('获取服务供应商失败：' + JSON.stringify(err));
 				})
 			// #endif
-			
-			/*
-			uni.getProvider({
-				"service": "oauth",
-				success: res => {
-					this.providerList = res.provider.map((name) => {
-						return {...this.config[name],name}
-					})
-					this.login('univerify')
-				},
-				fail: (err) => {
-					console.error('获取服务供应商失败：' + JSON.stringify(err));
-				}
-			})
-			*/
 		},
 		methods: {
 			...mapMutations({
 				setUserInfo: 'user/login'
 			}),
-			login(type) {
+			getRoute(n=0){
+				let pages = getCurrentPages();
+				console.log('route-pages-length',pages.length);
+				if(n>pages.length){ return '' }
+				return '/'+pages[pages.length - n].route
+			},
+			to(path){
+				console.log('比较',this.getRoute(2),path)
+				if(this.getRoute(2)==path){ // 控制路由是重新打开还是返回，避免重复打开页面
+					uni.navigateBack();
+				}else{
+					uni.navigateTo({url:path})
+				}
+			},
+			login(type,navigateBack=true) {
+				console.log(arguments);
+				console.log('services',services);
 				let oauthService = this.oauthServices.find((service) => service.id == type)
 				// #ifdef APP-PLUS
 				//uni.showLoading({mask: true});
@@ -122,24 +144,33 @@
 					fail: (err) => {
 						uni.hideLoading()
 						console.log(err);
-						switch (err.errCode){
-							case 30002:
-								console.log('在一键登陆界面，点击其他登陆方式');
-								break;
-							case 30003:
-								console.log('关闭了登陆');
-								uni.navigateBack()
-								break;
-							case 30006:
-								uni.showModal({
-									title: "登陆服务初始化错误",
-									content:err.metadata.error_data,
-									showCancel: false,
-									confirmText: '知道了',
+						
+						if(type=='univerify'){
+							if(err.metadata.error_data){
+								uni.showToast({
+									title: "一键登陆:"+err.metadata.error_data,
+									icon: 'none'
 								});
-								break;
-							default:
-								break;
+							}
+							switch (err.errCode){
+								case 30002:
+									console.log('在一键登陆界面，点击其他登陆方式');
+									break;
+								case 30003:
+									console.log('关闭了登陆');
+									if(navigateBack){ uni.navigateBack() }
+									break;
+								case 30006:
+									uni.showModal({
+										title: "登陆服务初始化错误",
+										content:err.metadata.error_data,
+										showCancel: false,
+										confirmText: '知道了',
+									});
+									break;
+								default:
+									break;
+							}
 						}
 					}
 				})
@@ -153,7 +184,7 @@
 						uni.setStorageSync('uni_id_uid', result.uid)
 						uni.setStorageSync('uni_id_token', result.token)
 						uni.setStorageSync('uni_id_token_expired', result.tokenExpired)
-				
+
 						delete result.userInfo.token
 						this.setUserInfo(result.userInfo)
 						if(type=='univerify'){
@@ -164,7 +195,18 @@
 							icon: 'none'
 						});
 						uni.hideLoading()
-						uni.navigateBack()
+						var delta = 0
+						//判断需要返回几层
+						let pages = getCurrentPages();
+						console.log(pages);
+						pages.forEach((page,index)=>{
+							console.log(pages[pages.length-index-1].route.split('/'));
+							if(pages[pages.length-index-1].route.split('/')[1] == 'uni-login-page'){
+								delta ++
+							}
+						})
+						console.log('delta:'+delta);
+						uni.navigateBack({delta})
 					}
 				})
 			},
@@ -195,7 +237,6 @@
 		width: 750rpx;
 		justify-content: space-around;
 	}
-
 	.item {
 		flex-direction: column;
 		justify-content: center;

@@ -28,6 +28,7 @@ let state = {
 			state.info = null;
 			state.hasLogin = false;
 			uni.setStorageSync('userInfo', null);
+			uni.setStorageSync('uni_id_token', '');
 		}
 	},
 	actions = {

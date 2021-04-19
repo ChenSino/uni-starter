@@ -1,4 +1,4 @@
-import baseappConfig from '@/baseapp.config.json';
+import baseappConfig from '@/baseapp.config.js';
 // #ifdef APP-PLUS
 import checkUpdate from '@/uni_modules/uni-upgrade-center-app/utils/check-update';
 import callCheckVersion from '@/uni_modules/uni-upgrade-center-app/utils/call-check-version';
@@ -50,11 +50,11 @@ export default function() {
 				if(url=='/uni_modules/uni-login-page/pages/index/index'){
 					//一键登录（univerify）、密码登陆（password）、快捷登录&验证码登陆（!univerify&password）
 					if(login[0]=='univerify'){
-						console.log(e.url,url);
+						// console.log(e.url,url);
 						if(e.url==url){ e.url+= '?' }
 						e.url += "univerify_first=true"
 					}else if(login[0]=='password'){
-						e.url = "/uni_modules/uni-login-page/pages/index/pwd-login"
+						e.url = "/uni_modules/uni-login-page/pages/pwd-login/pwd-login"
 					}else{
 						//默认即是
 					}
@@ -64,8 +64,8 @@ export default function() {
 			success(){	// 成功回调拦截 
 				
 			},
-			fail(){		// 失败回调拦截 
-				
+			fail(err){		// 失败回调拦截 
+				console.log(err);
 			},
 			complete(e){	// 完成回调拦截 
 				//console.log(e);

@@ -27,10 +27,10 @@
 				<text class="tip-text">未注册的手机号验证通过后将自动注册</text>
 
 				<!-- 其他登录方式 -->
-				<view class="auth-box" v-if="loginList.includes('password')">
+				<!-- <view class="auth-box" v-if="loginList.includes('password')">
 					<text class="login-text" hover-class="hover" @click="toPwdLogin">密码登录</text>
-					<!-- <text class="login-text" hover-class="hover" @click="openLoginList">其他登录方式</text> -->
-				</view>
+					<text class="login-text" hover-class="hover" @click="openLoginList">其他登录方式</text>
+				</view> -->
 			</view>
 		</view>
 		<!-- 登录按钮弹窗 -->
@@ -41,7 +41,7 @@
 
 <script>	
 var univerify_first,currentWebview;//是否一键登陆优先
-import baseappConfig from '@/baseapp.config.json';
+import baseappConfig from '@/baseapp.config.js';
 	import mixin from '../../common/loginPage.mixin.js';
 	var currentPage;
 	export default {
@@ -50,17 +50,19 @@ import baseappConfig from '@/baseapp.config.json';
 			return {
 				phoneArea: ['+86'],
 				currenPhoneArea: '+86',
-				loginList:[]
+				// loginList:[]
 			}
 		},
 		onLoad(e) {
-			this.loginList = baseappConfig.router.login
+			// this.loginList = baseappConfig.router.login
 			univerify_first = e.univerify_first
 			//#ifdef APP-PLUS
 			if(univerify_first){
 				const pages = getCurrentPages();
 				currentWebview = pages[pages.length - 1].$getAppWebview();
-				currentWebview.hide();
+				currentWebview.setStyle({
+					"top":"2000px"
+				})
 			}
 			//#endif
 		},
@@ -68,7 +70,9 @@ import baseappConfig from '@/baseapp.config.json';
 			//#ifdef APP-PLUS
 			if(univerify_first){
 				console.log('开始一键登陆');
-				this.$refs.uniQuickLogin.login('univerify')
+				setTimeout(()=>{
+					this.$refs.uniQuickLogin.login('univerify')
+				},100)
 				setTimeout(() => {
 					currentWebview.setStyle({
 						titleNView:{
@@ -76,7 +80,9 @@ import baseappConfig from '@/baseapp.config.json';
 							backgroundColor:"#FFFFFF"
 						}
 					})
-					currentWebview.show()
+					currentWebview.setStyle({
+						"top":"0"
+					})
 				}, 1500);
 			}
 			//#endif
@@ -112,7 +118,7 @@ import baseappConfig from '@/baseapp.config.json';
 			 */
 			toPwdLogin() {
 				uni.navigateTo({
-					url: './pwd-login'
+					url: '../pwd-login/pwd-login'
 				})
 			},
 			openLoginList() {

@@ -3,13 +3,13 @@
 		<view class="wrap-content">
 			<view class="content">
 				<!-- 顶部文字 -->
-				<text class="content-top-title">手机号密码登录</text>
+				<text class="content-top-title">用户名密码登录</text>
 				<login-ikonw class="login-iknow" :link="link" text="登录即表示同意用户协议和隐私政策"></login-ikonw>
 				<!-- 登录框 (选择手机号所属国家和地区需要另行实现) -->
 				<uni-forms ref="form" :value="formData" :rules="rules">
 					<uni-forms-item name="phone">
 						<uni-easyinput type="number" class="phone-input-box" :inputBorder="false"
-							v-model="formData.phone" maxlength="11" placeholder="请输入手机号">
+							v-model="formData.phone" maxlength="11" placeholder="请输入手机号/用户名/邮箱">
 							<template slot="left">
 								<!-- 当前仅支持中国大陆手机号 -->
 								<!-- <picker mode="selector" :range="phoneArea" @change="selectPhoneArea"> -->
@@ -59,9 +59,8 @@
 					title: '请输入正确的手机号',
 					icon: 'none'
 				});
-
 				uni.navigateTo({
-					url: './pwd-retrieve?phoneNumber=' + this.formData.phone + '&phoneArea=' + this.currenPhoneArea
+					url: '../pwd-retrieve/pwd-retrieve?phoneNumber=' + this.formData.phone + '&phoneArea=' + this.currenPhoneArea
 				})
 			},
 			/**
@@ -134,16 +133,13 @@
 
 <style>
 	@import url("../../common/loginPage.css");
-
 	.phone-input-box {
 		margin-top: 20rpx;
 	}
-
 	.auth-box {
 		justify-content: flex-start;
 		margin-top: 20rpx;
 	}
-
 	.login-text-sub {
 		color: #8a8f8b;
 	}

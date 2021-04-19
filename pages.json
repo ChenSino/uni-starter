@@ -23,17 +23,9 @@
 				"navigationBarTitleText": "",
 				"app-plus": {
 					"animationType": "none",
-					"popGesture": "none",
-					"navigationStyle": "custom",
-					"backgroundColor": "transparent"
-					// "titleNView": {
-					// 	"buttons": [{
-					// 		"text": "帮助",
-					// 		"type": "none",
-					// 		"fontSize": "16px",
-					// 		"width": "60px"
-					// 	}]
-					// }
+					"popGesture": "none"
+					// "navigationStyle": "custom",
+					// "backgroundColor": "transparent",
 				}
 			}
 		}, {
@@ -159,7 +151,6 @@
 				"navigationBarTitleText": "帮助",
 				"enablePullDownRefresh": false
 			}
-
 		}
 	    ,{
 	        "path" : "pages/test/test",
@@ -186,20 +177,20 @@
 		"navigationBarBackgroundColor": "#FFFFFF",
 		"backgroundColor": "#F8F8F8"
 	},
-	// "condition": {
-	// 	"list": [
-	// 		{
-	// 			"path": "uni_modules/uni-login-page/pages/index/index"
-	// 		},
-	// 		{
-	// 			"path": "pages/test/test"
-	// 		},
-	// 		{
-	// 			"path":"pages/ucenter/settings/settings"
-	// 		}
-	// 	],
-	// 	"current":1
-	// },
+	"condition": {
+		"list": [
+			{
+				"path": "uni_modules/uni-login-page/pages/index/index"
+			},
+			{
+				"path": "pages/test/test"
+			},
+			{
+				"path":"pages/ucenter/settings/settings"
+			}
+		],
+		"current":0
+	},
 	"tabBar": {
 		"color": "#7A7E83",
 		"selectedColor": "#007AFF",

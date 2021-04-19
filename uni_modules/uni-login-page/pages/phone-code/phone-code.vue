@@ -8,6 +8,9 @@
 				<!-- 登录框 (选择手机号所属国家和地区需要另行实现) -->
 				<uni-forms ref="form" :value="formData" :rules="rules">
 					<uni-forms-item name="phone">
+						<!-- <uni-easyinput type="number" class="phone-input-box" :inputBorder="false"
+							v-model="formData.phone" maxlength="11" placeholder="请输入手机号码">
+						</uni-easyinput> -->
 						<uni-easyinput type="number" class="phone-input-box" :inputBorder="false"
 							v-model="formData.code" maxlength="6" placeholder="请输入验证码">
 							<template slot="right">
@@ -112,6 +115,6 @@
 <style>
 	@import url("../../common/loginPage.css");
 	.phone-input-box{
-		margin-top: 20rpx;
+		margin-top: 10px;
 	}
 </style>
