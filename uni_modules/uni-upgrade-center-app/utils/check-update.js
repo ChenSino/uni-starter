@@ -5,7 +5,6 @@ const PACKAGE_INFO_KEY = '__package_info__'
 
 export default function() {
 	
-	return
 	// #ifdef APP-PLUS
 	callCheckVersion().then(async (e) => {
 		if (!e.result) return;
@@ -17,7 +16,7 @@ export default function() {
 			platform, // 安装包平台
 			type // 安装包类型
 		} = e.result;
-
+		
 		// 此处逻辑仅为实例，可自行编写
 		if (code > 0) {
 			// 腾讯云和阿里云下载链接不同，需要处理一下，阿里云会原样返回
@@ -66,6 +65,8 @@ export default function() {
 			// TODO 云函数报错处理
 			console.error(message)
 		}
+		
+		
 	}).catch(err => {
 		// TODO 云函数报错处理
 		console.error(err.message)

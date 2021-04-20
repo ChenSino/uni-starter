@@ -3,7 +3,7 @@
 		<view class="userInfo" @click="toSettings">
 			<image class="logo-img" :src="login ? (userInfo.avatar || avatarUrl) :avatarUrl"></image>
 			<view class="logo-title">
-				<text class="uer-name">{{login ? userInfo.username||userInfo.mobile : '未登录'}}</text>
+				<text class="uer-name">{{login ? userInfo.nickname||userInfo.username||userInfo.mobile : '未登录'}}</text>
 				<text class="go-login-navigat-arrow navigat-arrow" v-if="!login">&#xe65e;</text>
 			</view>
 		</view>
@@ -31,6 +31,7 @@
 		mapMutations
 	} from 'vuex';
 	import checkUpdate from '@/uni_modules/uni-upgrade-center-app/utils/check-update';
+	import callCheckVersion from '@/uni_modules/uni-upgrade-center-app/utils/call-check-version';
 	export default {
 		data() {
 			return {
@@ -57,53 +58,56 @@
 					}
 				],
 				ucenterList: [
-					[{
-						title: '阅读过的文章',
-						to: ''
-					}, {
-						title: '我的积分',
-						to: ''
-					}],
 					[
-						//#ifdef APP-PLUS
+						// #ifdef APP-PLUS
 						{
-							title: '检查更新',
-							rightText: `V${getApp().appVersion.version}_${getApp().appVersion.versionCode}`,
-							event: 'checkVersion',
-							showBadge: true
+							title: '去评分',
+							event: 'gotoMarket'
 						},
+						// #endif
 						{
-							title:'去评分',
-							event:'gotoMarket'
-						},
-						//#endif
-						{
-							title: '问题与反馈',
-							to: '/uni_modules/uni-feedback/pages/opendb-feedback/list' // /pages/ucenter/uni-feedback/uni-feedback uni_modules/uni-feedback/pages/opendb-feedback/list
-						},{
-							title: '关于',
-							to: '/pages/ucenter/about/about'
-						}
-					]
+							title: '阅读过的文章',
+							to: ''
+						}, {
+							title: '我的积分',
+							to: ''
+						}],
+					[{
+						title: '问题与反馈',
+						to: '/uni_modules/uni-feedback/pages/opendb-feedback/list' // /pages/ucenter/uni-feedback/uni-feedback uni_modules/uni-feedback/pages/opendb-feedback/list
+					}, {
+						title: '关于',
+						to: '/pages/ucenter/about/about'
+					}]
 				]
 			}
+		},
+		onLoad() {
+			this.ucenterList[this.ucenterList.length - 1].unshift(
+				{
+					title: '检查更新',
+					rightText: this.appVersion.version+'-'+this.appVersion.versionCode,
+					event: 'checkVersion',
+					showBadge: this.appVersion.hasNew
+				}
+			)
 		},
 		computed: {
 			...mapGetters({
 				userInfo: 'user/info',
 				login: 'user/hasLogin'
-			})
-		},
-		onReady() {
-
+			}),
+			appVersion() {
+				return getApp().appVersion
+			}
 		},
 		methods: {
 			...mapMutations({
 				logout: 'user/logout'
 			}),
-			toSettings(){
+			toSettings() {
 				uni.navigateTo({
-					url:"/pages/ucenter/settings/settings"
+					url: "/pages/ucenter/settings/settings"
 				})
 			},
 			/**
@@ -114,8 +118,9 @@
 					this[item.event]();
 				}
 			},
-			checkVersion() {
-				checkUpdate();
+			async checkVersion() {
+				console.log(await callCheckVersion());
+				checkUpdate()
 			},
 			goLogin() {
 				if (!this.login) {
@@ -132,27 +137,27 @@
 			},
 			tapGrid(index) {
 				uni.showToast({
-					title: '你点击了，第' + (index+1) + '个',
+					title: '你点击了，第' + (index + 1) + '个',
 					icon: 'none'
 				});
 			},
 			/**
 			 * 去应用市场评分
 			 */
-			gotoMarket(){
+			gotoMarket() {
 				// #ifdef APP-PLUS
 				if (uni.getSystemInfoSync().platform == "ios") {
 					// 这里填写appstore应用id
 					let appstoreid = 'id1417078253';
-					plus.runtime.openURL("itms-apps://" + 'itunes.apple.com/cn/app/wechat/'+appstoreid+'?mt=8');
+					plus.runtime.openURL("itms-apps://" + 'itunes.apple.com/cn/app/wechat/' + appstoreid + '?mt=8');
 				}
 				if (uni.getSystemInfoSync().platform == "android") {
 					var Uri = plus.android.importClass("android.net.Uri");
-					var uri = Uri.parse("market://details?id=" + plus.runtime.appid );  
-					var Intent = plus.android.importClass('android.content.Intent');  
-					var intent = new Intent(Intent.ACTION_VIEW, uri);  
-					var main = plus.android.runtimeMainActivity();  
-					main.startActivity(intent);  
+					var uri = Uri.parse("market://details?id=" + plus.runtime.appid);
+					var Intent = plus.android.importClass('android.content.Intent');
+					var intent = new Intent(Intent.ACTION_VIEW, uri);
+					var main = plus.android.runtimeMainActivity();
+					main.startActivity(intent);
 				}
 				// #endif
 			}

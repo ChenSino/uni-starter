@@ -48,12 +48,12 @@ export default function() {
 				}
 				//控制登陆优先级
 				if(url=='/uni_modules/uni-login-page/pages/index/index'){
-					//一键登录（univerify）、密码登陆（password）、快捷登录&验证码登陆（!univerify&password）
+					//一键登录（univerify）、密码登陆（username）、快捷登录&验证码登陆（!univerify&password）
 					if(login[0]=='univerify'){
 						// console.log(e.url,url);
 						if(e.url==url){ e.url+= '?' }
 						e.url += "univerify_first=true"
-					}else if(login[0]=='password'){
+					}else if(login[0]=='username'){
 						e.url = "/uni_modules/uni-login-page/pages/pwd-login/pwd-login"
 					}else{
 						//默认即是
@@ -120,11 +120,11 @@ function initAppVersion() {
 		}).appVersion = {
 			...currentVersion,
 			appid,
-			hasNew:true
+			hasNew:false
 		}
 		// 检查更新小红点
-		callCheckVersion()
-		.then(res=>{
+		callCheckVersion().then(res=>{
+			console.log('检查是否有可以更新的版本',res);
 			if(res.result.code>0){
 				// 有新版本
 				getApp({

@@ -1,6 +1,6 @@
 module.exports = {
 	"h5":{
-		"url":"https://static-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e.bspapp.com"
+		"url":"https://static-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e.bspapp.com" //	前端网页托管的域名
 	},
 	"mp":{
 		"weixin":{
@@ -13,7 +13,7 @@ module.exports = {
 			"/pages/ucenter/settings/settings",
 			"/uni_modules/uni-login-page/pages/index/pwd-retrieve"
 		],
-		"login":["univerify","password","weixin","apple","code"]
+		"login":["univerify","smsCode","username","weixin","apple"] //默认就是短信验证码登陆
 	},
 	"about":{
 		"appName":"base-app",
