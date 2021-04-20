@@ -14,7 +14,7 @@
 							<template slot="left">
 								<!-- 当前仅支持中国大陆手机号 -->
 								<!-- <picker mode="selector" :range="phoneArea" @change="selectPhoneArea"> -->
-									<text class="phone-area" @click="selectPhoneArea">{{currenPhoneArea}}</text>
+<!-- 									<text class="phone-area" @click="selectPhoneArea">{{currenPhoneArea}}</text> -->
 								<!-- </picker> -->
 							</template>
 						</uni-easyinput>

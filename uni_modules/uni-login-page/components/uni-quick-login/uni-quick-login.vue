@@ -15,44 +15,44 @@
 				config: {
 					"weixin": {
 						"text": "微信登陆",
-						"logo": "../../static/login/img/weixin.png",
+						"logo": "../../static/login/weixin.png",
 						"isChecked":true
 					},
 					"apple": {
 						"text": "苹果登陆",
-						"logo": "../../static/login/img/apple.png",
+						"logo": "../../static/login/apple.png",
 						"isChecked":true
 					},
 					"univerify": {
 						"text": "一键登陆",
-						"logo": "../../static/login/img/univerify.png",
+						"logo": "../../static/login/univerify.png",
 						"isChecked":true
 					},
 					"qq": {
 						"text": "QQ登陆",
-						"logo": "../../static/login/img/qq.png",
+						"logo": "../../static/login/qq.png",
 						"isChecked":false //暂未提供该登陆方式的接口示例
 					},
 					"xiaomi": {
 						"text": "小米登陆",
-						"logo": "../../static/login/img/qq.png",
+						"logo": "../../static/login/qq.png",
 						"isChecked":false //暂未提供该登陆方式的接口示例
 					},
 					"sinaweibo": {
 						"text": "微博登录",
-						"logo": "../../static/login/img/sinaweibo.png",
+						"logo": "../../static/login/weibo.png",
 						"isChecked":false //暂未提供该登陆方式的接口示例
 					}
 				},
 				servicesList:[
 					{
 						"text": "账号登陆",
-						"logo": "../../static/login/img/username.png",
+						"logo": "../../static/login/db.png",
 						"path":"/uni_modules/uni-login-page/pages/pwd-login/pwd-login"
 					},
 					{
 						"text": "短信登陆",
-						"logo": "../../static/login/img/smsCode.png",
+						"logo": "../../static/login/smsCode.png",
 						"path":"/uni_modules/uni-login-page/pages/index/index"
 					}
 				],
@@ -208,7 +208,7 @@
 						console.log('delta:'+delta);
 						uni.navigateBack({delta})
 					}
-				})
+				},{showLoading:true})
 			},
 			async getUserInfo(e){
 				return new Promise((resolve, reject)=>{

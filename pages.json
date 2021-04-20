@@ -77,6 +77,16 @@
 			"path": "pages/ucenter/about/about",
 			"style": {
 				"navigationBarTitleText": "关于"
+				// #ifdef APP-PLUS
+				,"app-plus": {
+					"titleNView": {
+						"buttons": [{
+							"type": "share"
+						}],
+						"type": "transparent"
+					}
+				}
+				// #endif
 			}
 
 		}, {
@@ -179,6 +189,13 @@
 	},
 	"condition": {
 		"list": [
+			{
+				"path": "pages/list/list",
+				"style": {
+					"navigationStyle": "custom",
+					"enablePullDownRefresh": true
+				}
+			},
 			{
 				"path": "uni_modules/uni-login-page/pages/index/index"
 			},

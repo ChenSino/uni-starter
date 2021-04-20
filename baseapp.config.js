@@ -1,4 +1,12 @@
 module.exports = {
+	"h5":{
+		"url":"https://static-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e.bspapp.com"
+	},
+	"mp":{
+		"weixin":{
+			"id":"gh_33446d7f7a26"
+		}
+	},
 	"router":{
 		"needLogin":[	//配置需要路由拦截的页面地址，在打开这些页面之前会自动检查（不联网）uni_id_token的值是否存在/过期等
 			"/pages/ucenter/edit/edit",
@@ -9,6 +17,7 @@ module.exports = {
 	},
 	"about":{
 		"appName":"base-app",
+		"logo":"/static/logo.png",
 		"company":"数字天堂（北京）网络技术有限公司",
 		"slogan":"为开发而生",
 		"agreements":[
@@ -21,6 +30,6 @@ module.exports = {
 				"url":"https://uniapp.dcloud.io/"
 			}
 		],
-		"下载地址":""
+		"download":"https://m3w.cn/uniapp"
 	}
 }

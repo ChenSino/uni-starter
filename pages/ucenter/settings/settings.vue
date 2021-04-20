@@ -2,7 +2,7 @@
 	<view class="content">
 		<!-- 功能列表 -->
 		<uni-list :border="false" class="mb10" v-for="(sublist,index) in agreeList">
-			<uni-list-item :border="false" class="mb1" v-for="(item,index) in sublist" :key="index" :title="item.title"
+			<uni-list-item :border="false" class="mb1" v-for="(item,i) in sublist" :key="i" :title="item.title"
 				:clickable="true" @click="itemClick(item)" :showSwitch="item.showSwitch" :switchChecked="item.isChecked"
 				:link="!item.showSwitch"></uni-list-item>
 		</uni-list>
@@ -217,6 +217,17 @@
 					title: '清除中',
 					mask: true
 				});
+				/*
+				任何临时存储或删除不直接影响程序运行逻辑（清除缓存必定造成业务逻辑的变化，如：打开页面的图片不从缓存中读取而从网络请求）的内容都可以视为缓存。主要有storage、和file写入。
+				缓存分为三部分		
+					原生层（如：webview、x5播放器的、第三方sdk的、地图组件等）
+					前端框架（重启就会自动清除）
+					开发者自己的逻辑（如：
+						本示例的 检测更新功能下载了apk安装包，
+						其他逻辑需要根据开发者自己的业务设计
+						比如：有聊天功能的应用，聊天记录是否视为缓存，还是单独提供清除聊天记录的功能由开发者自己设计
+					）
+				*/
 				uni.getSavedFileList({
 					success:res=>{
 						if (res.fileList.length > 0) {
@@ -225,10 +236,18 @@
 								complete:res=>{
 									console.log(res);
 									uni.hideLoading()
+									uni.showToast({
+										title: '清除成功',
+										icon: 'none'
+									});
 								}
 							});
 						}else{
 							uni.hideLoading()
+							uni.showToast({
+								title: '清除成功',
+								icon: 'none'
+							});
 						}
 					},
 					complete:e=>{

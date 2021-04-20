@@ -21,7 +21,6 @@ export default function request(name,params,callback=false,{showLoading=false,lo
 		uniCloud.callFunction({name,data: {action,params},
 			success(e){
 				// console.log(e);
-				if(showLoading || loadText) uni.hideLoading()
 				const {result:{data,code}} = e
 				console.log(data,code);
 				if (code === 0 ) {
@@ -47,6 +46,9 @@ export default function request(name,params,callback=false,{showLoading=false,lo
 					})
 				}
 				fail(err)
+			},
+			complete() {
+				if(showLoading || loadText) uni.hideLoading()
 			}
 		})
 	})

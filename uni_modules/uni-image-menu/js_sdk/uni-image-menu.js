@@ -1,22 +1,20 @@
 var nvMask,nvImageMenu;
 export default {
-	show(list,callback){
-		
+	show({list,cancelText},callback){
 		if(!list){
 			list = [{
 				"img":"/static/sharemenu/wechatfriend.png",
 				"text":"图标文字"
 			}]
 		}
-		
 		//以下为计算菜单的nview绘制布局，为固定算法，使用者无关关心
 		var screenWidth = plus.screen.resolutionWidth
 		//以360px宽度屏幕为例，上下左右边距及2排按钮边距留25像素，图标宽度55像素，同行图标间的间距在360宽的屏幕是30px，但需要动态计算，以此原则计算4列图标分别的left位置
 		//图标下的按钮文字距离图标5像素，文字大小12像素
 		//底部取消按钮高度固定为44px
 		//TODO 未处理横屏和pad，这些情况6个图标应该一排即可
-		var margin = 25,
-			iconWidth = 55,
+		var margin = 20,
+			iconWidth = 60,
 			icontextSpace = 5,
 			textHeight = 12
 		var left1 = margin / 360 * screenWidth
@@ -46,7 +44,7 @@ export default {
 		nvImageMenu = new plus.nativeObj.View("nvImageMenu", { //创建底部图标菜单
 			bottom: '0px',
 			left: '0px',
-			height: (iconWidth + textHeight + 2 * margin)*(parseInt(list.length/4)+1) +44+'px',//'264px',
+			height: (iconWidth + textHeight + 2 * margin)*Math.ceil(list.length/4) +44+'px',//'264px',
 			width: '100%',
 			backgroundColor: 'rgb(255,255,255)'
 		});
@@ -90,8 +88,7 @@ export default {
 			},
 			{
 				tag: 'font',
-				id: 'sharecancel',//底部取消按钮的文字
-				text: '取消分享',
+				text: cancelText,//底部取消按钮的文字
 				textStyles: {
 					size: '14px'
 				},
@@ -141,9 +138,10 @@ export default {
 					iClickIndex = iCol + 4
 				}
 				// console.log("点击按钮的序号: " + iClickIndex);
-				if (iClickIndex >= 0 && iClickIndex <= 5) { //处理具体的点击逻辑，此处也可以自行定义逻辑。如果增减了按钮，此处也需要跟着修改
-					callback(iClickIndex)
-				}
+				// if (iClickIndex >= 0 && iClickIndex <= 5) { //处理具体的点击逻辑，此处也可以自行定义逻辑。如果增减了按钮，此处也需要跟着修改
+				// }
+				callback(iClickIndex)
+				this.hide()
 			}
 		})
 		/* nvImageMenu.addEventListener("touchstart", function(e) {

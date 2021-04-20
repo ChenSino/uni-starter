@@ -1,9 +1,11 @@
 <template>
 	<view class="about">
-		<view class="logo">
-			<image class="logoImg" src="@/static/logo.png"></image>
+		<view class="box">
+			<image class="logoImg" :src="about.logo"></image>
 			<text class="tip appName">{{about.appName}}</text>
 			<text class="tip" style="font-size:24upx;">Version {{version}}</text>
+			<!--Sansnn-uQRCode组件来源，插件市场：https://ext.dcloud.net.cn/plugin?id=1287 微调后-->
+			<Sansnn-uQRCode :text="about.download" :makeOnLoad="true" class="qrcode"></Sansnn-uQRCode>
 		</view>
 		<view class="copyright">
 			<template v-for="(agreement,index) in about.agreements">
@@ -17,6 +19,7 @@
 </template>
 <script>
 import baseappConfig from '@/baseapp.config.js';
+import uniShare from 'uni_modules/uni-share/js_sdk/uni-share.js';
 	export default {
 		onLoad() {
 			// #ifdef APP-PLUS
@@ -33,6 +36,62 @@ import baseappConfig from '@/baseapp.config.js';
 		created() {
 			this.about = baseappConfig.about
 			this.year = (new Date).getFullYear()
+		},
+		onNavigationBarButtonTap() {
+			let {download,appName,slogan,logo} = this.about
+			uniShare({
+				content: { //公共的分享类型（type）、链接（herf）、标题（title）、summary（描述）、imageUrl（缩略图）
+					type: 0,
+					href: download,
+					title: appName,
+					summary: slogan,
+					imageUrl: logo
+				},
+				menus: [{
+						"img": "/static/sharemenu/wechatfriend.png",
+						"text": "微信好友",
+						"share": {
+							"provider": "weixin",
+							"scene": "WXSceneSession"
+						}
+					},
+					{
+						"img": "/static/sharemenu/wechatmoments.png",
+						"text": "微信朋友圈",
+						"share": {
+							"provider": "weixin",
+							"scene": "WXSenceTimeline"
+						}
+					},
+					{
+						"img": "/static/sharemenu/weibo.png",
+						"text": "微博",
+						"share": {
+							"provider": "sinaweibo"
+						}
+					},
+					{
+						"img": "/static/sharemenu/qq.png",
+						"text": "QQ",
+						"share": {
+							"provider": "qq"
+						}
+					},
+					{
+						"img": "/static/sharemenu/copyurl.png",
+						"text": "复制",
+						"share": "copyurl"
+					},
+					{
+						"img": "/static/sharemenu/more.png",
+						"text": "更多",
+						"share": "shareSystem"
+					}
+				],
+				cancelText: "取消分享",
+			}, e => { //callback
+				console.log(e);
+			})
 		},
 		methods:{
 			navigateTo({url,title}){
@@ -51,11 +110,8 @@ import baseappConfig from '@/baseapp.config.js';
 	width: 750upx;
 	flex-direction: column;
 }
-.logo {
-	width: 750upx;
-	position: fixed;
-	left:0;
-	top:100px;
+.box {
+	margin-top: 100px;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
@@ -71,6 +127,9 @@ import baseappConfig from '@/baseapp.config.js';
 	margin-bottom:5px;
 	font-size:42rpx;
 	font-weight: 500;
+}
+.qrcode{
+	margin-top: 50px;
 }
 .copyright {
 	width: 750upx;
