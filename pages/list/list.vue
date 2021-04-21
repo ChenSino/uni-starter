@@ -20,6 +20,7 @@
 		},
 		onLoad() {
 			checkIsAgree();
+			uni.getSubNVueById('networkErr').show()
 		},
 		onShow(options) {
 			this.searchText = getApp().globalData.searchText;

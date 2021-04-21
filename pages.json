@@ -5,9 +5,23 @@
 				//#ifndef MP
 				"navigationStyle": "custom",
 				//#endif
-				"enablePullDownRefresh": true
+				"enablePullDownRefresh": true,
+				"app-plus":{
+					"subNVues":[
+						{
+							"id":"networkErr",
+							"path":"pages/list/networkErr/networkErr",
+							"style":{
+								"height":"0",
+								"width":"100%",
+								"background":"transparent"
+							}
+						}
+					]
+				}
 			}
-		}, {
+		}, 
+		{
 			"path": "pages/list/news-list",
 			"style": {
 				//#ifndef MP
@@ -226,7 +240,6 @@
 				"path": "pages/ucenter/settings/settings"
 			}
 		],
-
 		"current": 0
 },
 	"tabBar": {

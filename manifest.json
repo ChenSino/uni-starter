@@ -101,6 +101,6 @@
         "enable" : false
     },
     "h5" : {
-        "template" : "template.h5.html"
+        "template" : ""
     }
 }

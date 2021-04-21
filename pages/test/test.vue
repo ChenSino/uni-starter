@@ -8,183 +8,29 @@
 		<text>应用相关权限</text>
 		<button type="default" @click="openAppPermissionSetting">打开</button>
 		<button type="default" @click="iosSetting">iosSetting</button> -->
-		<!-- <button type="default" @click="openCamera">打开相机</button> -->
-		<!-- <button type="default" @click="openGridPage">打开一个需要登陆的页面</button> -->
-		<button type="default" @click="showShare">打开分享</button>
-		<!-- <uni-bottom-menu ref="bottomMenu" @clickItem="clickItem" :list="menus"></uni-bottom-menu> -->
+		<button type="default" @click="openCamera">打开相机</button>
 	</view>
+	
 </template>
 
 <script>
-	// import permision from '@/js_sdk/wa-permission/permission.js';
-	import uniShare from 'uni_modules/uni-share/js_sdk/uni-share.js';
 	export default {
 		data() {
 			return {
 			}
 		},
 		onLoad() {
-			/*
-			
-			// uni.addInterceptor('showToast',{
-			// 	invoke(e){// 调用前拦截 
-			// 		console.log(e)
-			// 		e.title = "645"
-			// 	},
-			// 	success(e){// 成功回调拦截 
-			// 		console.log(e)
-			// 	},
-			// 	fail(e){// 失败回调拦截 
-			// 		console.log(e)
-			// 	},
-			// 	complete(e){
-			// 		console.log(e)
-			// 	},
-			// 	returnValue(e){// 返回结果拦截 
-			// 		console.log(e)
-			// 	}
-			// })
-			
-			// return 
-			// 
-			// 	当某个权限调用失败
-			// 	1.先检测手机的该模块是否打开
-			// 	2.检测当前应用是否被授权了该模块对应的权限
-			// 	提示，并点击跳转到设置
-			// 
-			// this.changeAction('chooseImage', {
-			// 	after_action: e => {
-			// 		console.log('changeAction', e);
-			// 		if(e.errCode === 11){
-			// 			uni.showModal({
-			// 				content: '无权限',
-			// 				confirmText:"前往设置",
-			// 				success(e) {
-			// 					if(e.confirm){
-			// 						permision.gotoAppPermissionSetting()
-			// 					}
-			// 				}
-			// 			});
-			// 		}
-			// 	}
-			// })
-			
-			// this.changeAction(["navigateTo", "redirectTo", "reLaunch", "switchTab"], {
-			// 	before_action: e => {
-			// 		let needLoginUrls = ['/pages/grid/grid']//需要登陆的页面
-			// 		let token = uni.getStorageSync('uni-id-token')
-			// 		if (needLoginUrls.includes(e.url) && token == '') {
-			// 			console.log('该页面需要登陆，即将跳转到login页面');
-			// 			uni.showToast({title:'该页面需要登陆，即将跳转到login页面',icon:'none'})
-			// 			return false
-			// 		}
-			// 		return true
-			// 	}
-			// })
-			
-			*/
+				// 当某个权限调用失败
+				// 1.先检测手机的该模块是否打开
+				// 2.检测当前应用是否被授权了该模块对应的权限
+				// 提示，并点击跳转到设置
 		},
 		methods: {
-			showShare(){
-				uniShare({
-					menus:[
-						{
-							"img": "/static/sharemenu/wechatfriend.png",
-							"text": "微信好友",
-							"share": {
-								"provider": "weixin",
-								"scene": "WXSceneSession"
-							}
-						},
-						{
-							"img": "/static/sharemenu/wechatmoments.png",
-							"text": "微信朋友圈",
-							"share": {
-								"provider": "weixin",
-								"scene": "WXSceneSession"
-							}
-						},
-						{
-							"img": "/static/sharemenu/weibo.png",
-							"text": "微博",
-							"share": {
-								"provider": "sinaweibo"
-							}
-						},
-						{
-							"img": "/static/sharemenu/qq.png",
-							"text": "QQ",
-							"share": {
-								"provider": "qq"
-							}
-						},
-						{
-							"img": "/static/sharemenu/copyurl.png",
-							"text": "复制",
-							"share": "copyurl"
-						},
-						{
-							"img": "/static/sharemenu/more.png",
-							"text": "更多",
-							"share": "shareSystem"
-						}
-					],
-					content:{
-						type: 0,
-						href: "https://uniapp.dcloud.io/api/plugins/share?id=share",
-						title: "主标题",
-						summary: "分享内容的摘要",
-						imageUrl: "https://uniapp.dcloud.io/api/plugins/share?id=share",
-					},
-					cancelText:"取消分享",
-				},e=>{	//callback
-					console.log(e);
-				})
-			},
-			clickItem(e){
-				console.log(e);
-				uni.showToast({
-					title: e
-				});
-			},
 			openCamera(){
 				uni.chooseImage({
-					sourceType: ["camera"],
+					sourceType: ["camera","album"],
 					complete: (e) => {
 						console.log(e);
-					}
-				})
-			},
-			openGridPage(){
-				uni.redirectTo({
-					url:'/pages/grid/grid'
-				})
-			},
-			changeAction(actions, {
-				before_action,
-				after_action
-			}) {
-				if(typeof actions == 'string'){
-					actions = [actions]
-				}
-				if (!before_action) {
-					before_action = () => true
-				}
-				actions.forEach(action=>{
-					let old_action = uni[action]
-					uni[action] = e => {
-						if (before_action(e)) {
-							console.log(after_action);
-							if (after_action) {
-								var compose = function(f, g) {
-									return function(x) {
-										return f(x,g(x));
-									};
-								};
-								e.complete = compose(e.complete,after_action)
-							}
-							old_action(e)
-						}
 					}
 				})
 			},
@@ -227,16 +73,6 @@
 					mainActivity.startActivity(intent);
 				}
 			},
-			fn1() {
-				let res = this.request('user-center/login_by_').then(e => {
-					console.log('then--1', e);
-				})
-			},
-			fn2() {
-				this.request('user-center/login_by_', {}, e => {
-					console.log('222', e);
-				})
-			}
 		}
 	}
 </script>

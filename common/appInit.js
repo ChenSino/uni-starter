@@ -8,12 +8,17 @@ export default function() {
 	initAppVersion();
 
 	//自定义路由拦截
-	const {"router":{needLogin,login}} = baseappConfig //需要登陆的页面
+	const {
+		"router": {
+			needLogin,
+			login
+		}
+	} = baseappConfig //需要登陆的页面
 	//uni.addInterceptor的写法
 	let list = ["navigateTo", "redirectTo", "reLaunch", "switchTab"];
-	list.forEach(item=>{
-		uni.addInterceptor(item,{
-			invoke(e){// 调用前拦截
+	list.forEach(item => {
+		uni.addInterceptor(item, {
+			invoke(e) { // 调用前拦截
 				//console.log(e);
 				const token = uni.getStorageSync('uni_id_token')
 				// console.log(token);
@@ -21,50 +26,71 @@ export default function() {
 				//拦截强制登陆页面
 				if (needLogin.includes(url) && token == '') {
 					console.log('该页面需要登陆，即将跳转到login页面');
-					uni.showToast({title:'该页面需要登陆，即将跳转到login页面',icon:'none'})
+					uni.showToast({
+						title: '该页面需要登陆，即将跳转到login页面',
+						icon: 'none'
+					})
 					uni.navigateTo({
-						url:"/uni_modules/uni-login-page/pages/index/index"
+						url: "/uni_modules/uni-login-page/pages/index/index"
 					})
 					return false
 				}
 				//控制登陆优先级
-				if(url=='/uni_modules/uni-login-page/pages/index/index'){
+				if (url == '/uni_modules/uni-login-page/pages/index/index') {
 					//一键登录（univerify）、密码登陆（username）、快捷登录&验证码登陆（!univerify&password）
-					if(login[0]=='univerify'){
+					if (login[0] == 'univerify') {
 						// console.log(e.url,url);
-						if(e.url==url){ e.url+= '?' }
+						if (e.url == url) {
+							e.url += '?'
+						}
 						e.url += "univerify_first=true"
-					}else if(login[0]=='username'){
+					} else if (login[0] == 'username') {
 						e.url = "/uni_modules/uni-login-page/pages/pwd-login/pwd-login"
-					}else{
+					} else {
 						//默认即是
 					}
 				}
 				return true
 			},
-			success(){	// 成功回调拦截 
-				
-			},
-			fail(err){		// 失败回调拦截 
+			fail(err) { // 失败回调拦截 
 				console.log(err);
 			},
-			complete(e){	// 完成回调拦截 
-				//console.log(e);
-			},
-			returnValue(){// 返回结果拦截 
-				
-			}
-		})// 移除拦截器API removeInterceptor('request')
+		})
 	})
-	
-	//提示网络变化
-	eventListenerNetwork()
-	/*
-		当某个权限调用失败
-		1.先检测手机的该模块是否打开
-		2.检测当前应用是否被授权了该模块对应的权限
-		提示，并点击跳转到设置
-	*/
+
+	//当应用无访问摄像头/相册权限，引导跳到设置界面
+	uni.addInterceptor('chooseImage', {
+		fail(e) { // 失败回调拦截 
+			console.log(e);
+			if (
+				e.errCode === 11 && uni.getSystemInfoSync().platform == "android"	||
+				e.errCode === 2 && uni.getSystemInfoSync().platform == "ios"
+			){
+				uni.showModal({
+					title:"无法访问摄像头",
+					content: "当前无摄像头访问权限，建议前往设置",
+					confirmText: "前往设置",
+					success(e) {
+						if (e.confirm) {
+							openAppPermissionSetting()
+						}
+					}
+				});
+			}
+			if(e.errCode === 12 && uni.getSystemInfoSync().platform == "android"){
+				uni.showModal({
+					title:"无法访问相册",
+					content: "当前无系统相册访问权限，建议前往设置",
+					confirmText: "前往设置",
+					success(e) {
+						if (e.confirm) {
+							openAppPermissionSetting()
+						}
+					}
+				});
+			}
+		}
+	})
 }
 /**
  * // 初始化appVersion
@@ -80,12 +106,12 @@ function initAppVersion() {
 		}).appVersion = {
 			...currentVersion,
 			appid,
-			hasNew:false
+			hasNew: false
 		}
 		// 检查更新小红点
-		callCheckVersion().then(res=>{
-			console.log('检查是否有可以更新的版本',res);
-			if(res.result.code>0){
+		callCheckVersion().then(res => {
+			console.log('检查是否有可以更新的版本', res);
+			if (res.result.code > 0) {
 				// 有新版本
 				getApp({
 					allowDefault: true
@@ -93,14 +119,13 @@ function initAppVersion() {
 			}
 		})
 	});
-	
 	// 检查更新
 	checkUpdate();
 	// #endif
 }
 
 // 设备网络状态变化事件
-function eventListenerNetwork () {
+function eventListenerNetwork() {
 	uni.onNetworkStatusChange(function(res) {
 		console.log(res.isConnected);
 		console.log(res.networkType);
@@ -127,3 +152,45 @@ function eventListenerNetwork () {
 		}
 	});
 }
+
+function openAppPermissionSetting(){
+	// 跳转到**应用**的权限页面
+	if (uni.getSystemInfoSync().platform == "ios") {
+		var UIApplication = plus.ios.import("UIApplication");
+		var application2 = UIApplication.sharedApplication();
+		var NSURL2 = plus.ios.import("NSURL");
+		// var setting2 = NSURL2.URLWithString("prefs:root=LOCATION_SERVICES");		
+		var setting2 = NSURL2.URLWithString("app-settings:");
+		application2.openURL(setting2);
+		plus.ios.deleteObject(setting2);
+		plus.ios.deleteObject(NSURL2);
+		plus.ios.deleteObject(application2);
+	} else {
+		// console.log(plus.device.vendor);
+		var Intent = plus.android.importClass("android.content.Intent");
+		var Settings = plus.android.importClass("android.provider.Settings");
+		var Uri = plus.android.importClass("android.net.Uri");
+		var mainActivity = plus.android.runtimeMainActivity();
+		var intent = new Intent();
+		intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+		var uri = Uri.fromParts("package", mainActivity.getPackageName(), null);
+		intent.setData(uri);
+		mainActivity.startActivity(intent);
+	}
+}
+/*
+	uni.addInterceptor(item, {
+		invoke(e) { // 调用前拦截
+		},
+		success() { // 成功回调拦截 
+		},
+		fail(err) { // 失败回调拦截 
+			console.log(err);
+		},
+		complete(e) { // 完成回调拦截 
+			//console.log(e);
+		},
+		returnValue() { // 返回结果拦截 
+		}
+	}) // 移除拦截器API removeInterceptor('request')
+*/
