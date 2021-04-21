@@ -2,17 +2,19 @@
 	<view class="warp">
 		<!-- 搜索 -->
 		<template>
+			<!-- #ifdef APP-PLUS -->
 			<status-bar />
+			<!-- #endif -->
 			<uni-search-bar ref="searchBar" style="flex:1;" radius="100" @click.native="searchClick" cancelButton="none"
 				disabled />
 		</template>
 		<!-- banner -->
 		<unicloud-db ref="bannerdb" v-slot:default="{data, loading, error, options}" :collection="collection"
 			:field="field" @load="load">
-			<uni-swiper-dot class="uni-swiper-dot-box" @clickItem="clickItem" :info="bannerFormate(data, loading)"
+			<uni-swiper-dot class="uni-swiper-dot-box" @clickItem="clickItem" :info="data || bannerFormate(data, loading)"
 				:current="current" :mode="mode" :dots-styles="dotsStyles" field="content">
 				<swiper class="swiper-box" @change="changeSwiper" :current="swiperDotIndex">
-					<swiper-item v-for="(item, index) in bannerFormate(data, loading)" :key="item._id">
+					<swiper-item v-for="(item, index) in (data || bannerFormate(data, loading))" :key="item._id">
 						<view :draggable="false" class="swiper-item" @click="clickBannerItem(item)">
 							<image class="swiper-image" :src="item.bannerfile" mode="aspectFill" :draggable="false" />
 						</view>

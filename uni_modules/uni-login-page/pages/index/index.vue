@@ -105,7 +105,7 @@ import baseappConfig from '@/baseapp.config.js';
 				 */
 				uni.showLoading();
 				uni.navigateTo({
-					url: './phone-code?phoneNumber=' + this.formData.phone + '&phoneArea=' +
+					url: '../phone-code/phone-code?phoneNumber=' + this.formData.phone + '&phoneArea=' +
 						this.currenPhoneArea,
 					success: res => {},
 					fail: () => {},

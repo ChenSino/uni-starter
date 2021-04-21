@@ -32,6 +32,9 @@
 	} from 'vuex';
 	import checkUpdate from '@/uni_modules/uni-upgrade-center-app/utils/check-update';
 	import callCheckVersion from '@/uni_modules/uni-upgrade-center-app/utils/call-check-version';
+	
+	const db = uniCloud.database();
+	const dbCollectionName = 'uni-id-scores';
 	export default {
 		data() {
 			return {
@@ -70,7 +73,8 @@
 							to: ''
 						}, {
 							title: '我的积分',
-							to: ''
+							to: '',
+							event:'getScore'
 						}],
 					[{
 						title: '问题与反馈',
@@ -164,6 +168,25 @@
 					main.startActivity(intent);
 				}
 				// #endif
+			},
+			/**
+			 * 获取积分信息
+			 */
+			getScore() {
+			  uni.showLoading({
+			    mask: true
+			  })
+			  db.collection(dbCollectionName).field('score,balance').get().then((res) => {
+			    const data = res.result.data[0]
+				console.log(data);
+			  }).catch((err) => {
+			    uni.showModal({
+			      content: err.message || '请求服务失败',
+			      showCancel: false
+			    })
+			  }).finally(() => {
+			    uni.hideLoading()
+			  })
 			}
 		}
 	}

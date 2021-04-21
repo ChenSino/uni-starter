@@ -8,20 +8,24 @@
 	 -->
 	<view style="overflow: hidden;">
 		<view class="search-box">
+			<!-- #ifdef APP-PLUS -->
 			<status-bar class="status-bar"></status-bar>
+			<!-- #endif -->
 			<view class="search-container-bar">
 				<uni-search-bar ref="searchBar" style="flex:1;" radius="100" v-model="searchText" @click.native="searchClick" cancelButton="none" disabled />
 			</view>
 		</view>
 		<view class="list">
+			<!-- #ifdef APP-PLUS -->
 			<status-bar></status-bar>
+			<!-- #endif -->
 			<!-- 刷新页面后的顶部提示框 -->
 			<!-- 当前弹出内容没有实际逻辑 ，可根据当前业务修改弹出提示 -->
 			<view class="tips" :class="{ 'tips-ani': tipShow }">为您更新了10条内容</view>
 			<!-- 页面分类标题 -->
 			<uni-section style="margin:0;" v-if="searchText" :title="listTitle" type="line"></uni-section>
 			<unicloud-db ref="udb" v-slot:default="{data, loading, error, options}" :options="formData"
-				:collection="collection" :field="field" :where="where" @load="load" @error="isLoading = false">
+				:collection="collection" :field="field" :foreignKey="foreignKey" :where="where" @load="load" @error="isLoading = false">
 				<text v-if="error" class="list-info">{{error.message}}</text>
 				<!-- 基于 uni-list 的页面布局 -->
 				<uni-list :class="{ 'uni-list--waterfall': options.waterfall }">
@@ -87,7 +91,8 @@
 				// 数据表名
 				collection: 'opendb-news-articles,uni-id-users',
 				// 查询字段，多个字段用 , 分割
-				field: 'author{username, _id}, user_id,_id,avatar,title,excerpt,last_modify_date, comment_count, like_count',
+				foreignKey: '',
+				field: 'author{username, _id}, _id,avatar,title,excerpt,last_modify_date, comment_count, like_count',
 				tipShow: false ,// 是否显示顶部提示框
 				isLoading:true
 			};

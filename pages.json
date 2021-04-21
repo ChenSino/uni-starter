@@ -2,7 +2,9 @@
 	"pages": [{
 			"path": "pages/list/list",
 			"style": {
+				//#ifndef MP
 				"navigationStyle": "custom",
+				//#endif
 				"enablePullDownRefresh": true,
 				"app-plus":{
 					"subNVues":[
@@ -22,14 +24,18 @@
 		{
 			"path": "pages/list/news-list",
 			"style": {
+				//#ifndef MP
 				"navigationStyle": "custom",
+				//#endif
 				"enablePullDownRefresh": true
 			}
 		},
 		{
 			"path": "pages/grid/grid",
 			"style": {
+				//#ifndef MP
 				"navigationStyle": "custom"
+				//#endif
 			}
 		}, {
 			"path": "uni_modules/uni-login-page/pages/index/index",
@@ -43,7 +49,9 @@
 		}, {
 			"path": "pages/list/search/search",
 			"style": {
+				//#ifndef MP
 				"navigationStyle": "custom"
+				//#endif
 			}
 		}, {
 			"path": "pages/list/detail",
