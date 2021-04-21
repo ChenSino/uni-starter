@@ -83,6 +83,7 @@
 			}
 		},
 		onLoad() {
+			//#ifdef APP-PLUS
 			this.ucenterList[this.ucenterList.length - 1].unshift(
 				{
 					title: '检查更新',
@@ -91,15 +92,18 @@
 					showBadge: this.appVersion.hasNew
 				}
 			)
+			//#endif
 		},
 		computed: {
 			...mapGetters({
 				userInfo: 'user/info',
 				login: 'user/hasLogin'
-			}),
-			appVersion() {
+			})
+			// #ifdef APP-PLUS
+			,appVersion() {
 				return getApp().appVersion
 			}
+			// #endif
 		},
 		methods: {
 			...mapMutations({
