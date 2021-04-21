@@ -1,6 +1,5 @@
 <template>
 	<view class="wrap">
-		<!-- <uni-nav-bar left-icon="back" left-text="返回" right-text="菜单" title="导航栏组件"></uni-nav-bar> -->
 		<view class="wrap-content">
 			<view class="content">
 				<!-- 顶部文字 -->
@@ -11,12 +10,12 @@
 					<uni-forms-item name="phone">
 						<uni-easyinput type="number" class="phone-input-box" :inputBorder="false"
 							v-model="formData.phone" maxlength="11" placeholder="请输入手机号">
-							<template slot="left">
-								<!-- 当前仅支持中国大陆手机号 -->
-								<!-- <picker mode="selector" :range="phoneArea" @change="selectPhoneArea"> -->
-<!-- 									<text class="phone-area" @click="selectPhoneArea">{{currenPhoneArea}}</text> -->
-								<!-- </picker> -->
-							</template>
+							<!-- 当前仅支持中国大陆手机号 -->
+							<!-- <template slot="left">
+								<picker mode="selector" :range="phoneArea" @change="selectPhoneArea">
+									<text class="phone-area" @click="selectPhoneArea">{{currenPhoneArea}}</text>
+								</picker>
+							</template> -->
 						</uni-easyinput>
 					</uni-forms-item>
 					<button class="send-btn-box" :disabled="!canGetShortMsg" :type="canGetShortMsg?'primary':'default'"

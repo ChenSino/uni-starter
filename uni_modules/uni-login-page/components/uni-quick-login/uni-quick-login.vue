@@ -1,8 +1,8 @@
 <template>
 	<view class="quick-login-box">
-		<view class="item" v-for="({id,logo,text,path},index) in servicesList" :key="index" @click="path?to(path):login(id,false)">
-			<image class="logo" :src="logo" mode="widthFix"></image>
-			<text class="login-title">{{text}}</text>
+		<view class="item" v-for="(item,index) in servicesList" :key="index" @click="item.path?to(item.path):login(item.id,false)">
+			<image class="logo" :src="item.logo" mode="widthFix"></image>
+			<text class="login-title">{{item.text}}</text>
 		</view>
 	</view>
 </template>
