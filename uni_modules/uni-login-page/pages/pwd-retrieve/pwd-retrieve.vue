@@ -9,7 +9,7 @@
 				<uni-forms ref="form" :value="formData" :rules="rules">
 					<uni-forms-item name="phone">
 						<uni-easyinput type="number" class="phone-input-box" :inputBorder="false"
-							v-model="formData.phone" placeholder="请输入手机号"></uni-easyinput>
+							v-model="formData.phone" maxlength="11" placeholder="请输入手机号"></uni-easyinput>
 						<uni-easyinput type="number" class="phone-input-box" :inputBorder="false"
 							v-model="formData.code" maxlength="6" placeholder="请输入验证码">
 							<template slot="right">
@@ -20,7 +20,7 @@
 							v-model="formData.pwd" placeholder="请输入新密码"></uni-easyinput>
 					</uni-forms-item>
 					<button class="send-btn-box" :disabled="!canSubmit" :type="canSubmit?'primary':'default'"
-						@click="checkCode(submit)">完成</button>
+						@click="submit">完成</button>
 				</uni-forms>
 			</view>
 		</view>
@@ -33,7 +33,7 @@ import mixin from '../../common/loginPage.mixin.js';
 		mixins:[mixin],
 		data() {
 			return {
-				currenPhoneArea: '',
+				currenPhoneArea: ''
 			}
 		},
 		computed: {
@@ -56,91 +56,22 @@ import mixin from '../../common/loginPage.mixin.js';
 			}
 		},
 		methods: {
-			checkCode(callback){
-				uniCloud.callFunction({//联网验证登陆
-					"name": "user-center",
-					"data": {
-						"action": "loginBySms",
-						"params":{
-							"mobile":this.formData.phone,
-							"code":this.formData.code
-						}
-					},
-					success:async (e) => {
-						uni.hideLoading()
-						console.log(e.result);
-						if(e.result.code === 0){
-							uni.setStorageSync('uni_id_uid', e.result.uid)
-							uni.setStorageSync('uni_id_token', e.result.token)
-							uni.setStorageSync('uni_id_token_expired', e.result.tokenExpired)
-							// uni.showToast({
-							// 	title: '登陆成功',
-							// 	icon: 'none'
-							// });
-							callback()
-						}else{
-							uni.showModal({
-								title: '错误',
-								content: e.result.msg,
-								showCancel: false,
-								confirmText: '知道了',
-							});
-						}
-					},
-					fail: (err) => {
-						console.log(err);
-						uni.showModal({
-							title: '错误',
-							content: JSON.stringify(err),
-							showCancel: false,
-							confirmText: '知道了',
-						});
-						if(err.errCode===30002){
-							
-						}
-					},
-					complete: () => {
-						uni.hideLoading()
-					}
-				})
-			},
 			/**
 			 * 完成并提交
 			 */
 			submit(){
-				uniCloud.callFunction({
-					name:"user-center",
-					"data":{
-						"action":"resetPwd",
-						"params":{
-							"password":this.formData.pwd
-						}
-					},
-					success:async (e) => {
-						uni.hideLoading()
-						console.log(e.result);
-						uni.showToast({
-							title: e.result.msg,
-							icon: 'none'
-						});
-						if(e.result.code === 0){
-							uni.navigateBack()
-						}
-					},
-					fail: (err) => {
-						console.log(err);
-						uni.showModal({
-							title: '错误',
-							content: JSON.stringify(err),
-							showCancel: false,
-							confirmText: '知道了',
-						});
-						if(err.errCode===30002){
-							
-						}
-					},
-					complete: () => {
-						uni.hideLoading()
+				this.request('user-center/resetPwdBySmsCode',{
+					"mobile":this.formData.phone,
+					"code":this.formData.code,
+					"password":this.formData.pwd
+				},(data,result)=>{
+					console.log(result);
+					uni.showToast({
+						title: result.msg,
+						icon: 'none'
+					});
+					if(result.code === 0){
+						uni.navigateBack()
 					}
 				})
 			}
