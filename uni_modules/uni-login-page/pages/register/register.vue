@@ -1,17 +1,17 @@
 <template>
 	<view class="uni-container">
-		<uni-forms ref="form" :value="formData" :rules="rules" validate-trigger="submit" err-show-type="toast">
+		<uni-forms ref="form" :value="formData" :rules="rules" validate-trigger="submit" err-show-type="undertext">
 			<uni-forms-item name="username" label="用户名" required>
 				<uni-easyinput placeholder="请输入用户名" v-model="formData.username" trim="both" />
 			</uni-forms-item>
-			<uni-forms-item name="gender" label="性别" required>
+			<uni-forms-item name="gender" label="性别">
 				<uni-data-checkbox v-model="formData.gender" :localdata="formOptions.gender_localdata" />
 			</uni-forms-item>
-			<uni-forms-item name="nickname" label="昵称" required>
+			<uni-forms-item name="nickname" label="昵称">
 				<uni-easyinput placeholder="请输入用户昵称" v-model="formData.nickname" trim="both" />
 			</uni-forms-item>
-			<uni-forms-item name="pwd" label="密码" v-model="formData.pwd" required>
-				<uni-easyinput placeholder="请输入6-20位密码" type="password" v-model="formData.pwd" trim="both" />
+			<uni-forms-item name="password" label="密码" v-model="formData.password" required>
+				<uni-easyinput placeholder="请输入6-20位密码" type="password" v-model="formData.password" trim="both" />
 			</uni-forms-item>
 			<uni-forms-item name="pwd2" label="确认密码" v-model="formData.pwd2" required>
 				<uni-easyinput placeholder="再次输入密码" type="password" v-model="formData.pwd2" trim="both" />
@@ -24,32 +24,18 @@
 </template>
 
 <script>
-	import {
-		validator
-	} from '../../js_sdk/validator/uni-id-users.js';
-
-	const db = uniCloud.database();
-	const dbCollectionName = 'uni-id-users';
-
-	function getValidator(fields) {
-		let reuslt = {}
-		for (let key in validator) {
-			if (fields.indexOf(key) > -1) {
-				reuslt[key] = validator[key]
-			}
-		}
-		return reuslt
-	}
-
+import rules from './validator.js';
+import mixin from '../../common/loginPage.mixin.js';
 	export default {
+		mixins:[mixin],
 		data() {
 			return {
 				formData: {
 					"username": "",
 					"gender": 0,
 					"nickname": "",
-					'pwd':'',
-					'pwd2':''
+					'password':'123456',
+					'pwd2':'123456'
 				},
 				formOptions: {
 					"gender_localdata": [{
@@ -65,9 +51,7 @@
 						}
 					]
 				},
-				rules: {
-					...getValidator(["username", "gender", "nickname", 'pwd', 'pwd2'])
-				}
+				rules
 			}
 		},
 		onReady() {
@@ -78,15 +62,10 @@
 			 * 触发表单提交
 			 */
 			submit() {
-				
 				uni.showLoading({
 					mask: true
 				})
 				this.$refs.form.submit().then((res) => {
-						if(res.pwd != res.pwd2)return uni.showToast({
-							title: '两次输入密码不一致',
-							icon: 'none'
-						});
 						this.submitForm(res)
 					}).catch((errors) => {
 						console.log(errors);
@@ -95,9 +74,13 @@
 						uni.hideLoading()
 					})
 			},
-
 			submitForm(value) {
-
+				this.request('user-center/register',value,(data,result)=>{
+					console.log(result);
+					if(result.code === 0){
+						this.loginSuccess(result)
+					}
+				})
 			}
 		}
 	}

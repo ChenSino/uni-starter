@@ -83,7 +83,20 @@ exports.main = async (event, context) => {
 	let res = {}
 	switch (event.action) {
 		case 'register':
-			res = await uniID.register(params);
+			let {username,password,gender,nickname,password} = params
+			if(/^1\d{10}$/.test(username)){
+				return {
+					code: 401,
+					msg: '用户名不能是手机号'
+				}
+			};
+			if(/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/.test(username)){
+				return {
+					code: 401,
+					msg: '用户名不能是邮箱'
+				}
+			}
+			res = await uniID.register({username,password,gender,nickname,password});
 			break;
 		case 'login':
 			let passed = false;

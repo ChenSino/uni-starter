@@ -69,19 +69,7 @@
 						uni.hideLoading()
 						console.log(e.result);
 						if(e.result.code === 0){
-							uni.setStorageSync('uni_id_uid', e.result.uid)
-							uni.setStorageSync('uni_id_token', e.result.token)
-							uni.setStorageSync('uni_id_token_expired', e.result.tokenExpired)
-							// console.log('66666=',e.result.uid,e.result.token,e.result.tokenExpired);
-							delete e.result.userInfo.token
-							this.setUserInfo(e.result.userInfo)
-							uni.showToast({
-								title: '登陆成功',
-								icon: 'none'
-							});
-							uni.switchTab({
-								url:"/pages/list/list"
-							})
+							this.loginSuccess(e.result)
 						}else{
 							uni.showModal({
 								title: '错误',

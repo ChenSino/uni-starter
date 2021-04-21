@@ -181,29 +181,11 @@
 				this.request('user-center/login_by_'+type,params,(data,result)=>{
 					console.log(result);
 					if(result.code === 0){
-						uni.setStorageSync('uni_id_uid', result.uid)
-						uni.setStorageSync('uni_id_token', result.token)
-						uni.setStorageSync('uni_id_token_expired', result.tokenExpired)
-
-						delete result.userInfo.token
-						this.setUserInfo(result.userInfo)
 						if(type=='univerify'){
 							uni.closeAuthView()
 						}
-						uni.showToast({
-							title: '登陆成功',
-							icon: 'none'
-						});
 						uni.hideLoading()
-						var delta = 0
-						//判断需要返回几层
-						let pages = getCurrentPages();
-						pages.forEach((page,index)=>{
-							if(pages[pages.length-index-1].route.split('/')[1] == 'uni-login-page'){
-								delta ++
-							}
-						})
-						uni.navigateBack({delta})
+						this.loginSuccess(result)
 					}
 				},{showLoading:true})
 			},

@@ -23,12 +23,12 @@
 					<button class="send-btn-box" :disabled="!canLogin" :type="canLogin?'primary':'default'"
 						@click="pwdLogin">登录</button>
 				</uni-forms>
-
 				<!-- 忘记密码 -->
 				<view class="auth-box">
 					<text class="login-text login-text-sub">忘记了?</text>
 					<text class="login-text" @click="toRetrievePwd">找回密码</text>
 				</view>
+				<button type="primary" class="toRegister" @click="toRegister">注册账号</button>
 			</view>
 		</view>
 		<uni-quick-login ref="uniQuickLogin"></uni-quick-login>
@@ -81,19 +81,7 @@
 						uni.hideLoading()
 						console.log(e.result);
 						if(e.result.code === 0){
-							uni.setStorageSync('uni_id_uid', e.result.uid)
-							uni.setStorageSync('uni_id_token', e.result.token)
-							uni.setStorageSync('uni_id_token_expired', e.result.tokenExpired)
-							// console.log('66666=',e.result.uid,e.result.token,e.result.tokenExpired);
-							delete e.result.userInfo.token
-							this.setUserInfo(e.result.userInfo)
-							uni.showToast({
-								title: '登陆成功',
-								icon: 'none'
-							});
-							uni.switchTab({
-								url:"/pages/list/list"
-							})
+							this.loginSuccess(e.result)
 						}else{
 							uni.showModal({
 								title: '错误',
@@ -127,6 +115,13 @@
 				});
 				// this.currenPhoneArea = this.phoneArea[event.detail.value];
 			},
+			/* 前往注册 */
+			toRegister(e){
+				console.log(e);
+				uni.navigateTo({
+					url:'/uni_modules/uni-login-page/pages/register/register'
+				})
+			}
 		}
 	}
 </script>
@@ -142,5 +137,9 @@
 	}
 	.login-text-sub {
 		color: #8a8f8b;
+	}
+	.toRegister{
+		margin-top: 80px;
+		width: 600rpx;
 	}
 </style>
