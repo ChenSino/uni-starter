@@ -10,6 +10,12 @@
 			<uni-forms-item name="nickname" label="昵称" required>
 				<uni-easyinput placeholder="请输入用户昵称" v-model="formData.nickname" trim="both" />
 			</uni-forms-item>
+			<uni-forms-item name="pwd" label="密码" v-model="formData.pwd" required>
+				<uni-easyinput placeholder="请输入6-20位密码" type="password" v-model="formData.pwd" trim="both" />
+			</uni-forms-item>
+			<uni-forms-item name="pwd2" label="确认密码" v-model="formData.pwd2" required>
+				<uni-easyinput placeholder="再次输入密码" type="password" v-model="formData.pwd2" trim="both" />
+			</uni-forms-item>
 			<view class="uni-button-group">
 				<button type="primary" class="uni-button" @click="submit">注册</button>
 			</view>
@@ -41,7 +47,9 @@
 				formData: {
 					"username": "",
 					"gender": 0,
-					"nickname": ""
+					"nickname": "",
+					'pwd':'',
+					'pwd2':''
 				},
 				formOptions: {
 					"gender_localdata": [{
@@ -58,7 +66,7 @@
 					]
 				},
 				rules: {
-					...getValidator(["username", "gender", "nickname"])
+					...getValidator(["username", "gender", "nickname", 'pwd', 'pwd2'])
 				}
 			}
 		},
@@ -70,6 +78,11 @@
 			 * 触发表单提交
 			 */
 			submit() {
+				if(this.formData.pwd != this.formData.pwd2)return uni.showToast({
+					title: '两次输入密码不一致',
+					icon: 'none'
+				});
+				
 				uni.showLoading({
 					mask: true
 				})

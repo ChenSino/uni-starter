@@ -55,6 +55,36 @@ const validator = {
 			}
 		],
 		"label": "昵称"
+	},
+	"pwd":{
+		"rules": [{
+		
+				required: true,
+				errorMessage: '请输入密码',
+		
+			},
+			{
+				minLength: 6,
+				maxLength: 20,
+				errorMessage: '密码长度在 {minLength} 到 {maxLength} 个字符',
+			}
+		],
+		"label": "密码"
+	},
+	"pwd2":{
+		"rules": [{
+		
+				required: true,
+				errorMessage: '再次输入密码',
+		
+			},
+			{
+				minLength: 6,
+				maxLength: 20,
+				errorMessage: '密码长度在 {minLength} 到 {maxLength} 个字符',
+			}
+		],
+		"label": "确认密码"
 	}
 }
 
