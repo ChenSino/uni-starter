@@ -32,7 +32,7 @@
 	} from 'vuex';
 	import checkUpdate from '@/uni_modules/uni-upgrade-center-app/utils/check-update';
 	import callCheckVersion from '@/uni_modules/uni-upgrade-center-app/utils/call-check-version';
-	
+
 	const db = uniCloud.database();
 	const dbCollectionName = 'uni-id-scores';
 	export default {
@@ -70,12 +70,13 @@
 						// #endif
 						{
 							title: '阅读过的文章',
-							to: ''
+							to: '/uni_modules/uni-news-favorite/pages/uni-news-favorite/list',
 						}, {
 							title: '我的积分',
 							to: '',
-							event:'getScore'
-						}],
+							event: 'getScore'
+						}
+					],
 					[{
 						title: '问题与反馈',
 						to: '/uni_modules/uni-feedback/pages/opendb-feedback/list' // /pages/ucenter/uni-feedback/uni-feedback uni_modules/uni-feedback/pages/opendb-feedback/list
@@ -88,14 +89,12 @@
 		},
 		onLoad() {
 			//#ifdef APP-PLUS
-			this.ucenterList[this.ucenterList.length - 1].unshift(
-				{
-					title: '检查更新',
-					rightText: this.appVersion.version+'-'+this.appVersion.versionCode,
-					event: 'checkVersion',
-					showBadge: this.appVersion.hasNew
-				}
-			)
+			this.ucenterList[this.ucenterList.length - 1].unshift({
+				title: '检查更新',
+				rightText: this.appVersion.version + '-' + this.appVersion.versionCode,
+				event: 'checkVersion',
+				showBadge: this.appVersion.hasNew
+			})
 			//#endif
 		},
 		computed: {
@@ -104,7 +103,8 @@
 				login: 'user/hasLogin'
 			})
 			// #ifdef APP-PLUS
-			,appVersion() {
+			,
+			appVersion() {
 				return getApp().appVersion
 			}
 			// #endif
@@ -173,20 +173,28 @@
 			 * 获取积分信息
 			 */
 			getScore() {
-			  uni.showLoading({
-			    mask: true
-			  })
-			  db.collection(dbCollectionName).field('score,balance').get().then((res) => {
-			    const data = res.result.data[0]
-				console.log(data);
-			  }).catch((err) => {
-			    uni.showModal({
-			      content: err.message || '请求服务失败',
-			      showCancel: false
-			    })
-			  }).finally(() => {
-			    uni.hideLoading()
-			  })
+
+				if (!this.userInfo) return uni.showToast({
+					title: '请登录后查看积分',
+					icon: 'none'
+				});
+				uni.showLoading({
+					mask: true
+				})
+				db.collection(dbCollectionName).field('score,balance').get().then((res) => {
+					const data = res.result.data[0];
+					uni.showToast({
+						title: '当前积分为' + data.balance,
+						icon: 'none'
+					});
+				}).catch((err) => {
+					uni.showModal({
+						content: err.message || '请求服务失败',
+						showCancel: false
+					})
+				}).finally(() => {
+					uni.hideLoading()
+				})
 			}
 		}
 	}

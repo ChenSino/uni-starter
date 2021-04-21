@@ -49,6 +49,10 @@
 	import baseappConfig from '@/baseapp.config.js';
 	import uniShare from 'uni_modules/uni-share/js_sdk/uni-share.js';
 	import uParse from '@/components/u-parse/parse.vue';
+	
+	const db = uniCloud.database();
+	const dbCollectionName = 'opendb-news-favorite';
+	import { mapGetters } from 'vuex';
 	export default {
 		components: {
 			uParse
@@ -72,7 +76,10 @@
 			//查询条件 ,更多详见 ：https://uniapp.dcloud.net.cn/uniCloud/unicloud-db?id=jsquery
 			where() {
 				return `_id =="${this.id}"`
-			}
+			},
+			...mapGetters({
+				'userInfo':'user/info'
+			})
 		},
 		onLoad(event) {
 			//获取真实新闻id，通常 id 来自上一个页面
@@ -104,13 +111,27 @@
 			}
 		},
 		methods: {
+			setFavorite(){
+				if(!this.userInfo)return
+				db.collection(dbCollectionName).add({
+					article_id:this.id,
+					article_title:this.title,
+					user_id:this.userInfo._id
+				}).then((res) => {
+					console.log(res);
+				}).catch(err=>{
+					console.log(err);
+				})
+			},
 			loadData(data) {
 				//如果上一页未传递标题过来（如搜索直达详情），则从新闻详情中读取标题
 				if (this.title == '' && data[0].title) {
 					this.title = data[0].title
 					uni.setNavigationBarTitle({
 						title: data[0].title
-					})
+					});
+					
+					this.setFavorite();
 				}
 			},
 			/**
