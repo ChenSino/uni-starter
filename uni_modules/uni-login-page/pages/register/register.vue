@@ -78,16 +78,15 @@
 			 * 触发表单提交
 			 */
 			submit() {
-				if(this.formData.pwd != this.formData.pwd2)return uni.showToast({
-					title: '两次输入密码不一致',
-					icon: 'none'
-				});
 				
 				uni.showLoading({
 					mask: true
 				})
 				this.$refs.form.submit().then((res) => {
-						console.log(res);
+						if(res.pwd != res.pwd2)return uni.showToast({
+							title: '两次输入密码不一致',
+							icon: 'none'
+						});
 						this.submitForm(res)
 					}).catch((errors) => {
 						console.log(errors);
