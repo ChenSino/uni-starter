@@ -80,10 +80,7 @@
 				// #ifdef APP-PLUS
 				,"app-plus": {
 					"titleNView": {
-						"buttons": [{
-							"type": "share"
-						}],
-						"type": "transparent"
+						"buttons": [{"type": "share"}]
 					}
 				}
 				// #endif

@@ -3,9 +3,10 @@
 		<view class="box">
 			<image class="logoImg" :src="about.logo"></image>
 			<text class="tip appName">{{about.appName}}</text>
-			<text class="tip" style="font-size:24upx;">Version {{version}}</text>
+			<text class="tip">Version {{version}}</text>
 			<!--Sansnn-uQRCode组件来源，插件市场：https://ext.dcloud.net.cn/plugin?id=1287 微调后-->
 			<Sansnn-uQRCode :text="about.download" :makeOnLoad="true" class="qrcode"></Sansnn-uQRCode>
+			<text class="tip">扫描二维码，您的朋友也可以下载{{about.appName}}客户端</text>
 		</view>
 		<view class="copyright">
 			<template v-for="(agreement,index) in about.agreements">
@@ -35,6 +36,9 @@ import uniShare from 'uni_modules/uni-share/js_sdk/uni-share.js';
 		},
 		created() {
 			this.about = baseappConfig.about
+			uni.setNavigationBarTitle({
+				title:'关于'+this.about.appName
+			})
 			this.year = (new Date).getFullYear()
 		},
 		onNavigationBarButtonTap() {
@@ -122,9 +126,12 @@ import uniShare from 'uni_modules/uni-share/js_sdk/uni-share.js';
 	height:160upx;
 	border-radius: 15px;
 }
+.tip{
+	font-size:24rpx;
+	margin-top: 10px;
+}
 .appName{
 	margin-top: 20px;
-	margin-bottom:5px;
 	font-size:42rpx;
 	font-weight: 500;
 }
