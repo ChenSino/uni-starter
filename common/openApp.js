@@ -4,14 +4,15 @@ const CONFIG_OPEN = CONFIG?.h5?.openApp?.openUrl ? CONFIG.h5.openApp : {};
 // 仅H5端添加"打开APP"
 export default function() {
 	// #ifdef H5
-	if (!CONFIG_OPEN.openUrl) return console.warn('请配置app地址');
+	if (!CONFIG_OPEN.openUrl) return;
 
 	let openLogo = CONFIG_OPEN.logo ?
 		`<img src="${CONFIG_OPEN.logo}" style="width: 2rem;height: 2rem;border-radius: 3px;">` : '';
 	let openApp = document.createElement("div");
 	openApp.id = 'openApp';
+	
 	openApp.style =
-		'width: 100%;height: 45px;display: flex;flex-direction: row;justify-content: space-between;align-items: center;box-sizing: border-box;padding: 0 0.5rem;background-color: #FFFFFF;'
+		'position: fixed;top: 0;left: 0;right: 0;z-index: 999;width: 100%;height: 45px;display: flex;flex-direction: row;justify-content: space-between;align-items: center;box-sizing: border-box;padding: 0 0.5rem;background-color: #FFFFFF;'
 	openApp.innerHTML = `
 		<div style="display: flex;flex-direction: row;justify-content: flex-start;align-items: center;">
 			${openLogo}
@@ -23,7 +24,6 @@ export default function() {
 	document.body.style = 'height:calc(100% - 45px); margin-top:45px;';
 	openApp.addEventListener('click', e => {
 		var target = e.target || e.srcElement;
-		console.log(target);
 		if (target.className.indexOf('openBtn') >= 0) {
 			window.location.href = CONFIG_OPEN.openUrl;
 		}
