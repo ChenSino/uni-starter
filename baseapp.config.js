@@ -1,6 +1,11 @@
 module.exports = {
 	"h5":{
-		"url":"https://static-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e.bspapp.com" //	前端网页托管的域名
+		"url":"https://static-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e.bspapp.com" ,//	前端网页托管的域名
+		"openApp":{
+			"openUrl":'https://sj.qq.com/myapp/detail.htm?apkName=com.tencent.android.qqdownloader&info=6646FD239A6EBA9E2DEE5DFC7E18D867',
+			"appname": 'base-app',
+			"logo": './static/logo.png',
+		}
 	},
 	"mp":{
 		"weixin":{
