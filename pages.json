@@ -123,6 +123,21 @@
 				}
 			}
 		}, {
+			"path": "uni_modules/uni-agree/pages/uni-agree/uni-agree",
+			"style": {
+				"disableScroll": true,
+				"app-plus": {
+					"backgroundColorTop": "transparent",
+					"background": "transparent",
+					"titleNView": false,
+					"scrollIndicator": false,
+					"popGesture": "none",
+					"animationType": "fade-in",
+					"animationDuration": 200
+
+				}
+			}
+		}, {
 			"path": "pages/ucenter/settings/settings",
 			"style": {
 				"navigationBarTitleText": "设置"

@@ -2,13 +2,12 @@
 	<view style="overflow: hidden;">
 		<!-- 页面主列表 -->
 		<news-list ref="newsList" :canSearch="canSearch" :currentText="searchText"></news-list>
-		
-		<uni-agree></uni-agree>
 	</view>
 </template>
 
 <script>
 	import newsList from './news-list.vue';
+	import checkIsAgree from '@/uni_modules/uni-agree/utils/uni-agree.js';
 	export default {
 		components:{
 			newsList
@@ -18,6 +17,9 @@
 				searchText: '',
 				canSearch:true
 			};
+		},
+		onLoad() {
+			checkIsAgree();
 		},
 		onShow(options) {
 			this.searchText = getApp().globalData.searchText;
