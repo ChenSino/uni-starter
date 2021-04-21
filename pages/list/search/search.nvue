@@ -160,7 +160,9 @@
 			this.searchText = getApp().globalData.searchText;
 		},
 		onLoad() {
+			//#ifdef APP-PLUS
 			this.statusBarHeight = `${uni.getSystemInfoSync().statusBarHeight}px`;
+			//#endif
 		},
 		methods: {
 			clear(res) {
