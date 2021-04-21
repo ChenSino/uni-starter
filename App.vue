@@ -8,6 +8,8 @@
 		onLaunch: function() {
 			console.log('App Launch')
 			initApp();
+			
+			//#ifdef APP-NVUE || H5
 			//预加载设置页面
 			uni.preloadPage({
 				url: "/pages/ucenter/settings/settings",
@@ -15,6 +17,7 @@
 					// console.log(e);
 				}
 			});
+			//#endif
 			// #ifdef APP-PLUS
 			//预加载一键登录
 				plus.oauth.getServices(oauthServices=>{

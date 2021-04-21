@@ -4,8 +4,8 @@ import checkUpdate from '@/uni_modules/uni-upgrade-center-app/utils/check-update
 import callCheckVersion from '@/uni_modules/uni-upgrade-center-app/utils/call-check-version';
 // #endif
 export default function() {
-
-	// 初始化appVersion
+	
+	// 初始化appVersion（仅app生效）
 	initAppVersion();
 
 	//自定义路由拦截
