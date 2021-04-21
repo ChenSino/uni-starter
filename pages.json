@@ -192,6 +192,15 @@
 		    }
 		    
 		}
+        ,{
+            "path" : "uni_modules/uni-login-page/pages/register/register",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
