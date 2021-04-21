@@ -2,7 +2,7 @@
 	"bsonType": "object",
 	"required": ["user_id", "article_id"],
 	"permission": {
-		"read": true,
+		"read": "doc.uid == auth.uid",
 		"create": "auth.uid != null",
 		"update": false,
 		"delete": "doc.uid == auth.uid"
@@ -15,6 +15,10 @@
 			"bsonType": "string",
 			"description": "文章id，参考opendb-news-articles表",
 			"foreignKey": "opendb-news-articles._id"
+		},
+		"article_title":{
+			"bsonType": "string",
+			"description": "文章标题"
 		},
 		"user_id": {
 			"bsonType": "string",

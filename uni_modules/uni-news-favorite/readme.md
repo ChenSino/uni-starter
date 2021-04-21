@@ -1,0 +1,1 @@
+# opendb-news-favorite
