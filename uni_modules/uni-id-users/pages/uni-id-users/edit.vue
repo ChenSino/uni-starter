@@ -49,12 +49,15 @@
 			return {
 				formData: {
 					"avatar": "",
-					"gender": 1,
+					"gender": 0,
 					"mobile": "",
 					"nickname": ""
 				},
 				formOptions: {
 					"gender_localdata": [{
+							"text": "未知",
+							"value": 0
+						},{
 							"text": "男",
 							"value": 1
 						},
