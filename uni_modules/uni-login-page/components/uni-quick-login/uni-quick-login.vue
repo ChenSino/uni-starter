@@ -115,12 +115,12 @@
 				console.log(arguments);
 				console.log('services',services);
 				let oauthService = this.oauthServices.find((service) => service.id == type)
-				// #ifdef APP-PLUS
-				//uni.showLoading({mask: true});
 				console.log(type);
+				
+				// #ifdef APP-PLUS
 				//请勿直接使用前端获取的unionid或openid直接用于登陆，前端的数据都是不可靠的
 				if(type=='weixin'){
-					oauthService.authorize(({code})=>{
+					return	oauthService.authorize(({code})=>{
 						console.log(code);
 						this.quickLogin({code},type)
 					},
@@ -129,6 +129,7 @@
 						console.log(err);
 					})
 				}
+				// #endif
 				
 				uni.login({
 					"provider": type,
@@ -174,7 +175,6 @@
 						}
 					}
 				})
-				// #endif
 			},
 			quickLogin(params,type){//联网验证登陆
 				console.log(params,type);
@@ -198,14 +198,11 @@
 						var delta = 0
 						//判断需要返回几层
 						let pages = getCurrentPages();
-						console.log(pages);
 						pages.forEach((page,index)=>{
-							console.log(pages[pages.length-index-1].route.split('/'));
 							if(pages[pages.length-index-1].route.split('/')[1] == 'uni-login-page'){
 								delta ++
 							}
 						})
-						console.log('delta:'+delta);
 						uni.navigateBack({delta})
 					}
 				},{showLoading:true})

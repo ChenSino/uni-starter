@@ -87,7 +87,7 @@
             "urlCheck" : false
         },
         "usingComponents" : true,
-		"betterScopedSlots":true
+        "betterScopedSlots" : true
     },
     "mp-alipay" : {
         "usingComponents" : true
@@ -100,5 +100,8 @@
     },
     "uniStatistics" : {
         "enable" : false
+    },
+    "h5" : {
+        "template" : "template.h5.html"
     }
 }
