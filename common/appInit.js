@@ -91,6 +91,12 @@ export default function() {
 			}
 		}
 	})
+	
+// #ifdef APP-PLUS
+// 设备网络状态变化事件
+	eventListenerNetwork()
+// #endif
+
 }
 /**
  * // 初始化appVersion
@@ -126,31 +132,52 @@ function initAppVersion() {
 
 // 设备网络状态变化事件
 function eventListenerNetwork() {
-	uni.onNetworkStatusChange(function(res) {
-		console.log(res.isConnected);
-		console.log(res.networkType);
-		if (!res.isConnected) {
-			uni.showModal({
-				content: "你未打开网络连接",
-				confirmText: "前往打开",
-				complete: (e) => {
-					console.log(e);
-					if (uni.getSystemInfoSync().platform == "ios") {
-						plus.runtime.launchApplication({
-							action: 'App-Prefs:root=WIFI'
-						}, function(e) {
-							console.log(JSON.stringify(e));
-						});
-					} else {
-						var main = plus.android.runtimeMainActivity();
-						var Intent = plus.android.importClass("android.content.Intent");
-						var mIntent = new Intent('android.settings.DATA_ROAMING_SETTINGS');
-						main.startActivity(mIntent);
-					}
-				}
-			});
+	//网络掉线
+	uni.getNetworkType({
+	    success:res=>{
+	        console.log(res);
+			if(res.networkType=='none'){
+				showNetworkErrPage()
+			}
+			uni.showToast({
+				title:'当前网络类型：'+res.networkType,
+				icon:'none',
+				duration:3000
+			})
+	    }
+	});
+	//监听网络变化
+	uni.onNetworkStatusChange(res=> {
+	    console.log(res.isConnected);
+	    console.log(res.networkType);
+		if(res.networkType!='none'){
+			uni.showToast({
+				title:'当前网络类型：'+res.networkType,
+				icon:'none',
+				duration:3000
+			})
+		}else{
+			showNetworkErrPage()
+			uni.showToast({
+				title:'网络类型：'+res.networkType,
+				icon:'none',
+				duration:3000
+			})
 		}
 	});
+	
+	function showNetworkErrPage(){
+		let pages = getCurrentPages();
+		console.log('pages.length',pages.length);
+		if(pages.length===0|| pages[pages.length - 1].route!='/pages/networkErr/networkErr.vue'){
+			uni.navigateTo({
+				url:'/pages/networkErr/networkErr'
+			})
+		}else{
+			console.log('已经打开');
+		}
+	}
+	
 }
 
 function openAppPermissionSetting(){

@@ -5,22 +5,21 @@
 				//#ifndef MP
 				"navigationStyle": "custom",
 				//#endif
-				"enablePullDownRefresh": true,
-				"app-plus":{
-					"subNVues":[
-						{
-							"id":"networkErr",
-							"path":"pages/list/networkErr/networkErr",
-							"style":{
-								"height":"0",
-								"width":"100%",
-								"background":"transparent"
-							}
-						}
-					]
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/networkErr/networkErr",
+			"style": {
+				"navigationStyle": "custom",
+				"backgroundColor": "transparent",
+				"app-plus": {
+					"animationType": "fade-in",
+					"background": "transparent",
+					"popGesture": "none"
 				}
 			}
-		}, 
+		},
 		{
 			"path": "pages/list/news-list",
 			"style": {
@@ -219,8 +218,7 @@
 		"backgroundColor": "#F8F8F8"
 	},
 	"condition": {
-		"list": [
-			{
+		"list": [{
 				"path": "pages/list/list"
 			},
 			{
@@ -234,7 +232,7 @@
 			}
 		],
 		"current": 0
-},
+	},
 	"tabBar": {
 		"color": "#7A7E83",
 		"selectedColor": "#007AFF",

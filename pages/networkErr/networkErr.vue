@@ -1,7 +1,9 @@
 <template>
-	<view class="box" :style="{'padding-top':statusBarHeight}">
-		<text class="networkErr">网络连接不可用</text>
-		<text @click="toSet">去设置</text>
+	<view class="box">
+		<view class="content">
+			<text class="networkErr">网络连接不可用</text>
+			<button type="default" @click="toSet">去设置</button>
+		</view>
 	</view>
 </template>
 
@@ -13,42 +15,17 @@
 			}
 		},
 		mounted() {
-			this.statusBarHeight = uni.getSystemInfoSync().statusBarHeight;
-			const getCurrentSubNVue = uni.getCurrentSubNVue();
-			getCurrentSubNVue.setStyle({
-				"height":this.statusBarHeight+60+'px'
-			})
-			uni.getNetworkType({
-			    success:res=>{
-			        console.log(res);
-					if(res.networkType!='none'){
-						getCurrentSubNVue.hide()
-					}else{
-						getCurrentSubNVue.show()
-					}
-			    }
-			});
 			uni.onNetworkStatusChange(res=> {
 			    console.log(res.isConnected);
 			    console.log(res.networkType);
-				
-				
 				if(res.networkType!='none'){
 					uni.showToast({
 						title:'当前网络类型：'+res.networkType,
 						icon:'none',
 						duration:3000
 					})
-					if(this.old=='none'){
-						this.$parent.reLink();
-					}
-					getCurrentSubNVue.hide()
-				}else{
-					getCurrentSubNVue.show()
-					uni.showToast({
-						title:'网络类型：'+res.networkType,
-						icon:'none',
-						duration:3000
+					uni.navigateBack({
+						animationType:'fade-out'
 					})
 				}
 			});
@@ -72,10 +49,20 @@
 	}
 </script>
 
-<style lang="scss" scoped>
+<style >
+	page {
+		background: transparent;
+	}
 	.box{
+		display: flex;
+		width: 750rpx;
+		height: 100vh;
+		justify-content: center;
+		align-items: center;
+	}
+	.content{
+		height: 100px;
+		width: 400rpx;
 		background-color: #DD524D;
-		height:100%;
-		flex: 1;
 	}
 </style>
