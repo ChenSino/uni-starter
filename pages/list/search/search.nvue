@@ -143,7 +143,7 @@
 				associativeList: [],
 				keyBoardPopup: false,
 
-				hotWorld: 'apple', //	搜索热词，如果没有输入即回车，则搜索热词，但是不会加入搜索记录
+				hotWorld: 'DCloud', //	搜索热词，如果没有输入即回车，则搜索热词，但是不会加入搜索记录
 				focus: true, //	是否自动聚焦
 				speechEngine: 'iFly' //	语音识别引擎 iFly 讯飞 baidu 百度
 			}

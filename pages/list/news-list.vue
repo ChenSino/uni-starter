@@ -25,7 +25,7 @@
 			<!-- 页面分类标题 -->
 			<uni-section style="margin:0;" v-if="searchText" :title="listTitle" type="line"></uni-section>
 			<unicloud-db ref="udb" v-slot:default="{data, loading, error, options}" :options="formData"
-				:collection="collection" :field="field" :where="where" @load="load" @error="isLoading = false">
+				:collection="collection" :field="field" :foreignKey="foreignKey" :where="where" @load="load" @error="isLoading = false">
 				<text v-if="error" class="list-info">{{error.message}}</text>
 				<!-- 基于 uni-list 的页面布局 -->
 				<uni-list :class="{ 'uni-list--waterfall': options.waterfall }">
@@ -91,7 +91,8 @@
 				// 数据表名
 				collection: 'opendb-news-articles,uni-id-users',
 				// 查询字段，多个字段用 , 分割
-				field: 'author{username, _id}, user_id,_id,avatar,title,excerpt,last_modify_date, comment_count, like_count',
+				foreignKey: '',
+				field: 'author{username, _id}, _id,avatar,title,excerpt,last_modify_date, comment_count, like_count',
 				tipShow: false ,// 是否显示顶部提示框
 				isLoading:true
 			};
