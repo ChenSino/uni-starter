@@ -24,8 +24,6 @@
 				"app-plus": {
 					"animationType": "none",
 					"popGesture": "none"
-					// "navigationStyle": "custom",
-					// "backgroundColor": "transparent",
 				}
 			}
 		}, {
@@ -77,10 +75,13 @@
 			"path": "pages/ucenter/about/about",
 			"style": {
 				"navigationBarTitleText": "关于"
-				// #ifdef APP-PLUS
-				,"app-plus": {
+					// #ifdef APP-PLUS
+					,
+				"app-plus": {
 					"titleNView": {
-						"buttons": [{"type": "share"}]
+						"buttons": [{
+							"type": "share"
+						}]
 					}
 				}
 				// #endif
@@ -142,7 +143,6 @@
 
 		}, {
 			"path": "uni_modules/uni-id-users/pages/uni-id-users/edit",
-			// "path": "pages/ucenter/edit/edit",
 			"style": {
 				"navigationBarTitleText": "编辑资料"
 			}
@@ -168,40 +168,28 @@
 			}
 
 		}, {
-			"path": "pages/ucenter/help/help",
+			"path": "pages/test/test",
 			"style": {
-				"navigationBarTitleText": "帮助",
+				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false
 			}
+
+		}, {
+			"path": "pages/common/webview/webview",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "uni_modules/uni-login-page/pages/register/register",
+			"style": {
+				"navigationBarTitleText": "注册",
+				"enablePullDownRefresh": false
+			}
+
 		}
-	    ,{
-	        "path" : "pages/test/test",
-	        "style" :                                                                                    
-	        {
-	            "navigationBarTitleText": "",
-	            "enablePullDownRefresh": false
-	        }
-	        
-	    }
-		,{
-		    "path" : "pages/common/webview/webview",
-		    "style" :                                                                                    
-		    {
-		        "navigationBarTitleText": "",
-		        "enablePullDownRefresh": false
-		    }
-		    
-		}
-        ,{
-            "path" : "uni_modules/uni-login-page/pages/register/register",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "注册",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-    ],
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "base-app",
@@ -220,11 +208,12 @@
 				"path": "pages/test/test"
 			},
 			{
-				"path":"pages/ucenter/settings/settings"
+				"path": "pages/ucenter/settings/settings"
 			}
 		],
-		"current":1
-	},
+
+		"current": 0
+},
 	"tabBar": {
 		"color": "#7A7E83",
 		"selectedColor": "#007AFF",

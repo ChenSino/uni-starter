@@ -8,9 +8,9 @@
 			</view>
 		</view>
 		<uni-grid class="grid" :column="5" :showBorder="false" :square="true">
-			<uni-grid-item class="item" v-for="({text,icon},index) in gridList" @click.native="tapGrid(index)">
-				<uni-icons class="icon" color="#5d5e64" :type="icon" size="28"></uni-icons>
-				<text class="text">{{text}}</text>
+			<uni-grid-item class="item" v-for="(item,index) in gridList" @click.native="tapGrid(index)">
+				<uni-icons class="icon" color="#5d5e64" :type="item.icon" size="28"></uni-icons>
+				<text class="text">{{item.text}}</text>
 			</uni-grid-item>
 		</uni-grid>
 		<uni-list class="center-list" v-for="(sublist , index) in ucenterList">
