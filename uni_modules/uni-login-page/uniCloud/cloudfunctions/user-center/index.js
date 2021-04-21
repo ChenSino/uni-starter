@@ -36,7 +36,7 @@ exports.main = async (event, context) => {
 	let noCheckAction = [
 		'register', 'checkToken','login', 'logout', 'sendSmsCode',
 		'createCaptcha', 'verifyCaptcha','refreshCaptcha', 'inviteLogin',
-		'login_by_weixin','login_by_univerify','login_by_apple','loginBySms'
+		'login_by_weixin','login_by_univerify','login_by_apple','loginBySms','resetPwdBySmsCode'
 	]
 	let payload;
 	console.log(event.action);
@@ -83,7 +83,7 @@ exports.main = async (event, context) => {
 	let res = {}
 	switch (event.action) {
 		case 'register':
-			let {username,password,gender,nickname,password} = params
+			let {username,password,gender,nickname} = params
 			if(/^1\d{10}$/.test(username)){
 				return {
 					code: 401,
@@ -196,6 +196,27 @@ exports.main = async (event, context) => {
 				type: 'register'
 			})
 			break;
+		case 'resetPwdBySmsCode':
+			if (!params.code) {
+				return {
+					code: 500,
+					msg: '请填写验证码'
+				}
+			}
+			if (!/^1\d{10}$/.test(params.mobile)) {
+				return {
+					code: 500,
+					msg: '手机号码填写错误'
+				}
+			}
+			let loginBySmsRes = await uniID.loginBySms(params)
+			console.log(loginBySmsRes);
+			if(loginBySmsRes.code === 0){
+				res = await uniID.resetPwd({password:params.password,"uid":loginBySmsRes.uid})
+			}else{
+				return loginBySmsRes
+			}
+			break;
 		case 'getInviteCode':
 			res = await uniID.getUserInfo({
 				uid: params.uid,
@@ -220,9 +241,6 @@ exports.main = async (event, context) => {
 			break;
 		case 'refreshCaptcha':
 			res = await uniCaptcha.refresh(params)
-			break;
-		case 'resetPwd':
-			res = await uniID.resetPwd({...params,"uid":payload.uid})
 			break;
 		default:
 			res = {

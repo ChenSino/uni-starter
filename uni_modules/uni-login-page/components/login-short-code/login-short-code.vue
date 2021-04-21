@@ -46,7 +46,7 @@
 		computed: {
 			innerText() {
 				if (this.reverseNumber == 0) return '获取验证码';
-				return this.reverseNumber;
+				return '重新发送('+this.reverseNumber+'s)';
 			}
 		},
 		created() {
@@ -136,11 +136,10 @@
 		justify-content: center;
 		align-items: center;
 	}
-
 	.inner-text {
 		font-size: 28rpx;
+		color: #AAAAAA;
 	}
-
 	.inner-text-active {
 		color: #007aff;
 	}

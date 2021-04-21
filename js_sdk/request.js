@@ -16,9 +16,9 @@ export default function request(name,params,callback=false,{showLoading=false,lo
 		name = routers[0]
 		action =  routers[1]
 	}
-	console.log({name,data: {action,params}})
+	console.log({name,data:{action,params}})
 	return new Promise((resolve,reject)=>{
-		uniCloud.callFunction({name,data: {action,params},
+		uniCloud.callFunction({name,data:{action,params},
 			success(e){
 				// console.log(e);
 				const {result:{data,code}} = e
