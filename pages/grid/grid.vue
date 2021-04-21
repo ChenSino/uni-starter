@@ -2,7 +2,9 @@
 	<view class="warp">
 		<!-- 搜索 -->
 		<template>
+			<!-- #ifdef APP-PLUS -->
 			<status-bar />
+			<!-- #endif -->
 			<uni-search-bar ref="searchBar" style="flex:1;" radius="100" @click.native="searchClick" cancelButton="none"
 				disabled />
 		</template>
