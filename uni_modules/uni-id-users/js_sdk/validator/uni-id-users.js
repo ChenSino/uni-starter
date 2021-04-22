@@ -32,16 +32,16 @@ const validator = {
 		"defaultValue": 0,
 		"label": "性别"
 	},
-	"mobile": {
-		"rules": [{
-				"format": "string"
-			},
-			{
-				"pattern": "^\\+?[0-9-]{3,20}$"
-			}
-		],
-		"label": "手机号码"
-	},
+	// "mobile": {
+	// 	"rules": [{
+	// 			"format": "string"
+	// 		},
+	// 		{
+	// 			"pattern": "^\\+?[0-9-]{3,20}$"
+	// 		}
+	// 	],
+	// 	"label": "手机号码"
+	// },
 	"nickname": {
 		"rules": [{
 

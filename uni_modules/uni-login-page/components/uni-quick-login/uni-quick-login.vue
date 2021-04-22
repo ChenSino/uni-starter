@@ -9,6 +9,7 @@
 <script>
 	import {mapGetters,mapMutations} from 'vuex';
 	//前一个窗口的页面地址。控制点击切换快捷登陆方式是创建还是返回
+	import loginSuccess from 'uni_modules/uni-login-page/common/loginSuccess.js';
 	export default {
 		data() {
 			return {
@@ -185,7 +186,9 @@
 							uni.closeAuthView()
 						}
 						uni.hideLoading()
-						this.loginSuccess(result)
+						loginSuccess(result)
+						delete result.userInfo.token
+						this.setUserInfo(result.userInfo)
 					}
 				},{showLoading:true})
 			},
