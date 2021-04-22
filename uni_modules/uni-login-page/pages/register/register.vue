@@ -17,7 +17,7 @@
 				<uni-easyinput placeholder="再次输入密码" type="password" v-model="formData.pwd2" trim="both" />
 			</uni-forms-item>
 			<view class="uni-button-group">
-				<button type="primary" class="uni-button" @click="submit">注册</button>
+				<button type="primary" class="uni-button" @click="submit">注册并登陆</button>
 			</view>
 		</uni-forms>
 	</view>
@@ -34,8 +34,8 @@ import mixin from '../../common/loginPage.mixin.js';
 					"username": "",
 					"gender": 0,
 					"nickname": "",
-					'password':'123456',
-					'pwd2':'123456'
+					'password':'',
+					'pwd2':''
 				},
 				formOptions: {
 					"gender_localdata": [{

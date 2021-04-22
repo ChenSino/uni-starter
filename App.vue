@@ -1,5 +1,6 @@
 <script>
 	import initApp from '@/common/appInit.js';
+	import checkIsAgree from '@/uni_modules/uni-agree/utils/uni-agree.js';
 	export default {
 		globalData: {
 			searchText: '',
@@ -8,6 +9,7 @@
 		onLaunch: function() {
 			console.log('App Launch')
 			initApp();
+			checkIsAgree();
 			
 			//#ifdef APP-NVUE || H5
 			//预加载设置页面

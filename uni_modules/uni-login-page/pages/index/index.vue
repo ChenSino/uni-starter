@@ -41,7 +41,7 @@
 <script>	
 var univerify_first,currentWebview;//是否一键登陆优先
 import baseappConfig from '@/baseapp.config.js';
-	import mixin from '../../common/loginPage.mixin.js';
+import mixin from '../../common/loginPage.mixin.js';
 	var currentPage;
 	export default {
 		mixins:[mixin],

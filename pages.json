@@ -8,6 +8,7 @@
 				"enablePullDownRefresh": true
 			}
 		},
+		// #ifdef APP-PLUS
 		{
 			"path": "pages/networkErr/networkErr",
 			"style": {
@@ -20,6 +21,7 @@
 				}
 			}
 		},
+		// #endif
 		{
 			"path": "pages/list/news-list",
 			"style": {
@@ -144,17 +146,8 @@
 		}, {
 			"path": "uni_modules/uni-agree/pages/uni-agree/uni-agree",
 			"style": {
-				"disableScroll": true,
-				"app-plus": {
-					"backgroundColorTop": "transparent",
-					"background": "transparent",
-					"titleNView": false,
-					"scrollIndicator": false,
-					"popGesture": "none",
-					"animationType": "fade-in",
-					"animationDuration": 200
-
-				}
+				"navigationStyle": "custom",
+				"app-plus":{"popGesture": "none"}
 			}
 		}, {
 			"path": "pages/ucenter/settings/settings",

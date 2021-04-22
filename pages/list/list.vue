@@ -7,7 +7,6 @@
 
 <script>
 	import newsList from './news-list.vue';
-	import checkIsAgree from '@/uni_modules/uni-agree/utils/uni-agree.js';
 	export default {
 		components:{
 			newsList
@@ -19,7 +18,6 @@
 			};
 		},
 		onLoad() {
-			checkIsAgree();
 		},
 		onShow(options) {
 			this.searchText = getApp().globalData.searchText;

@@ -11,7 +11,7 @@
 			<uni-forms-item name="gender" label="性别" required>
 				<uni-data-checkbox v-model="formData.gender" :localdata="formOptions.gender_localdata" />
 			</uni-forms-item>
-			<uni-forms-item name="mobile" label="手机号码" required>
+			<uni-forms-item name="mobile" label="手机号码" v-if="formData.mobile">
 				<uni-easyinput placeholder="手机号码" :disabled="true" v-model="formData.mobile" trim="both" />
 			</uni-forms-item>
 			<uni-forms-item name="nickname" label="昵称" required>
@@ -68,7 +68,7 @@
 					]
 				},
 				rules: {
-					...getValidator(["avatar", "gender", "mobile", "nickname"])
+					...getValidator(["avatar", "gender", "nickname"])
 				}
 			}
 		},
