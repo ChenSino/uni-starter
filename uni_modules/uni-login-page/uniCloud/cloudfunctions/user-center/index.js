@@ -32,18 +32,6 @@ exports.main = async (event, context) => {
 		return recentRecord.data.filter(item => item.state === 0).length === recordSize;
 	}
 
-	//注册成功后为用户执行相关操作，如创建该用户的积分表等
-	function registerSuccess(uid) {
-		await db.collection('uni-id-scores').add({
-			user_id: uid,
-			score: 1,
-			type: 1,
-			balance: 1,
-			comment: "",
-			create_date: Date.now()
-		})
-	}
-
 	//设置某些模块不需要token（也就是登陆成功后）才能操作,如果需要token就获取当前操作账户的uid
 	let noCheckAction = [
 		'register', 'checkToken', 'login', 'logout', 'sendSmsCode',
@@ -66,7 +54,17 @@ exports.main = async (event, context) => {
 		params.uid = payload.uid
 	}
 
-
+	//注册成功后为用户执行相关操作，如创建该用户的积分表等
+	async function registerSuccess(uid) {
+		await db.collection('uni-id-scores').add({
+			user_id: uid,
+			score: 1,
+			type: 1,
+			balance: 1,
+			comment: "",
+			create_date: Date.now()
+		})
+	}
 	//记录成功登陆的日志
 	const loginLog = async (res = {}, type = 'login') => {
 		const now = Date.now()
@@ -86,8 +84,10 @@ exports.main = async (event, context) => {
 			} : {
 				state: 0
 			})
-
-		return uniIdLogCollection.add(logData)
+		if(res.type == 'register'){
+			await registerSuccess(res.uid)
+		}
+		return await uniIdLogCollection.add(logData)
 	}
 
 
@@ -118,7 +118,7 @@ exports.main = async (event, context) => {
 				password
 			});
 			if (res.code === 0) {
-				registerSuccess(res.uid)
+				await registerSuccess(res.uid)
 			}
 			break;
 		case 'login':
@@ -136,10 +136,6 @@ exports.main = async (event, context) => {
 					queryField: ['username', 'email', 'mobile']
 				});
 				await loginLog(res);
-				if (res.code == 0 && res.type == 'register') {
-					registerSuccess(res.uid)
-				}
-
 				needCaptcha = await getNeedCaptcha();
 			}
 
@@ -151,24 +147,16 @@ exports.main = async (event, context) => {
 				uid: res.uid,
 				username: "微信用户"
 			});
-			if (res.code == 0 && res.type == 'register') {
-				registerSuccess(res.uid)
-			}
 			res.userInfo.username = "微信用户"
-			loginLog(res)
+			await loginLog(res)
 			break;
 		case 'login_by_univerify':
 			res = await uniID.loginByUniverify(params)
-			if (res.code == 0 && res.type == 'register') {
-				registerSuccess(res.uid)
-			}
+			await loginLog(res)
 			break;
 		case 'login_by_apple':
 			res = await uniID.loginByApple(params)
-			if (res.code == 0 && res.type == 'register') {
-				registerSuccess(res.uid)
-			}
-			loginLog(res)
+			await loginLog(res)
 			break;
 		case 'checkToken':
 			res = await uniID.checkToken(event.uniIdToken);
@@ -203,9 +191,7 @@ exports.main = async (event, context) => {
 				type: params.type,
 				templateId
 			})
-			if (res.code == 0 && res.type == 'register') {
-				registerSuccess(res.uid)
-			}
+			await loginLog(res)
 			break;
 		case 'loginBySms':
 			if (!params.code) {
@@ -221,10 +207,7 @@ exports.main = async (event, context) => {
 				}
 			}
 			res = await uniID.loginBySms(params)
-			if (res.code == 0 && res.type == 'register') {
-				registerSuccess(res.uid)
-			}
-			loginLog(res)
+			await loginLog(res)
 			break;
 		case 'inviteLogin':
 			if (!params.code) {
@@ -237,9 +220,6 @@ exports.main = async (event, context) => {
 				...params,
 				type: 'register'
 			})
-			if (res.code == 0 && res.type == 'register') {
-				registerSuccess(res.uid)
-			}
 			break;
 		case 'resetPwdBySmsCode':
 			if (!params.code) {

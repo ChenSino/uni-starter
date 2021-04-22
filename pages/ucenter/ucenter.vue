@@ -112,6 +112,9 @@
 			// #endif
 		},
 		methods: {
+			...mapMutations({
+				setUserInfo: 'user/login'
+			}),
 			toSettings() {
 				uni.navigateTo({
 					url: "/pages/ucenter/settings/settings"
@@ -131,9 +134,52 @@
 			},
 			toEdit() {
 				console.log('点击编辑信息');
-				uni.navigateTo({
-					url: '/uni_modules/uni-id-users/pages/uni-id-users/edit'
-				})
+				// uni.navigateTo({
+				// 	url: '/uni_modules/uni-id-users/pages/uni-id-users/edit'
+				// })
+				const token = uni.getStorageSync('uni_id_token')
+				if(token){
+					uni.chooseImage({
+						count:1,
+						success:(res)=> {
+							// 头像剪裁尺寸
+							let options = {
+								width:600,
+								height:600
+							}
+							// 剪裁并上传头像
+							uni.navigateTo({
+								url:'/pages/ucenter/edit/uploadCutImageToUnicloud?path=' + res.tempFilePaths[0] + `&options=${JSON.stringify(options)}`,
+								animationType:"fade-in",
+								events:{
+									uploadAvatarAfter:({url})=>{
+										console.log(url);
+										// 使用 clientDB 提交数据
+										db.collection('uni-id-users').where('_id==$env.uid').update({avatar:url}).then((res) => {
+											console.log(res);
+											uni.showToast({
+												icon: 'none',
+												title: '修改成功'
+											})
+											this.setUserInfo({avatar:url});
+										}).catch((err) => {
+											uni.showModal({
+												content: err.message || '请求服务失败',
+												showCancel: false
+											})
+										}).finally(() => {
+											uni.hideLoading()
+										})
+									}
+								}
+							});
+						}
+					})
+				}else{
+					uni.navigateTo({
+						url:'/uni_modules/uni-login-page/pages/index/index'
+					})
+				}
 			},
 			tapGrid(index) {
 				uni.showToast({

@@ -50,7 +50,7 @@
 			return {
 				formData: {
 					"avatar": "",
-					"gender": 0,
+					"gender": '',
 					"mobile": "",
 					"nickname": ""
 				},
@@ -100,12 +100,6 @@
 							width:600,
 							height:600
 						}
-						uni.navigateTo({
-							url: '/pages/ucenter/edit/uploadCutImageToUnicloud',
-							success: res => {},
-							fail: () => {},
-							complete: () => {}
-						});
 						// 剪裁并上传头像
 						uni.navigateTo({
 							url:'/pages/ucenter/edit/uploadCutImageToUnicloud?path=' + res.tempFilePaths[0] + `&options=${JSON.stringify(options)}`,
