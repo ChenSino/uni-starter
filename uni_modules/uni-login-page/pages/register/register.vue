@@ -4,9 +4,6 @@
 			<uni-forms-item name="username" label="用户名" required>
 				<uni-easyinput placeholder="请输入用户名" v-model="formData.username" trim="both" />
 			</uni-forms-item>
-			<uni-forms-item name="gender" label="性别">
-				<uni-data-checkbox v-model="formData.gender" :localdata="formOptions.gender_localdata" />
-			</uni-forms-item>
 			<uni-forms-item name="nickname" label="昵称">
 				<uni-easyinput placeholder="请输入用户昵称" v-model="formData.nickname" trim="both" />
 			</uni-forms-item>
@@ -32,24 +29,9 @@ import mixin from '../../common/loginPage.mixin.js';
 			return {
 				formData: {
 					"username": "",
-					"gender": 0,
 					"nickname": "",
 					'password':'',
 					'pwd2':''
-				},
-				formOptions: {
-					"gender_localdata": [{
-							"text": "未知",
-							"value": 0
-						}, {
-							"text": "男",
-							"value": 1
-						},
-						{
-							"text": "女",
-							"value": 2
-						}
-					]
 				},
 				rules
 			}

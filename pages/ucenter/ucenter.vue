@@ -1,6 +1,6 @@
 <template>
 	<view class="center">
-		<view class="userInfo" @click="toSettings">
+		<view class="userInfo" @click="toEdit">
 			<image class="logo-img" :src="login ? (userInfo.avatar || avatarUrl) :avatarUrl"></image>
 			<view class="logo-title">
 				<text class="uer-name">{{login ? userInfo.nickname||userInfo.username||userInfo.mobile : '未登录'}}</text>
@@ -83,6 +83,9 @@
 					}, {
 						title: '关于',
 						to: '/pages/ucenter/about/about'
+					}, {
+						title: '设置',
+						to: '/pages/ucenter/settings/settings'
 					}]
 				]
 			}
@@ -103,8 +106,7 @@
 				login: 'user/hasLogin'
 			})
 			// #ifdef APP-PLUS
-			,
-			appVersion() {
+			,appVersion() {
 				return getApp().appVersion
 			}
 			// #endif
@@ -130,18 +132,11 @@
 				console.log(await callCheckVersion());
 				checkUpdate()
 			},
-			goLogin() {
-				if (!this.login) {
-					console.log('点击前往登录');
-					uni.navigateTo({
-						url: '/uni_modules/uni-login-page/pages/index/index'
-					});
-				} else {
-					console.log('点击编辑信息');
-					uni.navigateTo({
-						url: './edit/edit'
-					})
-				}
+			toEdit() {
+				console.log('点击编辑信息');
+				uni.navigateTo({
+					url: '/uni_modules/uni-id-users/pages/uni-id-users/edit'
+				})
 			},
 			tapGrid(index) {
 				uni.showToast({
@@ -173,7 +168,6 @@
 			 * 获取积分信息
 			 */
 			getScore() {
-
 				if (!this.userInfo) return uni.showToast({
 					title: '请登录后查看积分',
 					icon: 'none'

@@ -9,7 +9,7 @@
 				<uni-forms ref="form" :value="formData" :rules="rules">
 					<uni-forms-item name="phone">
 						<uni-easyinput type="number" class="phone-input-box" :inputBorder="false"
-							v-model="formData.phone" maxlength="11" placeholder="请输入手机号/用户名/邮箱">
+							v-model="formData.phone" maxlength="11" placeholder="请输入手机号/用户名">
 							<template slot="left">
 								<!-- 当前仅支持中国大陆手机号 -->
 								<!-- <picker mode="selector" :range="phoneArea" @change="selectPhoneArea"> -->
@@ -20,15 +20,14 @@
 						<uni-easyinput type="password" class="phone-input-box" :inputBorder="false"
 							v-model="formData.pwd" placeholder="请输入密码"></uni-easyinput>
 					</uni-forms-item>
-					<button class="send-btn-box" :disabled="!canLogin" :type="canLogin?'primary':'default'"
-						@click="pwdLogin">登录</button>
+					<button class="send-btn-box" type="primary" @click="pwdLogin">登录</button>
 				</uni-forms>
 				<!-- 忘记密码 -->
 				<view class="auth-box">
-					<text class="login-text login-text-sub">忘记了?</text>
-					<text class="login-text" @click="toRetrievePwd">找回密码</text>
+					<text class="login-text" @click="toRetrievePwd">忘记密码</text>
+					<text class="login-text" @click="toRetrievePwd">注册账号</text>
 				</view>
-				<button type="primary" class="toRegister" @click="toRegister">注册账号</button>
+				<!-- <button type="primary" plain class="toRegister" @click="toRegister">注册账号</button> -->
 			</view>
 		</view>
 		<uni-quick-login ref="uniQuickLogin"></uni-quick-login>
@@ -132,8 +131,8 @@
 		margin-top: 20rpx;
 	}
 	.auth-box {
-		justify-content: flex-start;
-		margin-top: 20rpx;
+		justify-content: space-between;
+		margin-top: 20px;
 	}
 	.login-text-sub {
 		color: #8a8f8b;
