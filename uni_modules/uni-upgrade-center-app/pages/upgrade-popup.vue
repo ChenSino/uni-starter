@@ -385,10 +385,9 @@
 		top: 0;
 		right: 0;
 		bottom: 0;
-		background-color:rgba(0,0,0,.65);
+		background-color: rgba(0, 0, 0, .65);
 	}
-	
-	
+
 	.botton-radius {
 		border-bottom-left-radius: 30rpx;
 		border-bottom-right-radius: 30rpx;

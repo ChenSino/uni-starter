@@ -12,6 +12,8 @@
 
 ## 安装指引
 
+0. 依赖数据库`opendb-app-versions`，如果没有此库，请在云服务空间中创建。
+
 1. 使用`HBuilderX 3.1.0+`，因为要使用到`uni_modules`
 
 3. 在插件市场打开本插件页面，在右侧点击`使用 HBuilderX 导入插件`，选择要导入的项目点击确定
@@ -69,8 +71,6 @@
 
 5. `check-version`云函数内部会自动获取 App 平台
 
-6. 检查更新前端使用示例：`uni_modules/uni-upgrade-center-app/utils/check-update.js`，在要检查更新的地方导入调用即可
-
 
 **Tips**
 
@@ -107,10 +107,11 @@
 	- 使用上一步取出的版本包的版本号 和传参 appVersion、wgtVersion 来检测是否有更新。必须同时大于这两项，因为上一次可能是wgt热更新，否则返回暂无更新
 	- 如果库中 wgt包 版本大于传参 appVersion，但是不满足 min_uni_version < appVersion，则不会使用wgt更新，会接着判断库中 app包version 是否大于 appVersion
 	- 返回结果：
-	|code|message|
-	|:-:|:-:|
-	|0|当前版本已经是最新的，不需要更新|
-	|101|wgt更新|
-	|102|整包更新|
-	|-101|暂无更新或检查appid是否填写正确|
-	|-102|请检查传参是否填写正确|
+
+		|code|message|
+		|:-:|:-:|
+		|0|当前版本已经是最新的，不需要更新|
+		|101|wgt更新|
+		|102|整包更新|
+		|-101|暂无更新或检查appid是否填写正确|
+		|-102|请检查传参是否填写正确|

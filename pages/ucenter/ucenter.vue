@@ -81,11 +81,11 @@
 						title: '问题与反馈',
 						to: '/uni_modules/uni-feedback/pages/opendb-feedback/list' // /pages/ucenter/uni-feedback/uni-feedback uni_modules/uni-feedback/pages/opendb-feedback/list
 					}, {
-						title: '关于',
-						to: '/pages/ucenter/about/about'
-					}, {
 						title: '设置',
 						to: '/pages/ucenter/settings/settings'
+					}, {
+						title: '关于',
+						to: '/pages/ucenter/about/about'
 					}]
 				]
 			}
@@ -129,7 +129,14 @@
 				}
 			},
 			async checkVersion() {
-				console.log(await callCheckVersion());
+				let res = await callCheckVersion()
+				console.log(res);
+				if(res.result.code == 0){
+					uni.showToast({
+						title: res.result.message,
+						icon: 'none'
+					});
+				}
 				checkUpdate()
 			},
 			toEdit() {
