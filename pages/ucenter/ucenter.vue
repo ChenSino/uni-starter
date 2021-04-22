@@ -168,13 +168,8 @@
 				})
 				db.collection(dbCollectionName).where('user_id == $env.uid').field('score,balance').get().then((res) => {
 					const data = res.result.data[0];
-					console.log(data);
 					let msg = '';
-					if(data){
-						msg = '当前积分为' + data.balance
-					} else{
-						msg = '当前无积分';
-					}
+					msg = data ? ('当前积分为' + data.balance) : '当前无积分';
 					uni.showToast({
 						title: msg,
 						icon: 'none'

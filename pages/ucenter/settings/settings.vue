@@ -206,8 +206,10 @@
 					});
 				}
 			},
+			/**
+			 * 每一项的点击事件
+			 */
 			itemClick(item) {
-				console.log(item);
 				if (item.event) {
 					this[item.event](item);
 				}
