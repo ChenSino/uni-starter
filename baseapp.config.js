@@ -29,11 +29,11 @@ module.exports = {
 		"agreements":[
 			{
 				"title":"用户服务协议",
-				"url":"https://uniapp.dcloud.io/"
+				"url":"https://ask.dcloud.net.cn/protocol.html"
 			},
 			{
 				"title":"隐私政策",
-				"url":"https://uniapp.dcloud.io/"
+				"url":"https://ask.dcloud.net.cn/protocol.html"
 			}
 		],
 		"download":"https://m3w.cn/uniapp"
