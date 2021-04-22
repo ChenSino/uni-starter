@@ -1,13 +1,13 @@
 <template>
 	<view class="uni-container">
 		<uni-forms ref="form" :value="formData" :rules="rules" validate-trigger="submit" err-show-type="toast">
-			<uni-list-item>
-				<template v-slot:body>
+			<uni-forms-item name="avatar">
+				<template>
 					<view class="avatar-box">
 						<image class="avatar-img" :src="formData.avatar || '/static/uni-center/logo.png'" @click="chooseImg" mode="aspectFill"></image>
 					</view>
 				</template>
-			</uni-list-item>
+			</uni-forms-item>
 			<uni-forms-item name="gender" label="性别" required>
 				<uni-data-checkbox v-model="formData.gender" :localdata="formOptions.gender_localdata" />
 			</uni-forms-item>
@@ -29,7 +29,8 @@
 		validator
 	} from '../../js_sdk/validator/uni-id-users.js';
 	import {
-		mapMutations
+		mapMutations,
+		mapGetters
 	} from 'vuex';
 	const db = uniCloud.database();
 	const dbCollectionName = 'uni-id-users';
@@ -72,9 +73,13 @@
 				}
 			}
 		},
+		computed:{
+			...mapGetters({
+				userInfo:'user/info'
+			})
+		},
 		onLoad(e) {
-			let id = "60795c140983f8000192f235";
-			id = uni.getStorageSync('uni_id_uid');
+			let id = uni.getStorageSync('uni_id_uid') || this.userInfo._id;
 			this.formDataId = id
 			this.getDetail(id)
 		},
@@ -138,7 +143,6 @@
 						title: '修改成功'
 					})
 					this.setUserInfo(value);
-					// this.getOpenerEventChannel().emit('refreshData')
 					setTimeout(() => uni.navigateBack(), 500)
 				}).catch((err) => {
 					uni.showModal({

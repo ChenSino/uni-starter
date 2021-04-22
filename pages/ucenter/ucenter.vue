@@ -110,9 +110,6 @@
 			// #endif
 		},
 		methods: {
-			...mapMutations({
-				logout: 'user/logout'
-			}),
 			toSettings() {
 				uni.navigateTo({
 					url: "/pages/ucenter/settings/settings"
@@ -130,20 +127,8 @@
 				console.log(await callCheckVersion());
 				checkUpdate()
 			},
-			goLogin() {
-				if (!this.login) {
-					console.log('点击前往登录');
-					uni.navigateTo({
-						url: '/uni_modules/uni-login-page/pages/index/index'
-					});
-				} else {
-					console.log('点击编辑信息');
-					uni.navigateTo({
-						url: './edit/edit'
-					})
-				}
-			},
 			tapGrid(index) {
+				console.log(this.userInfo);
 				uni.showToast({
 					title: '你点击了，第' + (index + 1) + '个',
 					icon: 'none'
