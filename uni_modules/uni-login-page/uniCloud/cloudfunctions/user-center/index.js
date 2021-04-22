@@ -13,13 +13,13 @@ exports.main = async (event, context) => {
 	//event为客户端上传的参数
 	console.log('event : ' + JSON.stringify(event))
 	let params = event.params || {}
-	
+
 	//防止黑客恶意破解登陆，连续登陆失败一定次数后，需要用户提供验证码
 	const getNeedCaptcha = async () => {
 		//当用户最近“2小时内(recordDate)”登陆失败达到2次(recordSize)时。要求用户提交验证码
 		const now = Date.now(),
-			  recordDate = 120 * 60 * 1000,
-			  recordSize = 2;
+			recordDate = 120 * 60 * 1000,
+			recordSize = 2;
 		const uniIdLogCollection = db.collection('uni-id-log')
 		let recentRecord = await uniIdLogCollection.where({
 				deviceId: params.deviceId || context.DEVICEID,
@@ -31,12 +31,24 @@ exports.main = async (event, context) => {
 			.get();
 		return recentRecord.data.filter(item => item.state === 0).length === recordSize;
 	}
-	
+
+	//注册成功后为用户执行相关操作，如创建该用户的积分表等
+	function registerSuccess(uid) {
+		await db.collection('uni-id-scores').add({
+			user_id: uid,
+			score: 1,
+			type: 1,
+			balance: 1,
+			comment: "",
+			create_date: Date.now()
+		})
+	}
+
 	//设置某些模块不需要token（也就是登陆成功后）才能操作,如果需要token就获取当前操作账户的uid
 	let noCheckAction = [
-		'register', 'checkToken','login', 'logout', 'sendSmsCode',
-		'createCaptcha', 'verifyCaptcha','refreshCaptcha', 'inviteLogin',
-		'login_by_weixin','login_by_univerify','login_by_apple','loginBySms','resetPwdBySmsCode'
+		'register', 'checkToken', 'login', 'logout', 'sendSmsCode',
+		'createCaptcha', 'verifyCaptcha', 'refreshCaptcha', 'inviteLogin',
+		'login_by_weixin', 'login_by_univerify', 'login_by_apple', 'loginBySms', 'resetPwdBySmsCode'
 	]
 	let payload;
 	console.log(event.action);
@@ -53,8 +65,8 @@ exports.main = async (event, context) => {
 		}
 		params.uid = payload.uid
 	}
-	
-	
+
+
 	//记录成功登陆的日志
 	const loginLog = async (res = {}, type = 'login') => {
 		const now = Date.now()
@@ -66,7 +78,7 @@ exports.main = async (event, context) => {
 			ua: context.CLIENTUA,
 			create_date: now
 		};
-	
+
 		Object.assign(logData,
 			res.code === 0 ? {
 				user_id: res.uid,
@@ -74,7 +86,7 @@ exports.main = async (event, context) => {
 			} : {
 				state: 0
 			})
-	
+
 		return uniIdLogCollection.add(logData)
 	}
 
@@ -83,55 +95,79 @@ exports.main = async (event, context) => {
 	let res = {}
 	switch (event.action) {
 		case 'register':
-			let {username,password,gender,nickname} = params
-			if(/^1\d{10}$/.test(username)){
+			let {
+				username, password, gender, nickname
+			} = params
+			if (/^1\d{10}$/.test(username)) {
 				return {
 					code: 401,
 					msg: '用户名不能是手机号'
 				}
 			};
-			if(/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/.test(username)){
+			if (/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/.test(username)) {
 				return {
 					code: 401,
 					msg: '用户名不能是邮箱'
 				}
 			}
-			res = await uniID.register({username,password,gender,nickname,password});
+			res = await uniID.register({
+				username,
+				password,
+				gender,
+				nickname,
+				password
+			});
+			if (res.code === 0) {
+				registerSuccess(res.uid)
+			}
 			break;
 		case 'login':
 			let passed = false;
 			let needCaptcha = await getNeedCaptcha();
-			
+
 			if (needCaptcha) {
 				res = await uniCaptcha.verify(params)
 				if (res.code === 0) passed = true;
 			}
-			
+
 			if (!needCaptcha || passed) {
 				res = await uniID.login({
 					...params,
 					queryField: ['username', 'email', 'mobile']
 				});
 				await loginLog(res);
+				if (res.code == 0 && res.type == 'register') {
+					registerSuccess(res.uid)
+				}
+
 				needCaptcha = await getNeedCaptcha();
 			}
-			
+
 			res.needCaptcha = needCaptcha;
 			break;
 		case 'login_by_weixin':
 			res = await uniID.loginByWeixin(params);
 			await uniID.updateUser({
-				uid: params.uid,
-				username:"微信用户"
+				uid: res.uid,
+				username: "微信用户"
 			});
+			if (res.code == 0 && res.type == 'register') {
+				registerSuccess(res.uid)
+			}
 			res.userInfo.username = "微信用户"
 			loginLog(res)
 			break;
 		case 'login_by_univerify':
 			res = await uniID.loginByUniverify(params)
+			if (res.code == 0 && res.type == 'register') {
+				registerSuccess(res.uid)
+			}
 			break;
 		case 'login_by_apple':
 			res = await uniID.loginByApple(params)
+			if (res.code == 0 && res.type == 'register') {
+				registerSuccess(res.uid)
+			}
 			loginLog(res)
 			break;
 		case 'checkToken':
@@ -167,6 +203,9 @@ exports.main = async (event, context) => {
 				type: params.type,
 				templateId
 			})
+			if (res.code == 0 && res.type == 'register') {
+				registerSuccess(res.uid)
+			}
 			break;
 		case 'loginBySms':
 			if (!params.code) {
@@ -182,6 +221,9 @@ exports.main = async (event, context) => {
 				}
 			}
 			res = await uniID.loginBySms(params)
+			if (res.code == 0 && res.type == 'register') {
+				registerSuccess(res.uid)
+			}
 			loginLog(res)
 			break;
 		case 'inviteLogin':
@@ -195,6 +237,9 @@ exports.main = async (event, context) => {
 				...params,
 				type: 'register'
 			})
+			if (res.code == 0 && res.type == 'register') {
+				registerSuccess(res.uid)
+			}
 			break;
 		case 'resetPwdBySmsCode':
 			if (!params.code) {
@@ -211,9 +256,12 @@ exports.main = async (event, context) => {
 			}
 			let loginBySmsRes = await uniID.loginBySms(params)
 			console.log(loginBySmsRes);
-			if(loginBySmsRes.code === 0){
-				res = await uniID.resetPwd({password:params.password,"uid":loginBySmsRes.uid})
-			}else{
+			if (loginBySmsRes.code === 0) {
+				res = await uniID.resetPwd({
+					password: params.password,
+					"uid": loginBySmsRes.uid
+				})
+			} else {
 				return loginBySmsRes
 			}
 			break;
