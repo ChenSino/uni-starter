@@ -131,8 +131,8 @@
 						title: data[0].title
 					});
 					
-					this.setFavorite();
 				}
+				this.setFavorite();
 			},
 			/**
 			 * followClick
