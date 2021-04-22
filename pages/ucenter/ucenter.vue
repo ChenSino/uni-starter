@@ -128,7 +128,6 @@
 				checkUpdate()
 			},
 			tapGrid(index) {
-				console.log(this.userInfo);
 				uni.showToast({
 					title: '你点击了，第' + (index + 1) + '个',
 					icon: 'none'

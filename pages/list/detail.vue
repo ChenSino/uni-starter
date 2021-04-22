@@ -147,7 +147,6 @@
 				
 			},
 			loadData(data) {
-				console.log(data);
 				//如果上一页未传递标题过来（如搜索直达详情），则从新闻详情中读取标题
 				if (this.title == '' && data[0].title) {
 					this.title = data[0].title
@@ -156,7 +155,6 @@
 					});
 					
 				}
-				console.log(this.title);
 				this.setFavorite();
 			},
 			/**
