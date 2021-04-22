@@ -113,15 +113,36 @@
 		methods: {
 			setFavorite(){
 				if(!this.userInfo)return
-				db.collection(dbCollectionName).add({
+				db.collection(dbCollectionName).where({
 					article_id:this.id,
-					article_title:this.title,
 					user_id:this.userInfo._id
-				}).then((res) => {
+				})
+				.get()
+				.then(res=>{
+					let value = {
+						article_id:this.id,
+						article_title:this.title,
+						user_id:this.userInfo._id,
+						update_date:Date.now()
+					}
+					if(res.result.data.length == 0){
+						return db.collection(dbCollectionName).add(value)
+					} else {
+						return db.collection(dbCollectionName).where({
+							article_id:this.id,
+							user_id:this.userInfo._id
+						})
+						.update(value)
+					}
+				})
+				.then(res=>{
 					console.log(res);
-				}).catch(err=>{
+				})
+				.catch(err=>{
 					console.log(err);
 				})
+				
+				
 			},
 			loadData(data) {
 				//如果上一页未传递标题过来（如搜索直达详情），则从新闻详情中读取标题

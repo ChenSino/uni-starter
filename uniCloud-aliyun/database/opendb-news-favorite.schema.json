@@ -4,7 +4,7 @@
 	"permission": {
 		"read": "doc.uid == auth.uid",
 		"create": "auth.uid != null",
-		"update": false,
+		"update": "doc.uid == auth.uid",
 		"delete": "doc.uid == auth.uid"
 	},
 	"properties": {
@@ -31,6 +31,13 @@
 		"create_date": {
 			"bsonType": "timestamp",
 			"description": "收藏时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		},
+		"update_date": {
+			"bsonType": "timestamp",
+			"description": "更新/修改时间",
 			"forceDefaultValue": {
 				"$env": "now"
 			}

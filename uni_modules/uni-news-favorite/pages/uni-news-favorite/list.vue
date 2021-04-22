@@ -1,13 +1,13 @@
 <template>
   <view class="container">
-    <unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}" collection="opendb-news-favorite" field="article_id">
+    <unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}" collection="opendb-news-favorite">
       <view v-if="error">{{error.message}}</view>
       <view v-else-if="data">
         <uni-list>
-          <uni-list-item v-for="(item, index) in data" :key="index" showArrow :clickable="true" @click="handleItemClick(item)">
+          <uni-list-item v-for="(item, index) in data" :key="index" :clickable="true" @click="handleItemClick(item)">
             <view slot="body">
               <text>{{item.article_title || item.article_id}}</text>
-			  <uni-dateformat :date="item.create_date" format="yyyy-MM-dd hh:mm"
+			  <uni-dateformat class="article-date" :date="item.update_date" format="yyyy-MM-dd hh:mm"
 			  	:threshold="[0, 0]" />
             </view>
           </uni-list-item>
@@ -65,4 +65,7 @@
 </script>
 
 <style>
+	.article-date{
+		color: #C8C7CC;
+	}
 </style>
