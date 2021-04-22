@@ -1,6 +1,6 @@
 <template>
   <view class="container">
-    <unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}" collection="opendb-news-favorite">
+    <unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}" :where="where" orderby="update_date desc" collection="opendb-news-favorite">
       <view v-if="error">{{error.message}}</view>
       <view v-else-if="data">
         <uni-list>
@@ -19,13 +19,14 @@
 </template>
 
 <script>
+	import { mapGetters } from 'vuex';
   export default {
     data() {
       return {
         loadMore: {
           contentdown: '',
           contentrefresh: '',
-          contentnomore: ''
+          contentnomore: '',
         }
       }
     },
@@ -39,25 +40,18 @@
     onReachBottom() {
       this.$refs.udb.loadMore()
     },
+	computed:{
+		...mapGetters({
+			userInfo:'user/info'
+		}),
+		where(){
+			return `user_id == '${this.userInfo._id}'`
+		}
+	},
     methods: {
       handleItemClick(item) {
-		  console.log(item);
         uni.navigateTo({
           url: '/pages/list/detail?id='+item.article_id+'&title='+(item.article_title || '')
-        })
-      },
-      fabClick() {
-        // 打开新增页面
-        uni.navigateTo({
-          url: './add',
-          events: {
-            // 监听新增数据成功后, 刷新当前页面数据
-            refreshData: () => {
-              this.$refs.udb.loadData({
-                clear: true
-              })
-            }
-          }
         })
       }
     }

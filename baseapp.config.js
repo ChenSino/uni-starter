@@ -16,7 +16,8 @@ module.exports = {
 		"needLogin":[	//配置需要路由拦截的页面地址，在打开这些页面之前会自动检查（不联网）uni_id_token的值是否存在/过期等
 			"/pages/ucenter/edit/edit",
 			"/pages/ucenter/settings/settings",
-			"/uni_modules/uni-login-page/pages/index/pwd-retrieve"
+			"/uni_modules/uni-login-page/pages/index/pwd-retrieve",
+			"/uni_modules/uni-news-favorite/pages/uni-news-favorite/list"
 		],
 		"login":["univerify","smsCode","username","weixin","apple"] //默认就是短信验证码登陆
 	},
