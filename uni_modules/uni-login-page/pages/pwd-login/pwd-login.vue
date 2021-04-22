@@ -27,9 +27,8 @@
 				<!-- 忘记密码 -->
 				<view class="auth-box">
 					<text class="login-text" @click="toRetrievePwd">忘记密码</text>
-					<text class="login-text" @click="toRetrievePwd">注册账号</text>
+					<text class="login-text" @click="toRegister">注册账号</text>
 				</view>
-				<!-- <button type="primary" plain class="toRegister" @click="toRegister">注册账号</button> -->
 			</view>
 		</view>
 		<uni-quick-login ref="uniQuickLogin"></uni-quick-login>
