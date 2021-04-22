@@ -21,7 +21,8 @@ let mixin = {
 			formData:{
 				phone:'',
 				code:'',
-				pwd:''
+				pwd:'',
+				pwd2:''
 			},
 			rules: {
 				phone:{
@@ -54,6 +55,26 @@ let mixin = {
 						{
 							pattern: /^.{6,20}$/,
 							errorMessage: '密码应为6到20位',
+						}
+					]
+				},
+				pwd2:{
+					rules:[{
+							required: true,
+							errorMessage: '请确认密码',
+						},
+						{
+							pattern: /^.{6,20}$/,
+							errorMessage: '密码应为6到20位',
+						},
+						{
+							validateFunction:function(rule,value,data,callback){
+								console.log(value);
+								if(value!=data.pwd){
+									callback('两次输入密码不一致')
+								};
+								return true
+							}
 						}
 					]
 				}

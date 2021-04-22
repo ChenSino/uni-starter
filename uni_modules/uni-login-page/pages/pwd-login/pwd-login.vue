@@ -17,18 +17,22 @@
 								<!-- </picker> -->
 							</template>
 						</uni-easyinput>
+					</uni-forms-item>
+					<uni-forms-item name="pwd">
 						<uni-easyinput type="password" class="phone-input-box" :inputBorder="false"
 							v-model="formData.pwd" placeholder="请输入密码"></uni-easyinput>
 					</uni-forms-item>
 					<button class="send-btn-box" :disabled="!canLogin" :type="canLogin?'primary':'default'"
 						@click="pwdLogin">登录</button>
 				</uni-forms>
-				<!-- 忘记密码 -->
+				<!-- 忘记密码/注册账号 -->
 				<view class="auth-box">
-					<text class="login-text login-text-sub">忘记了?</text>
-					<text class="login-text" @click="toRetrievePwd">找回密码</text>
+					<view class="auth-box-left">
+						<text class="login-text login-text-sub">忘记了?</text>
+						<text class="login-text" @click="toRetrievePwd">找回密码</text>
+					</view>
+					<text @click="toRegister" class="login-text">注册账号</text>
 				</view>
-				<button type="primary" class="toRegister" @click="toRegister">注册账号</button>
 			</view>
 		</view>
 		<uni-quick-login ref="uniQuickLogin"></uni-quick-login>
@@ -132,8 +136,13 @@
 		margin-top: 20rpx;
 	}
 	.auth-box {
-		justify-content: flex-start;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
 		margin-top: 20rpx;
+	}
+	.auth-box-left{
+		flex-direction: row;
 	}
 	.login-text-sub {
 		color: #8a8f8b;

@@ -354,6 +354,7 @@
 						}
 					}
 				}
+				console.log(this.formData, this.formRules);
 				return this.validateAll(this.formData, 'submit', callback)
 			},
 
