@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import {about} from '@/baseapp.config.js';
     export default {
         data() {
             return {
@@ -50,12 +51,12 @@
         methods: {
             openprotocol(e) {
                 uni.navigateTo({
-                    url: "/pages/component/web-view/web-view?url=https://ask.dcloud.net.cn/protocol.html"
+                    url: "/pages/common/webview/webview?url="+about.agreements[0].url
                 })
             },
 			openPrivacyPolicy(e) {
 			    uni.navigateTo({
-			        url: "/pages/component/web-view/web-view?url=/hybrid/html/privacy-policy.html"
+			        url: "/pages/common/webview/webview?url="+about.agreements[1].url
 			    })
 			},
             agree(e) {
