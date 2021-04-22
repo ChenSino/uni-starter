@@ -112,9 +112,6 @@
 			// #endif
 		},
 		methods: {
-			...mapMutations({
-				logout: 'user/logout'
-			}),
 			toSettings() {
 				uni.navigateTo({
 					url: "/pages/ucenter/settings/settings"
@@ -175,10 +172,12 @@
 				uni.showLoading({
 					mask: true
 				})
-				db.collection(dbCollectionName).field('score,balance').get().then((res) => {
+				db.collection(dbCollectionName).where('user_id == $env.uid').field('score,balance').get().then((res) => {
 					const data = res.result.data[0];
+					let msg = '';
+					msg = data ? ('当前积分为' + data.balance) : '当前无积分';
 					uni.showToast({
-						title: '当前积分为' + data.balance,
+						title: msg,
 						icon: 'none'
 					});
 				}).catch((err) => {

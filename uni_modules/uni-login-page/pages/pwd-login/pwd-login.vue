@@ -17,6 +17,8 @@
 								<!-- </picker> -->
 							</template>
 						</uni-easyinput>
+					</uni-forms-item>
+					<uni-forms-item name="pwd">
 						<uni-easyinput type="password" class="phone-input-box" :inputBorder="false"
 							v-model="formData.pwd" placeholder="请输入密码"></uni-easyinput>
 					</uni-forms-item>

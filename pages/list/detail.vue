@@ -7,24 +7,26 @@
 	 DB Schema 规范：https://uniapp.dcloud.net.cn/uniCloud/schema
 	 -->
 	<view class="article">
+		<!-- #ifdef APP-PLUS -->
 		<uni-nav-bar :statusBar="true" :border="false"></uni-nav-bar>
+		<!-- #endif -->
+		<view class="article-title">{{ title }}</view>
 		<unicloud-db v-slot:default="{data, loading, error, options}" :options="formData" :collection="collection"
 			:field="field" :getone="true" :where="where" :manual="true" ref="detail"
 			foreignKey="opendb-news-articles.author" @load="loadData">
 			<template v-if="!loading && data">
-				<view class="article-title">{{title}}</view>
 				<uni-list :border="false">
 					<uni-list-item thumbSize="lg" :thumb="data.image">
 						<!-- 通过body插槽定义作者信息内容 -->
 						<view slot="body" class="header-content">
 							<view class="uni-title">{{data.author && data.author[0].username}}</view>
-							<view class="uni-note">更新于
-								<uni-dateformat :date="data.last_modify_date" format="yyyy-MM-dd"
-									:threshold="[60000, 2592000000]" />
-							</view>
 						</view>
 						<view slot="footer" class="footer">
-							<button @click="followClick" class="footer-button">关注</button>
+							<view class="uni-note">更新于
+								<uni-dateformat :date="data.last_modify_date" format="yyyy-MM-dd hh:mm"
+									:threshold="[60000, 2592000000]" />
+							</view>
+							<!-- <button @click="followClick" class="footer-button">关注</button> -->
 						</view>
 					</uni-list-item>
 				</uni-list>
@@ -61,7 +63,7 @@
 			return {
 				// 当前显示 _id
 				id: "",
-				title: '',
+				title: 'title',
 				// 数据表名
 				collection: 'opendb-news-articles,uni-id-users',
 				// 查询字段，多个字段用 , 分割
@@ -136,7 +138,7 @@
 					}
 				})
 				.then(res=>{
-					console.log(res);
+					// console.log(res);
 				})
 				.catch(err=>{
 					console.log(err);
