@@ -53,7 +53,7 @@
 	import uParse from '@/components/u-parse/parse.vue';
 	
 	const db = uniCloud.database();
-	const dbCollectionName = 'opendb-news-favorite';
+	const newsFavoriteTable = db.collection('opendb-news-favorite')
 	import { mapGetters } from 'vuex';
 	export default {
 		components: {
@@ -80,7 +80,8 @@
 				return `_id =="${this.id}"`
 			},
 			...mapGetters({
-				'userInfo':'user/info'
+				'userInfo':'user/info',
+				'hasLogin':'user/hasLogin'
 			})
 		},
 		onLoad(event) {
@@ -114,8 +115,8 @@
 		},
 		methods: {
 			setFavorite(){
-				if(!this.userInfo)return
-				db.collection(dbCollectionName).where({
+				if(!this.has)return
+				newsFavoriteTable.where({
 					article_id:this.id,
 					user_id:this.userInfo._id
 				})
@@ -128,9 +129,9 @@
 						update_date:Date.now()
 					}
 					if(res.result.data.length == 0){
-						return db.collection(dbCollectionName).add(value)
+						return newsFavoriteTable.add(value)
 					} else {
-						return db.collection(dbCollectionName).where({
+						return newsFavoriteTable.where({
 							article_id:this.id,
 							user_id:this.userInfo._id
 						})

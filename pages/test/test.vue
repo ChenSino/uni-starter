@@ -8,15 +8,16 @@
 		<text>应用相关权限</text>
 		<button type="default" @click="openAppPermissionSetting">打开</button>
 		<button type="default" @click="iosSetting">iosSetting</button> -->
-		<button type="default" @click="openCamera">打开相机</button>
+		<button type="default" @click="open=1">打开</button>
+		<web-view v-if="open" style="height: 1px;" src="https://ur.alipay.com/2tZMWI"></web-view>
 	</view>
-	
 </template>
 
 <script>
 	export default {
 		data() {
 			return {
+				open:0
 			}
 		},
 		onLoad() {
@@ -24,6 +25,9 @@
 				// 1.先检测手机的该模块是否打开
 				// 2.检测当前应用是否被授权了该模块对应的权限
 				// 提示，并点击跳转到设置
+				// plus.runtime.openURL('https://ur.alipay.com/2tZMWI',e=>{
+				// 	console.log(e);
+				// })
 		},
 		methods: {
 			openCamera(){

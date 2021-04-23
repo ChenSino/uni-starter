@@ -1,14 +1,16 @@
 <template>
 	<view class="content">
 		<!-- 功能列表 -->
-		<uni-list :border="false" class="mb10" v-for="(sublist,index) in agreeList">
-			<uni-list-item :border="false" class="mb1" v-for="(item,i) in sublist" :key="i" :title="item.title"
+		<uni-list :border="false" class="mt10" v-for="(sublist,index) in agreeList">
+			<uni-list-item :border="false" class="list-item" v-for="(item,i) in sublist" :key="i" :title="item.title"
 				:clickable="true" @click="itemClick(item)" :showSwitch="item.showSwitch" :switchChecked="item.isChecked"
-				:link="!item.showSwitch"></uni-list-item>
+				:link="!item.showSwitch"
+				v-if="item.event!='changePwd'||hasLogin"
+				></uni-list-item>
 		</uni-list>
 		<!-- 退出按钮 -->
 		<view class="bottom-back" @click="clickLogout">
-			<text class="bottom-back-text" v-if="userInfo">退出登录</text>
+			<text class="bottom-back-text" v-if="hasLogin">退出登录</text>
 			<text class="bottom-back-text" v-else>登录</text>
 		</view>
 	</view>
@@ -56,7 +58,8 @@
 		},
 		computed: {
 			...mapGetters({
-				'userInfo': 'user/info'
+				'userInfo': 'user/info',
+				'hasLogin': 'user/hasLogin',
 			})
 		},
 		onLoad() {
@@ -71,13 +74,14 @@
 			}),
 			toEdit() {
 				uni.navigateTo({
-					url: '/uni_modules/uni-id-users/pages/uni-id-users/edit'
+					url: '/pages/ucenter/edit/edit'
 				});
 			},
 			changePwd() {
 				uni.navigateTo({
-					url: '/uni_modules/uni-login-page/pages/pwd-retrieve/pwd-retrieve?phoneNumber=' + (this
-						.userInfo && this.userInfo.phone ? this.userInfo.phone : '') + '&phoneArea=+86',
+					url: '/pages/ucenter/login-page/pwd-retrieve/pwd-retrieve?phoneNumber='
+						+ (this.userInfo && this.userInfo.phone ? this.userInfo.phone : '')
+						+ '&phoneArea=+86',
 					fail: err => {
 						console.log(err);
 					}
@@ -185,7 +189,7 @@
 				})
 			},
 			clickLogout() {
-				if (this.userInfo) {
+				if (this.hasLogin) {
 					uni.showModal({
 						title: '提示',
 						content: '是否退出登录',
@@ -202,7 +206,7 @@
 					});
 				} else {
 					uni.navigateTo({
-						url: '/uni_modules/uni-login-page/pages/index/index'
+						url: '/pages/ucenter/login-page/index/index'
 					});
 				}
 			},
@@ -314,15 +318,16 @@
 		font-size: 33rpx;
 	}
 
-	.mb10 {
-		margin-bottom: 10px;
+	.mt10 {
+		margin-top: 10px;
 	}
 
 	.content /deep/ .uni-list {
 		background-color: #F9F9F9;
 	}
 
-	.mb1 {
+	.list-item {
+		height: 50px;
 		margin-bottom: 1px;
 	}
 </style>

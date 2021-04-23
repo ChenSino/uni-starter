@@ -31,12 +31,12 @@ export default function() {
 						icon: 'none'
 					})
 					uni.navigateTo({
-						url: "/uni_modules/uni-login-page/pages/index/index"
+						url: "/pages/ucenter/login-page/index/index"
 					})
 					return false
 				}
 				//控制登陆优先级
-				if (url == '/uni_modules/uni-login-page/pages/index/index') {
+				if (url == '/pages/ucenter/login-page/index/index') {
 					//一键登录（univerify）、密码登陆（username）、快捷登录&验证码登陆（!univerify&password）
 					if (login[0] == 'univerify') {
 						// console.log(e.url,url);
@@ -45,7 +45,7 @@ export default function() {
 						}
 						e.url += "univerify_first=true"
 					} else if (login[0] == 'username') {
-						e.url = "/uni_modules/uni-login-page/pages/pwd-login/pwd-login"
+						e.url = "/pages/ucenter/login-page/pwd-login/pwd-login"
 					} else {
 						//默认即是
 					}
@@ -132,6 +132,7 @@ function initAppVersion() {
 
 // 设备网络状态变化事件
 function eventListenerNetwork() {
+/*
 	//网络掉线
 	uni.getNetworkType({
 	    success:res=>{
@@ -169,7 +170,7 @@ function eventListenerNetwork() {
 	function showNetworkErrPage(){
 		let pages = getCurrentPages();
 		console.log('pages.length',pages.length);
-		if(pages.length===0|| pages[pages.length - 1].route!='/pages/networkErr/networkErr.vue'){
+		if(pages.length===0 || pages[pages.length - 1].route!='/pages/networkErr/networkErr.vue'){
 			uni.navigateTo({
 				url:'/pages/networkErr/networkErr'
 			})
@@ -204,6 +205,7 @@ function openAppPermissionSetting(){
 		intent.setData(uri);
 		mainActivity.startActivity(intent);
 	}
+*/
 }
 /*
 	uni.addInterceptor(item, {

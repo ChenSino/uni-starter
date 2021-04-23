@@ -20,20 +20,20 @@ export default function request(name,params,callback=false,{showLoading=false,lo
 	return new Promise((resolve,reject)=>{
 		uniCloud.callFunction({name,data:{action,params},
 			success(e){
-				// console.log(e);
+				console.log(e);
 				const {result:{data,code}} = e
 				console.log(data,code);
-				if (code === 0 ) {
-					resolve(e)
-					return callback(data,e.result,e)
+				if (code != 0 ) {
+					if(debug){
+						uni.showModal({
+							content: JSON.stringify(e),
+							showCancel: false,
+							confirmText: '知道了'
+						})
+					}
 				}
-				if(debug){
-					uni.showModal({
-						content: JSON.stringify(e),
-						showCancel: false,
-						confirmText: '知道了'
-					})
-				}
+				resolve(e)
+				return callback(data,e.result,e)
 			},
 			fail(err){
 				reject(err)

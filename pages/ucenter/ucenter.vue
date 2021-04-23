@@ -1,9 +1,9 @@
 <template>
 	<view class="center">
-		<view class="userInfo" @click="toEdit">
-			<image class="logo-img" :src="login ? (userInfo.avatar || avatarUrl) :avatarUrl"></image>
+		<view class="userInfo" @click="toUserInfo">
+			<image class="logo-img" :src="userInfo.avatar||avatarUrl"></image>
 			<view class="logo-title">
-				<text class="uer-name">{{login ? userInfo.nickname||userInfo.username||userInfo.mobile : '未登录'}}</text>
+				<text class="uer-name">{{userInfo.nickname||userInfo.username||userInfo.mobile||'未登录'}}</text>
 				<text class="go-login-navigat-arrow navigat-arrow" v-if="!login">&#xe65e;</text>
 			</view>
 		</view>
@@ -83,7 +83,8 @@
 					}, {
 						title: '设置',
 						to: '/pages/ucenter/settings/settings'
-					}, {
+					}],
+					[{
 						title: '关于',
 						to: '/pages/ucenter/about/about'
 					}]
@@ -92,7 +93,7 @@
 		},
 		onLoad() {
 			//#ifdef APP-PLUS
-			this.ucenterList[this.ucenterList.length - 1].unshift({
+			this.ucenterList[this.ucenterList.length - 2].unshift({
 				title: '检查更新',
 				rightText: this.appVersion.version + '-' + this.appVersion.versionCode,
 				event: 'checkVersion',
@@ -106,7 +107,8 @@
 				login: 'user/hasLogin'
 			})
 			// #ifdef APP-PLUS
-			,appVersion() {
+			,
+			appVersion() {
 				return getApp().appVersion
 			}
 			// #endif
@@ -131,7 +133,7 @@
 			async checkVersion() {
 				let res = await callCheckVersion()
 				console.log(res);
-				if(res.result.code == 0){
+				if (res.result.code == 0) {
 					uni.showToast({
 						title: res.result.message,
 						icon: 'none'
@@ -139,54 +141,10 @@
 				}
 				checkUpdate()
 			},
-			toEdit() {
-				console.log('点击编辑信息');
-				// uni.navigateTo({
-				// 	url: '/uni_modules/uni-id-users/pages/uni-id-users/edit'
-				// })
-				const token = uni.getStorageSync('uni_id_token')
-				if(token){
-					uni.chooseImage({
-						count:1,
-						success:(res)=> {
-							// 头像剪裁尺寸
-							let options = {
-								width:600,
-								height:600
-							}
-							// 剪裁并上传头像
-							uni.navigateTo({
-								url:'/pages/ucenter/edit/uploadCutImageToUnicloud?path=' + res.tempFilePaths[0] + `&options=${JSON.stringify(options)}`,
-								animationType:"fade-in",
-								events:{
-									uploadAvatarAfter:({url})=>{
-										console.log(url);
-										// 使用 clientDB 提交数据
-										db.collection('uni-id-users').where('_id==$env.uid').update({avatar:url}).then((res) => {
-											console.log(res);
-											uni.showToast({
-												icon: 'none',
-												title: '修改成功'
-											})
-											this.setUserInfo({avatar:url});
-										}).catch((err) => {
-											uni.showModal({
-												content: err.message || '请求服务失败',
-												showCancel: false
-											})
-										}).finally(() => {
-											uni.hideLoading()
-										})
-									}
-								}
-							});
-						}
-					})
-				}else{
-					uni.navigateTo({
-						url:'/uni_modules/uni-login-page/pages/index/index'
-					})
-				}
+			toUserInfo() {
+				uni.navigateTo({
+					url: '/pages/ucenter/edit/edit'
+				})
 			},
 			tapGrid(index) {
 				uni.showToast({
@@ -233,11 +191,6 @@
 						title: msg,
 						icon: 'none'
 					});
-				}).catch((err) => {
-					uni.showModal({
-						content: err.message || '请求服务失败',
-						showCancel: false
-					})
 				}).finally(() => {
 					uni.hideLoading()
 				})
@@ -254,11 +207,9 @@
 		font-style: normal;
 		src: url('~@/static/text-icon.ttf') format('truetype');
 	}
-
 	page {
 		background-color: #f8f8f8;
 	}
-
 	/* #endif*/
 
 	/* 解决头条小程序字体图标不显示问题，因为头条运行时自动插入了span标签，且有全局字体 */
@@ -266,15 +217,12 @@
 	text :not(view) {
 		font-family: texticons;
 	}
-
 	/* #endif */
-
 	.center {
 		flex: 1;
 		flex-direction: column;
 		background-color: #f8f8f8;
 	}
-
 	.userInfo {
 		width: 750rpx;
 		padding: 20rpx;
@@ -283,25 +231,18 @@
 		flex-direction: column;
 		align-items: center;
 	}
-
-	/* .logo-hover {
-		opacity: 0.8;
-	} */
-
 	.logo-img {
 		width: 150rpx;
 		height: 150rpx;
 		border-radius: 150rpx;
 		border: solid 1px #FFFFFF;
 	}
-
 	.logo-title {
 		height: 150rpx;
 		flex: 1;
 		align-items: center;
 		justify-content: space-between;
 		flex-direction: row;
-		margin-left: 20rpx;
 	}
 
 	.uer-name {

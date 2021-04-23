@@ -8,9 +8,9 @@
 					</view>
 				</template>
 			</uni-forms-item>
-			<uni-forms-item name="gender" label="性别" required>
+			<!-- <uni-forms-item name="gender" label="性别" required>
 				<uni-data-checkbox v-model="formData.gender" :localdata="formOptions.gender_localdata" />
-			</uni-forms-item>
+			</uni-forms-item> -->
 			<uni-forms-item name="mobile" label="手机号码" v-if="formData.mobile">
 				<uni-easyinput placeholder="手机号码" :disabled="true" v-model="formData.mobile" trim="both" />
 			</uni-forms-item>

@@ -8,20 +8,6 @@
 				"enablePullDownRefresh": true
 			}
 		},
-		// #ifdef APP-PLUS
-		{
-			"path": "pages/networkErr/networkErr",
-			"style": {
-				"navigationStyle": "custom",
-				"backgroundColor": "transparent",
-				"app-plus": {
-					"animationType": "fade-in",
-					"background": "transparent",
-					"popGesture": "none"
-				}
-			}
-		},
-		// #endif
 		{
 			"path": "pages/list/news-list",
 			"style": {
@@ -39,7 +25,7 @@
 				//#endif
 			}
 		}, {
-			"path": "uni_modules/uni-login-page/pages/index/index",
+			"path": "pages/ucenter/login-page/index/index",
 			"style": {
 				"navigationBarTitleText": "",
 				"app-plus": {
@@ -73,13 +59,18 @@
 				},
 				"navigationBarTitleText": "文章详情"
 			}
-
 		}, {
+			"path": "pages/ucenter/edit/bind-mobile/bind-mobile",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/ucenter/ucenter",
 			"style": {
 				"navigationStyle": "custom"
 			}
-		}, {
+		},{
 			"path": "uni_modules/uni-feedback/pages/opendb-feedback/list",
 			"style": {
 				"navigationBarTitleText": "常见问题"
@@ -156,9 +147,9 @@
 			}
 
 		}, {
-			"path": "uni_modules/uni-id-users/pages/uni-id-users/edit",
+			"path": "pages/ucenter/edit/edit",
 			"style": {
-				"navigationBarTitleText": "编辑资料"
+				"navigationBarTitleText": "个人资料"
 			}
 		}, {
 			"path": "pages/ucenter/edit/uploadCutImageToUnicloud",
@@ -166,17 +157,17 @@
 				"navigationStyle": "custom"
 			}
 		}, {
-			"path": "uni_modules/uni-login-page/pages/pwd-login/pwd-login",
+			"path": "pages/ucenter/login-page/pwd-login/pwd-login",
 			"style": {
 				"navigationBarTitleText": ""
 			}
 		}, {
-			"path": "uni_modules/uni-login-page/pages/pwd-retrieve/pwd-retrieve",
+			"path": "pages/ucenter/login-page/pwd-retrieve/pwd-retrieve",
 			"style": {
 				"navigationBarTitleText": ""
 			}
 		}, {
-			"path": "uni_modules/uni-login-page/pages/phone-code/phone-code",
+			"path": "pages/ucenter/login-page/phone-code/phone-code",
 			"style": {
 				"navigationBarTitleText": ""
 			}
@@ -196,7 +187,7 @@
 			}
 
 		}, {
-			"path": "uni_modules/uni-login-page/pages/register/register",
+			"path": "pages/ucenter/login-page/register/register",
 			"style": {
 				"navigationBarTitleText": "注册",
 				"enablePullDownRefresh": false
@@ -222,7 +213,7 @@
 				"path": "pages/list/list"
 			},
 			{
-				"path": "uni_modules/uni-login-page/pages/index/index"
+				"path": "pages/ucenter/login-page/index/index"
 			},
 			{
 				"path": "pages/test/test"
