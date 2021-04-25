@@ -2,16 +2,16 @@
 	<view class="uni-container">
 		<uni-forms ref="form" :value="formData" :rules="rules" validate-trigger="submit" err-show-type="undertext">
 			<uni-forms-item name="username" required>
-				<uni-easyinput :inputBorder="false" class="phone-input-box" placeholder="请输入用户名" v-model="formData.username" trim="both" />
+				<uni-easyinput :inputBorder="false" class="easyinput" placeholder="请输入用户名" v-model="formData.username" trim="both" />
 			</uni-forms-item>
 			<uni-forms-item name="nickname">
-				<uni-easyinput :inputBorder="false" class="phone-input-box" placeholder="请输入用户昵称" v-model="formData.nickname" trim="both" />
+				<uni-easyinput :inputBorder="false" class="easyinput" placeholder="请输入用户昵称" v-model="formData.nickname" trim="both" />
 			</uni-forms-item>
 			<uni-forms-item name="password" v-model="formData.password" required>
-				<uni-easyinput :inputBorder="false" class="phone-input-box" placeholder="请输入6-20位密码" type="password" v-model="formData.password" trim="both" />
+				<uni-easyinput :inputBorder="false" class="easyinput" placeholder="请输入6-20位密码" type="password" v-model="formData.password" trim="both" />
 			</uni-forms-item>
 			<uni-forms-item name="pwd2" v-model="formData.pwd2" required>
-				<uni-easyinput :inputBorder="false" class="phone-input-box" placeholder="再次输入密码" type="password" v-model="formData.pwd2" trim="both" />
+				<uni-easyinput :inputBorder="false" class="easyinput" placeholder="再次输入密码" type="password" v-model="formData.pwd2" trim="both" />
 			</uni-forms-item>
 			<uni-agreements></uni-agreements>
 			<button class="send-btn" type="primary" @click="submit">注册并登陆</button>
@@ -68,47 +68,11 @@ import mixin from '../common/login-page.mixin.js';
 </script>
 
 <style>
-	@import url("../common/loginPage.css");
+	@import url("../common/login-page.css");
 	.uni-container {
 		padding: 15px;
 	}
 	.send-btn{
 		margin-top: 5px;
 	}
-/* 
-	.uni-input-border,
-	.uni-textarea-border {
-		width: 100%;
-		font-size: 14px;
-		color: #666;
-		border: 1px #e5e5e5 solid;
-		border-radius: 5px;
-		box-sizing: border-box;
-	}
-
-	.uni-input-border {
-		padding: 0 10px;
-		height: 35px;
-
-	}
-
-	.uni-textarea-border {
-		padding: 10px;
-		height: 80px;
-	}
-
-	.uni-button-group {
-		margin-top: 50px;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-
-	.uni-button {
-		padding: 12px 20px;
-		font-size: 14px;
-		border-radius: 4px;
-		line-height: 1;
-		margin: 0;
-	} */
 </style>
