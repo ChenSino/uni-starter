@@ -14,9 +14,12 @@ export default function(result){
 	let pages = getCurrentPages();
 	console.log(pages);
 	pages.forEach((page,index)=>{
-		if(pages[pages.length-index-1].route.split('/')[1] == 'uni-login-page'){
+		console.log(pages[pages.length-index-1].route.split('/')[2]);
+		pages[pages.length-index-1].route.split('/')
+		if(pages[pages.length-index-1].route.split('/')[2] == 'login-page'){
 			delta ++
 		}
 	})
+	console.log('判断需要返回几层',delta);
 	uni.navigateBack({delta})
 }
