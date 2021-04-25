@@ -13,15 +13,15 @@
 			<uni-forms-item name="pwd2" v-model="formData.pwd2" required>
 				<uni-easyinput :inputBorder="false" class="phone-input-box" placeholder="再次输入密码" type="password" v-model="formData.pwd2" trim="both" />
 			</uni-forms-item>
-			<login-ikonw class="login-iknow" :link="link" text="登录即表示同意用户协议和隐私政策"></login-ikonw>
-			<button class="send-btn-box" type="primary" @click="submit">注册并登陆</button>
+			<uni-agreements></uni-agreements>
+			<button class="send-btn" type="primary" @click="submit">注册并登陆</button>
 		</uni-forms>
 	</view>
 </template>
 
 <script>
 import rules from './validator.js';
-import mixin from '../common/loginPage.mixin.js';
+import mixin from '../common/login-page.mixin.js';
 	export default {
 		mixins:[mixin],
 		data() {
@@ -56,7 +56,7 @@ import mixin from '../common/loginPage.mixin.js';
 					})
 			},
 			submitForm(value) {
-				this.request('user-center/register',value,(data,result)=>{
+				this.request('user-center/register',value,result=>{
 					console.log(result);
 					if(result.code === 0){
 						this.loginSuccess(result)
@@ -72,7 +72,10 @@ import mixin from '../common/loginPage.mixin.js';
 	.uni-container {
 		padding: 15px;
 	}
-
+	.send-btn{
+		margin-top: 5px;
+	}
+/* 
 	.uni-input-border,
 	.uni-textarea-border {
 		width: 100%;
@@ -107,22 +110,5 @@ import mixin from '../common/loginPage.mixin.js';
 		border-radius: 4px;
 		line-height: 1;
 		margin: 0;
-	}
-
-	.avatar-box {
-		width: 700rpx;
-		height: 200rpx;
-		/* #ifndef APP-NVUE */
-		display: flex;
-		/* #endif */
-		justify-content: center;
-		align-items: center;
-	}
-
-	.avatar-img {
-		width: 150rpx;
-		height: 150rpx;
-		border-radius: 75rpx;
-		border: #F8F8F8 solid 3px;
-	}
+	} */
 </style>

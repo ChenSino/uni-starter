@@ -120,7 +120,7 @@
 			}),
 			getRoute(n = 0) {
 				let pages = getCurrentPages();
-				console.log('route-pages-length', pages.length);
+				// console.log('route-pages-length', pages.length);
 				if (n > pages.length) {
 					return ''
 				}
@@ -211,7 +211,7 @@
 			},
 			quickLogin(params, type) { //联网验证登陆
 				console.log(params, type);
-				this.request('user-center/login_by_' + type, params, (data, result) => {
+				this.request('user-center/login_by_' + type, params, result => {
 					console.log(result);
 					if (result.code === 0) {
 						if (type == 'univerify') {
@@ -252,6 +252,9 @@
 		flex-direction: row;
 		width: 750rpx;
 		justify-content: space-around;
+		position: fixed;
+		bottom: 10rpx;
+		left: 0;
 	}
 
 	.item {

@@ -100,25 +100,26 @@
 				// #endif
 			}
 
-		}, {
-			"path": "pages/ucenter/agree-list/agree-list",
-			"style": {
-				"navigationBarTitleText": "政策与协议"
-			}
+		},
+		// {
+		// 	"path": "pages/ucenter/agree-list/agree-list",
+		// 	"style": {
+		// 		"navigationBarTitleText": "政策与协议"
+		// 	}
 
-		}, {
-			"path": "pages/ucenter/agree-list/privacy/privacy",
-			"style": {
-				"navigationBarTitleText": "隐私政策"
-			}
+		// }, {
+		// 	"path": "pages/ucenter/agree-list/privacy/privacy",
+		// 	"style": {
+		// 		"navigationBarTitleText": "隐私政策"
+		// 	}
 
-		}, {
-			"path": "pages/ucenter/agree-list/service/service",
-			"style": {
-				"navigationBarTitleText": "服务协议"
-			}
-
-		}, {
+		// }, {
+		// 	"path": "pages/ucenter/agree-list/service/service",
+		// 	"style": {
+		// 		"navigationBarTitleText": "服务协议"
+		// 	}
+		// }, 
+		{
 			"path": "uni_modules/uni-upgrade-center-app/pages/upgrade-popup",
 			"style": {
 				"disableScroll": true,

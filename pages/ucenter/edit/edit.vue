@@ -71,7 +71,7 @@
 						console.log(e.authResult);
 						this.request('user-center/bind_mobile_by_univerify',
 							e.authResult,
-							(data, result) =>
+							result=>
 							{
 								console.log(result);
 								if(result.code===0){

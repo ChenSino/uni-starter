@@ -18,7 +18,7 @@ module.exports = {
 			"/uni_modules/uni-news-favorite/pages/uni-news-favorite/list",
 			"/pages/ucenter/edit/uploadCutImageToUnicloud"
 		],
-		"login": ["univerify", "smsCode", "username", "weixin", "apple"] //默认就是短信验证码登陆
+		"login": [ "smsCode","univerify", "username", "weixin", "apple"] //默认就是短信验证码登陆
 	},
 	"about": {
 		"appName": "base-app",

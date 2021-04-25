@@ -51,7 +51,7 @@
 				this.request('user-center/bind_mobile_by_sms', {
 					"mobile": this.formData.phone,
 					"code": this.formData.code
-				}, (data, result) => {
+				}, result=> {
 					console.log(result);
 					this.setUserInfo({"mobile":result.mobile})
 					uni.showToast({

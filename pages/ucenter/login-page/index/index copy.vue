@@ -1,0 +1,153 @@
+<template>
+	<view class="wrap">
+		<view class="wrap-content">
+			<view class="content">
+				<!-- 顶部文字 -->
+				<text class="content-top-title">登陆后即可展示自己</text>
+				<login-ikonw class="login-iknow" :link="link" text="登录即表示同意用户协议和隐私政策"></login-ikonw>
+				<!-- 登录框 (选择手机号所属国家和地区需要另行实现) -->
+				<uni-forms ref="form" :value="formData" :rules="rules">
+					<uni-forms-item name="phone">
+						<uni-easyinput type="number" class="phone-input-box" :inputBorder="false"
+							v-model="formData.phone" maxlength="11" placeholder="请输入手机号">
+							<!-- 当前仅支持中国大陆手机号 -->
+							<!-- <template slot="left">
+								<picker mode="selector" :range="phoneArea" @change="selectPhoneArea">
+									<text class="phone-area" @click="selectPhoneArea">{{currenPhoneArea}}</text>
+								</picker>
+							</template> -->
+						</uni-easyinput>
+					</uni-forms-item>
+					<button class="send-btn-box"  :type="canGetShortMsg?'primary':'default'"
+						@click="sendShortMsg">获取短信验证码</button>
+				</uni-forms>
+
+				<!-- tip -->
+				<text class="tip-text">未注册的手机号验证通过后将自动注册</text>
+
+				<!-- 其他登录方式 -->
+				<!-- <view class="auth-box" v-if="loginList.includes('password')">
+					<text class="login-text" hover-class="hover" @click="toPwdLogin">密码登录</text>
+					<text class="login-text" hover-class="hover" @click="openLoginList">其他登录方式</text>
+				</view> -->
+			</view>
+		</view>
+		<!-- 登录按钮弹窗 -->
+		<login-action-sheet ref="loginActionSheet"></login-action-sheet>
+		<uni-quick-login ref="uniQuickLogin"></uni-quick-login>
+	</view>
+</template>
+
+<script>	
+var univerify_first,currentWebview;//是否一键登陆优先
+import baseappConfig from '@/baseapp.config.js';
+import mixin from '../common/loginPage.mixin.js';
+	var currentPage;
+	export default {
+		mixins:[mixin],
+		data() {
+			return {
+				phoneArea: ['+86'],
+				currenPhoneArea: '+86',
+				// loginList:[]
+			}
+		},
+		onLoad(e) {
+			// this.loginList = baseappConfig.router.login
+			univerify_first = e.univerify_first
+			//#ifdef APP-PLUS
+			if(univerify_first){
+				const pages = getCurrentPages();
+				currentWebview = pages[pages.length - 1].$getAppWebview();
+				currentWebview.setStyle({
+					"top":"2000px"
+				})
+			}
+			//#endif
+		},
+		onReady() {
+			//#ifdef APP-PLUS
+			if(univerify_first){
+				console.log('开始一键登陆');
+				setTimeout(()=>{
+					this.$refs.uniQuickLogin.login('univerify')
+				},100)
+				setTimeout(() => {
+					currentWebview.setStyle({
+						titleNView:{
+							autoBackButton:true,
+							backgroundColor:"#FFFFFF"
+						}
+					})
+					currentWebview.setStyle({
+						"top":"0"
+					})
+				}, 1500);
+			}
+			//#endif
+		},
+		computed: {
+			canGetShortMsg() {
+				return this.isPhone;
+			}
+		},
+		methods: {
+			selectPhoneArea(event) {
+				uni.showToast({
+					title: '当前仅支持中国大陆手机号',
+					icon: 'none'
+				});
+				// this.currenPhoneArea = this.phoneArea[event.detail.value];
+			},
+			sendShortMsg() {
+				/**
+				 * 发送验证吗
+				 */
+				uni.showLoading();
+				uni.navigateTo({
+					url: '../phone-code/phone-code?phoneNumber=' + this.formData.phone + '&phoneArea=' +
+						this.currenPhoneArea,
+					success: res => {},
+					fail: () => {},
+					complete: () => {}
+				});
+			},
+			/**
+			 * 去密码登录页
+			 */
+			toPwdLogin() {
+				uni.navigateTo({
+					url: '../pwd-login/pwd-login'
+				})
+			},
+			openLoginList() {
+				this.$refs.loginActionSheet.open();
+			},
+			back() {
+				uni.navigateBack()
+			}
+		}
+	}
+</script>
+
+<style>
+	@import url("../common/loginPage.css");
+
+	.content-top-title {
+		text-align: center;
+	}
+
+	.login-iknow {
+		justify-content: center;
+	}
+
+	.phone-area {
+		/* #ifdef APP-NVUE */
+		border-right-width: 1rpx;
+		border-right-color: #d7d9d8;
+		/* #endif */
+		/* #ifndef APP-NVUE */
+		border-right: 1rpx solid #d7d9d8;
+		/* #endif */
+	}
+</style>

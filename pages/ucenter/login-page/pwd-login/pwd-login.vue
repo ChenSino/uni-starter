@@ -1,67 +1,46 @@
 <template>
-	<view class="wrap">
-		<view class="wrap-content">
-			<view class="content">
-				<!-- 顶部文字 -->
-				<text class="content-top-title">用户名密码登录</text>
-				<login-ikonw class="login-iknow" :link="link" text="登录即表示同意用户协议和隐私政策"></login-ikonw>
-				<!-- 登录框 (选择手机号所属国家和地区需要另行实现) -->
-				<uni-forms ref="form" :value="formData" :rules="rules">
-					<uni-forms-item name="phone">
-						<uni-easyinput type="number" class="phone-input-box" :inputBorder="false"
-							v-model="formData.phone" maxlength="11" placeholder="请输入手机号/用户名">
-							<template slot="left">
-								<!-- 当前仅支持中国大陆手机号 -->
-								<!-- <picker mode="selector" :range="phoneArea" @change="selectPhoneArea"> -->
-									<text class="phone-area" @click="selectPhoneArea">{{currenPhoneArea}}</text>
-								<!-- </picker> -->
-							</template>
-						</uni-easyinput>
-					</uni-forms-item>
-					<uni-forms-item name="pwd">
-						<uni-easyinput type="password" class="phone-input-box" :inputBorder="false"
-							v-model="formData.pwd" placeholder="请输入密码"></uni-easyinput>
-					</uni-forms-item>
-					<button class="send-btn-box" :disabled="!canLogin" :type="canLogin?'primary':'default'"
-											@click="pwdLogin">登录</button>
-				</uni-forms>
-				<!-- 忘记密码 -->
-				<view class="auth-box">
-					<text class="login-text" @click="toRetrievePwd">忘记密码</text>
-					<text class="login-text" @click="toRegister">注册账号</text>
-				</view>
-			</view>
+	<view class="content">
+		<!-- 顶部文字 -->
+		<text class="title">用户名密码登录</text>
+		<uni-agreements></uni-agreements>
+		<input type="number" class="input-box" :inputBorder="false" v-model="username" maxlength="11" placeholder="请输入手机号/用户名"></input>
+		<input type="password" class="input-box" :inputBorder="false" v-model="password" placeholder="请输入密码"></input>
+		<button class="send-btn" :disabled="!canLogin" :type="canLogin?'primary':'default'" @click="pwdLogin">登录</button>
+		<!-- 忘记密码 -->
+		<view class="auth-box">
+			<text class="link" @click="toRetrievePwd">忘记密码</text>
+			<text class="link" @click="toRegister">注册账号</text>
 		</view>
 		<uni-quick-login ref="uniQuickLogin"></uni-quick-login>
 	</view>
 </template>
 
 <script>
-	import mixin from '../common/loginPage.mixin.js';
+	import mixin from '../common/login-page.mixin.js';
 	export default {
 		mixins:[mixin],
 		data() {
 			return {
-				phoneArea: ['+86'],
-				currenPhoneArea: '+86',
+				"password":"",
+				"username":""
 			}
 		},
 		computed: {
 			canLogin() {
-				return this.formData.phone.length && this.isPwd;
-			}
+				return  this.username.length && this.isPwd;
+			},
+			isPwd(){
+				return /^.{6,20}$/.test(this.password);
+			},
+			isPhone(){
+				return /^1\d{10}$/.test(this.phone);
+			},
 		},
 		methods: {
-			/**
-			 * 页面跳转，找回密码
-			 */
+			// 页面跳转，找回密码
 			toRetrievePwd() {
-				// if (!this.isPhone) return uni.showToast({
-				// 	title: '请输入正确的手机号',
-				// 	icon: 'none'
-				// });
 				uni.navigateTo({
-					url: '../pwd-retrieve/pwd-retrieve?phoneNumber=' + (this.isPhone?this.formData.phone:'') + '&phoneArea=' + this.currenPhoneArea
+					url: '../pwd-retrieve/pwd-retrieve?phoneNumber=' + (this.isPhone?this.username:'') + '&phoneArea=' + this.currenPhoneArea
 				})
 			},
 			/**
@@ -69,52 +48,24 @@
 			 */
 			pwdLogin() {
 				// 下边是可以登录
-				uniCloud.callFunction({
-					name:"user-center",
-					"data":{
-						"action":"login",
-						"params":{
-							"username":this.formData.phone,
-							"password":this.formData.pwd
-						}
-					},
-					success:async (e) => {
-						uni.hideLoading()
-						console.log(e.result);
-						if(e.result.code === 0){
-							this.loginSuccess(e.result)
+				this.request('user-center/login',
+					{
+						"username":this.username,
+						"password":this.password
+					},result=>{
+						console.log(result);
+						if(result.code === 0){
+							this.loginSuccess(result)
 						}else{
 							uni.showModal({
 								title: '错误',
-								content: e.result.msg,
+								content: result.msg,
 								showCancel: false,
-								confirmText: '知道了',
+								confirmText: '知道了'
 							});
 						}
-					},
-					fail: (err) => {
-						console.log(err);
-						uni.showModal({
-							title: '错误',
-							content: JSON.stringify(err),
-							showCancel: false,
-							confirmText: '知道了',
-						});
-						if(err.errCode===30002){
-							
-						}
-					},
-					complete: () => {
-						uni.hideLoading()
 					}
-				})
-			},
-			selectPhoneArea(event) {
-				uni.showToast({
-					title: '当前仅支持中国大陆手机号',
-					icon: 'none'
-				});
-				// this.currenPhoneArea = this.phoneArea[event.detail.value];
+				)
 			},
 			/* 前往注册 */
 			toRegister(e){
@@ -128,13 +79,14 @@
 </script>
 
 <style>
-	@import url("../common/loginPage.css");
-	.phone-input-box {
-		margin-top: 20rpx;
-	}
+	@import url("../common/login-page.css");
 	.auth-box {
+		flex-direction: row;
 		justify-content: space-between;
 		margin-top: 20px;
+	}
+	.auth-box .link{
+		font-size: 26rpx;
 	}
 	.login-text-sub {
 		color: #8a8f8b;

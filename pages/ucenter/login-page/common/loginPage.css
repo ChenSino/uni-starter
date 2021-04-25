@@ -27,10 +27,6 @@ page {
 }
 
 .content {
-	/* #ifndef APP-NVUE */
-	display: flex;
-	/* #endif */
-	width: 630rpx;
 	flex-direction: column;
 }
 

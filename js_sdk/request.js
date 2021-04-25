@@ -23,7 +23,7 @@ export default function request(name,params,callback=false,{showLoading=false,lo
 				const {result:{data,code}} = e
 				console.log(data,code);
 				resolve(e)
-				return callback(data,e.result,e)
+				return callback(e.result,e)
 			},
 			fail(err){
 				reject(err)

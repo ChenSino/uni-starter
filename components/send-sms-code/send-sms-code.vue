@@ -79,8 +79,8 @@
 					{
 						"mobile": this.phone,
 						"type": this.codeType
-					},(data,result)=>{
-						console.log(data,result);
+					},result=>{
+						console.log(result);
 						uni.showToast({
 							title: "短信验证码发送成功",
 							icon: 'none'
