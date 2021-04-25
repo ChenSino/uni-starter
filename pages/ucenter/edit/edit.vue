@@ -1,8 +1,8 @@
 <template>
 	<view>
 		<uni-list>
-			<uni-list-item class="item" link>
-				<view @click="setAvatar" slot="body" class="item">
+			<uni-list-item class="item" @click="setAvatar" link>
+				<view slot="body" class="item">
 					<text>头像</text>
 					<image class="avatarUrl" :src="userInfo.avatar||nullAvatarUrl" mode="widthFix"></image>
 				</view>

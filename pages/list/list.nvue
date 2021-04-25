@@ -1,0 +1,151 @@
+<template>
+	<view>
+		<view class="search-box">
+			<!-- #ifdef APP-PLUS -->
+			<uni-nav-bar class="status-bar"></uni-nav-bar>
+			<!-- #endif -->
+			<view class="search-container-bar">
+				<uni-search-bar ref="searchBar" style="flex:1;" radius="100" v-model="searchText"
+					@click.native="searchClick" cancelButton="none" disabled />
+			</view>
+		</view>
+		<view class="content">
+			<!-- #ifdef APP-PLUS -->
+			<!-- <uni-nav-bar class="status-bar"></uni-nav-bar> -->
+			<!-- #endif -->
+
+			<!-- 刷新页面后的顶部提示框 -->
+			<!-- 当前弹出内容没有实际逻辑 ，可根据当前业务修改弹出提示 -->
+			<view class="tips" :class="{ 'tips-ani': tipShow }">为您更新了10条内容</view>
+			<!-- 页面分类标题 -->
+
+			<!-- <uni-section style="margin:0;" v-if="searchText" :title="listTitle" type="line"></uni-section> -->
+
+			<unicloud-db ref="udb" v-slot:default="{data, loading, error, options}" :options="formData"
+				collection="opendb-news-articles,uni-id-users"
+				field="author{username, _id}, _id,avatar,title,excerpt,last_modify_date, comment_count, like_count"
+				:foreignKey="foreignKey" :where="where" @load="load" @error="isLoading = false">
+				<text v-if="error" class="list-info">{{error.message}}</text>
+				<!-- 基于 uni-list 的页面布局 -->
+				<uni-list :class="{ 'uni-list--waterfall': options.waterfall }">
+					<!-- 通过 uni-list--waterfall 类决定页面布局方向 -->
+					<!-- to 属性携带参数跳转详情页面，当前只为参考 -->
+					<uni-list-item :border="!options.waterfall" :to="'./detail?id='+item._id+'&title='+item.title"
+						class="uni-list-item--waterfall" title="自定义列表" v-for="item in data" :key="item._id">
+						<!-- 通过header插槽定义列表左侧图片 -->
+						<template v-slot:header>
+							<image class="avatar" :src="item.avatar" mode="aspectFill"></image>
+						</template>
+						<!-- 通过body插槽定义布局 -->
+						<view slot="body" class="main">
+							<text class="title">{{ item.title }}</text>
+							<view class="foot">
+								<text class="uni-ellipsis-1">{{ item.author[0].username }}</text>
+								<text>{{ item.comment_count }}评论</text>
+								<uni-dateformat :date="item.last_modify_date" format="yyyy-MM-dd"
+									:threshold="[60000, 2592000000]" />
+							</view>
+						</view>
+					</uni-list-item>
+				</uni-list>
+				<!-- 通过 loadMore 组件实现上拉加载效果，如需自定义显示内容，可参考：https://ext.dcloud.net.cn/plugin?id=29 -->
+				<uni-load-more v-if="!error && (loading || options.status === 'noMore') " :status="options.status" />
+				<uni-nodata v-if="data.length == 0" :isLoading="isLoading" @retry="refresh"></uni-nodata>
+			</unicloud-db>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				canSearch: true,
+				searchText: 'searchText',
+				formData: {
+					waterfall: false, // 布局方向切换
+					status: 'loading', // 加载状态
+				},
+				where: '',
+				// 数据表名
+				foreignKey: '',
+				tipShow: false, // 是否显示顶部提示框
+				isLoading: true
+			};
+		},
+		onLoad() {},
+		onShow(options) {
+			this.searchText = getApp().globalData.searchText;
+		},
+		/**
+		 * 下拉刷新回调函数
+		 */
+		onPullDownRefresh() {
+			this.refresh();
+		},
+		onReachBottom() {
+			this.loadMore();
+		},
+		methods: {
+			load(e) {
+				console.log(e);
+			},
+			refresh(e) {
+				console.log(e);
+				this.tipShow = true
+				this.formData.status = 'more'
+				this.isLoading = true
+				this.$refs.udb.loadData({
+					clear: true
+				}, () => {
+					this.tipShow = false
+					this.isLoading = false
+					uni.stopPullDownRefresh()
+				})
+			},
+			select() {
+				this.formData.waterfall = !this.formData.waterfall;
+			},
+		}
+	};
+</script>
+
+<style lang="scss" scoped>
+	.content {
+		flex: 1;
+	}
+
+	.avatar {
+		width: 200rpx;
+		height: 200rpx;
+		margin-right: 10rpx;
+	}
+
+	.tips {
+		color: #67c23a;
+		font-size: 14px;
+		line-height: 40px;
+		text-align: center;
+		background-color: #f0f9eb;
+		height: 0;
+		opacity: 0;
+		transform: translateY(-100%);
+		//transition: all 0.3s;
+	}
+	
+	.main{
+		justify-content: space-between;
+	}
+	.title {
+		width: 480rpx;
+	}
+	.foot{
+		flex-direction: row;
+		justify-content: space-between;
+	}
+	.tips-ani {
+		transform: translateY(0);
+		height: 40px;
+		opacity: 1;
+	}
+</style>

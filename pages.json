@@ -9,15 +9,6 @@
 			}
 		},
 		{
-			"path": "pages/list/news-list",
-			"style": {
-				//#ifndef MP
-				"navigationStyle": "custom",
-				//#endif
-				"enablePullDownRefresh": true
-			}
-		},
-		{
 			"path": "pages/grid/grid",
 			"style": {
 				//#ifndef MP
