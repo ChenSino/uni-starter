@@ -19,12 +19,12 @@
 				</uni-easyinput>
 			</uni-forms-item>
 			<uni-forms-item name="pwd">
-				<uni-easyinput type="password" class="easyinput" :inputBorder="false"
-					v-model="formData.pwd" placeholder="请输入新密码"></uni-easyinput>
+				<uni-easyinput type="password" class="easyinput" :inputBorder="false" v-model="formData.pwd"
+					placeholder="请输入新密码"></uni-easyinput>
 			</uni-forms-item>
 			<uni-forms-item name="pwd2">
-				<uni-easyinput type="password" class="easyinput" :inputBorder="false"
-					v-model="formData.pwd2" placeholder="请确认新密码"></uni-easyinput>
+				<uni-easyinput type="password" class="easyinput" :inputBorder="false" v-model="formData.pwd2"
+					placeholder="请确认新密码"></uni-easyinput>
 			</uni-forms-item>
 			<button class="send-btn-box" :disabled="!canSubmit" :type="canSubmit?'primary':'default'"
 				@click="submit">完成</button>
@@ -33,11 +33,71 @@
 </template>
 
 <script>
-import mixin from '../common/loginPage.mixin.js';
+	import mixin from '../common/login-page.mixin.js';
 	export default {
-		mixins:[mixin],
+		mixins: [mixin],
 		data() {
 			return {
+				formData: {
+					"phone": "",
+					'pwd': '',
+					'pwd2': ''
+				},
+				rules: {
+					phone: {
+						rules: [{
+								required: true,
+								errorMessage: '请输入手机号',
+							},
+							{
+								pattern: /^1\d{10}$/,
+								errorMessage: '手机号格式不正确',
+							}
+						]
+					},
+					code: {
+						rules: [{
+								required: true,
+								errorMessage: '请输入验证码',
+							},
+							{
+								pattern: /^.{6}$/,
+								errorMessage: '请输入6位验证码',
+							}
+						]
+					},
+					pwd: {
+						rules: [{
+								required: true,
+								errorMessage: '请输入密码',
+							},
+							{
+								pattern: /^.{6,20}$/,
+								errorMessage: '密码应为6到20位',
+							}
+						]
+					},
+					pwd2: {
+						rules: [{
+								required: true,
+								errorMessage: '请确认密码',
+							},
+							{
+								pattern: /^.{6,20}$/,
+								errorMessage: '密码应为6到20位',
+							},
+							{
+								validateFunction: function(rule, value, data, callback) {
+									console.log(value);
+									if (value != data.pwd) {
+										callback('两次输入密码不一致')
+									};
+									return true
+								}
+							}
+						]
+					}
+				}
 			}
 		},
 		computed: {
@@ -47,17 +107,17 @@ import mixin from '../common/loginPage.mixin.js';
 			canSubmit() {
 				return this.isPhone && this.isPwd && this.isCode;
 			},
-			isPhone(){
+			isPhone() {
 				let reg_phone = /^1\d{10}$/;
 				let isPhone = reg_phone.test(this.formData.phone);
 				return isPhone;
 			},
-			isPwd(){
+			isPwd() {
 				let reg_pwd = /^.{6,20}$/;
 				let isPwd = reg_pwd.test(this.formData.pwd);
 				return isPwd;
 			},
-			isCode(){
+			isCode() {
 				let reg_code = /^\d{6}$/;
 				let isCode = reg_code.test(this.formData.code);
 				return isCode;
@@ -69,7 +129,7 @@ import mixin from '../common/loginPage.mixin.js';
 			}
 		},
 		onReady() {
-			if(this.formData.phone){
+			if (this.formData.phone) {
 				this.$refs.shortCode.start();
 			}
 		},
@@ -77,24 +137,24 @@ import mixin from '../common/loginPage.mixin.js';
 			/**
 			 * 完成并提交
 			 */
-			submit(){
+			submit() {
 				this.$refs.form.submit()
-				.then(res=>{
-					this.request('user-center/resetPwdBySmsCode',{
-						"mobile":this.formData.phone,
-						"code":this.formData.code,
-						"password":this.formData.pwd
-					},result=>{
-						console.log(result);
-						uni.showToast({
-							title: result.msg,
-							icon: 'none'
-						});
-						if(result.code === 0){
-							uni.navigateBack()
-						}
+					.then(res => {
+						this.request('user-center/resetPwdBySmsCode', {
+							"mobile": this.formData.phone,
+							"code": this.formData.code,
+							"password": this.formData.pwd
+						}, result => {
+							console.log(result);
+							uni.showToast({
+								title: result.msg,
+								icon: 'none'
+							});
+							if (result.code === 0) {
+								uni.navigateBack()
+							}
+						})
 					})
-				})
 			}
 		}
 	}
@@ -102,7 +162,8 @@ import mixin from '../common/loginPage.mixin.js';
 
 <style>
 	@import url("../common/login-page.css");
-	.content-top-title{
+
+	.content-top-title {
 		margin-bottom: 6px;
 	}
 </style>
