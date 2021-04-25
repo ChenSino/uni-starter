@@ -20,7 +20,7 @@
 		}
 	}
 	export default {
-		name: "login-short-code",
+		name: "send-sms-code",
 		props: {
 			/**
 			 * 倒计时时长 s
@@ -35,6 +35,15 @@
 			phone: {
 				type: [String, Number],
 				default: ''
+			},
+			/*
+				验证码类型，用于防止不同功能的验证码混用，目前支持的类型login登录、register注册、bind绑定手机、unbind解绑手机
+			*/
+			codeType:{
+				type: String,
+				default(){
+					return 'login'
+				}
 			}
 		},
 		data() {
@@ -69,7 +78,7 @@
 				this.request('user-center/sendSmsCode',
 					{
 						"mobile": this.phone,
-						"type": "login"
+						"type": this.codeType
 					},(data,result)=>{
 						console.log(data,result);
 						uni.showToast({
@@ -79,37 +88,8 @@
 						this.reverseNumber = Number(this.count);
 						this.getCode();
 						this.$emit('getCode');
-					})
-				
-				// uniCloud.callFunction({
-				// 	"name": "user-center",
-				// 	"data": {
-				// 		"action": "sendSmsCode",
-				// 		"params": {
-				// 			"mobile": this.phone,
-				// 			"type": "login"
-				// 		}
-				// 	},
-				// 	success: (e) => {
-				// 		uni.showToast({
-				// 			title: "短信验证码发送成功",
-				// 			icon: 'none'
-				// 		});
-				// 		this.reverseNumber = Number(this.count);
-				// 		this.getCode();
-				// 		this.$emit('getCode');
-				// 	},
-				// 	fail: (err) => {
-				// 		console.log(err);
-				// 		uni.showToast({
-				// 			title: '短信验证码发送失败',
-				// 			icon: 'none'
-				// 		});
-				// 	},
-				// 	complete: () => {
-				// 		uni.hideLoading()
-				// 	}
-				// })
+					}
+				)
 			},
 			getCode() {
 				if (this.reverseNumber == 0) {

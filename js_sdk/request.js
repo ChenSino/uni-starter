@@ -9,7 +9,6 @@ const debug = true;//开启后，会alert错误信息
 export default function request(name,params,callback=false,{showLoading=false,loadText='',fail=()=>{}}={}){
 	// console.log('request');
 	showLoading||loadText? uni.showLoading({title:loadText}):'';
-	
 	let routers =  name.split('/');
 	var action = false
 	if (routers.length>1){
@@ -23,28 +22,12 @@ export default function request(name,params,callback=false,{showLoading=false,lo
 				console.log(e);
 				const {result:{data,code}} = e
 				console.log(data,code);
-				if (code != 0 ) {
-					if(debug){
-						uni.showModal({
-							content: JSON.stringify(e),
-							showCancel: false,
-							confirmText: '知道了'
-						})
-					}
-				}
 				resolve(e)
 				return callback(data,e.result,e)
 			},
 			fail(err){
 				reject(err)
 				console.log(err);
-				if(debug){
-					uni.showModal({
-						content: JSON.stringify(err),
-						showCancel: false,
-						confirmText: '知道了'
-					})
-				}
 				fail(err)
 			},
 			complete() {

@@ -112,6 +112,9 @@
 				return getApp().appVersion
 			}
 			// #endif
+			,appConfig(){
+				return getApp().config
+			}
 		},
 		methods: {
 			...mapMutations({
@@ -159,12 +162,12 @@
 				// #ifdef APP-PLUS
 				if (uni.getSystemInfoSync().platform == "ios") {
 					// 这里填写appstore应用id
-					let appstoreid = 'id1417078253';
+					let appstoreid = this.appConfig.marketId.ios;// 'id1417078253';
 					plus.runtime.openURL("itms-apps://" + 'itunes.apple.com/cn/app/wechat/' + appstoreid + '?mt=8');
 				}
 				if (uni.getSystemInfoSync().platform == "android") {
 					var Uri = plus.android.importClass("android.net.Uri");
-					var uri = Uri.parse("market://details?id=" + plus.runtime.appid);
+					var uri = Uri.parse("market://details?id=" + this.appConfig.marketId.android);
 					var Intent = plus.android.importClass('android.content.Intent');
 					var intent = new Intent(Intent.ACTION_VIEW, uri);
 					var main = plus.android.runtimeMainActivity();

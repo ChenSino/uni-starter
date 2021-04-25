@@ -35,5 +35,9 @@ module.exports = {
 			}
 		],
 		"download": "https://m3w.cn/uniapp"
+	},
+	"marketId":{//用于打开应用市场评分界面
+		"ios":"id1417078253",
+		"android":"123456"
 	}
 }

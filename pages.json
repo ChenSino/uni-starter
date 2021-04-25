@@ -62,7 +62,7 @@
 		}, {
 			"path": "pages/ucenter/edit/bind-mobile/bind-mobile",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationBarTitleText": "绑定手机号码"
 			}
 		},
 		{
@@ -70,7 +70,7 @@
 			"style": {
 				"navigationStyle": "custom"
 			}
-		},{
+		}, {
 			"path": "uni_modules/uni-feedback/pages/opendb-feedback/list",
 			"style": {
 				"navigationBarTitleText": "常见问题"
@@ -90,8 +90,7 @@
 			"style": {
 				"navigationBarTitleText": "关于"
 					// #ifdef APP-PLUS
-					,
-				"app-plus": {
+				,"app-plus": {
 					"titleNView": {
 						"buttons": [{
 							"type": "share"
@@ -138,7 +137,9 @@
 			"path": "uni_modules/uni-agree/pages/uni-agree/uni-agree",
 			"style": {
 				"navigationStyle": "custom",
-				"app-plus":{"popGesture": "none"}
+				"app-plus": {
+					"popGesture": "none"
+				}
 			}
 		}, {
 			"path": "pages/ucenter/settings/settings",
@@ -195,8 +196,8 @@
 
 		},
 		{
-			"path":"uni_modules/uni-news-favorite/pages/uni-news-favorite/list",
-			"style":{
+			"path": "uni_modules/uni-news-favorite/pages/uni-news-favorite/list",
+			"style": {
 				"navigationBarTitleText": "阅读记录",
 				"enablePullDownRefresh": false
 			}

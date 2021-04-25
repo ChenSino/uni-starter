@@ -91,7 +91,9 @@
 					},
 					fail: (err) => {
 						console.log(err);
-						this.bindMobileBySmsCode()
+						if(err.code=='30002'){
+							this.bindMobileBySmsCode()
+						}
 					}
 				})
 			},

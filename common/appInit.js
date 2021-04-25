@@ -6,6 +6,10 @@ import callCheckVersion from '@/uni_modules/uni-upgrade-center-app/utils/call-ch
 export default function() {
 	// 初始化appVersion（仅app生效）
 	initAppVersion();
+	
+	// baseappConfig挂载到getApp().
+	getApp({allowDefault: true}).config = baseappConfig;
+	
 
 	//自定义路由拦截
 	const {

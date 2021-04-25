@@ -1,12 +1,12 @@
 <template>
 	<view class="box">
 		<!-- 登录框 (选择手机号所属国家和地区需要另行实现) -->
-		<uni-easyinput focus type="number" class="phone-input-box" :inputBorder="false" v-model="formData.phone"
+		<uni-easyinput clearable focus type="number" class="input-box" :inputBorder="false" v-model="formData.phone"
 			maxlength="11" placeholder="请输入手机号"></uni-easyinput>
-		<uni-easyinput type="number" class="phone-input-box" :inputBorder="false" v-model="formData.code" maxlength="6"
+		<uni-easyinput clearable type="number" class="input-box" :inputBorder="false" v-model="formData.code" maxlength="6"
 			placeholder="请输入验证码">
 			<template slot="right">
-				<login-short-code ref="shortCode" :phone="formData.phone"></login-short-code>
+				<send-sms-code ref="shortCode" code-type="bind" :phone="formData.phone"></send-sms-code>
 			</template>
 		</uni-easyinput>
 		<button class="send-btn-box" type="primary" @click="submit">提交</button>
@@ -71,16 +71,15 @@
 	.box {
 		align-items: center;
 		justify-content: center;
+		padding: 50rpx;
 		padding-top: 10px;
 	}
 
 	.box /deep/ .uni-easyinput__content {
-		height: 45px;
+		height: 50px;
 	}
 
-	.phone-input-box {
-		width: 650rpx;
-		height: 50px;
+	.input-box {
 		margin-top: 16px;
 		background-color: #f9f9f9;
 		border-radius: 6rpx;

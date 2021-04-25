@@ -14,7 +14,7 @@
 						<uni-easyinput type="number" class="phone-input-box" :inputBorder="false"
 							v-model="formData.code" maxlength="6" placeholder="请输入验证码">
 							<template slot="right">
-								<login-short-code :phone="formData.phone" ref="shortCode"></login-short-code>
+								<send-sms-code :phone="formData.phone" ref="shortCode"></send-sms-code>
 							</template>
 						</uni-easyinput>
 					</uni-forms-item>

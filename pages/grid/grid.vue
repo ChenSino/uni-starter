@@ -9,7 +9,7 @@
 				disabled />
 		</template>
 		<!-- banner -->
-		<unicloud-db ref="bannerdb" v-slot:default="{data, loading, error, options}" :collection="collection"
+		<unicloud-db ref="bannerdb" v-slot:default="{data, loading, error, options}" collection="opendb-banner"
 			:field="field" @load="load">
 			<uni-swiper-dot class="uni-swiper-dot-box" @clickItem="clickItem" :info="data || bannerFormate(data, loading)"
 				:current="current" :mode="mode" :dots-styles="dotsStyles" field="content">
@@ -88,8 +88,6 @@
 						text: 'Grid 9'
 					}
 				],
-
-				collection: 'opendb-banner',
 				// 查询字段，多个字段用 , 分割
 				field: '_id,bannerfile,open_url,title',
 				where: 'category_id==grid',

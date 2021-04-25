@@ -124,19 +124,20 @@ exports.main = async (event, context) => {
 				mobile: params.mobile,
 				code: params.code
 			});
-			let verifyCode = await uniID.verifyCode({
+			// let verifyCode = await uniID.verifyCode({
+			// 	mobile: params.mobile,
+			// 	code: params.code
+			// })
+			// if (verifyCode.code === 0) {
+			// } else {
+			// 	res = verifyCode
+			// }
+			res = await uniID.bindMobile({
+				uid: params.uid,
 				mobile: params.mobile,
 				code: params.code
 			})
-			if (verifyCode.code === 0) {
-				res = await uniID.bindMobile({
-					uid: params.uid,
-					mobile: params.mobile
-				})
-			} else {
-				res = verifyCode
-			}
-			console.log(res, verifyCode);
+			console.log(res);
 			break;
 		case 'register':
 			let {
@@ -210,10 +211,10 @@ exports.main = async (event, context) => {
 			break;
 		case 'sendSmsCode':
 			
-			//123546
 			return uniID.setVerifyCode({
 				mobile: params.mobile,
-				code:'123456'
+				code:'123456',
+				type: params.type
 			})
 		
 		

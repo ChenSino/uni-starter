@@ -16,7 +16,7 @@
 						<uni-easyinput :focus="formData.phone.length" type="number" class="phone-input-box" :inputBorder="false"
 							v-model="formData.code" maxlength="6" placeholder="请输入验证码">
 							<template slot="right">
-								<login-short-code ref="shortCode" :phone="formData.phone"></login-short-code>
+								<send-sms-code ref="shortCode" :phone="formData.phone"></send-sms-code>
 							</template>
 						</uni-easyinput>
 					</uni-forms-item>
@@ -93,7 +93,7 @@ import mixin from '../common/loginPage.mixin.js';
 
 <style>
 	@import url("../common/loginPage.css");
-	.phone-input-box{
-		margin-top: 20rpx;
+	.content-top-title{
+		margin-bottom: 6px;
 	}
 </style>
