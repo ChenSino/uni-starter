@@ -11,8 +11,8 @@
 			<uni-list-item title="清理缓存" @click="clearTmp" link></uni-list-item>
 			<uni-list-item v-if="pushIsOn != 'wait'" @click.native="openSetting()" title="推送功能" showSwitch :switchChecked="pushIsOn"></uni-list-item>
 			<!-- #endif -->
-			<uni-list-item v-if="supportMode.includes('fingerPrint')" title="指纹解锁" @click="fingerPrint" link></uni-list-item>
-			<uni-list-item v-if="supportMode.includes('facial')" title="人脸解锁" @click="facial" link></uni-list-item>
+			<uni-list-item v-if="supportMode.includes('fingerPrint')" title="指纹解锁" @click="startSoterAuthentication('fingerPrint','指纹解锁')" link></uni-list-item>
+			<uni-list-item v-if="supportMode.includes('facial')" title="人脸解锁" @click="startSoterAuthentication('facial','人脸解锁')" link></uni-list-item>
 		</uni-list>
 		
 		<!-- 退出/登陆 按钮 -->
@@ -86,26 +86,17 @@
 				});
 			},
 			/**
-			 * 添加生物认证选项
-			 */
-			fingerPrint(){
-				
-			},
-			facial(){
-				
-			},
-			/**
 			 * 开始生物认证
 			 */
-			startSoterAuthentication(item) {
+			startSoterAuthentication(requestAuthMode,title) {
 				// 检查是否开启认证
-				this.checkIsSoterEnrolledInDevice(item)
+				this.checkIsSoterEnrolledInDevice({name:requestAuthMode,title:title})
 					.then(() => {
 						// 开始认证
 						uni.startSoterAuthentication({
-							requestAuthModes: [item.name],
+							requestAuthModes: [requestAuthMode],
 							challenge: '123456', // 微信端挑战因子
-							authContent: `请用${item.title}`,
+							authContent: `请用${title}`,
 							success: (res) => {
 								if (res.errCode == 0) {
 									/**
@@ -116,7 +107,7 @@
 									 * 微信小程序需要再次通过后台验证resultJSON与resultJSONSignature获取最终结果
 									 */
 									return uni.showToast({
-										title: `${item.title}成功`,
+										title: `${title}成功`,
 										icon: 'none'
 									});
 								}
