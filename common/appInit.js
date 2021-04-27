@@ -9,7 +9,6 @@ export default function() {
 	
 	// baseappConfig挂载到getApp().
 	getApp({allowDefault: true}).config = baseappConfig;
-	
 
 	//自定义路由拦截
 	const {
@@ -41,8 +40,8 @@ export default function() {
 				}
 				//控制登陆优先级
 				if (url == '/pages/ucenter/login-page/index/index') {
-					//一键登录（univerify）、密码登陆（username）、快捷登录&验证码登陆（!univerify&password）
-					if (login[0] == 'univerify') {
+					//一键登录（uniVerify）、账号（username）、验证码登陆（短信smsCode）
+					if (login[0] == 'uniVerify') {
 						// console.log(e.url,url);
 						if (e.url == url) {
 							e.url += '?'
@@ -67,7 +66,7 @@ export default function() {
 		fail(e) { // 失败回调拦截 
 			console.log(e);
 			if (
-				e.errCode === 11 && uni.getSystemInfoSync().platform == "android"	||
+				e.errCode === 11 && uni.getSystemInfoSync().platform == "android" ||
 				e.errCode === 2 && uni.getSystemInfoSync().platform == "ios"
 			){
 				uni.showModal({

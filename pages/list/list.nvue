@@ -1,127 +1,220 @@
 <template>
 	<view>
-		<view class="search-box">
-			<!-- #ifdef APP-PLUS -->
-			<uni-nav-bar class="status-bar"></uni-nav-bar>
-			<!-- #endif -->
-			<view class="search-container-bar">
-				<uni-search-bar ref="searchBar" style="flex:1;" radius="100" v-model="searchText"
-					@click.native="searchClick" cancelButton="none" disabled />
-			</view>
+		<!-- 搜索功能 小程序用绘制的且带原生导航，h5和app用原生自带绘制 -->
+		<!-- #ifndef APP-PLUS -->
+		<view class="uni-search-box">
+			<uni-search-bar class="uni-search-bar" v-model="keyword" ref="searchBar" radius="100"
+				@click.native="searchClick" cancelButton="none" disabled />
 		</view>
-		<view class="content">
-			<!-- #ifdef APP-PLUS -->
-			<!-- <uni-nav-bar class="status-bar"></uni-nav-bar> -->
-			<!-- #endif -->
+		<!-- #endif -->
 
-			<!-- 刷新页面后的顶部提示框 -->
-			<!-- 当前弹出内容没有实际逻辑 ，可根据当前业务修改弹出提示 -->
-			<view class="tips" :class="{ 'tips-ani': tipShow }">为您更新了10条内容</view>
-			<!-- 页面分类标题 -->
-
-			<!-- <uni-section style="margin:0;" v-if="searchText" :title="listTitle" type="line"></uni-section> -->
-
-			<unicloud-db ref="udb" v-slot:default="{data, loading, error, options}" :options="formData"
-				collection="opendb-news-articles,uni-id-users"
-				field="author{username, _id}, _id,avatar,title,excerpt,last_modify_date, comment_count, like_count"
-				:foreignKey="foreignKey" :where="where" @load="load" @error="isLoading = false">
-				<text v-if="error" class="list-info">{{error.message}}</text>
-				<!-- 基于 uni-list 的页面布局 -->
-				<uni-list :class="{ 'uni-list--waterfall': options.waterfall }">
-					<!-- 通过 uni-list--waterfall 类决定页面布局方向 -->
-					<!-- to 属性携带参数跳转详情页面，当前只为参考 -->
-					<uni-list-item :border="!options.waterfall" :to="'./detail?id='+item._id+'&title='+item.title"
-						class="uni-list-item--waterfall" title="自定义列表" v-for="item in data" :key="item._id">
-						<!-- 通过header插槽定义列表左侧图片 -->
-						<template v-slot:header>
-							<image class="avatar" :src="item.avatar" mode="aspectFill"></image>
-						</template>
-						<!-- 通过body插槽定义布局 -->
-						<view slot="body" class="main">
-							<text class="title">{{ item.title }}</text>
-							<view class="foot">
-								<text class="uni-ellipsis-1">{{ item.author[0].username }}</text>
-								<text>{{ item.comment_count }}评论</text>
-								<uni-dateformat :date="item.last_modify_date" format="yyyy-MM-dd"
-									:threshold="[60000, 2592000000]" />
-							</view>
+		<unicloud-db ref='udb' v-slot:default="{data,pagination,hasMore, loading, error, options}" @load="handleLoad"
+			:where="where" collection="opendb-news-articles,uni-id-users"
+			field="avatar,title,last_modify_date,user_id{username}">
+			<!-- 基于 uni-list 的页面布局 -->
+			<uni-list class="uni-list" :border="false" :style='{height:windowHeight+"px"}' :bounce="true"
+				:alwaysScrollableVertical="true">
+				<!-- #ifdef APP-NVUE -->
+				<refresh @refresh="refresh" @pullingdown="onpullingdown" :display="!loading ? 'show' : 'hide'">
+					<refreshBox :state="refreshState"></refreshBox>
+				</refresh>
+				<!-- #endif -->
+				<cell class="get-data-state" v-if="data.length===0&&pagination.current===1">
+					<!-- 刷新页面后的顶部提示框 当前弹出内容没有实际逻辑 ，可根据当前业务修改弹出提示 -->
+					<text class="refresh-tip"
+						:class="{ 'show-refresh-tip':showRefreshTip }">为您更新了{{data.length}}条内容</text>
+					<!-- 数据为空 当前页码为1，且正在加载中;这里为了演示，更加直观的表达内部逻辑。商用项目建议将这部分封装为组件，更好的让业务逻辑与功能分离-->
+					<template v-if="loading">
+						<image class="get-data-state-img" src="@/static/getDataState/loading.png" mode="widthFix">
+						</image>
+						<text class="get-data-state-text">加载中...</text>
+					</template>
+					<template v-else>
+						<image class="get-data-state-img" src="@/static/getDataState/nodata.png" mode="widthFix">
+						</image>
+						<text class="get-data-state-text">内容为空</text>
+					</template>
+				</cell>
+				<uni-list-item v-if="error">{{error.message}}</uni-list-item>
+				<uni-list-item v-else :to="'./detail?id='+item._id+'&title='+item.title"
+					v-for="(item,index) in testData(data)" :key="index">
+					<!-- 通过header插槽定义列表左侧图片 -->
+					<template v-slot:header>
+						<image class="avatar" :src="item.avatar" mode="aspectFill"></image>
+					</template>
+					<!-- 通过body插槽定义布局 -->
+					<view slot="body" class="main">
+						<text class="title">{{ item.title }}</text>
+						<view class="info">
+							<text class="author">{{item.user_id[0].username}}</text>
+							<uni-dateformat class="last_modify_date" :date="item.last_modify_date" format="yyyy-MM-dd"
+								:threshold="[60000, 2592000000]" />
 						</view>
-					</uni-list-item>
-				</uni-list>
-				<!-- 通过 loadMore 组件实现上拉加载效果，如需自定义显示内容，可参考：https://ext.dcloud.net.cn/plugin?id=29 -->
-				<uni-load-more v-if="!error && (loading || options.status === 'noMore') " :status="options.status" />
-				<uni-nodata v-if="data.length == 0" :isLoading="isLoading" @retry="refresh"></uni-nodata>
-			</unicloud-db>
-		</view>
+					</view>
+				</uni-list-item>
+
+				<!-- 存在下一页数据，且不在加载中 通过 loadMore 组件实现上拉加载效果，如需自定义显示内容，可参考：https://ext.dcloud.net.cn/plugin?id=29 -->
+				<cell v-if="hasMore">
+					<uni-load-more v-if="!error &&!loading&&hasMore" :status="options.status"></uni-load-more>
+				</cell>
+				<cell v-else>
+					<text class="noMore">- 没有更多数据了 -</text>
+				</cell>
+			</uni-list>
+		</unicloud-db>
 	</view>
 </template>
 
 <script>
+	var cdbRef, currentWebview;
 	export default {
 		data() {
 			return {
-				canSearch: true,
-				searchText: 'searchText',
-				formData: {
-					waterfall: false, // 布局方向切换
-					status: 'loading', // 加载状态
-				},
-				where: '',
-				// 数据表名
-				foreignKey: '',
-				tipShow: false, // 是否显示顶部提示框
-				isLoading: true
-			};
+				showRefreshTip: true,
+				where: "",
+				keyword: "",
+				refreshState: 0,
+				windowHeight: 0 //窗口的高
+			}
 		},
-		onLoad() {},
-		onShow(options) {
-			this.searchText = getApp().globalData.searchText;
+		onReady() {
+			this.windowHeight = uni.getSystemInfoSync().windowHeight
+			this.showRefreshTip = false
+			cdbRef = this.$refs.udb
+			console.log(cdbRef);
 		},
-		/**
-		 * 下拉刷新回调函数
-		 */
-		onPullDownRefresh() {
-			this.refresh();
-		},
-		onReachBottom() {
-			this.loadMore();
+		onShow() {
+			try{
+				this.keyword = getApp().globalData.searchText
+				console.log(this.keyword);
+				getApp().globalData.searchText = ''
+				this.setInputText()
+			}catch(e){
+				console.log(e);
+				//TODO handle the exception
+			}
 		},
 		methods: {
-			load(e) {
-				console.log(e);
+			setInputText() {
+				// 设置 searchInput的 text
+				// #ifdef APP-PLUS
+				if (!currentWebview) {
+					let pages = getCurrentPages();
+					currentWebview = pages[pages.length - 1].$getAppWebview();
+				}
+				currentWebview.setTitleNViewSearchInputText(this.keyword)
+				// #endif
 			},
-			refresh(e) {
-				console.log(e);
-				this.tipShow = true
-				this.formData.status = 'more'
-				this.isLoading = true
-				this.$refs.udb.loadData({
+			testData(data) {
+				var testData = []
+				for (let i = 0; i < 10; i++) {
+					testData.push(...data)
+				}
+				return testData
+			},
+			handleLoad(data, ended, pagination) {
+				// `data` 当前查询结果 `ended` 是否有更多数据 `pagination` 分页信息 HBuilderX 3.1.5+ 支持
+				console.log(9527, data, ended, pagination);
+				//上拉加载成功
+				this.loadMoreEnd()
+			},
+			searchClick() {
+				uni.hideKeyboard();
+				uni.navigateTo({
+					url: '/pages/list/search/search',
+					animationType: 'fade-in',
+					events: {
+						acceptDataFromOpenedPage(e) {
+							console.log(e);
+						}
+					}
+				});
+			},
+			refresh() {
+				cdbRef.loadData({
 					clear: true
 				}, () => {
-					this.tipShow = false
-					this.isLoading = false
-					uni.stopPullDownRefresh()
+					this.showRefreshTip = true
+					setTimeout(() => {
+						this.showRefreshTip = false
+					}, 1000)
+					this.refreshEnd()
 				})
 			},
-			select() {
-				this.formData.waterfall = !this.formData.waterfall;
+			loadMore() {
+				cdbRef.loadMore({
+					clear: true
+				})
 			},
+			refreshEnd() {
+				// #ifdef APP-NVUE
+				this.refreshState = 0
+				// #endif
+				uni.stopPullDownRefresh()
+			},
+			loadMoreEnd() {
+				console.log('loadMoreEnd');
+			},
+			// #ifdef APP-NVUE
+			onpullingdown({
+				pullingDistance,
+				viewHeight
+			}) {
+				if (pullingDistance > viewHeight) {
+					this.refreshState = 1
+				}
+			},
+			// #endif
+		},
+		// #ifndef APP-NVUE
+		onPullDownRefresh() {
+			this.refresh()
+			console.log('refresh');
+		},
+		// #endif
+		onReachBottom() {
+			this.loadMore()
+			console.log('触底了');
+		},
+		onNavigationBarSearchInputClicked() {
+			this.searchClick()
+		},
+		onNavigationBarSearchInputChanged(e) {
+			console.log('变了', e);
+			if (e.text) {
+				this.where = 'title == ' + e.text
+			}
 		}
-	};
+	}
 </script>
 
-<style lang="scss" scoped>
-	.content {
-		flex: 1;
-	}
-
+<style>
 	.avatar {
 		width: 200rpx;
 		height: 200rpx;
 		margin-right: 10rpx;
 	}
 
-	.tips {
+	.main {
+		justify-content: space-between;
+	}
+
+	.title {
+		width: 480rpx;
+	}
+
+	.info {
+		flex-direction: row;
+		justify-content: space-between;
+	}
+
+	.author,
+	.last_modify_date {
+		font-size: 28rpx;
+		color: #999999;
+	}
+
+	.refresh-tip {
 		color: #67c23a;
 		font-size: 14px;
 		line-height: 40px;
@@ -130,22 +223,52 @@
 		height: 0;
 		opacity: 0;
 		transform: translateY(-100%);
-		//transition: all 0.3s;
+		transition: height 0.3s;
 	}
-	
-	.main{
-		justify-content: space-between;
+
+	.uni-search-box {
+		background-color: #FFFFFF;
+		position: sticky;
+		top: 0;
+		left: 0;
+		/* #ifndef APP-PLUS */
+		z-index:9;
+		/* #endif */
 	}
-	.title {
-		width: 480rpx;
-	}
-	.foot{
-		flex-direction: row;
-		justify-content: space-between;
-	}
-	.tips-ani {
+
+	.show-refresh-tip {
 		transform: translateY(0);
 		height: 40px;
 		opacity: 1;
+	}
+
+	.get-data-state {
+		width: 750rpx;
+		align-items: center;
+	}
+
+	.get-data-state-img {
+		width: 500rpx;
+	}
+
+	.get-data-state-text {
+		width: 32rpx;
+		color: #999999;
+		line-height: 50rpx;
+		height: 50rpx;
+		width: 750rpx;
+		text-align: center;
+	}
+
+	.uni-list {
+	}
+
+	.noMore {
+		width: 750rpx;
+		text-align: center;
+		color: #6E6E6E;
+		font-size: 26rpx;
+		height: 55px;
+		line-height: 55px;
 	}
 </style>

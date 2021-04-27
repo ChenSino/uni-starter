@@ -1,7 +1,7 @@
 {
 	"bsonType": "object",
 	"permission": {
-		"read": "doc.is_reply == false",
+		"read": true, //"doc.is_reply == false",
 		"create": true,
 		"update": false,
 		"delete": false

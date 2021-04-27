@@ -13,13 +13,13 @@
 		<view class="article-title">{{ title }}</view>
 		<unicloud-db v-slot:default="{data, loading, error, options}" :options="formData" :collection="collection"
 			:field="field" :getone="true" :where="where" :manual="true" ref="detail"
-			foreignKey="opendb-news-articles.author" @load="loadData">
+			foreignKey="opendb-news-articles.user_id" @load="loadData">
 			<template v-if="!loading && data">
 				<uni-list :border="false">
 					<uni-list-item thumbSize="lg" :thumb="data.image">
 						<!-- 通过body插槽定义作者信息内容 -->
 						<view slot="body" class="header-content">
-							<view class="uni-title">{{data.author && data.author[0].username}}</view>
+							<view class="uni-title">{{data.user_id && data.user_id[0].username}}</view>
 						</view>
 						<view slot="footer" class="footer">
 							<view class="uni-note">更新于
@@ -38,9 +38,8 @@
 						<text class="uni-ellipsis">{{data.excerpt}}</text>
 					</view>
 				</view>
-				<!-- 新闻详情：使用 uParse 解析富文本 -->
 				<view class="article-content">
-					<u-parse :content="data.content" :noData="options.noData"></u-parse>
+					<rich-text :nodes="data.content"></rich-text>
 				</view>
 			</template>
 		</unicloud-db>
@@ -50,15 +49,13 @@
 <script>
 	import baseappConfig from '@/baseapp.config.js';
 	import uniShare from 'uni_modules/uni-share/js_sdk/uni-share.js';
-	import uParse from '@/components/u-parse/parse.vue';
-	
+
 	const db = uniCloud.database();
 	const newsFavoriteTable = db.collection('opendb-news-favorite')
-	import { mapGetters } from 'vuex';
+	import {
+		mapGetters
+	} from 'vuex';
 	export default {
-		components: {
-			uParse
-		},
 		data() {
 			return {
 				// 当前显示 _id
@@ -67,7 +64,7 @@
 				// 数据表名
 				collection: 'opendb-news-articles,uni-id-users',
 				// 查询字段，多个字段用 , 分割
-				field: 'author{username, _id},_id,avatar,excerpt,last_modify_date, comment_count, like_count,title,content',
+				field: 'user_id{username, _id},_id,avatar,excerpt,last_modify_date, comment_count, like_count,title,content',
 				formData: {
 					noData: '<p style="text-align:center;color:#666">详情加载中...</p>'
 				},
@@ -80,8 +77,8 @@
 				return `_id =="${this.id}"`
 			},
 			...mapGetters({
-				'userInfo':'user/info',
-				'hasLogin':'user/hasLogin'
+				'userInfo': 'user/info',
+				'hasLogin': 'user/hasLogin'
 			})
 		},
 		onLoad(event) {
@@ -114,38 +111,38 @@
 			}
 		},
 		methods: {
-			setFavorite(){
-				if(!this.has)return
+			setFavorite() {
+				if (!this.has) return
 				newsFavoriteTable.where({
-					article_id:this.id,
-					user_id:this.userInfo._id
-				})
-				.get()
-				.then(res=>{
-					let value = {
-						article_id:this.id,
-						article_title:this.title,
-						user_id:this.userInfo._id,
-						update_date:Date.now()
-					}
-					if(res.result.data.length == 0){
-						return newsFavoriteTable.add(value)
-					} else {
-						return newsFavoriteTable.where({
-							article_id:this.id,
-							user_id:this.userInfo._id
-						})
-						.update(value)
-					}
-				})
-				.then(res=>{
-					// console.log(res);
-				})
-				.catch(err=>{
-					console.log(err);
-				})
-				
-				
+						article_id: this.id,
+						user_id: this.userInfo._id
+					})
+					.get()
+					.then(res => {
+						let value = {
+							article_id: this.id,
+							article_title: this.title,
+							user_id: this.userInfo._id,
+							update_date: Date.now()
+						}
+						if (res.result.data.length == 0) {
+							return newsFavoriteTable.add(value)
+						} else {
+							return newsFavoriteTable.where({
+									article_id: this.id,
+									user_id: this.userInfo._id
+								})
+								.update(value)
+						}
+					})
+					.then(res => {
+						// console.log(res);
+					})
+					.catch(err => {
+						console.log(err);
+					})
+
+
 			},
 			loadData(data) {
 				//如果上一页未传递标题过来（如搜索直达详情），则从新闻详情中读取标题
@@ -154,7 +151,7 @@
 					uni.setNavigationBarTitle({
 						title: data[0].title
 					});
-					
+
 				}
 				this.setFavorite();
 			},
@@ -187,7 +184,7 @@
 						imageUrl: avatar
 					},
 					menus: [{
-							"img": "/static/sharemenu/wechatfriend.png",
+							"img": "/static/app-plus/sharemenu/wechatfriend.png",
 							"text": "微信好友",
 							"share": {
 								"provider": "weixin",
@@ -195,7 +192,7 @@
 							}
 						},
 						{
-							"img": "/static/sharemenu/wechatmoments.png",
+							"img": "/static/app-plus/sharemenu/wechatmoments.png",
 							"text": "微信朋友圈",
 							"share": {
 								"provider": "weixin",
@@ -203,41 +200,42 @@
 							}
 						},
 						{
-							"img": "/static/sharemenu/mp_weixin.png",
+							"img": "/static/app-plus/sharemenu/mp_weixin.png",
 							"text": "微信小程序",
 							"share": {
 								provider: "weixin",
 								scene: "WXSceneSession",
 								type: 5,
 								miniProgram: {
-									id:baseappConfig.mp.weixin.id,
-									path:`/pages/list/detail?id=${_id}&title=${title}`,
-									webUrl:baseappConfig.h5.url + `/#/pages/list/detail?id=${_id}&title=${title}`,
-									type:0
+									id: baseappConfig.mp.weixin.id,
+									path: `/pages/list/detail?id=${_id}&title=${title}`,
+									webUrl: baseappConfig.h5.url +
+										`/#/pages/list/detail?id=${_id}&title=${title}`,
+									type: 0
 								},
 							}
 						},
 						{
-							"img": "/static/sharemenu/weibo.png",
+							"img": "/static/app-plus/sharemenu/weibo.png",
 							"text": "微博",
 							"share": {
 								"provider": "sinaweibo"
 							}
 						},
 						{
-							"img": "/static/sharemenu/qq.png",
+							"img": "/static/app-plus/sharemenu/qq.png",
 							"text": "QQ",
 							"share": {
 								"provider": "qq"
 							}
 						},
 						{
-							"img": "/static/sharemenu/copyurl.png",
+							"img": "/static/app-plus/sharemenu/copyurl.png",
 							"text": "复制",
 							"share": "copyurl"
 						},
 						{
-							"img": "/static/sharemenu/more.png",
+							"img": "/static/app-plus/sharemenu/more.png",
 							"text": "更多",
 							"share": "shareSystem"
 						}

@@ -107,11 +107,13 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "",
+        "appid" : "wx07597007230e3702",
         "setting" : {
-            "urlCheck" : false
+            "urlCheck" : false,
+            "es6" : false
         },
         "usingComponents" : true
+		// "betterScopedSlots" : true
     },
     "mp-alipay" : {
         "usingComponents" : true

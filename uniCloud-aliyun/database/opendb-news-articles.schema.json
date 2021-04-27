@@ -19,16 +19,6 @@
 				"$env": "uid"
 			}
 		},
-		"author": {
-			"bsonType": "string",
-			"title": "作者信息",
-			"description": "冗余字段，用于保存联表查询结果，参考`uni-id-users`表",
-			"foreignKey": "uni-id-users._id",
-			"enum": {
-				"collection": "uni-id-users",
-				"field": "username, _id as text, _id as value"
-			}
-		},
 		"category_id": {
 			"bsonType": "string",
 			"title": "分类",

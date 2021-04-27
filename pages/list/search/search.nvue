@@ -296,8 +296,8 @@
 			},
 			loadList(text = '') {
 				getApp().globalData.searchText = text;
-				uni.navigateTo({
-					url:'/pages/list/news-list'
+				uni.switchTab({
+					url:'/pages/list/list'
 				})
 			},
 			backPage(){

@@ -1,14 +1,21 @@
 <template>
 	<view class="content">
 		<!-- 功能列表 -->
-		<uni-list :border="false" class="mt10" v-for="(sublist,index) in agreeList">
-			<uni-list-item :border="false" class="list-item" v-for="(item,i) in sublist" :key="i" :title="item.title"
-				:clickable="true" @click="itemClick(item)" :showSwitch="item.showSwitch" :switchChecked="item.isChecked"
-				:link="!item.showSwitch"
-				v-if="item.event!='changePwd'||hasLogin"
-				></uni-list-item>
+		<uni-list class="mt10">
+			<uni-list-item title="个人资料" to="/pages/ucenter/edit/edit" link="navigateTo"></uni-list-item>
+			<uni-list-item v-if="userInfo.phone" title="修改密码" :to="'/pages/ucenter/login-page/pwd-retrieve/pwd-retrieve?phoneNumber='+ userInfo.phone" link="navigateTo"></uni-list-item>
 		</uni-list>
-		<!-- 退出按钮 -->
+		<uni-list class="mt10">
+			<!-- #ifdef APP-PLUS -->
+			<!-- 检查push过程未结束不显示，push设置项 -->
+			<uni-list-item title="清理缓存" @click="clearTmp" link></uni-list-item>
+			<uni-list-item v-if="pushIsOn != 'wait'" @click.native="openSetting()" title="推送功能" showSwitch :switchChecked="pushIsOn"></uni-list-item>
+			<!-- #endif -->
+			<uni-list-item v-if="supportMode.includes('fingerPrint')" title="指纹解锁" @click="fingerPrint" link></uni-list-item>
+			<uni-list-item v-if="supportMode.includes('facial')" title="人脸解锁" @click="facial" link></uni-list-item>
+		</uni-list>
+		
+		<!-- 退出/登陆 按钮 -->
 		<view class="bottom-back" @click="clickLogout">
 			<text class="bottom-back-text" v-if="hasLogin">退出登录</text>
 			<text class="bottom-back-text" v-else>登录</text>
@@ -28,32 +35,8 @@
 	export default {
 		data() {
 			return {
-				agreeList: [
-					[{
-							title: '个人资料',
-							event: 'toEdit'
-						},
-						{
-							title: '修改密码',
-							event: 'changePwd'
-						}
-					],
-					[
-						//#ifdef APP-PLUS
-						{
-							title: '推送功能',
-							name: 'push',
-							event: 'openSetting',
-							isChecked: false,
-							showSwitch: true
-						},
-						{
-							title: '清理缓存',
-							event: 'clearTmp'
-						},
-						//#endif
-					]
-				]
+				supportMode:[],
+				pushIsOn:"wait"
 			}
 		},
 		computed: {
@@ -63,10 +46,25 @@
 			})
 		},
 		onLoad() {
-			this.initSoterAuthentication();
+			// #ifdef APP-PLUS || MP-WEIXIN
+			uni.checkIsSupportSoterAuthentication({
+				success: (res) => {
+					console.log(res);
+					this.supportMode = res.supportMode
+				},
+				fail: (err) => {
+					reject(err);
+				}
+			})
+			// #endif
 		},
 		onShow() {
-			this.checkPush();
+			// 检查手机端获取推送是否开启
+			//#ifdef APP-PLUS
+			setTimeout(()=>{
+				this.pushIsOn = isOn();
+			},1)
+			//#endif
 		},
 		methods: {
 			...mapMutations({
@@ -87,41 +85,14 @@
 					}
 				});
 			},
-			checkPush() {
-				// 手机端获取推送是否开启
-				//#ifdef APP-PLUS
-				let pushIsOn = isOn();
-				this.agreeList.forEach(item => {
-					item.name == 'push' ? (item.isChecked = pushIsOn) : '';
-				})
-				//#endif
-			},
 			/**
 			 * 添加生物认证选项
 			 */
-			initSoterAuthentication() {
-				// #ifdef APP-PLUS || MP-WEIXIN
-
-				let checkAuthModeList = [{
-					title: '指纹解锁',
-					name: 'fingerPrint',
-					event: 'startSoterAuthentication'
-				}, {
-					title: '人脸解锁',
-					name: 'facial',
-					event: 'startSoterAuthentication'
-				}];
-				uni.checkIsSupportSoterAuthentication({
-					success: (res) => {
-						res.supportMode.forEach(item => {
-							this.agreeList.push([checkAuthModeList.find(mode => mode.name == item)]);
-						})
-					},
-					fail: (err) => {
-						reject(err);
-					}
-				})
-				// #endif
+			fingerPrint(){
+				
+			},
+			facial(){
+				
 			},
 			/**
 			 * 开始生物认证
@@ -210,14 +181,6 @@
 					});
 				}
 			},
-			/**
-			 * 每一项的点击事件
-			 */
-			itemClick(item) {
-				if (item.event) {
-					this[item.event](item);
-				}
-			},
 			clearTmp() {
 				uni.showLoading({
 					title: '清除中',
@@ -265,6 +228,7 @@
 			 * 打开设置页面
 			 */
 			openSetting() {
+				console.log('openSetting');
 				setting();
 			}
 		}
@@ -326,7 +290,7 @@
 		background-color: #F9F9F9;
 	}
 
-	.list-item {
+	.content /deep/ .uni-list-item--disabled,.list-item {
 		height: 50px;
 		margin-bottom: 1px;
 	}

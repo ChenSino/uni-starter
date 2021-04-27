@@ -4,7 +4,7 @@
 			<image class="logo-img" :src="userInfo.avatar||avatarUrl"></image>
 			<view class="logo-title">
 				<text class="uer-name">{{userInfo.nickname||userInfo.username||userInfo.mobile||'未登录'}}</text>
-				<text class="go-login-navigat-arrow navigat-arrow" v-if="!login">&#xe65e;</text>
+				<uni-icons class="icon" color="#FFFFFF" type="arrowright" v-if="!login" size="16"></uni-icons>
 			</view>
 		</view>
 		<uni-grid class="grid" :column="5" :showBorder="false" :square="true">
@@ -204,23 +204,11 @@
 
 <style>
 	/* #ifndef APP-PLUS-NVUE */
-	@font-face {
-		font-family: texticons;
-		font-weight: normal;
-		font-style: normal;
-		src: url('~@/static/text-icon.ttf') format('truetype');
-	}
 	page {
 		background-color: #f8f8f8;
 	}
 	/* #endif*/
 
-	/* 解决头条小程序字体图标不显示问题，因为头条运行时自动插入了span标签，且有全局字体 */
-	/* #ifdef MP-TOUTIAO */
-	text :not(view) {
-		font-family: texticons;
-	}
-	/* #endif */
 	.center {
 		flex: 1;
 		flex-direction: column;
@@ -254,33 +242,15 @@
 		font-size: 38rpx;
 		color: #FFFFFF;
 	}
-
-	.go-login-navigat-arrow {
-		font-size: 38rpx;
-		color: #FFFFFF;
-	}
-
-	.navigat-arrow {
-		height: 90rpx;
-		width: 40rpx;
-		line-height: 90rpx;
-		font-size: 34rpx;
-		color: #FFFFFF;
-		text-align: right;
-		font-family: texticons;
-	}
-
 	.center-list {
 		margin-bottom: 30rpx;
 		background-color: #f9f9f9;
 	}
-
 	.center-list-cell {
 		width: 750rpx;
 		background-color: #007AFF;
 		height: 40rpx;
 	}
-
 	.grid {
 		background-color: #FFFFFF;
 		margin: 25rpx 0;
