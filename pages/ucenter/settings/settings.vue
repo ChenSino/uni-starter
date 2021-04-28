@@ -2,7 +2,7 @@
 	<view class="content">
 		<!-- 功能列表 -->
 		<uni-list class="mt10">
-			<uni-list-item title="个人资料" to="/pages/ucenter/edit/edit" link="navigateTo"></uni-list-item>
+			<uni-list-item title="个人资料" to="/pages/ucenter/userinfo/userinfo" link="navigateTo"></uni-list-item>
 			<uni-list-item v-if="userInfo.phone" title="修改密码" :to="'/pages/ucenter/login-page/pwd-retrieve/pwd-retrieve?phoneNumber='+ userInfo.phone" link="navigateTo"></uni-list-item>
 		</uni-list>
 		<uni-list class="mt10">
@@ -72,7 +72,7 @@
 			}),
 			toEdit() {
 				uni.navigateTo({
-					url: '/pages/ucenter/edit/edit'
+					url: '/pages/ucenter/userinfo/userinfo'
 				});
 			},
 			changePwd() {

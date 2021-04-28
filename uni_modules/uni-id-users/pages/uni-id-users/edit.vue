@@ -102,7 +102,7 @@
 						}
 						// 剪裁并上传头像
 						uni.navigateTo({
-							url:'/pages/ucenter/edit/uploadCutImageToUnicloud?path=' + res.tempFilePaths[0] + `&options=${JSON.stringify(options)}`,
+							url:'/pages/ucenter/userinfo/uploadCutImageToUnicloud?path=' + res.tempFilePaths[0] + `&options=${JSON.stringify(options)}`,
 							animationType:"fade-in",
 							events:{
 								uploadAvatarAfter:({url})=>{

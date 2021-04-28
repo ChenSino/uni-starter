@@ -99,7 +99,7 @@
 			},
 			bindMobileBySmsCode() {
 				uni.navigateTo({
-					url:'/pages/ucenter/edit/bind-mobile/bind-mobile'
+					url:'/pages/ucenter/userinfo/bind-mobile/bind-mobile'
 				})
 			},
 			setNickname(nickname) {
@@ -141,7 +141,7 @@
 						}
 						// 剪裁并上传头像
 						uni.navigateTo({
-							url: '/pages/ucenter/edit/uploadCutImageToUnicloud?path=' +
+							url: '/pages/ucenter/userinfo/uploadCutImageToUnicloud?path=' +
 								res
 								.tempFilePaths[0] +
 								`&options=${JSON.stringify(options)}`,
