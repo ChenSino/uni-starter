@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}" where="user_id == $env.uid"
-			orderby="update_date desc" collection="opendb-news-favorite" @load="isLoading == false" @error="isLoading == false">
+			orderby="update_date desc" collection="opendb-news-favorite" @load="isLoading == false" @error="isLoading == false" :page-size="10">
 			<view v-if="data && data.length">
 				<uni-list>
 					<uni-list-item v-for="(item, index) in data" :key="index" :clickable="true"
@@ -15,7 +15,7 @@
 				</uni-list>
 			</view>
 			<uni-nodata v-else :isLoading="isLoading" @retry="refreshData"></uni-nodata>
-			<uni-load-more :status="loading?'loading':(hasMore ? 'more' : 'noMore')"></uni-load-more>
+			<uni-load-more v-if="data.length>10" :status="loading?'loading':(hasMore ? 'more' : 'noMore')"></uni-load-more>
 		</unicloud-db>
 	</view>
 </template>

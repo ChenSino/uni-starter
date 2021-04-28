@@ -63,7 +63,7 @@
 				// 数据表名
 				collection: 'opendb-news-articles,uni-id-users',
 				// 查询字段，多个字段用 , 分割
-				field: 'user_id{username, _id},_id,avatar,excerpt,last_modify_date, comment_count, like_count,title,content',
+				field: 'user_id{username,_id},avatar,excerpt,last_modify_date,comment_count,like_count,title,content',
 				formData: {
 					noData: '<p style="text-align:center;color:#666">详情加载中...</p>'
 				},
@@ -114,7 +114,7 @@
 		},
 		methods: {
 			setFavorite() {
-				if (!this.has) return
+				if (!this.hasLogin) return
 				newsFavoriteTable.where({
 						article_id: this.id,
 						user_id: this.userInfo._id

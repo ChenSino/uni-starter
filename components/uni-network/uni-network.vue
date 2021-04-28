@@ -64,6 +64,7 @@
 
 <style scoped>
 	.box{
+		flex: 1;
 		margin:100rpx 0;
 		flex-direction: column;
 		align-items: center;

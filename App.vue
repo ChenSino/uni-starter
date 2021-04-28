@@ -83,18 +83,7 @@
 
 <style>
 	/*每个页面公共css */
-	.border-test {
-		/* #ifdef APP-NVUE */
-		border-width: 1rpx;
-		border-color: #DD524D;
-		/* #endif */
-		/* #ifndef APP-NVUE */
-		border: 1px solid #DD524D;
-		box-sizing: border-box;
-		/* #endif */
-	}
-
-	/* #ifndef APP-NVUE */
+/* #ifndef APP-NVUE */
 	view,
 	scroll-view,
 	text,
@@ -109,5 +98,5 @@
 	scroll-view {
 		-webkit-overflow-scrolling: touch;
 	}
-	/* #endif */
+/* #endif */
 </style>

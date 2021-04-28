@@ -67,11 +67,12 @@
 							title: '去评分',
 							event: 'gotoMarket'
 						},
-						// #endif
+						//#endif
 						{
 							title: '阅读过的文章',
 							to: '/uni_modules/uni-news-favorite/pages/uni-news-favorite/list',
-						}, {
+						},
+						{
 							title: '我的积分',
 							to: '',
 							event: 'getScore'
