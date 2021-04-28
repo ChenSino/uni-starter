@@ -1,57 +1,73 @@
-# uni-share
-例子
-import uniShare from 'uni_modules/uni-share/js_sdk/uni-share.js';
-uniShare({
-	menus:[
-		{
-			"img": "/static/sharemenu/wechatfriend.png",
-			"text": "微信好友",
-			"share": {
-				"provider": "weixin",
-				"scene": "WXSceneSession"
+#### 本功能基于[底部图标菜单](https://ext.dcloud.net.cn/plugin?id=4858)封装而成。
+### 示例代码
+```
+	uniShare({
+		content: { //公共的分享参数配置  类型（type）、链接（herf）、标题（title）、summary（描述）、imageUrl（缩略图）
+			type: 0,
+			href: 'https://uniapp.dcloud.io/',
+			title: '标题',
+			summary: '描述',
+			imageUrl: 'https://img-cdn-aliyun.dcloud.net.cn/stream/icon/__UNI__HelloUniApp.png'
+		},
+		menus: [{
+				"img": "/static/app-plus/sharemenu/wechatfriend.png",
+				"text": "微信好友",
+				"share": { //当前项的分享参数配置。可覆盖公共的配置如下：分享到微信小程序，配置了type=5
+					"provider": "weixin",
+					"scene": "WXSceneSession"
+				}
+			},
+			{
+				"img": "/static/app-plus/sharemenu/wechatmoments.png",
+				"text": "微信朋友圈",
+				"share": {
+					"provider": "weixin",
+					"scene": "WXSenceTimeline"
+				}
+			},
+			{
+				"img": "/static/app-plus/sharemenu/mp_weixin.png",
+				"text": "微信小程序",
+				"share": {
+					provider: "weixin",
+					scene: "WXSceneSession",
+					type: 5,
+					miniProgram: {
+						id: baseappConfig.mp.weixin.id,
+						path: `/pages/list/detail?id=${_id}&title=${title}`,
+						webUrl: baseappConfig.h5.url +
+							`/#/pages/list/detail?id=${_id}&title=${title}`,
+						type: 0
+					},
+				}
+			},
+			{
+				"img": "/static/app-plus/sharemenu/weibo.png",
+				"text": "微博",
+				"share": {
+					"provider": "sinaweibo"
+				}
+			},
+			{
+				"img": "/static/app-plus/sharemenu/qq.png",
+				"text": "QQ",
+				"share": {
+					"provider": "qq"
+				}
+			},
+			{
+				"img": "/static/app-plus/sharemenu/copyurl.png",
+				"text": "复制",
+				"share": "copyurl"
+			},
+			{
+				"img": "/static/app-plus/sharemenu/more.png",
+				"text": "更多",
+				"share": "shareSystem"
 			}
-		},
-		{
-			"img": "/static/sharemenu/wechatmoments.png",
-			"text": "微信朋友圈",
-			"share": {
-				"provider": "weixin",
-				"scene": "WXSceneSession"
-			}
-		},
-		{
-			"img": "/static/sharemenu/weibo.png",
-			"text": "微博",
-			"share": {
-				"provider": "sinaweibo"
-			}
-		},
-		{
-			"img": "/static/sharemenu/qq.png",
-			"text": "QQ",
-			"share": {
-				"provider": "qq"
-			}
-		},
-		{
-			"img": "/static/sharemenu/copyurl.png",
-			"text": "复制",
-			"share": "copyurl"
-		},
-		{
-			"img": "/static/sharemenu/more.png",
-			"text": "更多",
-			"share": "shareSystem"
-		}
-	],
-	cancelText:"取消分享",
-	content:{
-		type: 0,
-		href: "https://uniapp.dcloud.io/api/plugins/share?id=share",
-		title: "主标题",
-		summary: "分享内容的摘要",
-		imageUrl: "https://uniapp.dcloud.io/api/plugins/share?id=share",
-	}
-},e=>{	//callback
-	console.log(e);
-})
+		],
+		cancelText: "取消分享",
+	}, e => { //callback
+		console.log(e);
+	})
+```

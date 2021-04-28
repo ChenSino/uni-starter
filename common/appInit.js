@@ -1,3 +1,4 @@
+//应用初始化页
 import baseappConfig from '@/baseapp.config.js';
 // #ifdef APP-PLUS
 import checkUpdate from '@/uni_modules/uni-upgrade-center-app/utils/check-update';
@@ -6,10 +7,29 @@ import callCheckVersion from '@/uni_modules/uni-upgrade-center-app/utils/call-ch
 export default function() {
 	// 初始化appVersion（仅app生效）
 	initAppVersion();
-	
-	// baseappConfig挂载到getApp().
-	getApp({allowDefault: true}).config = baseappConfig;
 
+	// baseappConfig挂载到getApp().
+	getApp({allowDefault: true}).globalData.config = baseappConfig;
+	
+	/*
+		这里应用拦截器实现了，路由拦截。当应用无访问摄像头/相册权限，引导跳到设置界面
+		1.添加拦截器说明如下：
+			uni.addInterceptor(item, {
+				invoke(e) { // 调用前拦截
+				},
+				success() { // 成功回调拦截 
+				},
+				fail(err) { // 失败回调拦截 
+					console.log(err);
+				},
+				complete(e) { // 完成回调拦截 
+					//console.log(e);
+				},
+				returnValue() { // 返回结果拦截 
+				}
+			})
+		2.移除拦截器API removeInterceptor('request')
+	*/
 	//自定义路由拦截
 	const {
 		"router": {
@@ -17,7 +37,6 @@ export default function() {
 			login
 		}
 	} = baseappConfig //需要登陆的页面
-	//uni.addInterceptor的写法
 	let list = ["navigateTo", "redirectTo", "reLaunch", "switchTab"];
 	list.forEach(item => {
 		uni.addInterceptor(item, {
@@ -61,6 +80,7 @@ export default function() {
 		})
 	})
 
+
 	//当应用无访问摄像头/相册权限，引导跳到设置界面
 	uni.addInterceptor('chooseImage', {
 		fail(e) { // 失败回调拦截 
@@ -96,8 +116,25 @@ export default function() {
 	})
 	
 // #ifdef APP-PLUS
-// 设备网络状态变化事件
-	eventListenerNetwork()
+// 监听并提示设备网络状态变化
+	uni.onNetworkStatusChange(res=> {
+	    console.log(res.isConnected);
+	    console.log(res.networkType);
+		if(res.networkType!='none'){
+			uni.showToast({
+				title:'当前网络类型：'+res.networkType,
+				icon:'none',
+				duration:3000
+			})
+		}else{
+			showNetworkErrPage()
+			uni.showToast({
+				title:'网络类型：'+res.networkType,
+				icon:'none',
+				duration:3000
+			})
+		}
+	});
 // #endif
 
 }
@@ -132,97 +169,3 @@ function initAppVersion() {
 	checkUpdate();
 	// #endif
 }
-
-// 设备网络状态变化事件
-function eventListenerNetwork() {
-/*
-	//网络掉线
-	uni.getNetworkType({
-	    success:res=>{
-	        console.log(res);
-			if(res.networkType=='none'){
-				showNetworkErrPage()
-			}
-			uni.showToast({
-				title:'当前网络类型：'+res.networkType,
-				icon:'none',
-				duration:3000
-			})
-	    }
-	});
-	//监听网络变化
-	uni.onNetworkStatusChange(res=> {
-	    console.log(res.isConnected);
-	    console.log(res.networkType);
-		if(res.networkType!='none'){
-			uni.showToast({
-				title:'当前网络类型：'+res.networkType,
-				icon:'none',
-				duration:3000
-			})
-		}else{
-			showNetworkErrPage()
-			uni.showToast({
-				title:'网络类型：'+res.networkType,
-				icon:'none',
-				duration:3000
-			})
-		}
-	});
-	
-	function showNetworkErrPage(){
-		let pages = getCurrentPages();
-		console.log('pages.length',pages.length);
-		if(pages.length===0 || pages[pages.length - 1].route!='/pages/networkErr/networkErr.vue'){
-			uni.navigateTo({
-				url:'/pages/networkErr/networkErr'
-			})
-		}else{
-			console.log('已经打开');
-		}
-	}
-	
-}
-
-function openAppPermissionSetting(){
-	// 跳转到**应用**的权限页面
-	if (uni.getSystemInfoSync().platform == "ios") {
-		var UIApplication = plus.ios.import("UIApplication");
-		var application2 = UIApplication.sharedApplication();
-		var NSURL2 = plus.ios.import("NSURL");
-		// var setting2 = NSURL2.URLWithString("prefs:root=LOCATION_SERVICES");		
-		var setting2 = NSURL2.URLWithString("app-settings:");
-		application2.openURL(setting2);
-		plus.ios.deleteObject(setting2);
-		plus.ios.deleteObject(NSURL2);
-		plus.ios.deleteObject(application2);
-	} else {
-		// console.log(plus.device.vendor);
-		var Intent = plus.android.importClass("android.content.Intent");
-		var Settings = plus.android.importClass("android.provider.Settings");
-		var Uri = plus.android.importClass("android.net.Uri");
-		var mainActivity = plus.android.runtimeMainActivity();
-		var intent = new Intent();
-		intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-		var uri = Uri.fromParts("package", mainActivity.getPackageName(), null);
-		intent.setData(uri);
-		mainActivity.startActivity(intent);
-	}
-*/
-}
-/*
-	uni.addInterceptor(item, {
-		invoke(e) { // 调用前拦截
-		},
-		success() { // 成功回调拦截 
-		},
-		fail(err) { // 失败回调拦截 
-			console.log(err);
-		},
-		complete(e) { // 完成回调拦截 
-			//console.log(e);
-		},
-		returnValue() { // 返回结果拦截 
-		}
-	}) // 移除拦截器API removeInterceptor('request')
-*/

@@ -113,7 +113,7 @@
 			}
 			// #endif
 			,appConfig(){
-				return getApp().config
+				return getApp().globalData.config
 			}
 		},
 		methods: {
@@ -146,7 +146,7 @@
 			},
 			toUserInfo() {
 				uni.navigateTo({
-					url: '/pages/ucenter/edit/edit'
+					url: '/pages/ucenter/userinfo/userinfo'
 				})
 			},
 			tapGrid(index) {

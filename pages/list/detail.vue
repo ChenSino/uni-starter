@@ -47,7 +47,6 @@
 </template>
 
 <script>
-	import baseappConfig from '@/baseapp.config.js';
 	import uniShare from 'uni_modules/uni-share/js_sdk/uni-share.js';
 
 	const db = uniCloud.database();
@@ -79,7 +78,10 @@
 			...mapGetters({
 				'userInfo': 'user/info',
 				'hasLogin': 'user/hasLogin'
-			})
+			}),
+			baseappConfig(){
+				return getApp().globalData.config
+			}
 		},
 		onLoad(event) {
 			//获取真实新闻id，通常 id 来自上一个页面

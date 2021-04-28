@@ -19,13 +19,18 @@
 	</view>
 </template>
 <script>
-import baseappConfig from '@/baseapp.config.js';
 import uniShare from 'uni_modules/uni-share/js_sdk/uni-share.js';
 	export default {
 		onLoad() {
 			// #ifdef APP-PLUS
 			this.version = plus.runtime.version
 			// #endif
+		},
+		computed:{
+			baseappConfig(){
+				console.log(getApp());
+				return getApp().globalData.config
+			}
 		},
 		data() {
 			return {
@@ -35,7 +40,8 @@ import uniShare from 'uni_modules/uni-share/js_sdk/uni-share.js';
 			};
 		},
 		created() {
-			this.about = baseappConfig.about
+			console.log();
+			this.about = this.baseappConfig.about
 			uni.setNavigationBarTitle({
 				title:'关于'+this.about.appName
 			})

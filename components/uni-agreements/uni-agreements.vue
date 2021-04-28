@@ -13,7 +13,7 @@
 		name:"uni-agreements",
 		computed:{
 			agreements(){
-				return getApp().config.about.agreements
+				return getApp().globalData.config.about.agreements
 			}
 		},
 		methods:{

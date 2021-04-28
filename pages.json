@@ -3,23 +3,17 @@
 		{
 			"path": "pages/list/list",
 			"style": {
-				// #ifdef APP-NVUE
-				"enablePullDownRefresh": false,
-				// #endif
-				// #ifdef H5
 				"navigationStyle":"custom",
-				// #endif
+				"enablePullDownRefresh": true,
 				"app-plus":{
-					// #ifdef APP-PLUS
-					"titleNView":{ /*排除了H5*/
-						"searchInput":{
-							"placeholder":"请输入搜索的内容",
-							"backgroundColor":"#efefef",
-							"disabled":true,
-							"borderRadius":"30px"
-						}
-					}
-					// #endif
+					// "titleNView":{ /*排除了H5*/
+					// 	"searchInput":{
+					// 		"placeholder":"请输入搜索的内容",
+					// 		"backgroundColor":"#efefef",
+					// 		"disabled":true,
+					// 		"borderRadius":"30px"
+					// 	}
+					// }
 				}
 			}
 		},
@@ -73,7 +67,7 @@
 				"navigationBarTitleText": "文章详情"
 			}
 		}, {
-			"path": "pages/ucenter/edit/bind-mobile/bind-mobile",
+			"path": "pages/ucenter/userinfo/bind-mobile/bind-mobile",
 			"style": {
 				"navigationBarTitleText": "绑定手机号码"
 			}
@@ -162,12 +156,12 @@
 			}
 
 		}, {
-			"path": "pages/ucenter/edit/edit",
+			"path": "pages/ucenter/userinfo/userinfo",
 			"style": {
 				"navigationBarTitleText": "个人资料"
 			}
 		}, {
-			"path": "pages/ucenter/edit/uploadCutImageToUnicloud",
+			"path": "pages/ucenter/userinfo/uploadCutImageToUnicloud",
 			"style": {
 				"navigationStyle": "custom"
 			}

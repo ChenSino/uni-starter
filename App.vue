@@ -4,7 +4,8 @@
 	export default {
 		globalData: {
 			searchText: '',
-			appVersion: {}
+			appVersion: {},
+			config:{}
 		},
 		onLaunch: function() {
 			console.log('App Launch')

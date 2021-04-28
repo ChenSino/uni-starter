@@ -78,6 +78,4 @@ export default async (param,callback) => {
 			callback(e)
 		});
 	}
-
-
 }

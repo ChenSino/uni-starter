@@ -18,7 +18,7 @@ var univerify_first,currentWebview;//是否一键登陆优先
 	export default {
 		data() {
 			return {
-				phone:"17769516081"
+				phone:""
 			}
 		},
 		computed: {
