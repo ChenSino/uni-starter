@@ -6,7 +6,7 @@
 		<uni-easyinput clearable type="number" class="input-box" :inputBorder="false" v-model="formData.code" maxlength="6"
 			placeholder="请输入验证码">
 			<template slot="right">
-				<send-sms-code ref="shortCode" code-type="bind" :phone="formData.phone"></send-sms-code>
+				<uni-send-sms-code ref="shortCode" code-type="bind" :phone="formData.phone"></uni-send-sms-code>
 			</template>
 		</uni-easyinput>
 		<button class="send-btn-box" type="primary" @click="submit">提交</button>

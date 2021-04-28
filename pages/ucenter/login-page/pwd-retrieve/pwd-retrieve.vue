@@ -2,7 +2,7 @@
 	<view class="content">
 		<!-- 顶部文字 -->
 		<text class="title">重置密码</text>
-		<login-ikonw v-show="isPhone" class="login-iknow" :text="tipText"></login-ikonw>
+		<text v-show="isPhone" class="login-iknow" >{{tipText}}</text>
 		<!-- 登录框 (选择手机号所属国家和地区需要另行实现) -->
 		<uni-forms ref="form" :value="formData" :rules="rules">
 			<uni-forms-item name="phone">
@@ -14,7 +14,7 @@
 				<uni-easyinput :focus="formData.phone.length!=0" type="number" class="easyinput" :inputBorder="false"
 					v-model="formData.code" maxlength="6" placeholder="请输入验证码">
 					<template slot="right">
-						<send-sms-code ref="shortCode" :phone="formData.phone"></send-sms-code>
+						<uni-send-sms-code ref="shortCode" :phone="formData.phone"></uni-send-sms-code>
 					</template>
 				</uni-easyinput>
 			</uni-forms-item>

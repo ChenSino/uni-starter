@@ -112,7 +112,8 @@
 				return getApp().appVersion
 			}
 			// #endif
-			,appConfig(){
+			,
+			appConfig() {
 				return getApp().globalData.config
 			}
 		},
@@ -136,13 +137,14 @@
 			async checkVersion() {
 				let res = await callCheckVersion()
 				console.log(res);
-				if (res.result.code == 0) {
+				if (res.result.code > 0) {
+					checkUpdate()
+				} else {
 					uni.showToast({
 						title: res.result.message,
 						icon: 'none'
 					});
 				}
-				checkUpdate()
 			},
 			toUserInfo() {
 				uni.navigateTo({
@@ -162,7 +164,7 @@
 				// #ifdef APP-PLUS
 				if (uni.getSystemInfoSync().platform == "ios") {
 					// 这里填写appstore应用id
-					let appstoreid = this.appConfig.marketId.ios;// 'id1417078253';
+					let appstoreid = this.appConfig.marketId.ios; // 'id1417078253';
 					plus.runtime.openURL("itms-apps://" + 'itunes.apple.com/cn/app/wechat/' + appstoreid + '?mt=8');
 				}
 				if (uni.getSystemInfoSync().platform == "android") {
@@ -207,6 +209,7 @@
 	page {
 		background-color: #f8f8f8;
 	}
+
 	/* #endif*/
 
 	.center {
@@ -214,6 +217,7 @@
 		flex-direction: column;
 		background-color: #f8f8f8;
 	}
+
 	.userInfo {
 		width: 750rpx;
 		padding: 20rpx;
@@ -222,12 +226,14 @@
 		flex-direction: column;
 		align-items: center;
 	}
+
 	.logo-img {
 		width: 150rpx;
 		height: 150rpx;
 		border-radius: 150rpx;
 		border: solid 1px #FFFFFF;
 	}
+
 	.logo-title {
 		height: 150rpx;
 		flex: 1;
@@ -242,15 +248,18 @@
 		font-size: 38rpx;
 		color: #FFFFFF;
 	}
+
 	.center-list {
 		margin-bottom: 30rpx;
 		background-color: #f9f9f9;
 	}
+
 	.center-list-cell {
 		width: 750rpx;
 		background-color: #007AFF;
 		height: 40rpx;
 	}
+
 	.grid {
 		background-color: #FFFFFF;
 		margin: 25rpx 0;

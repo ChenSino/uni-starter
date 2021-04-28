@@ -60,6 +60,7 @@
 		font-family: uniicons;
 		src: url('./uni.ttf') format('truetype');
 	}
+
 	/* #endif */
 
 	.uni-icons {

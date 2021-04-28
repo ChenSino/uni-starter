@@ -7,16 +7,17 @@
 				</slot>
 			</view>
 			<input v-if="show || searchVal" :focus="showSync" :placeholder="placeholder" :maxlength="maxlength" class="uni-searchbar__box-search-input"
-			 confirm-type="search" type="text" v-model="searchVal" @confirm="confirm" @blur="blur" />
+			 confirm-type="search" type="text" v-model="searchVal" @confirm="confirm" @blur="blur" @focus="emitFocus" />
 			<text v-else class="uni-searchbar__text-placeholder">{{ placeholder }}</text>
 			<view v-if="show && (clearButton==='always'||clearButton==='auto'&&searchVal!=='')" class="uni-searchbar__box-icon-clear"
 			 @click="clear">
 				<slot name="clearIcon">
-					<uni-icons color="#c0c4cc" size="18" type="clear" />
+					<uni-icons color="#c0c4cc" size="15" type="clear" />
 				</slot>
 			</view>
 		</view>
 		<text @click="cancel" class="uni-searchbar__cancel" v-if="cancelButton ==='always' || show && cancelButton ==='auto'">{{cancelText}}</text>
+		<view v-if="disabled" @click.stop="searchCoverClick" class="uni-search-cover"></view>
 	</view>
 </template>
 
@@ -85,6 +86,10 @@
 			focus: {
 				type: Boolean,
 				default: false
+			},
+			disabled: {
+				type: Boolean,
+				default: false
 			}
 		},
 		data() {
@@ -120,6 +125,9 @@
 			}
 		},
 		methods: {
+			searchCoverClick(){
+				this.$emit('click')
+			},
 			searchClick() {
 				if (this.show) {
 					return
@@ -170,6 +178,9 @@
 				this.$emit("blur", {
 					value: this.searchVal
 				})
+			},
+			emitFocus(e) {
+				this.$emit("focus", e.detail)
 			}
 		}
 	};
@@ -205,7 +216,6 @@
 		border-style: solid;
 		border-color: $uni-border-color;
 	}
-
 	.uni-searchbar__box-icon-search {
 		/* #ifndef APP-NVUE */
 		display: flex;
@@ -246,6 +256,17 @@
 		color: $uni-text-color;
 		/* #ifdef H5 */
 		cursor: pointer;
+		/* #endif */
+	}
+	.uni-search-cover{
+		height: $uni-searchbar-height;
+		margin-top: $uni-spacing-col-base;
+		width: 750rpx;
+		position: absolute;
+		top: 0;
+		left: 0;
+		/* #ifndef APP-NVUE */
+		z-index: 99;
 		/* #endif */
 	}
 </style>

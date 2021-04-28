@@ -1,7 +1,7 @@
 <template>
 	<view class="quick-login-box">
 		<view class="item" v-for="(item,index) in servicesList" :key="index"
-			@click="item.path?to(item.path):login(item.id,false)">
+			@click="item.path?to(item.path):login_before(item.id,false)">
 			<image class="logo" :src="item.logo" mode="widthFix"></image>
 			<text class="login-title">{{item.text}}</text>
 		</view>
@@ -136,7 +136,7 @@
 					})
 				}
 			},
-			login(type, navigateBack = true) {
+			login_before(type, navigateBack = true) {
 				console.log(arguments);
 				console.log('services', services);
 				let oauthService = this.oauthServices.find((service) => service.id == type)
@@ -149,7 +149,7 @@
 							code
 						}) => {
 							console.log(code);
-							this.quickLogin({
+							this.login({
 								code
 							}, type)
 						},
@@ -171,7 +171,7 @@
 							})
 							Object.assign(e.authResult, res.userInfo)
 						}
-						this.quickLogin(e.authResult, type)
+						this.login(e.authResult, type)
 					},
 					fail: (err) => {
 						uni.hideLoading()
@@ -209,7 +209,7 @@
 					}
 				})
 			},
-			quickLogin(params, type) { //联网验证登陆
+			login(params, type) { //联网验证登陆
 				console.log(params, type);
 				this.request('user-center/login_by_' + type, params, result => {
 					console.log(result);

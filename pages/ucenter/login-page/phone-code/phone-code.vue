@@ -7,7 +7,7 @@
 			<uni-easyinput type="number" class="easyinput" :inputBorder="false"
 				v-model="code" maxlength="6" placeholder="请输入验证码">
 				<template slot="right">
-					<send-sms-code :phone="phone" ref="sendSmsCode"></send-sms-code>
+					<uni-send-sms-code :phone="phone" ref="sendSmsCode"></uni-send-sms-code>
 				</template>
 			</uni-easyinput>
 			<button class="send-btn" :disabled="!canSubmit" :type="canSubmit?'primary':'default'"

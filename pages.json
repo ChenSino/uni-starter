@@ -4,24 +4,7 @@
 			"path": "pages/list/list",
 			"style": {
 				"navigationStyle":"custom",
-				"enablePullDownRefresh": true,
-				"app-plus":{
-					// "titleNView":{ /*排除了H5*/
-					// 	"searchInput":{
-					// 		"placeholder":"请输入搜索的内容",
-					// 		"backgroundColor":"#efefef",
-					// 		"disabled":true,
-					// 		"borderRadius":"30px"
-					// 	}
-					// }
-				}
-			}
-		},
-		{
-			"path": "pages/test/test",
-			"style": {
-				"navigationBarTitleText": "测试页面",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": true
 			}
 		},
 		{
@@ -217,9 +200,6 @@
 			},
 			{
 				"path": "pages/ucenter/login-page/index/index"
-			},
-			{
-				"path": "pages/test/test"
 			},
 			{
 				"path": "pages/ucenter/settings/settings"

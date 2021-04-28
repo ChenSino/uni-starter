@@ -11,8 +11,8 @@
 			<uni-list-item title="清理缓存" @click="clearTmp" link></uni-list-item>
 			<uni-list-item v-if="pushIsOn != 'wait'" @click.native="openSetting()" title="推送功能" showSwitch :switchChecked="pushIsOn"></uni-list-item>
 			<!-- #endif -->
-			<uni-list-item v-if="supportMode.includes('fingerPrint')" title="指纹解锁" @click="startSoterAuthentication('fingerPrint','指纹解锁')" link></uni-list-item>
-			<uni-list-item v-if="supportMode.includes('facial')" title="人脸解锁" @click="startSoterAuthentication('facial','人脸解锁')" link></uni-list-item>
+			<uni-list-item v-if="supportMode.includes('fingerPrint')" title="指纹解锁" @click="startSoterAuthentication('fingerPrint')" link></uni-list-item>
+			<uni-list-item v-if="supportMode.includes('facial')" title="人脸解锁" @click="startSoterAuthentication('facial')" link></uni-list-item>
 		</uni-list>
 		
 		<!-- 退出/登陆 按钮 -->
@@ -78,8 +78,7 @@
 			changePwd() {
 				uni.navigateTo({
 					url: '/pages/ucenter/login-page/pwd-retrieve/pwd-retrieve?phoneNumber='
-						+ (this.userInfo && this.userInfo.phone ? this.userInfo.phone : '')
-						+ '&phoneArea=+86',
+						+ (this.userInfo && this.userInfo.phone ? this.userInfo.phone : ''),
 					fail: err => {
 						console.log(err);
 					}
@@ -88,13 +87,14 @@
 			/**
 			 * 开始生物认证
 			 */
-			startSoterAuthentication(requestAuthMode,title) {
+			startSoterAuthentication(checkAuthMode) {
+				let title = {"fingerPrint":"指纹解锁","facial":"人脸解锁"}[checkAuthMode]
 				// 检查是否开启认证
-				this.checkIsSoterEnrolledInDevice({name:requestAuthMode,title:title})
+				this.checkIsSoterEnrolledInDevice({checkAuthMode,title})
 					.then(() => {
 						// 开始认证
 						uni.startSoterAuthentication({
-							requestAuthModes: [requestAuthMode],
+							checkAuthModes: [requestAuthMode],
 							challenge: '123456', // 微信端挑战因子
 							authContent: `请用${title}`,
 							success: (res) => {
@@ -126,23 +126,23 @@
 						})
 					})
 			},
-			checkIsSoterEnrolledInDevice(mode) {
+			checkIsSoterEnrolledInDevice({checkAuthMode,title}) {
 				return new Promise((resolve, reject) => {
 					uni.checkIsSoterEnrolledInDevice({
-						checkAuthMode: mode.name,
+						checkAuthMode: checkAuthMode,
 						success: (res) => {
 							if (res.isEnrolled) {
 								return resolve(res);
 							}
 							uni.showToast({
-								title: `设备未开启${mode.title}`,
+								title: `设备未开启${title}`,
 								icon: 'none'
 							});
 							reject(res);
 						},
 						fail: (err) => {
 							uni.showToast({
-								title: `${mode.title}失败`,
+								title: `${title}失败`,
 								icon: 'none'
 							});
 							reject(err);

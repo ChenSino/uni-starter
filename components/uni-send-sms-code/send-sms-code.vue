@@ -20,7 +20,7 @@
 		}
 	}
 	export default {
-		name: "send-sms-code",
+		name: "uni-send-sms-code",
 		props: {
 			/**
 			 * 倒计时时长 s
