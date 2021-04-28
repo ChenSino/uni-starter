@@ -1,5 +1,5 @@
-插件来源：[https://ext.dcloud.net.cn/plugin?id=3594](https://ext.dcloud.net.cn/plugin?id=3594)
-以下是插件作者的插件介绍：
+> 插件来源：[https://ext.dcloud.net.cn/plugin?id=3594](https://ext.dcloud.net.cn/plugin?id=3594)
+##### 以下是作者写的插件介绍：
 
 # Clipper 图片裁剪
 > uniapp 图片裁剪，可用于图片头像等裁剪处理

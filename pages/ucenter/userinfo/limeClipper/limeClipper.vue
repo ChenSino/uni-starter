@@ -689,6 +689,6 @@ export default {
 };
 </script>
 
-<style lang="stylus" scoped>
-@import './index'
+<style scoped>
+@import './index.css'
 </style>

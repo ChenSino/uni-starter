@@ -79,7 +79,7 @@
 				'userInfo': 'user/info',
 				'hasLogin': 'user/hasLogin'
 			}),
-			baseappConfig(){
+			baseappConfig() {
 				return getApp().globalData.config
 			}
 		},
@@ -143,8 +143,6 @@
 					.catch(err => {
 						console.log(err);
 					})
-
-
 			},
 			loadData(data) {
 				//如果上一页未传递标题过来（如搜索直达详情），则从新闻详情中读取标题

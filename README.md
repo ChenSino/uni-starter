@@ -25,3 +25,13 @@ base app将节省开发者大量的时间，让开发者集中精力在自己的
 有了base app，再加上schema2code生成前端页面，一个简单应用就可以快速完成。
 
 base app + uniCloud admin，应用开发从未如此简单快捷！
+
+baseapp中的主要功能，插件列表
+1. uni-id用户体系 [uni-id](https://uniapp.dcloud.io/uniCloud/uni-id)
+2. 分享功能插件 [uni-share](https://ext.dcloud.net.cn/plugin?id=4860)
+3. 升级中心	[uni-upgrade-center](https://ext.dcloud.net.cn/plugin?id=4542)
+4. 云端一体搜索模板 [uni-search-template](https://ext.dcloud.net.cn/plugin?id=3851)
+
+第三方插件（感谢插件作者，排名不分前后）：
+1. [limeClipper](https://ext.dcloud.net.cn/plugin?id=3594) @作者： 陌上华年
+2. [Sansnn-uQRCode](https://ext.dcloud.net.cn/plugin?id=1287) @作者： 3snn
