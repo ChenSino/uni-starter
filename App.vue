@@ -9,7 +9,9 @@
 		},
 		onLaunch: function() {
 			console.log('App Launch')
+			
 			initApp();
+			
 			// #ifdef APP-PLUS
 			//checkIsAgree(); 暂时先用默认生成的，自定义的等待原生支持后实现。因为启动vue界面时已经，请求了部分权限这并不符合国家的法规
 			// #endif

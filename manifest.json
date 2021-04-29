@@ -110,11 +110,11 @@
         "appid" : "wx07597007230e3702",
         "setting" : {
             "urlCheck" : false,
-            "es6" : false
+            "es6" : true
         },
-        "usingComponents" : true
+        "usingComponents" : true ,
+		"betterScopedSlots" : true
     },
-    // "betterScopedSlots" : true
     "mp-alipay" : {
         "usingComponents" : true
     },

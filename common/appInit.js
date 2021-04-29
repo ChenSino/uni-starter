@@ -1,16 +1,19 @@
-//应用初始化页
 import baseappConfig from '@/baseapp.config.js';
+//应用初始化页
 // #ifdef APP-PLUS
 import checkUpdate from '@/uni_modules/uni-upgrade-center-app/utils/check-update';
 import callCheckVersion from '@/uni_modules/uni-upgrade-center-app/utils/call-check-version';
 // #endif
 export default function() {
+	
+	setTimeout(()=>{
+		// baseappConfig挂载到getApp().
+		const app = getApp({allowDefault: true})
+		app.globalData.config = baseappConfig;
+	},30)
+	
 	// 初始化appVersion（仅app生效）
 	initAppVersion();
-
-	// baseappConfig挂载到getApp().
-	getApp({allowDefault: true}).globalData.config = baseappConfig;
-	
 	/*
 		这里应用拦截器实现了，路由拦截。当应用无访问摄像头/相册权限，引导跳到设置界面
 		1.添加拦截器说明如下：

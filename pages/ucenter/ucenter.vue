@@ -8,13 +8,13 @@
 			</view>
 		</view>
 		<uni-grid class="grid" :column="5" :showBorder="false" :square="true">
-			<uni-grid-item class="item" v-for="(item,index) in gridList" @click.native="tapGrid(index)">
+			<uni-grid-item class="item" v-for="(item,index) in gridList" @click.native="tapGrid(index)" :key="index">
 				<uni-icons class="icon" color="#5d5e64" :type="item.icon" size="28"></uni-icons>
 				<text class="text">{{item.text}}</text>
 			</uni-grid-item>
 		</uni-grid>
-		<uni-list class="center-list" v-for="(sublist , index) in ucenterList">
-			<uni-list-item v-for="item in sublist" :title="item.title" link :rightText="item.rightText"
+		<uni-list class="center-list" v-for="(sublist , index) in ucenterList" :key="index">
+			<uni-list-item v-for="(item,i) in sublist" :title="item.title" link :rightText="item.rightText" :key="i"
 				:clickable="true" :to="item.to" @click="ucenterListClick(item)">
 				<view v-if="item.showBadge" class="item-footer" slot="footer">
 					<text class="item-footer-text">{{item.rightText}}</text>

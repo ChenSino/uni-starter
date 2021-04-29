@@ -2,7 +2,7 @@
 	"id": "uniCloud-base-app",
 	"displayName": "baseApp",
 	"version": "1.0.0",
-	"description": "云端一体项目基础功能示例",
+	"description": "集成了商用项目开发常见功能的项目模板",
 	"keywords": [
 		"baseApp",
 		"login",
@@ -20,7 +20,7 @@
 	"dcloudext": {
 		"category": [
 			"uniCloud",
-			"云端一体项目基础功能示例"
+			"集成了商用项目开发常见功能的项目模板"
 		],
 		"sale": {
 			"regular": {
