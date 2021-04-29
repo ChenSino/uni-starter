@@ -1,6 +1,6 @@
 {
     "name" : "base-app",
-    "appid" : "__UNI__03B096E",
+    "appid" : "",
     "description" : "",
     "versionName" : "1.0.0",
     "versionCode" : "100",
@@ -75,7 +75,7 @@
                 "oauth" : {
                     "univerify" : {},
                     "weixin" : {
-                        "appid" : "wxffdd8fa6ec4ef2a0",
+                        "appid" : "",
                         "appsecret" : "",
                         "UniversalLinks" : ""
                     },
@@ -84,7 +84,7 @@
                 "ad" : {},
                 "share" : {
                     "weixin" : {
-                        "appid" : "wxffdd8fa6ec4ef2a0",
+                        "appid" : "",
                         "UniversalLinks" : ""
                     }
                 },
@@ -95,7 +95,7 @@
                 "payment" : {
                     "weixin" : {
                         "__platform__" : [ "ios", "android" ],
-                        "appid" : "wxffdd8fa6ec4ef2a0",
+                        "appid" : "",
                         "UniversalLinks" : ""
                     }
                 }
@@ -107,7 +107,7 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "wx07597007230e3702",
+        "appid" : "",
         "setting" : {
             "urlCheck" : false,
             "es6" : true
