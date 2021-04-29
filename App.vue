@@ -16,17 +16,8 @@
 			//checkIsAgree(); 暂时先用默认生成的，自定义的等待原生支持后实现。因为启动vue界面时已经，请求了部分权限这并不符合国家的法规
 			// #endif
 
-			//#ifdef APP-NVUE || H5
-			//预加载设置页面
-			uni.preloadPage({
-				url: "/pages/ucenter/settings/settings",
-				complete: e => {
-					// console.log(e);
-				}
-			});
-			//#endif
 			// #ifdef APP-PLUS
-			//预加载一键登录
+			//一键登录 功能预登陆
 			plus.oauth.getServices(oauthServices => {
 				// console.log(oauthServices);
 				oauthServices.forEach(({

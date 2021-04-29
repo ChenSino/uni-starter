@@ -15,23 +15,7 @@ export default function() {
 	// 初始化appVersion（仅app生效）
 	initAppVersion();
 	/*
-		这里应用拦截器实现了，路由拦截。当应用无访问摄像头/相册权限，引导跳到设置界面
-		1.添加拦截器说明如下：
-			uni.addInterceptor(item, {
-				invoke(e) { // 调用前拦截
-				},
-				success() { // 成功回调拦截 
-				},
-				fail(err) { // 失败回调拦截 
-					console.log(err);
-				},
-				complete(e) { // 完成回调拦截 
-					//console.log(e);
-				},
-				returnValue() { // 返回结果拦截 
-				}
-			})
-		2.移除拦截器API removeInterceptor('request')
+		这里应用了[拦截器](https://uniapp.dcloud.io/api/interceptor?id=addinterceptor)实现了，路由拦截。当应用无访问摄像头/相册权限，引导跳到设置界面
 	*/
 	//自定义路由拦截
 	const {
@@ -130,7 +114,6 @@ export default function() {
 				duration:3000
 			})
 		}else{
-			showNetworkErrPage()
 			uni.showToast({
 				title:'网络类型：'+res.networkType,
 				icon:'none',
