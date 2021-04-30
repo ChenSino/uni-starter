@@ -14,7 +14,6 @@
 					</uni-list-item>
 				</uni-list>
 			</view>
-			<uni-nodata v-else :isLoading="isLoading" @retry="refreshData"></uni-nodata>
 			<uni-load-more v-if="data.length>10" :status="loading?'loading':(hasMore ? 'more' : 'noMore')"></uni-load-more>
 		</unicloud-db>
 	</view>

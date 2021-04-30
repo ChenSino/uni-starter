@@ -3,7 +3,7 @@
 		<!-- 顶部文字 -->
 		<text class="title">用户名密码登录</text>
 		<uni-agreements></uni-agreements>
-		<input type="number" class="input-box" :inputBorder="false" v-model="username" maxlength="11" placeholder="请输入手机号/用户名"></input>
+		<input type="number" class="input-box" :inputBorder="false" v-model="username" placeholder="请输入手机号/用户名"></input>
 		<input type="password" class="input-box" :inputBorder="false" v-model="password" placeholder="请输入密码"></input>
 		<button class="send-btn" :disabled="!canLogin" :type="canLogin?'primary':'default'" @click="pwdLogin">登录</button>
 		<!-- 忘记密码 -->

@@ -124,14 +124,6 @@ exports.main = async (event, context) => {
 				mobile: params.mobile,
 				code: params.code
 			});
-			// let verifyCode = await uniID.verifyCode({
-			// 	mobile: params.mobile,
-			// 	code: params.code
-			// })
-			// if (verifyCode.code === 0) {
-			// } else {
-			// 	res = verifyCode
-			// }
 			res = await uniID.bindMobile({
 				uid: params.uid,
 				mobile: params.mobile,
@@ -159,8 +151,7 @@ exports.main = async (event, context) => {
 				username,
 				password,
 				gender,
-				nickname,
-				password
+				nickname
 			});
 			if (res.code === 0) {
 				await registerSuccess(res.uid)

@@ -3,8 +3,9 @@
 		<!-- 功能列表 -->
 		<uni-list class="mt10">
 			<uni-list-item title="个人资料" to="/pages/ucenter/userinfo/userinfo" link="navigateTo"></uni-list-item>
-			<uni-list-item v-if="userInfo.phone" title="修改密码" :to="'/pages/ucenter/login-page/pwd-retrieve/pwd-retrieve?phoneNumber='+ userInfo.phone" link="navigateTo"></uni-list-item>
+			<uni-list-item v-if="userInfo.mobile" title="修改密码" :to="'/pages/ucenter/login-page/pwd-retrieve/pwd-retrieve?phoneNumber='+ userInfo.mobile" link="navigateTo"></uni-list-item>
 		</uni-list>
+		<!-- #ifndef H5 -->
 		<uni-list class="mt10">
 			<!-- #ifdef APP-PLUS -->
 			<!-- 检查push过程未结束不显示，push设置项 -->
@@ -14,6 +15,7 @@
 			<uni-list-item v-if="supportMode.includes('fingerPrint')" title="指纹解锁" @click="startSoterAuthentication('fingerPrint')" link></uni-list-item>
 			<uni-list-item v-if="supportMode.includes('facial')" title="人脸解锁" @click="startSoterAuthentication('facial')" link></uni-list-item>
 		</uni-list>
+		<!-- #endif -->
 		
 		<!-- 退出/登陆 按钮 -->
 		<view class="bottom-back" @click="clickLogout">
@@ -53,7 +55,7 @@
 					this.supportMode = res.supportMode
 				},
 				fail: (err) => {
-					reject(err);
+					console.log(err);
 				}
 			})
 			// #endif
@@ -78,7 +80,7 @@
 			changePwd() {
 				uni.navigateTo({
 					url: '/pages/ucenter/login-page/pwd-retrieve/pwd-retrieve?phoneNumber='
-						+ (this.userInfo && this.userInfo.phone ? this.userInfo.phone : ''),
+						+ (this.userInfo && this.userInfo.mobile ? this.userInfo.mobile : ''),
 					fail: err => {
 						console.log(err);
 					}
@@ -117,6 +119,7 @@
 								});
 							},
 							fail: (err) => {
+								console.log(err);
 								console.log(`认证失败:${err.errCode}`);
 								uni.showToast({
 									title: `认证失败`,
@@ -129,7 +132,7 @@
 			checkIsSoterEnrolledInDevice({checkAuthMode,title}) {
 				return new Promise((resolve, reject) => {
 					uni.checkIsSoterEnrolledInDevice({
-						checkAuthMode: checkAuthMode,
+						checkAuthMode,
 						success: (res) => {
 							if (res.isEnrolled) {
 								return resolve(res);
@@ -141,6 +144,7 @@
 							reject(res);
 						},
 						fail: (err) => {
+							console.log(err);
 							uni.showToast({
 								title: `${title}失败`,
 								icon: 'none'

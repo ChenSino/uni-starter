@@ -1,19 +1,14 @@
-> baseapp目前还处于内测阶段，内测QQ群号：869926521，欢迎大家加入！内测期间享受有疑问实时解答的福利。
-> 内测群反馈的已知问题，正在修复中
-- [ ] 账号登录限制11位了。注册的时候好像没限制
-- [ ] 缺了小程序授权登陆
-- [ ] 服务端，应当加个空的config配置方便二开使用
-- [ ] 密码注册把pwd2也存在本地了，暴露了密码
+> base app目前还处于内测阶段，内测QQ群号：869926521，欢迎大家加入！内测期间享受有疑问实时解答的福利。
 
 ### 介绍
-base app，是一个云端一体的、集成了商用项目开发常见功能的项目模板。
+`base app`，是一个云端一体的、集成了商用项目开发常见功能的项目模板。
 如果说uniCloud admin是管理端项目的基础模板，那么base app则是用户端、尤其是移动端的基础模板。
 在HBuilderX新建项目时选择base app项目模板，在这个模板基础之上快速填充自己的业务，即可很快完成一个应用。
 地址：[https://gitee.com/dcloud/base-app](https://gitee.com/dcloud/base-app)
 
 #### 项目背景
 我们一直想出一个结合uni-app、uniCloud和openDB以及uni-id和uniCloud admin等，uni全家桶的项目模板；
-为了照顾各类应用的开发者，我们取交最终集罗列了如下功能，发现这些就是除业务逻辑外的项目基本功能并把它命名为baseapp。
+为了照顾各类应用的开发者，我们取交最终集罗列了如下功能，发现这些就是除业务逻辑外的项目基本功能并把它命名为`base app`。
 
 ### base app集成的功能包括：
 1. 个人中心：登录注册（含用户名密码登录、手机号验证码登录、app一键登陆、微信登录、Apple登录、支付宝小程序登录）、修改密码、忘记密码、头像更换、昵称修改、积分查看、指纹绑定、退出
@@ -33,6 +28,47 @@ base app将节省开发者大量的时间，让开发者集中精力在自己的
 有了base app，再加上schema2code生成前端页面，一个简单应用就可以快速完成。
 base app + uniCloud admin，应用开发从未如此简单快捷！
 
+### 应用配置
+cloudfunctions
+└─────common 公共模块
+│		└─uni-config-center			// baseapp的服务端配置中心，项目所有云函数的配置在这里填写
+│			├─index.js				// config-center入口文件
+│			└─uni-id				// 插件uni-id对应的目录
+│				├─config.json		// uni-id对应的配置文件
+│				└─file.cert			// uni-id依赖的其他文件,假如你使用微信发红包功能，需要的证书文件就是放到这里
+├─ baseconfig						// baseapp的前端的配置文件，项目所有模块的配置在这里填写。详见该文件的代码注释。
+└─ manifest.json					// 配置应用名称、appid、logo、版本等打包信息，[详情](https://uniapp.dcloud.io/collocation/manifest)
+
+完整的uni-app目录结构[详情](https://uniapp.dcloud.io/frame?id=%e7%9b%ae%e5%bd%95%e7%bb%93%e6%9e%84)
+#### 1. manifest.json配置
+
+完成如下配置：
+- App模块配置 --> OAuth（登录鉴权）--> 勾选微信登录 --> 填写`appid`、`appsecret`、`ios平台通用链接`
+- App模块配置 --> OAuth（登录鉴权）勾选`苹果登录`，[IOS苹果授权登录参考文档](https://ask.dcloud.net.cn/article/36651)。如不发布到Appstore，不需要配置此项
+- App模块配置 --> Share（分享）--> 微信分享 --> 填写`appid`、`ios平台通用链接`
+- App常用其他设置  --> 填写关联域Associated Domains  [参考教程](https://ask.dcloud.net.cn/article/36393)。如不发布到Appstore，不需要配置此项
+
+#### 2. uni-id配置
+
+在项目目录`uniCloud`--> `cloudfunctions`--> `common`--> `uni-config-center`--> `uni-id`--> `config.json`文件里：
+
+- 微信登录填写`appid` 、`appsecret`,在微信开放平台查看，[微信开放平台](https://open.weixin.qq.com/)
+- 苹果登录需要配置，`app-plus`-->  `oauth`-->  `apple`，填写包名`bundleId`
+
+### 界面如下：
+
+## 项目构成
+#### baseapp中的主要模块介绍
+1. uni-id用户体系 [uni-id](https://uniapp.dcloud.io/uniCloud/uni-id)
+2. uniCloud 配置中心 [uni-config-center](https://ext.dcloud.net.cn/plugin?id=4425)
+2. 分享功能插件 [uni-share](https://ext.dcloud.net.cn/plugin?id=4860)
+3. 升级中心	[uni-upgrade-center](https://ext.dcloud.net.cn/plugin?id=4542)
+4. 云端一体搜索模板 [uni-search-template](https://ext.dcloud.net.cn/plugin?id=3851)
+
+#### 第三方插件（感谢插件作者，排名不分前后）：
+1. [limeClipper](https://ext.dcloud.net.cn/plugin?id=3594) @作者： 陌上华年
+2. [Sansnn-uQRCode](https://ext.dcloud.net.cn/plugin?id=1287) @作者： 3snn
+
 #### 时序介绍
 	初始化应用执行appInit
 		读取baseapp.config并挂载到globalData的config下
@@ -44,33 +80,11 @@ base app + uniCloud admin，应用开发从未如此简单快捷！
 	全局监听clientDB的err事件，判断是否为token过期失效等需要重新登陆的问题。自动跳转到登陆页面
 	判断入口页是否为强制登陆页面，Y.检测本地的token是否有效（存在且并未过期）否则跳转到登陆页面
 
-#### 应用配置
-|	|_cloudfunctions
-|		|_common
-|			|_uni-config-center
-|				|_uni-id
-|					|_config.json
-|- baseconfig
-|- manifest.json
-### 界面如下：
-
-
-## 项目构成
-#### baseapp中的主要模块介绍
-1. uni-id用户体系 [uni-id](https://uniapp.dcloud.io/uniCloud/uni-id)
-2. 分享功能插件 [uni-share](https://ext.dcloud.net.cn/plugin?id=4860)
-3. 升级中心	[uni-upgrade-center](https://ext.dcloud.net.cn/plugin?id=4542)
-4. 云端一体搜索模板 [uni-search-template](https://ext.dcloud.net.cn/plugin?id=3851)
-
-#### 第三方插件（感谢插件作者，排名不分前后）：
-1. [limeClipper](https://ext.dcloud.net.cn/plugin?id=3594) @作者： 陌上华年
-2. [Sansnn-uQRCode](https://ext.dcloud.net.cn/plugin?id=1287) @作者： 3snn
-
 ## 真机体验快速部署流程
 
 #### 1. 开通uniCloud
 
-- 开通uniCloud：本项目是云端一体的，它的云端代码需要部署在uniCloud云服务空间里，需要开通uniCloud。在[https://unicloud.dcloud.net.cn/](https://unicloud.dcloud.net.cn/)登录，按云厂商要求进行实名认证。
+- 开通`uniCloud`：本项目是云端一体的，它的云端代码需要部署在uniCloud云服务空间里，需要开通uniCloud。在[https://unicloud.dcloud.net.cn/](https://unicloud.dcloud.net.cn/)登录，按云厂商要求进行实名认证。
 - 在uniCloud认证通过后，创建一个服务空间给本项目使用。选择阿里云或腾讯云均可。[参考](https://uniapp.dcloud.net.cn/uniCloud/price)
 - 使用HBuilderX 3.1以上版本（最好是最新版），把本项目导入到HBuilderX中，在项目根目录uniCloud上点右键菜单，关联服务空间 -> 选择之前创建的服务空间
 
@@ -136,56 +150,8 @@ base app + uniCloud admin，应用开发从未如此简单快捷！
 
 以上业务都有审核周期，请提前处理。
 
-### 配置参数
-
-#### 1. manifest.json配置
-
-完成如下配置：
-
-
-- App模块配置 --> OAuth（登录鉴权）--> 勾选微信登录 --> 填写`appid`、`appsecret`、`ios平台通用链接`（如不发布到Appstore，不需要填通用链接）
-- App模块配置 --> OAuth（登录鉴权）勾选`苹果登录`，[IOS苹果授权登录参考文档](https://ask.dcloud.net.cn/article/36651)。如不发布到Appstore，不需要配置此项
-- App模块配置 --> Share（分享）--> 微信分享 --> 填写`appid`、`ios平台通用链接`（如不发布到Appstore，不需要填通用链接。）
-- App常用其他设置  --> 填写关联域Associated Domains  [参考教程](https://ask.dcloud.net.cn/article/36393)。如不发布到Appstore，不需要配置此项
-
-#### 2. uni-id配置
-
-在项目目录`uniCloud`--> `cloudfunctions`--> `common`--> `uni-config-center`--> `uni-id`--> `config.json`文件里：
-
-- 微信登录填写`appid` 、`appsecret`,在微信开放平台查看，[微信开放平台](https://open.weixin.qq.com/)
-- 苹果登录需要配置，`app-plus`-->  `oauth`-->  `apple`，填写包名`bundleId`
-
-
-
-#### 3. 申请接入微信商户支付
-
-在项目目录`uniCloud`--> `cloudfunctions`目录
-- `minectrl`--> `controller`--> `mine.js`配置如下：
-- `uni-admin`--> `controller`--> `admin.js`配置如下：
-
-```js
-	appid: 'wxxxxxxxxxxxxxxx', //公众号id
-	mchid: '00000000000', //商户id
-	partnerKey: 'xxxxxxxxxxxxxxxxxxxxx', //安全密钥
-```
-
-教程参考，[微信App支付功能申请](https://uniapp.dcloud.net.cn/api/plugins/payment?id=app%e5%b9%b3%e5%8f%b0%e6%94%af%e4%bb%98%e6%b5%81%e7%a8%8b)
-
-对 `uniCloud`--> `cloudfunctions`目录点右键，上传所有云函数及公共模块。
-
-#### 5. 配置分享下载链接
-
-裂变拉新是必要的传播手段，本项目集成了DCloud的[应用发行平台](https://www.dcloud.io/dportal.html)服务，直接提供了分享下载的功能。
-
-1. 申请开通m3w服务：加入qq群645630288，向管理员提供appid，管理员审核
-2. 在HBuilderX中选择好本项目，点菜单发行 -> 生成统一发布页面，在新界面上传图文介绍，就会得到一个短网址
-3. 在项目根目录`common`--> `globalunit.js`里面修改`downloadurl`下载地址为上一步得到的短网址
-
-
 #### 7. APP云打包
-
-IOS和Android云打包，配置正确的包名，勾选广告，打包。
-
+IOS和Android云打包，配置正确的包名，打包。
 注意：打包安卓或者苹果时，需要在开发者中心后台一键登录中配置相应平台的Android 包名或IOS BundleId 。
 
 

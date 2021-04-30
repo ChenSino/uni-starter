@@ -9,7 +9,6 @@
 					</uni-collapse-item>
 				</uni-collapse>
 			</view>
-			<uni-nodata v-else :isLoading="isLoading" @retry="refreshData"></uni-nodata>
 		</unicloud-db>
 		<uni-fab ref="fab" horizontal="right" vertical="bottom" :pop-menu="false" @fabClick="fabClick" />
 	</view>

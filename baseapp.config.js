@@ -35,20 +35,27 @@ module.exports = {
 			如果你需要在不同平台有不同的配置，直接用条件编译即可
 		*/
 	},
+	//关于应用
 	"about": {
+		//应用名称
 		"appName": "base-app",
+		//应用logo
 		"logo": "/static/logo.png",
+		//公司名称
 		"company": "数字天堂（北京）网络技术有限公司",
+		//口号
 		"slogan": "为开发而生",
+		//政策协议
 		"agreements": [{
-				"title": "用户服务协议",
-				"url": "https://ask.dcloud.net.cn/protocol.html"
+				"title": "用户服务协议", //协议名称
+				"url": "https://ask.dcloud.net.cn/protocol.html" //对应的网络链接
 			},
 			{
 				"title": "隐私政策",
 				"url": "https://ask.dcloud.net.cn/protocol.html"
 			}
 		],
+		//应用的链接，用于分享到第三方平台和生成关于我们页的二维码
 		"download": "https://m3w.cn/uniapp"
 	},
 	//用于打开应用市场评分界面
