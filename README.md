@@ -29,6 +29,7 @@ base app将节省开发者大量的时间，让开发者集中精力在自己的
 base app + uniCloud admin，应用开发从未如此简单快捷！
 
 ### 应用配置
+<pre>
 cloudfunctions
 └─────common 公共模块
 │		└─uni-config-center			// baseapp的服务端配置中心，项目所有云函数的配置在这里填写
@@ -38,7 +39,7 @@ cloudfunctions
 │				└─file.cert			// uni-id依赖的其他文件,假如你使用微信发红包功能，需要的证书文件就是放到这里
 ├─ baseconfig						// baseapp的前端的配置文件，项目所有模块的配置在这里填写。详见该文件的代码注释。
 └─ manifest.json					// 配置应用名称、appid、logo、版本等打包信息，[详情](https://uniapp.dcloud.io/collocation/manifest)
-
+</pre>
 完整的uni-app目录结构[详情](https://uniapp.dcloud.io/frame?id=%e7%9b%ae%e5%bd%95%e7%bb%93%e6%9e%84)
 #### 1. manifest.json配置
 
