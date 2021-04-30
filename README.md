@@ -52,7 +52,6 @@ cloudfunctions
 #### 2. uni-id配置
 
 在项目目录`uniCloud`--> `cloudfunctions`--> `common`--> `uni-config-center`--> `uni-id`--> `config.json`文件里：
-
 - 微信登录填写`appid` 、`appsecret`,在微信开放平台查看，[微信开放平台](https://open.weixin.qq.com/)
 - 苹果登录需要配置，`app-plus`-->  `oauth`-->  `apple`，填写包名`bundleId`
 
