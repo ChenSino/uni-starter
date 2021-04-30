@@ -50,7 +50,7 @@
 	import uniShare from 'uni_modules/uni-share/js_sdk/uni-share.js';
 
 	const db = uniCloud.database();
-	const newsFavoriteTable = db.collection('opendb-news-favorite')
+	const readNewsLog = db.collection('read-news-log')
 	import {
 		mapGetters
 	} from 'vuex';
@@ -114,35 +114,26 @@
 		},
 		methods: {
 			setFavorite() {
-				if (!this.hasLogin) return
-				newsFavoriteTable.where({
-						article_id: this.id,
-						user_id: this.userInfo._id
-					})
-					.get()
-					.then(res => {
-						let value = {
-							article_id: this.id,
-							article_title: this.title,
-							user_id: this.userInfo._id,
-							update_date: Date.now()
-						}
-						if (res.result.data.length == 0) {
-							return newsFavoriteTable.add(value)
-						} else {
-							return newsFavoriteTable.where({
-									article_id: this.id,
-									user_id: this.userInfo._id
+				if (!this.hasLogin){
+					return console.log('未登陆用户');
+				}
+				let article_id = this.id,
+					last_time = Date.now();
+					console.log({article_id,last_time});
+					readNewsLog.where(`"article_id" == "${article_id}" && "user_id"==$env.uid`)
+						.update({last_time})
+						.then(({result:{updated}}) => {
+							console.log('updated',updated);
+							if (!updated) {
+								readNewsLog.add({article_id}).then(e=>{
+									console.log(e);
+								}).catch(err => {
+									console.log(err);
 								})
-								.update(value)
-						}
-					})
-					.then(res => {
-						// console.log(res);
-					})
-					.catch(err => {
-						console.log(err);
-					})
+							}
+						}).catch(err => {
+							console.log(err);
+						})
 			},
 			loadData(data) {
 				//如果上一页未传递标题过来（如搜索直达详情），则从新闻详情中读取标题

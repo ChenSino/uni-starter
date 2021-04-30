@@ -133,7 +133,7 @@ exports.main = async (event, context) => {
 			break;
 		case 'register':
 			let {
-				username, password, gender, nickname
+				username, password, nickname
 			} = params
 			if (/^1\d{10}$/.test(username)) {
 				return {
@@ -150,7 +150,6 @@ exports.main = async (event, context) => {
 			res = await uniID.register({
 				username,
 				password,
-				gender,
 				nickname
 			});
 			if (res.code === 0) {
