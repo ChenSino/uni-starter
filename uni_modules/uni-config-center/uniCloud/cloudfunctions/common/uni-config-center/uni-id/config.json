@@ -12,7 +12,7 @@
 		"tokenExpiresIn": 2592000,
 		"oauth": {
 			"weixin": {
-				"appid": "",
+				"appid": "999",
 				"appsecret": ""
 			},
 			"apple": {
