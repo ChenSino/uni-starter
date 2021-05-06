@@ -30,7 +30,6 @@
         },
         /* 模块配置 */
         "modules" : {
-            "OAuth" : {},
             "Fingerprint" : {},
             "Share" : {},
             "Push" : {},
