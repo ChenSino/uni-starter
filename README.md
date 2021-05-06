@@ -65,16 +65,19 @@ cloudfunctions
 	+ 更多`uni-upgrade-center`的介绍 [详情](https://uniapp.dcloud.io/uniCloud/upgrade-center)
 
 ### 时序介绍
-	初始化应用执行appInit
-		读取baseapp.config并挂载到globalData的config下
-		读取应用版本号，检查是否有可更新的版本。并存到globalData下
-		使用[拦截器](https://uniapp.dcloud.io/api/interceptor?id=addinterceptor)
-			实现了，1、路由拦截。2、摄像头/相册权限，引导跳到设置界面
-		监听网络的变化与toast方式提醒
-	预登陆一键登录功能
-	全局监听clientDB的err事件，判断是否为token过期失效等需要重新登陆的问题。自动跳转到登陆页面
-	判断入口页是否为强制登陆页面，检测本地的token是否有效（存在且并未过期）否则跳转到登陆页面
-
+1. 初始化应用执行appInit
+	1. 读取baseapp.config并挂载到globalData的config下
+	2. 读取应用版本号，并存到globalData下。
+	3. 检查是否有可更新的应用版本。
+	4. 使用[拦截器](https://uniapp.dcloud.io/api/interceptor?id=addinterceptor) 实现了，
+	 - 强制登陆路由拦截。
+	 - 摄像头/相册权限，引导跳到设置界面
+2. 全局监听
+	1. 网络的变化与toast方式提醒
+	2. clientDB的err事件，
+		- 判断是否为token过期失效等需要重新登陆的问题。自动跳转到登陆页面
+		- 检测本地的token是否有效（存在且并未过期）否则跳转到登陆页面
+3. 预登陆一键登录功能
 ## 快速体验部署流程
 #### 1. 开通uniCloud
 - 开通`uniCloud`：本项目是云端一体的，它的云端代码需要部署在uniCloud云服务空间里，需要开通uniCloud。在[https://unicloud.dcloud.net.cn/](https://unicloud.dcloud.net.cn/)登录，按云厂商要求进行实名认证。
@@ -103,5 +106,5 @@ cloudfunctions
 2. 本项目代码可以商用，无需为DCloud付费。但不能把本项目的代码改造用于非uni-app和uniCloud的技术体系。即，不能将后台改成php、java等其他后台，这将违反使用许可协议。
 
 ### 第三方插件（感谢插件作者，排名不分前后）：
-1. [limeClipper](https://ext.dcloud.net.cn/plugin?id=3594) @作者： 陌上华年
-2. [Sansnn-uQRCode](https://ext.dcloud.net.cn/plugin?id=1287) @作者： 3snn
+1. 图片裁剪 [limeClipper](https://ext.dcloud.net.cn/plugin?id=3594) @作者： 陌上华年
+2. 二维码生成 [Sansnn-uQRCode](https://ext.dcloud.net.cn/plugin?id=1287) @作者： 3snn
