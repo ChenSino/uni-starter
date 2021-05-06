@@ -11,12 +11,23 @@
 为了照顾各类应用的开发者，我们取交集最终罗列了如下功能，发现这些就是除业务逻辑外的项目基本功能并把它命名为`base app`。
 
 ### 界面效果
-
-<img style="width:200px;margin:5px 5vw 0 0;float:left" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/61e0f3d3-d726-4973-865c-e6ee0bdd0870.jpg" />
-<img style="width:200px;margin:5px 5vw 0 0;float:left" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/644bab3c-1f90-46ba-a920-f464b52d0e36.jpg" />
-<img style="width:200px;margin:5px 5vw 0 0;float:left" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/a1d53005-5d45-45d1-b048-a7260a478edf.jpg" />
-<img style="width:200px;margin:5px 5vw 0 0;float:left" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/d41b871f-d47f-4e86-b2f1-2b1a74a8a4bd.jpg" />
+<img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/c2362519-8131-4071-b08a-8175e11b9341.jpg" />
+<img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/61e0f3d3-d726-4973-865c-e6ee0bdd0870.jpg" />
+<img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/644bab3c-1f90-46ba-a920-f464b52d0e36.jpg" />
+<img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/97db3e92-c3b3-4e32-bfb8-c348f9c9cd61.jpg" />
+<img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/a1d53005-5d45-45d1-b048-a7260a478edf.jpg" />
+<img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/d41b871f-d47f-4e86-b2f1-2b1a74a8a4bd.jpg" />
+<img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/b0d7f5e7-2e16-4b3e-a123-6e9cd97582d7.jpg" />
+<img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/e03ad65d-11bb-4697-81b2-d13af42f0441.jpg" />
 <div style="clear: both;"></div>
+<style>
+img{
+	box-shadow:0 0 2px #eeeeee;
+	width:200px;
+	margin:15px 5vw 0 0;
+	float:left
+}
+</style>
 
 ### base app集成的功能包括：
 1. 个人中心：登录注册（含用户名密码登录、手机号验证码登录、app一键登陆、微信登录、Apple登录、支付宝小程序登录）、修改密码、忘记密码、头像更换、昵称修改、积分查看、指纹绑定、退出
