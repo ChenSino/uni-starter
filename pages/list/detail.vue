@@ -169,7 +169,7 @@
 				uniShare({
 					content: { //公共的分享类型（type）、链接（herf）、标题（title）、summary（描述）、imageUrl（缩略图）
 						type: 0,
-						href: baseappConfig.h5.url + `/#/pages/list/detail?id=${_id}&title=${title}`,
+						href: this.baseappConfig.h5.url + `/#/pages/list/detail?id=${_id}&title=${title}`,
 						title: this.title,
 						summary: excerpt,
 						imageUrl: avatar
@@ -198,9 +198,9 @@
 								scene: "WXSceneSession",
 								type: 5,
 								miniProgram: {
-									id: baseappConfig.mp.weixin.id,
+									id: this.baseappConfig.mp.weixin.id,
 									path: `/pages/list/detail?id=${_id}&title=${title}`,
-									webUrl: baseappConfig.h5.url +
+									webUrl: this.baseappConfig.h5.url +
 										`/#/pages/list/detail?id=${_id}&title=${title}`,
 									type: 0
 								},

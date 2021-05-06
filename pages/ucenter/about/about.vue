@@ -58,7 +58,7 @@ import uniShare from 'uni_modules/uni-share/js_sdk/uni-share.js';
 					imageUrl: logo
 				},
 				menus: [{
-						"img": "/static/sharemenu/wechatfriend.png",
+						"img": "/static/app-plus/sharemenu/wechatfriend.png",
 						"text": "微信好友",
 						"share": {
 							"provider": "weixin",
@@ -66,7 +66,7 @@ import uniShare from 'uni_modules/uni-share/js_sdk/uni-share.js';
 						}
 					},
 					{
-						"img": "/static/sharemenu/wechatmoments.png",
+						"img": "/static/app-plus/sharemenu/wechatmoments.png",
 						"text": "微信朋友圈",
 						"share": {
 							"provider": "weixin",
@@ -74,26 +74,26 @@ import uniShare from 'uni_modules/uni-share/js_sdk/uni-share.js';
 						}
 					},
 					{
-						"img": "/static/sharemenu/weibo.png",
+						"img": "/static/app-plus/sharemenu/weibo.png",
 						"text": "微博",
 						"share": {
 							"provider": "sinaweibo"
 						}
 					},
 					{
-						"img": "/static/sharemenu/qq.png",
+						"img": "/static/app-plus/sharemenu/qq.png",
 						"text": "QQ",
 						"share": {
 							"provider": "qq"
 						}
 					},
 					{
-						"img": "/static/sharemenu/copyurl.png",
+						"img": "/static/app-plus/sharemenu/copyurl.png",
 						"text": "复制",
 						"share": "copyurl"
 					},
 					{
-						"img": "/static/sharemenu/more.png",
+						"img": "/static/app-plus/sharemenu/more.png",
 						"text": "更多",
 						"share": "shareSystem"
 					}
