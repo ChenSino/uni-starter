@@ -10,6 +10,14 @@
 我们一直想出一个结合uni-app、uniCloud和openDB以及uni-id和uniCloud admin等，uni全家桶的项目模板；
 为了照顾各类应用的开发者，我们取交最终集罗列了如下功能，发现这些就是除业务逻辑外的项目基本功能并把它命名为`base app`。
 
+### 界面效果
+
+<img style="width:36vw;margin:5px 5vw 0 0;float:left" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/61e0f3d3-d726-4973-865c-e6ee0bdd0870.jpg" />
+<img style="width:36vw;margin:5px 5vw 0 0;float:left" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/644bab3c-1f90-46ba-a920-f464b52d0e36.jpg" />
+<img style="width:36vw;margin:5px 5vw 0 0;float:left" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/a1d53005-5d45-45d1-b048-a7260a478edf.jpg" />
+<img style="width:36vw;margin:5px 5vw 0 0;float:left" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/d41b871f-d47f-4e86-b2f1-2b1a74a8a4bd.jpg" />
+<div style="clear: both;"></div>
+
 ### base app集成的功能包括：
 1. 个人中心：登录注册（含用户名密码登录、手机号验证码登录、app一键登陆、微信登录、Apple登录、支付宝小程序登录）、修改密码、忘记密码、头像更换、昵称修改、积分查看、指纹绑定、退出
 2. 设置：App更新（整包升级、wgt升级、强制升级，后台搭配uniCloud admin的升级中心插件管理）、权限引导（app）、推送开关（app）、清除缓存（app）、用户协议、隐私协议（app）、问题与反馈、分享推荐、关于
@@ -74,15 +82,12 @@ cloudfunctions
 - 使用HBuilderX 3.1以上版本（最好是最新版），把本项目导入到HBuilderX中，在项目根目录uniCloud上点右键菜单，关联服务空间 -> 选择之前创建的服务空间
 
 #### 2. 关联项目与云服务空间
+<img style="width:50vw" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/f3f36e4a-77e6-495c-bb85-5fc6999e29e1.jpg" />
+<img style="width:50vw" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/dd39dfcc-60c8-4f9f-a4d7-6b08f39e737e.jpg" />
+<img style="width:50vw" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/350f5e46-976e-4c5b-be49-e5c3908b03f4.jpg" />
 
-#### 3. 初始化数据库
-方式一：
-- 在项目`uniCloud`目录-->`database`-->`db_init.json`文件，右键选择 “初始化云数据库”。
-- 在`database`目录，右键选择 “上传所有数据集合Schema及扩展校验函数”。
-方式二：
-- 在项目`uniCloud`目录右键，选择“运行云服务空间初始化向导”，点击“下一步”，点击“开始部署”。
 
-#### 4. 跨域配置
+#### 3. 跨域配置
 
 如运行在iOS上，需解决本地页面跨域问题。
 
