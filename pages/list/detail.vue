@@ -26,7 +26,6 @@
 								<uni-dateformat :date="data.last_modify_date" format="yyyy-MM-dd hh:mm"
 									:threshold="[60000, 2592000000]" />
 							</view>
-							<!-- <button @click="followClick" class="footer-button">关注</button> -->
 						</view>
 					</uni-list-item>
 				</uni-list>
@@ -172,7 +171,7 @@
 						href: this.baseappConfig.h5.url + `/#/pages/list/detail?id=${_id}&title=${title}`,
 						title: this.title,
 						summary: excerpt,
-						imageUrl: avatar
+						imageUrl: avatar + '?x-oss-process=image/resize,m_fill,h_100,w_100' //压缩图片解决，在ios端分享图过大导致的图片失效问题
 					},
 					menus: [{
 							"img": "/static/app-plus/sharemenu/wechatfriend.png",

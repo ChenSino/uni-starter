@@ -55,7 +55,7 @@ import uniShare from 'uni_modules/uni-share/js_sdk/uni-share.js';
 					href: download,
 					title: appName,
 					summary: slogan,
-					imageUrl: logo
+					imageUrl: logo+'?x-oss-process=image/resize,m_fill,h_100,w_100' //压缩图片解决，在ios端分享图过大导致的图片失效问题
 				},
 				menus: [{
 						"img": "/static/app-plus/sharemenu/wechatfriend.png",
