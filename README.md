@@ -94,7 +94,6 @@ cloudfunctions
 注意：真机运行需要制作自定义基座，制作后选择运行到自定义基座.
 
 ### FAQ：常见问题
-
 1. 提示“公共模块uni-id缺少配置信息”解决方案：在cloudfunctions右键‘上传所有云函数、公共模块及actions’之后，需要在cloudfunctions--》common--》uni-config-center 目录单独上传一次，右键‘上传公共模块’。
 2. 本项目代码可以商用，无需为DCloud付费。但不能把本项目的代码改造用于非uni-app和uniCloud的技术体系。即，不能将后台改成php、java等其他后台，这将违反使用许可协议。
 
