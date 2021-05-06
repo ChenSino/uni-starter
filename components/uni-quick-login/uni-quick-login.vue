@@ -5,6 +5,9 @@
 			<image class="logo" :src="item.logo" mode="widthFix"></image>
 			<text class="login-title">{{item.text}}</text>
 		</view>
+		<!-- #ifdef MP -->
+
+		<!-- #endif -->
 	</view>
 </template>
 <script>
@@ -15,19 +18,27 @@
 	//前一个窗口的页面地址。控制点击切换快捷登陆方式是创建还是返回
 	import loginSuccess from '@/pages/ucenter/login-page/common/loginSuccess.js';
 	export default {
+		computed: {
+			loginConfig() {
+				return getApp().globalData.config.router.login
+			}
+		},
 		data() {
 			return {
 				servicesList: [{
+						"id": "username",
 						"text": "账号登陆",
 						"logo": "/static/uni-quick-login/user.png",
 						"path": "/pages/ucenter/login-page/pwd-login/pwd-login"
 					},
 					{
+						"id": "smsCode",
 						"text": "短信验证码",
 						"logo": "/static/uni-quick-login/sms.png",
 						"path": "/pages/ucenter/login-page/index/index"
 					}
-				]
+				],
+				oauthServices: []
 			}
 		},
 		props: {
@@ -79,6 +90,8 @@
 			},
 		},
 		created() {
+			console.log('loginConfig', this.loginConfig);
+			console.log('this.getRoute(1)', this.getRoute(1));
 			let servicesList = this.servicesList
 			//去掉当前页面对应的登陆选项
 			for (var i = 0; i < servicesList.length; i++) {
@@ -86,6 +99,14 @@
 					servicesList.splice(i, 1)
 				}
 			}
+			//去掉配置项中不存在的项
+			for (var i = 0; i < servicesList.length; i++) {
+				if (!this.loginConfig.includes(servicesList[i].id)) {
+					console.log(servicesList[i].id);
+					servicesList.splice(i, 1)
+				}
+			}
+			console.log('servicesList', servicesList);
 		},
 		mounted() {
 			//获取当前环境能用的快捷登陆方式
@@ -113,6 +134,15 @@
 				console.error('获取服务供应商失败：' + JSON.stringify(err));
 			})
 			// #endif
+			// #ifdef MP-WEIXIN
+			let id = 'weixin'
+			if (this.loginConfig.includes(id)) {
+				this.servicesList.push({
+					...this.config[id],
+					id
+				})
+			}
+			// #endif
 		},
 		methods: {
 			...mapMutations({
@@ -138,7 +168,6 @@
 			},
 			login_before(type, navigateBack = true) {
 				console.log(arguments);
-				console.log('services', services);
 				let oauthService = this.oauthServices.find((service) => service.id == type)
 				console.log(type);
 
@@ -163,6 +192,9 @@
 				uni.login({
 					"provider": type,
 					"univerifyStyle": this.univerifyStyle,
+					complete: (e) => {
+						console.log(9527, e);
+					},
 					success: async e => {
 						console.log(e);
 						if (type == 'apple') {
@@ -171,6 +203,13 @@
 							})
 							Object.assign(e.authResult, res.userInfo)
 						}
+						// #ifdef MP-WEIXIN
+						if (type == 'weixin') {
+							return this.login({
+								code: e.code
+							}, type)
+						}
+						// #endif
 						this.login(e.authResult, type)
 					},
 					fail: (err) => {
@@ -210,7 +249,10 @@
 				})
 			},
 			login(params, type) { //联网验证登陆
-				console.log(params, type);
+				console.log({
+					params,
+					type
+				});
 				this.request('user-center/login_by_' + type, params, result => {
 					console.log(result);
 					if (result.code === 0) {

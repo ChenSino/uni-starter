@@ -25,13 +25,10 @@ module.exports = {
 			"/uni_modules/uni-news-favorite/pages/uni-news-favorite/list",
 			"/pages/ucenter/userinfo/uploadCutImageToUnicloud"
 		],
-		"login": [ "smsCode","uniVerify", "username", "weixin", "apple"],
-		/*
+		"login": ["smsCode","uniVerify", "username", "weixin", "apple"],
+		/* 
 			根据数组的第0项，决定登陆方式的第一优先级。
 			未列举到的，或设备环境不支持的选项，将被隐藏。
-			快捷登陆按钮，在任意一页面都存在。
-			所以只有三种情况：
-			一键登录（uniVerify）、账号（username）、验证码登陆（其他值为第一项都为验证码登陆）
 			如果你需要在不同平台有不同的配置，直接用条件编译即可
 		*/
 	},

@@ -55,8 +55,6 @@ export default function() {
 						e.url += "univerify_first=true"
 					} else if (login[0] == 'username') {
 						e.url = "/pages/ucenter/login-page/pwd-login/pwd-login"
-					} else {
-						//默认即是
 					}
 				}
 				return true

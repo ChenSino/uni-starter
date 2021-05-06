@@ -1,12 +1,12 @@
 <template>
 	<view class="content">
 		<!-- 功能列表 -->
-		<uni-list class="mt10">
+		<uni-list class="mt10" :border="false">
 			<uni-list-item title="个人资料" to="/pages/ucenter/userinfo/userinfo" link="navigateTo"></uni-list-item>
 			<uni-list-item v-if="userInfo.mobile" title="修改密码" :to="'/pages/ucenter/login-page/pwd-retrieve/pwd-retrieve?phoneNumber='+ userInfo.mobile" link="navigateTo"></uni-list-item>
 		</uni-list>
 		<!-- #ifndef H5 -->
-		<uni-list class="mt10">
+		<uni-list class="mt10" :border="false">
 			<!-- #ifdef APP-PLUS -->
 			<!-- 检查push过程未结束不显示，push设置项 -->
 			<uni-list-item title="清理缓存" @click="clearTmp" link></uni-list-item>

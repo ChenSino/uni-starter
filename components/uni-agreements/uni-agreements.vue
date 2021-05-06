@@ -3,7 +3,7 @@
 		<text>登陆即表示同意</text>
 		<template v-for="(agreement,index) in agreements">
 			<text class="agreement" @click="navigateTo(agreement)">{{agreement.title}}</text>
-			<text class="hint" v-if="agreements.length-1>index">和</text>
+			<text class="hint" v-if="hasAnd(agreements,index)">和</text>
 		</template>
 	</view>
 </template>
@@ -13,7 +13,7 @@
 		name:"uni-agreements",
 		computed:{
 			agreements(){
-				return getApp().globalData.config.about.agreements
+				return getApp().globalData.config.about.agreements||[]
 			}
 		},
 		methods:{
@@ -24,6 +24,9 @@
 					fail: () => {},
 					complete: () => {}
 				});
+			},
+			hasAnd(agreements,index){
+				return agreements.length-1>index
 			}
 		},
 		data() {
