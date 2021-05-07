@@ -75,7 +75,7 @@ cloudfunctions
 	+ `manifest.json` 基础配置 --> 应用版本名称 和 应用版本号
 	+ 更多`uni-upgrade-center`的介绍 [详情](https://uniapp.dcloud.io/uniCloud/upgrade-center)
 
-### 时序介绍
+### 应用启动时序介绍
 1. 初始化应用执行appInit
 	1. 读取baseapp.config并挂载到globalData的config下
 	2. 读取应用版本号，并存到globalData下。
@@ -101,13 +101,6 @@ cloudfunctions
 <img style="width:50vw" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/350f5e46-976e-4c5b-be49-e5c3908b03f4.jpg" />
 
 
-#### 3. 跨域配置
-
-如运行在iOS上，需解决本地页面跨域问题。
-
-在uniCloud web 控制台跨域配置里添加：localhost:13131
-
-![](https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/a60dd5c0-614e-11eb-8d54-21c4ca4ce5d7.jpg)
 
 #### 5. 真机运行
 注意：真机运行需要制作自定义基座，制作后选择运行到自定义基座.
