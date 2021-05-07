@@ -10,9 +10,9 @@
 			<!-- #ifdef APP-PLUS -->
 			<!-- 检查push过程未结束不显示，push设置项 -->
 			<uni-list-item title="清理缓存" @click="clearTmp" link></uni-list-item>
-			<uni-list-item v-if="pushIsOn != 'wait'" @click.native="openSetting()" title="推送功能" showSwitch :switchChecked="pushIsOn"></uni-list-item>
+			<uni-list-item v-if="pushIsOn != 'wait'" @click.native="pushIsOn?pushServer.off():pushServer.on()" title="推送功能" showSwitch :switchChecked="pushIsOn"></uni-list-item>
 			<!-- #endif -->
-			<uni-list-item v-if="supportMode.includes('fingerPrint')" title="指纹解锁" @click="startSoterAuthentication('fingerPrint')" link></uni-list-item>
+			<uni-list-item v-if="supportMode.includes('fingerPrint')" title="指纹解锁" @click.native="startSoterAuthentication('fingerPrint')" link></uni-list-item>
 			<uni-list-item v-if="supportMode.includes('facial')" title="人脸解锁" @click="startSoterAuthentication('facial')" link></uni-list-item>
 		</uni-list>
 		<!-- #endif -->
@@ -26,10 +26,7 @@
 </template>
 
 <script>
-	import {
-		isOn,
-		setting
-	} from './dc-push/push.js';
+	import pushServer from './dc-push/push.js';
 	import {
 		mapMutations,
 		mapGetters
@@ -37,6 +34,7 @@
 	export default {
 		data() {
 			return {
+				pushServer:pushServer,
 				supportMode:[],
 				pushIsOn:"wait"
 			}
@@ -64,8 +62,8 @@
 			// 检查手机端获取推送是否开启
 			//#ifdef APP-PLUS
 			setTimeout(()=>{
-				this.pushIsOn = isOn();
-			},1)
+				this.pushIsOn = pushServer.isOn();
+			},300)
 			//#endif
 		},
 		methods: {
@@ -90,16 +88,22 @@
 			 * 开始生物认证
 			 */
 			startSoterAuthentication(checkAuthMode) {
+				console.log(checkAuthMode);
 				let title = {"fingerPrint":"指纹解锁","facial":"人脸解锁"}[checkAuthMode]
 				// 检查是否开启认证
 				this.checkIsSoterEnrolledInDevice({checkAuthMode,title})
 					.then(() => {
+						console.log(checkAuthMode,title);
 						// 开始认证
 						uni.startSoterAuthentication({
-							checkAuthModes: [requestAuthMode],
+							requestAuthModes: [checkAuthMode],
 							challenge: '123456', // 微信端挑战因子
 							authContent: `请用${title}`,
+							complete: (res) => {
+								console.log(res);
+							},
 							success: (res) => {
+								console.log(res);
 								if (res.errCode == 0) {
 									/**
 									 * 验证成功后开启自己的业务逻辑
@@ -134,6 +138,7 @@
 					uni.checkIsSoterEnrolledInDevice({
 						checkAuthMode,
 						success: (res) => {
+							console.log(res);
 							if (res.isEnrolled) {
 								return resolve(res);
 							}
@@ -218,13 +223,6 @@
 						console.log(e);
 					}
 				});
-			},
-			/**
-			 * 打开设置页面
-			 */
-			openSetting() {
-				console.log('openSetting');
-				setting();
 			}
 		}
 	}

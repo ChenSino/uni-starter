@@ -8,7 +8,7 @@
 const debug = true;//开启后，会alert错误信息
 export default function request(name,params,callback=false,{showLoading=false,loadText='',fail=()=>{}}={}){
 	// console.log('request');
-	showLoading||loadText? uni.showLoading({title:loadText}):'';
+	showLoading||loadText? uni.showLoading({title:loadText,mask:true}):'';
 	let routers =  name.split('/');
 	var action = false
 	if (routers.length>1){

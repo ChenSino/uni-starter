@@ -1,7 +1,6 @@
 <template>
 	<view class="content">
 		<!-- 顶部文字 -->
-		<text class="title">重置密码</text>
 		<text v-show="isPhone" class="login-iknow" >{{tipText}}</text>
 		<!-- 登录框 (选择手机号所属国家和地区需要另行实现) -->
 		<uni-forms ref="form" :value="formData" :rules="rules">
@@ -163,7 +162,7 @@
 <style>
 	@import url("../common/login-page.css");
 
-	.content-top-title {
-		margin-bottom: 6px;
+	.content{
+		padding-top: 36rpx;
 	}
 </style>

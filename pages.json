@@ -156,7 +156,7 @@
 		}, {
 			"path": "pages/ucenter/login-page/pwd-retrieve/pwd-retrieve",
 			"style": {
-				"navigationBarTitleText": ""
+				"navigationBarTitleText": "重置密码"
 			}
 		}, {
 			"path": "pages/ucenter/login-page/phone-code/phone-code",

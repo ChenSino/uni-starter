@@ -50,8 +50,8 @@
 					e=>{
 						console.log(e);
 						this.loginSuccess(e)
-					}
-				)
+					},
+				{showLoading:true})
 			}
 		}
 	}
