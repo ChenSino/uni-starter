@@ -1,16 +1,15 @@
 <template>
 	<view class="content">
 		<!-- 顶部文字 -->
-		<text v-show="isPhone" class="login-iknow" >{{tipText}}</text>
 		<!-- 登录框 (选择手机号所属国家和地区需要另行实现) -->
 		<uni-forms ref="form" :value="formData" :rules="rules">
 			<uni-forms-item name="phone">
 				<!-- focus规则如果上一页携带来“手机号码”数据就focus验证码输入框，否则focus手机号码输入框 -->
-				<uni-easyinput :focus="!formData.phone.length" type="number" class="easyinput" :inputBorder="false"
+				<uni-easyinput :focus="formData.phone.length!=11" type="number" class="easyinput" :inputBorder="false"
 					v-model="formData.phone" maxlength="11" placeholder="请输入手机号"></uni-easyinput>
 			</uni-forms-item>
 			<uni-forms-item name="code">
-				<uni-easyinput :focus="formData.phone.length!=0" type="number" class="easyinput" :inputBorder="false"
+				<uni-easyinput :focus="formData.phone.length==11" type="number" class="easyinput" :inputBorder="false"
 					v-model="formData.code" maxlength="6" placeholder="请输入验证码">
 					<template slot="right">
 						<uni-send-sms-code ref="shortCode" :phone="formData.phone"></uni-send-sms-code>
@@ -100,9 +99,6 @@
 			}
 		},
 		computed: {
-			tipText() {
-				return `验证码已通过短信发送至${this.formData.phone}。密码为6 - 20位`
-			},
 			canSubmit() {
 				return this.isPhone && this.isPwd && this.isCode;
 			},

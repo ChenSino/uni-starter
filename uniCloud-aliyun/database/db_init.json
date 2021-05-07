@@ -36,14 +36,57 @@
 			"create_date": 1616771628150
 		}]
 	},
-	"uni-id-users":{
-		"data":[{
-			"_id":"123",
+	"uni-id-users": {
+		"data": [{
+			"_id": "123",
 			"username": "预置用户",
 			"nickname": "测试",
 			"avatar": "https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-dc-site/d84c6de0-6080-11eb-bdc1-8bd33eb6adaa.png",
 			"mobile": "18888888888",
 			"mobile_confirmed": 1
+		}]
+	},
+	"opendb-banner": {
+		"data": [{
+			"status": true,
+			"bannerfile": {
+				"name": "094a9dc0-50c0-11eb-b680-7980c8a877b8.jpg",
+				"extname": "jpg",
+				"fileType": "image",
+				"url": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/b88a7e17-35f0-4d0d-bc32-93f8909baf03.jpg",
+				"size": 70880,
+				"image": {
+					"width": 500,
+					"height": 333,
+					"location": "blob:http://localhost:8081/a3bfaab4-7ee6-44d5-a171-dc8225d83598"
+				},
+				"path": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/b88a7e17-35f0-4d0d-bc32-93f8909baf03.jpg"
+			},
+			"open_url": "https://www.dcloud.io/",
+			"title": "测试",
+			"sort": 1,
+			"category_id": "",
+			"description": ""
+		},
+		{
+		    "status": true,
+		    "bannerfile": {
+		        "name": "094a9dc0-50c0-11eb-b680-7980c8a877b8.jpg",
+		        "extname": "jpg",
+		        "fileType": "image",
+		        "url": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/9db94cb4-a5e0-4ed9-b356-b42a392b3112.jpg",
+		        "size": 70880,
+		        "image": {
+		            "width": 500,
+		            "height": 333,
+		            "location": "blob:http://localhost:8081/1a6f718a-4012-476a-9172-590fef2cc518"
+		        },
+		        "path": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/9db94cb4-a5e0-4ed9-b356-b42a392b3112.jpg"
+		    },
+		    "open_url": "https://www.dcloud.io/",
+		    "title": "",
+		    "category_id": "",
+		    "description": ""
 		}]
 	}
 }
