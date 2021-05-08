@@ -147,43 +147,42 @@ base-app
 │		├─uni-id-log.schema.json	        	数据表xxx的DB Schema <a target="_blank" href="https://uniapp.dcloud.net.cn/uniCloud/schema">详情</a>
 │		├─uni-id-scores.schema.json	        	数据表xxx的DB Schema <a target="_blank" href="https://uniapp.dcloud.net.cn/uniCloud/schema">详情</a>
 │		└─uni-id-users.schema.json	        	数据表xxx的DB Schema <a target="_blank" href="https://uniapp.dcloud.net.cn/uniCloud/schema">详情</a>
-├─pages								业务页面文件存放的目录
+├─pages										业务页面文件存放的目录
 │	├─common						
-│	│	└─webview					webview目录
-│	│		└─webview.vue			webview页面	用于实现跨端的web页面浏览
+│	│	└─webview							webview目录
+│	│		└─webview.vue					webview页面	用于实现跨端的web页面浏览
 │	├─grid
-│	│	└─grid.vue	 				grid页面
+│	│	└─grid.vue	 						带宫格和banner的示例页面
 │	├─list
-│	│	├─list.vue	 				list页面
+│	│	├─list.vue	 						新闻列表
 │	│	├─search
-│	│	│	└─search				
-│	│	└─detail.vue
+│	│	│	└─search						云端一体搜索插件
+│	│	└─detail.vue						新闻详情
 │	├─ucenter
-│	│	├─about
+│	│	├─about								关于我们
 │	│	│	└─about
-│	│	├─login-page				登陆模块
-│	|	|	├─common				
-│	│	│	│	├─login-page.css
-│	│	│	│	├─login-page.mixin.js
-│	│	│	│	└─loginSuccess.js
-│	|	|	├─index
-│	|	|	├─phone-code
-│	|	|	├─pwd-login
-│	|	|	├─pwd-retrieve
-│	|	|	├─pwd-retrieve
-│	│	│	└─register
+│	│	├─login-page						登陆模块
+│	|	|	├─common						登陆模块公共库
+│	│	│	│	├─login-page.css			公共样式库
+│	│	│	│	├─login-page.mixin.js		公共mixin
+│	│	│	│	└─loginSuccess.js			公共登陆成功后操作
+│	|	|	├─index							短信验证码登陆，手机号码输入页面
+│	|	|	├─phone-code					短信验证码登陆，验证码输入页面
+│	|	|	├─pwd-login						账户密码登陆
+│	|	|	├─pwd-retrieve					密码重置
+│	│	│	└─register						注册账户模块
 │	│	│		├─validator.js
 │	│	│		└─register.vue
-│	│	├─read-news-log
+│	│	├─read-news-log						新闻阅读记录
 │	│	│	└─read-news-log
-│	│	├─settings
+│	│	├─settings						
 │	│	│	├─dc-push
-│	│	│	│	└─push.js
-│	│	│	└─settings.vue
-│	│	├─userinfo
+│	│	│	│	└─push.js					push权限操作SDK
+│	│	│	└─settings.vue					app设置
+│	│	├─userinfo							用户个人信息
 │	│	│	├─bind-mobile
-│	│	│	│	└─bind-mobile.vue
-│	│	│	├─limeClipper
+│	│	│	│	└─bind-mobile.vue			绑定手机号码
+│	│	│	├─limeClipper					图片裁剪插件,来源[limeClipper](https://ext.dcloud.net.cn/plugin?id=3594) @作者： 陌上华年
 │	│	│	│	├─images
 │	│	│	│	│	├─photo.svg
 │	│	│	│	│	└─rotate.svg
@@ -192,9 +191,9 @@ base-app
 │	│	│	│	├─README.md
 │	│	│	│	└─utils.js
 │	│	│	├─main.js
-│	│	│	├─uploadCutImageToUnicloud.vue
+│	│	│	├─uploadCutImageToUnicloud.vue	引用limeClipper的图片裁剪模块，为了方便二开可能会出现兼容`vue`与`nvue`，所以做成了`页面`而不是`组件`
 │	│	│	└─userinfo.vue
-│	|	└─ucenter.vue
+│	|	└─ucenter.vue						用户中心
 │	|
 ├─static	 						存放应用引用的本地静态资源（如图片、视频等）的目录，<b>注意：</b>静态资源只能存放于此
 ├─uni_modules						存放[uni_module](/uni_modules)规范的插件。
