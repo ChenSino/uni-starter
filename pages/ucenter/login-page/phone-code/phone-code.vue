@@ -35,7 +35,7 @@
 			}
 		},
 		onLoad({phoneNumber,phoneArea}) {
-			this.phone = phoneNumber||'17769516081';
+			this.phone = phoneNumber;
 		},
 		onReady() {
 			this.$refs.sendSmsCode.start();
