@@ -49,7 +49,7 @@ uni-starter将节省开发者大量的时间，让开发者集中精力在自己
 uni-starter + uniCloud admin，应用开发从未如此简单快捷！
 
 uni-starter提供了uni-starter.config.js，可指定该应用是否强制登录才能进入首页，可配置选择登录注册方式以及不同方式的优先级等。
-
+配置项内容如下：
 ```
 module.exports = {
 	"h5": {
@@ -133,20 +133,19 @@ uni-starter
 │	|	└─user-center				用户中心云函数，实现用户注册、修改密码、发送验证码、快捷登录（微信、短信、账户、一键登录）
 │	└──database						云数据目录
 │		├─db_init.json				db_init.json初始化数据库文件，其中不再包含schema <a target="_blank" href="https://uniapp.dcloud.net.cn/uniCloud/hellodb?id=db-init">详情</a>
-│		├─opendb-app-versions.schema.json		表结构文件
-│		├─opendb-banner.schema.json	        	表结构文件
-│		├─opendb-feedback.schema.json	        表结构文件
-│		├─opendb-news-articles.schema.json	    表结构文件
-│		├─opendb-news-categories.schema.json	表结构文件
-│		├─opendb-news-comments.schema.json		表结构文件
-│		├─opendb-news-favorite.schema.json		表结构文件
-│		├─opendb-search-hot.schema.json	        表结构文件
-│		├─opendb-search-log.schema.json	        表结构文件
-│		├─opendb-verify-codes.schema.json		表结构文件
-│		├─read-news-log.schema.json	        	表结构文件
-│		├─uni-id-log.schema.json	        	表结构文件
-│		├─uni-id-scores.schema.json	        	表结构文件
-│		└─uni-id-users.schema.json	        	表结构文件
+│		├─opendb-app-versions.schema.json		应用版本，表结构文件
+│		├─opendb-banner.schema.json	        	横幅数据表，表结构文件
+│		├─opendb-feedback.schema.json	        意见反馈表，表结构文件
+│		├─opendb-news-articles.schema.json	    新闻文章表，表结构文件
+│		├─opendb-news-categories.schema.json	新闻分类表，表结构文件
+│		├─opendb-news-comments.schema.json		新闻评论表，表结构文件
+│		├─opendb-news-favorite.schema.json		新闻收藏表，表结构文件
+│		├─opendb-search-hot.schema.json			热门搜索表，表结构文件
+│		├─opendb-search-log.schema.json			搜索记录表，表结构文件
+│		├─opendb-verify-codes.schema.json		验证码表，表结构文件
+│		├─uni-id-log.schema.json	        	登陆日志表，表结构文件
+│		├─uni-id-scores.schema.json	        	用户积分表，表结构文件
+│		└─uni-id-users.schema.json	        	用户表，表结构文件
 ├─pages										业务页面文件存放的目录
 │	├─common						
 │	│	└─webview							webview目录

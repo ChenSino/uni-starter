@@ -13,7 +13,7 @@
         "usearch",
         "unisearch"
     ],
-	"repository": "https://gitee.com/dcloud/uni-starter",
+	"repository": "https://codechina.csdn.net/dcloud/uni-starter.git",
 	"engines": {
 		"HBuilderX": "^3.1.0"
 	},
