@@ -1,16 +1,16 @@
-> base app目前还处于内测阶段，内测QQ群号：869926521，欢迎大家加入！内测期间享受有疑问实时解答的福利。
+> uni-starter目前还处于内测阶段，内测QQ群号：869926521，欢迎大家加入！内测期间享受有疑问实时解答的福利。
 
 ### ps:文档处于完善过程中
 
 ### 介绍
-`base app`，是一个云端一体的、集成了商用项目开发常见功能的项目模板。
-如果说uniCloud admin是管理端项目的基础模板，那么base app则是用户端、尤其是移动端的基础模板。
-在HBuilderX新建项目时选择base app项目模板，在这个模板基础之上快速填充自己的业务，即可很快完成一个应用。
+`uni-starter`，是一个云端一体的、集成了商用项目开发常见功能的项目模板。
+如果说uniCloud admin是管理端项目的基础模板，那么uni-starter则是用户端、尤其是移动端的基础模板。
+在HBuilderX新建项目时选择uni-starter项目模板，在这个模板基础之上快速填充自己的业务，即可很快完成一个应用。
 地址：[https://gitee.com/dcloud/uni-starter](https://gitee.com/dcloud/uni-starter)
 
 #### 项目背景
 我们一直想出一个结合uni-app、uniCloud和openDB以及uni-id和uniCloud admin等，uni全家桶的项目模板；
-为了照顾各类应用的开发者，我们取交集最终罗列了如下功能，发现这些就是除业务逻辑外的项目基本功能并把它命名为`base app`。
+为了照顾各类应用的开发者，我们取交集最终罗列了如下功能，发现这些就是除业务逻辑外的项目基本功能并把它命名为`uni-starter`。
 
 ### 界面效果
 <img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/c2362519-8131-4071-b08a-8175e11b9341.jpg" />
@@ -31,7 +31,7 @@ img{
 }
 </style>
 
-### base app集成的功能包括：
+### uni-starter集成的功能包括：
 1. 个人中心：登录注册（含用户名密码登录、手机号验证码登录、app一键登陆、微信登录、Apple登录、支付宝小程序登录）、修改密码、忘记密码、头像更换、昵称修改、积分查看、指纹绑定、退出
 2. 设置：App更新（整包升级、wgt升级、强制升级，后台搭配uniCloud admin的升级中心插件管理）、权限引导（app）、推送开关（app）、清除缓存（app）、用户协议、隐私协议（app）、问题与反馈、分享推荐、关于
 3. 启动引导：iOS初次启动被用户禁止网络权限后引导开启、Android弹出隐私协议后再申请权限
@@ -44,11 +44,11 @@ img{
 	- 权限拦截，定位、拍照、相册涉及隐私权限和设备是否开关
 8. h5版支持在页面顶部引导下载App
 
-base app将节省开发者大量的时间，让开发者集中精力在自己的特色业务上。
-有了base app，再加上schema2code生成前端页面，一个简单应用就可以快速完成。
-base app + uniCloud admin，应用开发从未如此简单快捷！
+uni-starter将节省开发者大量的时间，让开发者集中精力在自己的特色业务上。
+有了uni-starter，再加上schema2code生成前端页面，一个简单应用就可以快速完成。
+uni-starter + uniCloud admin，应用开发从未如此简单快捷！
 
-base app提供了uni-starter.config.js，可指定该应用是否强制登录才能进入首页，可配置选择登录注册方式以及不同方式的优先级等。
+uni-starter提供了uni-starter.config.js，可指定该应用是否强制登录才能进入首页，可配置选择登录注册方式以及不同方式的优先级等。
 
 ```
 module.exports = {
@@ -212,7 +212,7 @@ uni-starter
 	+ 更多`uni-config-center`的介绍 [详情](https://ext.dcloud.net.cn/plugin?id=4425)
 - 分享模块
 	+ `manifest.json` App模块配置 --> Share（分享）--> 勾选并配置你所需要的模块
-	+ 分享功能配置参数，随着应用的业务场景决定，在各场景调用的时候配置。参考base app的`/pages/list/detail.vue`的`methods -> shareClick`
+	+ 分享功能配置参数，随着应用的业务场景决定，在各场景调用的时候配置。参考uni-starter的`/pages/list/detail.vue`的`methods -> shareClick`
 	+ 更多`uni-share`的介绍 [详情](https://ext.dcloud.net.cn/plugin?id=4860)
 - 升级中心相关
 	+ `manifest.json` 基础配置 --> 应用版本名称 和 应用版本号
