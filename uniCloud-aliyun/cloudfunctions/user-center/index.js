@@ -186,7 +186,7 @@ exports.main = async (event, context) => {
 			await loginLog(res)
 			break;
 		case 'login_by_univerify':
-			res = await uniID.loginByUniverify(params)
+			res = await uniID.loginByuniverify(params)
 			await loginLog(res)
 			break;
 		case 'login_by_apple':

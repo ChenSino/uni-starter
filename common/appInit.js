@@ -46,8 +46,8 @@ export default function() {
 				}
 				//控制登陆优先级
 				if (url == '/pages/ucenter/login-page/index/index') {
-					//一键登录（uniVerify）、账号（username）、验证码登陆（短信smsCode）
-					if (login[0] == 'uniVerify') {
+					//一键登录（univerify）、账号（username）、验证码登陆（短信smsCode）
+					if (login[0] == 'univerify') {
 						// console.log(e.url,url);
 						if (e.url == url) {
 							e.url += '?'

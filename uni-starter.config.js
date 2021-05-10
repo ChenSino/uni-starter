@@ -25,7 +25,7 @@ module.exports = {
 			"/uni_modules/uni-news-favorite/pages/uni-news-favorite/list",
 			"/pages/ucenter/userinfo/uploadCutImageToUnicloud"
 		],
-		"login": ["smsCode","uniVerify", "username", "weixin", "apple"],
+		"login": ["smsCode","univerify", "username", "weixin", "apple"],
 		/* 
 			根据数组的第0项，决定登陆方式的第一优先级。
 			未列举到的，或设备环境不支持的选项，将被隐藏。

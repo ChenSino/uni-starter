@@ -105,7 +105,7 @@
 			//去掉配置项中不存在的项
 			for (var i = 0; i < servicesList.length; i++) {
 				if (!this.loginConfig.includes(servicesList[i].id)) {
-					console.log(servicesList[i].id);
+					console.log('去掉配置项中不存在的项',servicesList[i].id);
 					servicesList.splice(i, 1)
 				}
 			}
@@ -119,7 +119,8 @@
 				oauthServices.forEach(({
 					id
 				}) => {
-					if (this.config[id].isChecked) {
+					console.log(9527,id);
+					if (this.config[id].isChecked&&this.loginConfig.includes(id)) {
 						this.servicesList.push({
 							...this.config[id],
 							id
