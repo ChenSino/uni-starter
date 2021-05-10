@@ -131,7 +131,7 @@ uni-starter
 │	│	|	├─uni-config-center		uni-starter的服务端配置中心，项目所有云函数的配置在这里填写
 │	│	|	|	├─index.js			config-center入口文件
 │	│	|	|	└─uni-id			uni-id模块配置目录
-│	│	|	|		├─config.json	uni-id对应的配置数据
+│	│	|	|		├─config.json	uni-id对应的配置数据：微信登陆、一键登录、短信验证码登陆等key都在这里填写
 │	│	|	|		└─file.cert		uni-id依赖的配置文件,假如你使用微信发红包功能，需要的证书文件就是放到这里
 │	|	|	└───uni-id				uni-id用户体系 <a target="_blank" href="https://uniapp.dcloud.io/uniCloud/uni-id">详情</a>
 │	|	├─uni-analyse-searchhot		云端一体搜索模板依赖的云函数 <a target="_blank" href="https://ext.dcloud.net.cn/plugin?id=3851">详情</a>
@@ -221,7 +221,7 @@ uni-starter
 - 升级中心相关
 	+ `manifest.json` 基础配置 --> 应用版本名称 和 应用版本号
 	+ 更多`uni-upgrade-center`的介绍 [详情](https://uniapp.dcloud.io/uniCloud/upgrade-center)
-- 开通一键登录
+
 
 
 ### 应用启动时序介绍
