@@ -6,7 +6,7 @@
 `uni-starter`，是一个云端一体的、集成了商用项目开发常见功能的项目模板。
 如果说uniCloud admin是管理端项目的基础模板，那么uni-starter则是用户端、尤其是移动端的基础模板。
 在HBuilderX新建项目时选择uni-starter项目模板，在这个模板基础之上快速填充自己的业务，即可很快完成一个应用。
-地址：[https://gitee.com/dcloud/uni-starter](https://gitee.com/dcloud/uni-starter)
+地址：[https://codechina.csdn.net/dcloud/uni-starter.git](https://codechina.csdn.net/dcloud/uni-starter.git)
 
 #### 项目背景
 我们一直想出一个结合uni-app、uniCloud和openDB以及uni-id和uniCloud admin等，uni全家桶的项目模板；
@@ -133,20 +133,20 @@ uni-starter
 │	|	└─user-center				用户中心云函数，实现用户注册、修改密码、发送验证码、快捷登录（微信、短信、账户、一键登录）
 │	└──database						云数据目录
 │		├─db_init.json				db_init.json初始化数据库文件，其中不再包含schema <a target="_blank" href="https://uniapp.dcloud.net.cn/uniCloud/hellodb?id=db-init">详情</a>
-│		├─opendb-app-versions.schema.json		数据表xxx的DB Schema <a target="_blank" href="https://uniapp.dcloud.net.cn/uniCloud/schema">详情</a>
-│		├─opendb-banner.schema.json	        	数据表xxx的DB Schema <a target="_blank" href="https://uniapp.dcloud.net.cn/uniCloud/schema">详情</a>
-│		├─opendb-feedback.schema.json	        数据表xxx的DB Schema <a target="_blank" href="https://uniapp.dcloud.net.cn/uniCloud/schema">详情</a>
-│		├─opendb-news-articles.schema.json	    数据表xxx的DB Schema <a target="_blank" href="https://uniapp.dcloud.net.cn/uniCloud/schema">详情</a>
-│		├─opendb-news-categories.schema.json	数据表xxx的DB Schema <a target="_blank" href="https://uniapp.dcloud.net.cn/uniCloud/schema">详情</a>
-│		├─opendb-news-comments.schema.json		数据表xxx的DB Schema <a target="_blank" href="https://uniapp.dcloud.net.cn/uniCloud/schema">详情</a>
-│		├─opendb-news-favorite.schema.json		数据表xxx的DB Schema <a target="_blank" href="https://uniapp.dcloud.net.cn/uniCloud/schema">详情</a>
-│		├─opendb-search-hot.schema.json	        数据表xxx的DB Schema <a target="_blank" href="https://uniapp.dcloud.net.cn/uniCloud/schema">详情</a>
-│		├─opendb-search-log.schema.json	        数据表xxx的DB Schema <a target="_blank" href="https://uniapp.dcloud.net.cn/uniCloud/schema">详情</a>
-│		├─opendb-verify-codes.schema.json		数据表xxx的DB Schema <a target="_blank" href="https://uniapp.dcloud.net.cn/uniCloud/schema">详情</a>
-│		├─read-news-log.schema.json	        	数据表xxx的DB Schema <a target="_blank" href="https://uniapp.dcloud.net.cn/uniCloud/schema">详情</a>
-│		├─uni-id-log.schema.json	        	数据表xxx的DB Schema <a target="_blank" href="https://uniapp.dcloud.net.cn/uniCloud/schema">详情</a>
-│		├─uni-id-scores.schema.json	        	数据表xxx的DB Schema <a target="_blank" href="https://uniapp.dcloud.net.cn/uniCloud/schema">详情</a>
-│		└─uni-id-users.schema.json	        	数据表xxx的DB Schema <a target="_blank" href="https://uniapp.dcloud.net.cn/uniCloud/schema">详情</a>
+│		├─opendb-app-versions.schema.json		表结构文件
+│		├─opendb-banner.schema.json	        	表结构文件
+│		├─opendb-feedback.schema.json	        表结构文件
+│		├─opendb-news-articles.schema.json	    表结构文件
+│		├─opendb-news-categories.schema.json	表结构文件
+│		├─opendb-news-comments.schema.json		表结构文件
+│		├─opendb-news-favorite.schema.json		表结构文件
+│		├─opendb-search-hot.schema.json	        表结构文件
+│		├─opendb-search-log.schema.json	        表结构文件
+│		├─opendb-verify-codes.schema.json		表结构文件
+│		├─read-news-log.schema.json	        	表结构文件
+│		├─uni-id-log.schema.json	        	表结构文件
+│		├─uni-id-scores.schema.json	        	表结构文件
+│		└─uni-id-users.schema.json	        	表结构文件
 ├─pages										业务页面文件存放的目录
 │	├─common						
 │	│	└─webview							webview目录
