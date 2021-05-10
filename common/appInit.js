@@ -1,4 +1,4 @@
-import baseappConfig from '@/baseapp.config.js';
+import uniStarterConfig from '@/uni-starter.config.js';
 //应用初始化页
 // #ifdef APP-PLUS
 import checkUpdate from '@/uni_modules/uni-upgrade-center-app/utils/check-update';
@@ -7,9 +7,9 @@ import callCheckVersion from '@/uni_modules/uni-upgrade-center-app/utils/call-ch
 export default function() {
 	
 	setTimeout(()=>{
-		// baseappConfig挂载到getApp().
+		// uniStarterConfig挂载到getApp().
 		const app = getApp({allowDefault: true})
-		app.globalData.config = baseappConfig;
+		app.globalData.config = uniStarterConfig;
 	},30)
 	
 	// 初始化appVersion（仅app生效）
@@ -23,7 +23,7 @@ export default function() {
 			needLogin,
 			login
 		}
-	} = baseappConfig //需要登陆的页面
+	} = uniStarterConfig //需要登陆的页面
 	let list = ["navigateTo", "redirectTo", "reLaunch", "switchTab"];
 	list.forEach(item => {
 		uni.addInterceptor(item, {

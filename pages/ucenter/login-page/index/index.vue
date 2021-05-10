@@ -2,14 +2,14 @@
 	<view class="content">
 		<!-- 顶部文字 -->
 		<text class="title">登陆后即可展示自己</text>
-		<uni-agreements></uni-agreements>
+		<uni-agreements @setAgree="agree = $event"></uni-agreements>
 		<!-- 登录框 -->
 		<input type="number" class="input-box" :inputBorder="false" v-model="phone" maxlength="11" placeholder="请输入手机号"/>
 		<button class="get-code" :class="{isPhone}" :disabled="!isPhone" :type="isPhone?'primary':'default'"
 			@click="sendShortMsg">获取短信验证码</button>
 		<text class="tip">未注册的手机号验证通过后将自动注册</text>			
 		<!-- 登录按钮弹窗 -->
-		<uni-quick-login ref="uniQuickLogin"></uni-quick-login>
+		<uni-quick-login :agree="agree" ref="uniQuickLogin"></uni-quick-login>
 	</view>
 </template>
 
@@ -18,7 +18,8 @@ var univerify_first,currentWebview;//是否一键登陆优先
 	export default {
 		data() {
 			return {
-				phone:""
+				phone:"",
+				agree:false
 			}
 		},
 		computed: {
@@ -62,6 +63,12 @@ var univerify_first,currentWebview;//是否一键登陆优先
 		},
 		methods: {
 			sendShortMsg() {
+				if(!this.agree){
+					return uni.showToast({
+						title: '你未同意隐私政策协议',
+						icon: 'none'
+					});
+				}
 				// 发送验证吗
 				uni.showLoading();
 				uni.navigateTo({

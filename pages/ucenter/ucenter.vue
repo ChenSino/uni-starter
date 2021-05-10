@@ -4,18 +4,21 @@
 			<image class="logo-img" :src="userInfo.avatar||avatarUrl"></image>
 			<view class="logo-title">
 				<text class="uer-name">{{userInfo.nickname||userInfo.username||userInfo.mobile||'未登录'}}</text>
-				<uni-icons class="icon" color="#FFFFFF" type="arrowright" v-if="!login" size="16"></uni-icons>
 			</view>
 		</view>
 		<uni-grid class="grid" :column="5" :showBorder="false" :square="true">
 			<uni-grid-item class="item" v-for="(item,index) in gridList" @click.native="tapGrid(index)" :key="index">
-				<uni-icons class="icon" color="#5d5e64" :type="item.icon" size="28"></uni-icons>
+				<uni-icons class="icon" color="#ffd44f" :type="item.icon" size="26"></uni-icons>
 				<text class="text">{{item.text}}</text>
 			</uni-grid-item>
 		</uni-grid>
 		<uni-list class="center-list" v-for="(sublist , index) in ucenterList" :key="index">
 			<uni-list-item v-for="(item,i) in sublist" :title="item.title" link :rightText="item.rightText" :key="i"
-				:clickable="true" :to="item.to" @click="ucenterListClick(item)">
+				:clickable="true" :to="item.to" 
+				@click="ucenterListClick(item)"
+				 :show-extra-icon="true"
+				:extraIcon="{type:item.icon,color:'#999'}"
+				>
 				<view v-if="item.showBadge" class="item-footer" slot="footer">
 					<text class="item-footer-text">{{item.rightText}}</text>
 					<view class="item-footer-badge"></view>
@@ -38,7 +41,7 @@
 	export default {
 		data() {
 			return {
-				avatarUrl: '/static/uni-center/logo.png',
+				avatarUrl: '/static/uni-center/defaultAvatarUrl.png',
 				gridList: [{
 						"text": "文字1",
 						"icon": "chat"
@@ -64,30 +67,36 @@
 					[
 						// #ifdef APP-PLUS
 						{
-							title: '去评分',
-							event: 'gotoMarket'
+							"title": '去评分',
+							"event": 'gotoMarket',
+							"icon":"hand-thumbsup"
 						},
 						//#endif
 						{
-							title: '阅读过的文章',
-							to: '/pages/ucenter/read-news-log/read-news-log',
+							"title": '阅读过的文章',
+							"to": '/pages/ucenter/read-news-log/read-news-log',
+							"icon":"flag"
 						},
 						{
-							title: '我的积分',
-							to: '',
-							event: 'getScore'
+							"title": '我的积分',
+							"to": '',
+							"event": 'getScore',
+							"icon":"paperplane"
 						}
 					],
 					[{
-						title: '问题与反馈',
-						to: '/uni_modules/uni-feedback/pages/opendb-feedback/list' // /pages/ucenter/uni-feedback/uni-feedback uni_modules/uni-feedback/pages/opendb-feedback/list
+						"title": '问题与反馈',
+						"to": '/uni_modules/opendb-feedback/pages/opendb-feedback/add',
+						"icon":"help"
 					}, {
-						title: '设置',
-						to: '/pages/ucenter/settings/settings'
+						"title": '设置',
+						"to": '/pages/ucenter/settings/settings',
+						"icon":"settings"
 					}],
 					[{
-						title: '关于',
-						to: '/pages/ucenter/about/about'
+						"title": '关于',
+						"to": '/pages/ucenter/about/about',
+						"icon":"info"
 					}]
 				]
 			}
@@ -98,6 +107,7 @@
 				title: '检查更新',
 				rightText: this.appVersion.version + '-' + this.appVersion.versionCode,
 				event: 'checkVersion',
+				icon:'loop',
 				showBadge: this.appVersion.hasNew
 			})
 			//#endif
@@ -223,7 +233,7 @@
 		width: 750rpx;
 		padding: 20rpx;
 		padding-top: 50px;
-		background-color: #2F85FC;
+		background-image: url(../../static/uni-center/headers.png);
 		flex-direction: column;
 		align-items: center;
 	}
@@ -232,11 +242,9 @@
 		width: 150rpx;
 		height: 150rpx;
 		border-radius: 150rpx;
-		border: solid 1px #FFFFFF;
 	}
 
 	.logo-title {
-		height: 150rpx;
 		flex: 1;
 		align-items: center;
 		justify-content: space-between;
@@ -244,8 +252,8 @@
 	}
 
 	.uer-name {
-		height: 60rpx;
-		line-height: 60rpx;
+		height: 100rpx;
+		line-height: 100rpx;
 		font-size: 38rpx;
 		color: #FFFFFF;
 	}
@@ -263,11 +271,14 @@
 
 	.grid {
 		background-color: #FFFFFF;
-		margin: 25rpx 0;
+		margin-bottom: 15rpx;
+		padding: 10rpx 0;
 	}
 
 	.uni-grid .text {
-		font-size: 26rpx;
+		font-size: 30rpx;
+		height: 30px;
+		line-height: 30px;
 		color: #817f82;
 	}
 

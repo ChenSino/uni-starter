@@ -1,6 +1,9 @@
 <template>
 	<view class="root">
-		<text>登陆即表示同意</text>
+		<checkbox-group @change="setAgree" class="checkbox-group">
+			<checkbox  style="transform: scale(0.8);" />
+			<text>同意</text>
+		</checkbox-group>
 		<template v-for="(agreement,index) in agreements">
 			<text class="agreement" @click="navigateTo(agreement)">{{agreement.title}}</text>
 			<text class="hint" v-if="hasAnd(agreements,index)">和</text>
@@ -27,11 +30,15 @@
 			},
 			hasAnd(agreements,index){
 				return agreements.length-1>index
+			},
+			setAgree(e){
+				this.isAgree = !this.isAgree
+				this.$emit('setAgree',this.isAgree)
 			}
 		},
 		data() {
 			return {
-				
+				isAgree:false
 			};
 		}
 	}
@@ -42,6 +49,10 @@
 	flex-direction: row;
 	font-size: 28rpx;
 	color: #8a8f8b;
+}
+.checkbox-group{
+	display: flex;
+	flex-direction: row;
 }
 .agreement{
 	color:#04498c;

@@ -5,9 +5,6 @@
 			<image class="logo" :src="item.logo" mode="widthFix"></image>
 			<text class="login-title">{{item.text}}</text>
 		</view>
-		<!-- #ifdef MP -->
-
-		<!-- #endif -->
 	</view>
 </template>
 <script>
@@ -42,6 +39,12 @@
 			}
 		},
 		props: {
+			agree:{
+				type:Boolean,
+				default(){
+					return false
+				}
+			},
 			config: {
 				type: Object,
 				default () {
@@ -167,6 +170,13 @@
 				}
 			},
 			login_before(type, navigateBack = true) {
+				if(!this.agree){
+					return uni.showToast({
+						title: '你未同意隐私政策协议',
+						icon: 'none'
+					});
+				}
+				
 				console.log(arguments);
 				let oauthService = this.oauthServices.find((service) => service.id == type)
 				console.log(type);

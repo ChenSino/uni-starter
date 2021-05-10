@@ -1,6 +1,6 @@
 {
-    "name" : "base-app",
-    "appid" : "",
+    "name" : "uni-starter",
+    "appid" : "__UNI__E5373F7",
     "description" : "集成了商用项目开发常见功能的项目模板",
     "versionName" : "1.0.0",
     "versionCode" : "100",

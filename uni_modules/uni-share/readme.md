@@ -33,9 +33,9 @@
 					scene: "WXSceneSession",
 					type: 5,
 					miniProgram: {
-						id: baseappConfig.mp.weixin.id,
+						id: uniStarterConfig.mp.weixin.id,
 						path: `/pages/list/detail?id=${_id}&title=${title}`,
-						webUrl: baseappConfig.h5.url +
+						webUrl: uniStarterConfig.h5.url +
 							`/#/pages/list/detail?id=${_id}&title=${title}`,
 						type: 0
 					},

@@ -6,7 +6,7 @@
 `base app`，是一个云端一体的、集成了商用项目开发常见功能的项目模板。
 如果说uniCloud admin是管理端项目的基础模板，那么base app则是用户端、尤其是移动端的基础模板。
 在HBuilderX新建项目时选择base app项目模板，在这个模板基础之上快速填充自己的业务，即可很快完成一个应用。
-地址：[https://gitee.com/dcloud/base-app](https://gitee.com/dcloud/base-app)
+地址：[https://gitee.com/dcloud/uni-starter](https://gitee.com/dcloud/uni-starter)
 
 #### 项目背景
 我们一直想出一个结合uni-app、uniCloud和openDB以及uni-id和uniCloud admin等，uni全家桶的项目模板；
@@ -48,7 +48,7 @@ base app将节省开发者大量的时间，让开发者集中精力在自己的
 有了base app，再加上schema2code生成前端页面，一个简单应用就可以快速完成。
 base app + uniCloud admin，应用开发从未如此简单快捷！
 
-base app提供了baseapp.config.js，可指定该应用是否强制登录才能进入首页，可配置选择登录注册方式以及不同方式的优先级等。
+base app提供了uni-starter.config.js，可指定该应用是否强制登录才能进入首页，可配置选择登录注册方式以及不同方式的优先级等。
 
 ```
 module.exports = {
@@ -59,7 +59,7 @@ module.exports = {
 			//点击悬浮下载栏后打开的网页链接
 			"openUrl": 'https://sj.qq.com/myapp/detail.htm?apkName=com.tencent.android.qqdownloader&info=6646FD239A6EBA9E2DEE5DFC7E18D867',
 			//左侧显示的应用名称
-			"appname": 'base-app',
+			"appname": 'uni-starter',
 			//应用的图标
 			"logo": './static/logo.png',
 		}
@@ -87,7 +87,7 @@ module.exports = {
 	//关于应用
 	"about": {
 		//应用名称
-		"appName": "base-app",
+		"appName": "uni-starter",
 		//应用logo
 		"logo": "/static/logo.png",
 		//公司名称
@@ -119,11 +119,11 @@ module.exports = {
 ### 应用配置
 #### 目录结构
 <pre>
-base-app
+uni-starter
 ├─uniCloud-aliyun	
 │	├─cloudfunctions 云函数目录
 │	|	├─common 公共模块
-│	│	|	├─uni-config-center		baseapp的服务端配置中心，项目所有云函数的配置在这里填写
+│	│	|	├─uni-config-center		uni-starter的服务端配置中心，项目所有云函数的配置在这里填写
 │	│	|	|	├─index.js			config-center入口文件
 │	│	|	|	└─uni-id			uni-id模块配置目录
 │	│	|	|		├─config.json	uni-id对应的配置数据
@@ -199,7 +199,7 @@ base-app
 ├─uni_modules						存放[uni_module](/uni_modules)规范的插件。
 ├─main.js							Vue初始化入口文件
 ├─App.vue							应用配置，用来配置App全局样式以及监听 <a href="/collocation/frame/lifecycle?id=应用生命周期">应用生命周期</a>
-├─baseconfig						baseapp的前端的配置文件，项目所有模块的配置在这里填写。详见该文件的代码注释。
+├─baseconfig						uni-starter的前端的配置文件，项目所有模块的配置在这里填写。详见该文件的代码注释。
 ├─manifest.json	 					配置应用名称、appid、logo、版本等打包信息，<a href="/collocation/manifest">详见</a>
 └─pages.json						配置页面路由、导航条、选项卡等页面类信息，<a href="/collocation/pages">详见</a>
 </pre>
@@ -229,7 +229,7 @@ base-app
 	}
 ```
 1. onLaunch还执行了initApp()包含以下操作
-	1. 读取baseapp.config并挂载到globalData的config下
+	1. 读取uni-starter.config并挂载到globalData的config下
 	2. 读取应用版本号，并存到globalData下。
 	3. 检查是否有可更新的应用版本。
 	4. 网络的变化与toast方式提醒

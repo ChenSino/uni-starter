@@ -1,10 +1,10 @@
 {
-	"id": "uniCloud-base-app",
-	"displayName": "baseApp",
+	"id": "uni-starter",
+	"displayName": "uni-starter",
 	"version": "1.0.0",
 	"description": "集成了商用项目开发常见功能的项目模板",
 	"keywords": [
-		"baseApp",
+		"uni-starter",
 		"login",
 		"登录模版",
         "uniCloud",
@@ -13,7 +13,7 @@
         "usearch",
         "unisearch"
     ],
-	"repository": "https://gitee.com/dcloud/base-app",
+	"repository": "https://gitee.com/dcloud/uni-starter",
 	"engines": {
 		"HBuilderX": "^3.1.0"
 	},

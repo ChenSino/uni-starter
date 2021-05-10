@@ -7,7 +7,7 @@ module.exports = {
 			//点击悬浮下载栏后打开的网页链接
 			"openUrl": 'https://sj.qq.com/myapp/detail.htm?apkName=com.tencent.android.qqdownloader&info=6646FD239A6EBA9E2DEE5DFC7E18D867',
 			//左侧显示的应用名称
-			"appname": 'base-app',
+			"appname": 'uni-starter',
 			//应用的图标
 			"logo": './static/logo.png',
 		}
@@ -35,7 +35,7 @@ module.exports = {
 	//关于应用
 	"about": {
 		//应用名称
-		"appName": "base-app",
+		"appName": "uni-starter",
 		//应用logo
 		"logo": "/static/logo.png",
 		//公司名称

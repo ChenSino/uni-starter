@@ -27,7 +27,7 @@ import uniShare from 'uni_modules/uni-share/js_sdk/uni-share.js';
 			// #endif
 		},
 		computed:{
-			baseappConfig(){
+			uniStarterConfig(){
 				console.log(getApp());
 				return getApp().globalData.config
 			}
@@ -41,7 +41,7 @@ import uniShare from 'uni_modules/uni-share/js_sdk/uni-share.js';
 		},
 		created() {
 			console.log();
-			this.about = this.baseappConfig.about
+			this.about = this.uniStarterConfig.about
 			uni.setNavigationBarTitle({
 				title:'关于'+this.about.appName
 			})

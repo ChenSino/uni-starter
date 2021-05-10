@@ -78,7 +78,7 @@
 				'userInfo': 'user/info',
 				'hasLogin': 'user/hasLogin'
 			}),
-			baseappConfig() {
+			uniStarterConfig() {
 				return getApp().globalData.config
 			}
 		},
@@ -112,6 +112,26 @@
 			}
 		},
 		methods: {
+			setReadNewsLog(){
+				let item = {
+					"article_id":this.id,
+					"last_time":Date.now()
+				},
+				readNewsLog = uni.getStorageSync('readNewsLog')||[],
+				index = -1;
+				readNewsLog.forEach(({article_id},i)=>{
+					if(article_id == item.article_id){
+						index = i
+					}
+				})
+				if(index === -1){
+					readNewsLog.push(item)
+				}else{
+					readNewsLog.splice(index,1,item)
+				}
+				uni.setStorageSync('readNewsLog',readNewsLog)
+				console.log(readNewsLog);
+			},
 			setFavorite() {
 				if (!this.hasLogin){
 					return console.log('未登陆用户');
@@ -143,7 +163,7 @@
 					});
 
 				}
-				this.setFavorite();
+				this.setReadNewsLog();
 			},
 			/**
 			 * followClick
@@ -168,7 +188,7 @@
 				uniShare({
 					content: { //公共的分享类型（type）、链接（herf）、标题（title）、summary（描述）、imageUrl（缩略图）
 						type: 0,
-						href: this.baseappConfig.h5.url + `/#/pages/list/detail?id=${_id}&title=${title}`,
+						href: this.uniStarterConfig.h5.url + `/#/pages/list/detail?id=${_id}&title=${title}`,
 						title: this.title,
 						summary: excerpt,
 						imageUrl: avatar + '?x-oss-process=image/resize,m_fill,h_100,w_100' //压缩图片解决，在ios端分享图过大导致的图片失效问题
@@ -197,9 +217,9 @@
 								scene: "WXSceneSession",
 								type: 5,
 								miniProgram: {
-									id: this.baseappConfig.mp.weixin.id,
+									id: this.uniStarterConfig.mp.weixin.id,
 									path: `/pages/list/detail?id=${_id}&title=${title}`,
-									webUrl: this.baseappConfig.h5.url +
+									webUrl: this.uniStarterConfig.h5.url +
 										`/#/pages/list/detail?id=${_id}&title=${title}`,
 									type: 0
 								},

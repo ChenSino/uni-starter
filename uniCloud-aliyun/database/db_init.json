@@ -23,7 +23,7 @@
 			"is_silently": false,
 			"is_mandatory": false,
 			"appid": "__UNI__03B096E",
-			"name": "base-app",
+			"name": "uni-starter",
 			"title": "新增升级中心",
 			"contents": "新增升级中心",
 			"platform": [
