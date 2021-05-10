@@ -1,0 +1,34 @@
+{
+    "pages": [
+        {
+            "path": "pages/opendb-feedback/add",
+            "style": {
+                "navigationBarTitleText": "新增"
+            }
+        },
+        {
+            "path": "pages/opendb-feedback/edit",
+            "style": {
+                "navigationBarTitleText": "编辑"
+            }
+        },
+        {
+            "path": "pages/opendb-feedback/list",
+            "style": {
+                "navigationBarTitleText": "列表"
+            }
+        },
+        {
+            "path": "pages/opendb-feedback/detail",
+            "style": {
+                "navigationBarTitleText": "详情"
+            }
+        }
+    ],
+    "globalStyle": {
+        "navigationBarTextStyle": "black",
+        "navigationBarTitleText": "uni-app",
+        "navigationBarBackgroundColor": "#F8F8F8",
+        "backgroundColor": "#F8F8F8"
+    }
+}
