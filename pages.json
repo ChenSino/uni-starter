@@ -61,7 +61,7 @@
 				"navigationStyle": "custom"
 			}
 		}, {
-			"path": "uni_modules/uni-feedback/pages/uni-feedback/add",
+			"path": "uni_modules/uni-feedback/pages/uni-feedback/uni-feedback",
 			"style": {
 				"navigationBarTitleText": "问题反馈"
 			}
