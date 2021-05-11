@@ -61,22 +61,7 @@
 				"navigationStyle": "custom"
 			}
 		}, {
-			"path": "uni_modules/opendb-feedback/pages/opendb-feedback/list",
-			"style": {
-				"navigationBarTitleText": "常见问题"
-			}
-		}, {
-			"path": "uni_modules/opendb-feedback/pages/opendb-feedback/add",
-			"style": {
-				"navigationBarTitleText": "问题反馈"
-			}
-		}, {
-			"path": "uni_modules/opendb-feedback/pages/opendb-feedback/detail",
-			"style": {
-				"navigationBarTitleText": "问题反馈"
-			}
-		}, {
-			"path": "uni_modules/opendb-feedback/pages/opendb-feedback/edit",
+			"path": "uni_modules/uni-feedback/pages/uni-feedback/add",
 			"style": {
 				"navigationBarTitleText": "问题反馈"
 			}

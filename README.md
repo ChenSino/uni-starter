@@ -5,11 +5,11 @@
 ### 介绍
 `uni-starter`，是一个云端一体的、集成了商用项目开发常见功能的项目模板。
 如果说uniCloud admin是管理端项目的基础模板，那么uni-starter则是用户端、尤其是移动端的基础模板。
-在HBuilderX新建项目时选择uni-starter项目模板，在这个模板基础之上快速填充自己的业务，即可很快完成一个应用。
+在HBuilderX新建项目时选择`uni-starter`项目模板，在这个模板基础之上快速填充自己的业务，即可很快完成一个应用。
 地址：[https://codechina.csdn.net/dcloud/uni-starter.git](https://codechina.csdn.net/dcloud/uni-starter.git)
 
 #### 项目背景
-在过去我们会收集到开发者，咨询的各种问题，其中我们总结了高频。我们一直想出一个结合uni-app、uniCloud和openDB以及uni-id和uniCloud admin等，uni全家桶的项目模板；
+我们一直想出一个结合uni-app、uniCloud和openDB以及uni-id和uniCloud admin等，uni全家桶的项目模板；
 为了照顾各类应用的开发者，我们取交集最终罗列了如下功能，发现这些就是除业务逻辑外的项目基本功能并把它命名为`uni-starter`。
 uni-starter将节省开发者大量的时间，让开发者集中精力在自己的特色业务上。
 有了uni-starter，再加上schema2code生成前端页面，一个简单应用就可以快速完成。
@@ -92,30 +92,45 @@ img{
 #### 2.登陆模块
 - uni-start集成的登陆方式有：验证码登陆(smsCode)、读取手机SIM卡一键登陆(univerify)、账号密码登陆(username)、微信登陆(weixin)、苹果登陆(apple)
 - 使用方式：在 `uni-starter.config.js`->`router`->`login`下完全列举你需要的登陆方式。这里支持用[条件编译](https://uniapp.dcloud.io/platform?id=%e6%9d%a1%e4%bb%b6%e7%bc%96%e8%af%91)因此你可以配置在不同平台下拥有的登陆方式。
-- 优先级策略：根据配置的第0项为第一优先级。
+- 优先级策略：
+	如果:配置内容为：["username","smsCode"]，用户执行如下代码：
+	```
+	uni.navigateTo({
+		url: "/pages/ucenter/login-page/index/index"
+	})
+	```
+	访问登陆页面，但会被拦截器自动切换到“配置的第0项的登陆方式对应的页面”，即账户登陆方式页面，路径：`/pages/ucenter/login-page/pwd-login/pwd-login`。
+
 - 生效策略：未列举到的或设备环境不支持的登陆方式将被隐藏。
 - 配置：
-	+ uni-starter服务端使用[uni-config-center](https://ext.dcloud.net.cn/plugin?id=4425)统一管理这些配置，详情下文[目录结构](#id=catalogue)
-	+ `manifest.json` App模块配置 --> OAuth（登录鉴权）--> 勾选并配置你所需要的模块
+	+ 服务端：uni-starter服务端使用[uni-config-center](https://ext.dcloud.net.cn/plugin?id=4425)统一管理这些配置，详情下文[目录结构](#id=catalogue)
+	+ 应用模块：`manifest.json` App模块配置 --> OAuth（登录鉴权）--> 勾选并配置你所需要的模块
 
 #### 3.h5版在页面顶部引导用户`点击下载App`
 - 把h5端用户引流到APP端是一个非常常用的功能，相对于h5，APP端有更高的用户留存和更好的产品体验。
-- 这跟是一个演示开发者如何在h5端做全局悬浮块。你可以在`/common/openApp.js`中修改他的样式等代码等，注意他只支持普通js语法。
+- 这同时也是一个演示开发者如何在h5端做全局悬浮块的例子。你可以在`/common/openApp.js`中修改他的样式等代码等，注意他只支持普通js语法。
 
 #### 4.分享模块
-- `manifest.json` App模块配置 --> Share（分享）--> 勾选并配置你所需要的模块
+- 应用配置：`manifest.json` App模块配置 --> Share --> 勾选并配置你所需要的模块
 - 分享功能配置参数，随着应用的业务场景决定，在各场景调用的时候配置。参考uni-starter的`/pages/list/detail.vue`的`methods -> shareClick`
 - 更多`uni-share`的介绍 [详情](https://ext.dcloud.net.cn/plugin?id=4860)
 
 #### 5.升级中心相关
-- `manifest.json` 基础配置 --> 应用版本名称 和 应用版本号
-- 更多`uni-upgrade-center`的介绍 [详情](https://uniapp.dcloud.io/uniCloud/upgrade-center)
+为了解决开发者维护多个 App 升级繁琐，重复逻辑过多，管理不便的问题，升级中心`uni-upgrade-center`应运而生。
+提供了简单、易用、统一的 App 管理、App 版本管理、安装包发布管理，升级检测更新管理。
+- 升级中心分为两个部分：`uni-upgrade-center` Admin管理后台和`uni-upgrade-center-app`前台检测更新。
+- `uni-upgrade-center`的介绍 [详情](https://ext.dcloud.net.cn/plugin?id=4542)
+- `uni-upgrade-center-app`的介绍 [详情](https://ext.dcloud.net.cn/plugin?id=4470)
 
 #### 6.指纹识别模块
 - `manifest.json` App模块配置 --> `Fingerprint`指纹识别
 
 #### 7.消息推送模块
 - `manifest.json` App模块配置 --> `push`消息推送
+
+#### 8.意见反馈
+- 客户端[详情](https://ext.dcloud.net.cn/plugin?id=50)
+- admin端[详情](https://ext.dcloud.net.cn/plugin?id=4992)
 
 ### 应用启动时序介绍
 文件路径： App.vue

@@ -24,7 +24,7 @@ module.exports = {
 			"/pages/ucenter/userinfo/userinfo",
 			"/uni_modules/uni-news-favorite/pages/uni-news-favorite/list",
 			"/pages/ucenter/userinfo/uploadCutImageToUnicloud",
-			"/uni_modules/opendb-feedback/pages/opendb-feedback/add"
+			"/uni_modules/uni-feedback/pages/uni-feedback/add"
 		],
 		"login": ["smsCode","univerify", "username", "weixin", "apple"],
 		/* 

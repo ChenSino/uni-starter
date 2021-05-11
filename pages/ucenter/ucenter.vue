@@ -82,7 +82,7 @@
 					],
 					[{
 						"title": '问题与反馈',
-						"to": '/uni_modules/opendb-feedback/pages/opendb-feedback/add',
+						"to": '/uni_modules/uni-feedback/pages/uni-feedback/add',
 						"icon":"help"
 					}, {
 						"title": '设置',

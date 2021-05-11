@@ -25,7 +25,7 @@
 <script>
 	import {
 		validator
-	} from '../../js_sdk/validator/opendb-feedback.js';
+	} from '../../js_sdk/validator/uni-feedback.js';
 
 	const db = uniCloud.database();
 	const dbCollectionName = 'opendb-feedback';
