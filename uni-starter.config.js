@@ -23,7 +23,8 @@ module.exports = {
 		"needLogin": [
 			"/pages/ucenter/userinfo/userinfo",
 			"/uni_modules/uni-news-favorite/pages/uni-news-favorite/list",
-			"/pages/ucenter/userinfo/uploadCutImageToUnicloud"
+			"/pages/ucenter/userinfo/uploadCutImageToUnicloud",
+			"/uni_modules/opendb-feedback/pages/opendb-feedback/add"
 		],
 		"login": ["smsCode","univerify", "username", "weixin", "apple"],
 		/* 

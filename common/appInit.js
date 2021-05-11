@@ -34,9 +34,9 @@ export default function() {
 				const url = e.url.split('?')[0]
 				//拦截强制登陆页面
 				if (needLogin.includes(url) && token == '') {
-					console.log('该页面需要登陆，即将跳转到login页面');
+					console.log('该页面需要登陆才能访问，请先登陆');
 					uni.showToast({
-						title: '该页面需要登陆，即将跳转到login页面',
+						title: '该页面需要登陆才能访问，请先登陆',
 						icon: 'none'
 					})
 					uni.navigateTo({

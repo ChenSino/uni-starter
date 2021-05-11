@@ -6,9 +6,9 @@
 				<text class="uer-name">{{userInfo.nickname||userInfo.username||userInfo.mobile||'未登录'}}</text>
 			</view>
 		</view>
-		<uni-grid class="grid" :column="5" :showBorder="false" :square="true">
+		<uni-grid class="grid" :column="4" :showBorder="false" :square="true">
 			<uni-grid-item class="item" v-for="(item,index) in gridList" @click.native="tapGrid(index)" :key="index">
-				<uni-icons class="icon" color="#ffd44f" :type="item.icon" size="26"></uni-icons>
+				<uni-icons class="icon" color="#007AFF" :type="item.icon" size="26"></uni-icons>
 				<text class="text">{{item.text}}</text>
 			</uni-grid-item>
 		</uni-grid>
@@ -57,10 +57,6 @@
 					{
 						"text": "文字4",
 						"icon": "download"
-					},
-					{
-						"text": "文字5",
-						"icon": "paperplane"
 					}
 				],
 				ucenterList: [

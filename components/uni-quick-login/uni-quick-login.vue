@@ -177,10 +177,10 @@
 						icon: 'none'
 					});
 				}
-				
-				console.log(arguments);
+				uni.showLoading()
+				// console.log(arguments);
 				let oauthService = this.oauthServices.find((service) => service.id == type)
-				console.log(type);
+				// console.log(type);
 
 				// #ifdef APP-PLUS
 				//请勿直接使用前端获取的unionid或openid直接用于登陆，前端的数据都是不可靠的
@@ -212,6 +212,7 @@
 							let res = await this.getUserInfo({
 								provider: "apple"
 							})
+							uni.hideLoading()
 							Object.assign(e.authResult, res.userInfo)
 						}
 						// #ifdef MP-WEIXIN
@@ -275,8 +276,6 @@
 						delete result.userInfo.token
 						this.setUserInfo(result.userInfo)
 					}
-				}, {
-					showLoading: true
 				})
 			},
 			async getUserInfo(e) {

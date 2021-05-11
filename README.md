@@ -9,7 +9,7 @@
 地址：[https://codechina.csdn.net/dcloud/uni-starter.git](https://codechina.csdn.net/dcloud/uni-starter.git)
 
 #### 项目背景
-我们一直想出一个结合uni-app、uniCloud和openDB以及uni-id和uniCloud admin等，uni全家桶的项目模板；
+在过去我们会收集到开发者，咨询的各种问题，其中我们总结了高频。我们一直想出一个结合uni-app、uniCloud和openDB以及uni-id和uniCloud admin等，uni全家桶的项目模板；
 为了照顾各类应用的开发者，我们取交集最终罗列了如下功能，发现这些就是除业务逻辑外的项目基本功能并把它命名为`uni-starter`。
 uni-starter将节省开发者大量的时间，让开发者集中精力在自己的特色业务上。
 有了uni-starter，再加上schema2code生成前端页面，一个简单应用就可以快速完成。

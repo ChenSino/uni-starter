@@ -12,19 +12,19 @@
 		"tokenExpiresIn": 2592000,
 		"oauth": {
 			"weixin": {
-				"appid": "",
-				"appsecret": ""
+				"appid": "wxffdd8fa6ec4ef2a0",
+				"appsecret": "6c9119430d7be0a147bcbbb73ef33acf"
 			},
 			"apple": {
-				"bundleId": ""
+				"bundleId": "io.dcloud.hellouniapp"
 			}
 		}
 	},
 	"mp-weixin": {
 		"oauth": {
 			"weixin": {
-				"appid": "",
-				"appsecret": ""
+				"appid": "wx81dbb061d2258234",
+				"appsecret": "73be6e8b8b31b7b0783fe448cc1fe820"
 			}
 		}
 	},
@@ -40,13 +40,13 @@
 		"sms": {
 			"name": "DCloud",
 			"codeExpiresIn": 300,
-			"smsKey": "",
-			"smsSecret": ""
+			"smsKey": "71a19f38c954f7d768d68a050486bf15",
+			"smsSecret": "d6c424b702d73baa3b6e1a1452469213"
 		},
 		"univerify": {
-			"appid": "",
-			"apiKey": "",
-			"apiSecret": ""
+			"appid": "__UNI__03B096E",
+			"apiKey": "3fc28519d90d74173bcecf2daf4ffcc4",
+			"apiSecret": "dd793e5bc4b372ce932f35bbb4c5d61b"
 		}
 	}
 }
