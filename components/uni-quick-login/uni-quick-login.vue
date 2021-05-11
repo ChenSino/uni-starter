@@ -177,7 +177,7 @@
 						icon: 'none'
 					});
 				}
-				uni.showLoading()
+				uni.showLoading({mask:true})
 				// console.log(arguments);
 				let oauthService = this.oauthServices.find((service) => service.id == type)
 				// console.log(type);

@@ -1,6 +1,6 @@
 {
     "name" : "uni-starter",
-    "appid" : "__UNI__03B096E",
+    "appid" : "",
     "description" : "集成了商用项目开发常见功能的项目模板",
     "versionName" : "1.0.0",
     "versionCode" : "100",
@@ -91,7 +91,7 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "wx81dbb061d2258234",
+        "appid" : "",
         "setting" : {
             "urlCheck" : false,
             "es6" : false
