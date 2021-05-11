@@ -87,7 +87,7 @@
 					}, {
 						"title": '设置',
 						"to": '/pages/ucenter/settings/settings',
-						"icon":"settings"
+						"icon":"gear"
 					}],
 					[{
 						"title": '关于',

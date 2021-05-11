@@ -45,7 +45,122 @@ img{
 	- 优雅实现：自动引导打开`选择图片`所需要的权限。当调用`uni.chooseImage`时检测到无权限自动开启引导。并不是在每次调用接口时处理这类问题，你可以参考该例子做更多该类场景的处理。uni-starter也会持续完善
 8. h5版在页面顶部引导用户`点击下载App`
 
-#### 应用配置
+### 功能模块介绍
+#### 1. 拦截器与路由守卫
+第三方路由拦截库，一般带有windows对象等问题并不适合在uni-app中使用；另外传统路由拦截方式都是给原生方法做嵌套，首先这种写法并不优雅，另外不同项目的作者可能会不同的第三方路由库，这非常不利于生态的建设。你可能从插件市场拉下来一个项目有太多的学习成本，与你自有项目结合有大量差异需要去磨平。为此`uni-starter`基于`uni.addInterceptor`拦截器。
+拦截器顾名思义，是在框架方法执行的各个环节（包含：拦截前触发、成功回调拦截、失败回调拦截、完成回调拦截）篡改参数或终止运行。
+```
+	const {"router": {needLogin,login} } = uniStarterConfig //需要登陆的页面
+	let list = ["navigateTo", "redirectTo", "reLaunch", "switchTab"];
+	list.forEach(item => { //用遍历的方式分别为,uni.navigateTo,uni.redirectTo,uni.reLaunch,uni.switchTab这4个路由方法添加拦截器
+		uni.addInterceptor(item, {
+			invoke(e) { // 调用前拦截
+				//获取用户的token
+				const token = uni.getStorageSync('uni_id_token')
+				//获取当前页面路径（即url去掉"?"和"?"后的参数）
+				const url = e.url.split('?')[0]
+				//拦截强制登陆页面
+				if (needLogin.includes(url) && token == '') {
+					uni.showToast({
+						title: '该页面需要登陆才能访问，请先登陆',
+						icon: 'none'
+					})
+					uni.navigateTo({
+						url: "/pages/ucenter/login-page/index/index"
+					})
+					return false
+				}
+				//控制登陆优先级
+				if (url == '/pages/ucenter/login-page/index/index') {
+					//一键登录（univerify）、账号（username）、验证码登陆（短信smsCode）
+					if (login[0] == 'univerify') {
+						if(e.url == url) { e.url += '?' } //添加参数之前判断是否带了`？`号如果没有就补上，因为当开发场景本身有参数的情况下是已经带了`？`号
+						e.url += "univerify_first=true"
+					} else if (login[0] == 'username') {
+						e.url = "/pages/ucenter/login-page/pwd-login/pwd-login"
+					}
+				}
+				return true
+			},
+			fail(err) { // 失败回调拦截 
+				console.log(err);
+			},
+		})
+	})
+```
+
+#### 2.登陆模块
+- uni-start集成的登陆方式有：验证码登陆(smsCode)、读取手机SIM卡一键登陆(univerify)、账号密码登陆(username)、微信登陆(weixin)、苹果登陆(apple)
+- 使用方式：在 `uni-starter.config.js`->`router`->`login`下完全列举你需要的登陆方式。这里支持用[条件编译](https://uniapp.dcloud.io/platform?id=%e6%9d%a1%e4%bb%b6%e7%bc%96%e8%af%91)因此你可以配置在不同平台下拥有的登陆方式。
+- 优先级策略：根据配置的第0项为第一优先级。
+- 生效策略：未列举到的或设备环境不支持的登陆方式将被隐藏。
+- 配置：
+	+ uni-starter服务端使用[uni-config-center](https://ext.dcloud.net.cn/plugin?id=4425)统一管理这些配置，详情下文[目录结构](#id=catalogue)
+	+ `manifest.json` App模块配置 --> OAuth（登录鉴权）--> 勾选并配置你所需要的模块
+
+#### 3.h5版在页面顶部引导用户`点击下载App`
+- 把h5端用户引流到APP端是一个非常常用的功能，相对于h5，APP端有更高的用户留存和更好的产品体验。
+- 这跟是一个演示开发者如何在h5端做全局悬浮块。你可以在`/common/openApp.js`中修改他的样式等代码等，注意他只支持普通js语法。
+
+#### 4.分享模块
+- `manifest.json` App模块配置 --> Share（分享）--> 勾选并配置你所需要的模块
+- 分享功能配置参数，随着应用的业务场景决定，在各场景调用的时候配置。参考uni-starter的`/pages/list/detail.vue`的`methods -> shareClick`
+- 更多`uni-share`的介绍 [详情](https://ext.dcloud.net.cn/plugin?id=4860)
+
+#### 5.升级中心相关
+- `manifest.json` 基础配置 --> 应用版本名称 和 应用版本号
+- 更多`uni-upgrade-center`的介绍 [详情](https://uniapp.dcloud.io/uniCloud/upgrade-center)
+
+#### 6.指纹识别模块
+- `manifest.json` App模块配置 --> `Fingerprint`指纹识别
+
+#### 7.消息推送模块
+- `manifest.json` App模块配置 --> `push`消息推送
+
+### 应用启动时序介绍
+文件路径： App.vue
+```
+	import initApp from '@/common/appInit.js';
+	export default {
+		onLaunch: function() {
+			initApp();
+		}
+	}
+```
+onLaunch生命周期执行了
+1. 全局监听clientDB的err事件，
+	- 判断是否为token过期失效等需要重新登陆的问题。自动跳转到登陆页面
+	- 检测本地的token是否有效（存在且并未过期）否则跳转到登陆页面
+2. 预登陆一键登录功能
+3. 执行了initApp()包含以下操作
+	1. 读取uni-starter.config并挂载到globalData的config下
+	2. 读取应用版本号，并存到globalData下
+	3. 检查是否有可更新的应用版本，决定是否启动在线更新版本
+	4. 监听设备的网络变化并以uni.showToast APi的方式提醒用户
+	5. 使用[拦截器](https://uniapp.dcloud.io/api/interceptor?id=addinterceptor) 实现
+		- 页面路由拦截，配置需强制登陆的页面；打开时检测，如果token无效就自动跳转到登陆页
+		- 优雅实现：自动引导打开`选择图片`所需要的权限。当调用`uni.chooseImage`时检测到无权限自动开启引导。并不是在每次调用接口时处理这类问题，你可以参考该例子做更多该类场景的处理。uni-starter也会持续完善
+
+## 快速体验部署流程
+#### 1. 开通uniCloud
+- 开通`uniCloud`：本项目是云端一体的，它的云端代码需要部署在uniCloud云服务空间里，需要开通uniCloud。在[https://unicloud.dcloud.net.cn/](https://unicloud.dcloud.net.cn/)登录，按云厂商要求进行实名认证。
+- 在uniCloud认证通过后，创建一个服务空间给本项目使用。选择阿里云或腾讯云均可。[参考](https://uniapp.dcloud.net.cn/uniCloud/price)
+- 使用HBuilderX 3.1以上版本（最好是最新版），把本项目导入到HBuilderX中，在项目根目录uniCloud上点右键菜单，关联服务空间 -> 选择之前创建的服务空间
+
+#### 2. 关联项目与云服务空间
+<img class="cloud" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/f3f36e4a-77e6-495c-bb85-5fc6999e29e1.jpg" />
+<img class="cloud" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/dd39dfcc-60c8-4f9f-a4d7-6b08f39e737e.jpg" />
+<img class="cloud" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/350f5e46-976e-4c5b-be49-e5c3908b03f4.jpg" />
+<div style="clear: both;"></div>
+<style>
+img.cloud{
+	box-shadow:0 0 2px #eeeeee;
+	width:400px;
+	margin:15px 5vw 0 0;
+	float:left
+}
+</style>
+
 ##### 配置文件
 uni-starter提供了uni-starter.config.js，可指定该应用是否强制登录才能进入首页，可配置选择登录注册方式以及不同方式的优先级等。配置项内容如下：
 ```
@@ -113,16 +228,7 @@ module.exports = {
 }
 ```
 
-##### 模块配置
-为了你可以快速体验uni-starter需要配置以下模块
-1. Fingerprint 指纹识别
-2. push消息推送
-3. OAuth登陆模块
-	1. 一键登陆univerify
-	2. 苹果登陆 Sign in with Apple 
-	3. 微信登陆
-
-#### 目录结构
+#### 目录结构@catalogue
 <pre>
 uni-starter
 ├─uniCloud-aliyun	
@@ -208,65 +314,6 @@ uni-starter
 └─pages.json						配置页面路由、导航条、选项卡等页面类信息，<a href="/collocation/pages">详见</a>
 </pre>
 完整的uni-app目录结构[详情](https://uniapp.dcloud.io/frame?id=%e7%9b%ae%e5%bd%95%e7%bb%93%e6%9e%84)
-#### 按功能模块
-- 登陆模块
-	+ `manifest.json` App模块配置 --> OAuth（登录鉴权）--> 勾选并配置你所需要的模块
-	+ 登陆方式的优先级和登陆项（支持多平台条件编译）详情配置文件：`baseconfig`的`router -> login`
-	+ 服务端配置详情：`/uni_modules/uni-config-center/uniCloud/cloudfunctions/common/uni-config-center/uni-id/config.json`
-	+ 更多`uni-config-center`的介绍 [详情](https://ext.dcloud.net.cn/plugin?id=4425)
-- 分享模块
-	+ `manifest.json` App模块配置 --> Share（分享）--> 勾选并配置你所需要的模块
-	+ 分享功能配置参数，随着应用的业务场景决定，在各场景调用的时候配置。参考uni-starter的`/pages/list/detail.vue`的`methods -> shareClick`
-	+ 更多`uni-share`的介绍 [详情](https://ext.dcloud.net.cn/plugin?id=4860)
-- 升级中心相关
-	+ `manifest.json` 基础配置 --> 应用版本名称 和 应用版本号
-	+ 更多`uni-upgrade-center`的介绍 [详情](https://uniapp.dcloud.io/uniCloud/upgrade-center)
-
-
-
-### 应用启动时序介绍
-文件路径： App.vue
-```
-	import initApp from '@/common/appInit.js';
-	export default {
-		onLaunch: function() {
-			initApp();
-		}
-	}
-```
-onLaunch生命周期执行了
-1. 全局监听clientDB的err事件，
-	- 判断是否为token过期失效等需要重新登陆的问题。自动跳转到登陆页面
-	- 检测本地的token是否有效（存在且并未过期）否则跳转到登陆页面
-2. 预登陆一键登录功能
-3. 执行了initApp()包含以下操作
-	1. 读取uni-starter.config并挂载到globalData的config下
-	2. 读取应用版本号，并存到globalData下
-	3. 检查是否有可更新的应用版本，决定是否启动在线更新版本
-	4. 监听设备的网络变化并以uni.showToast APi的方式提醒用户
-	5. 使用[拦截器](https://uniapp.dcloud.io/api/interceptor?id=addinterceptor) 实现
-		- 页面路由拦截，配置需强制登陆的页面；打开时检测，如果token无效就自动跳转到登陆页
-		- 优雅实现：自动引导打开`选择图片`所需要的权限。当调用`uni.chooseImage`时检测到无权限自动开启引导。并不是在每次调用接口时处理这类问题，你可以参考该例子做更多该类场景的处理。uni-starter也会持续完善
-
-## 快速体验部署流程
-#### 1. 开通uniCloud
-- 开通`uniCloud`：本项目是云端一体的，它的云端代码需要部署在uniCloud云服务空间里，需要开通uniCloud。在[https://unicloud.dcloud.net.cn/](https://unicloud.dcloud.net.cn/)登录，按云厂商要求进行实名认证。
-- 在uniCloud认证通过后，创建一个服务空间给本项目使用。选择阿里云或腾讯云均可。[参考](https://uniapp.dcloud.net.cn/uniCloud/price)
-- 使用HBuilderX 3.1以上版本（最好是最新版），把本项目导入到HBuilderX中，在项目根目录uniCloud上点右键菜单，关联服务空间 -> 选择之前创建的服务空间
-
-#### 2. 关联项目与云服务空间
-<img class="cloud" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/f3f36e4a-77e6-495c-bb85-5fc6999e29e1.jpg" />
-<img class="cloud" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/dd39dfcc-60c8-4f9f-a4d7-6b08f39e737e.jpg" />
-<img class="cloud" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/350f5e46-976e-4c5b-be49-e5c3908b03f4.jpg" />
-<div style="clear: both;"></div>
-<style>
-img.cloud{
-	box-shadow:0 0 2px #eeeeee;
-	width:400px;
-	margin:15px 5vw 0 0;
-	float:left
-}
-</style>
 
 ### 注意事项
 1. 真机运行需要制作自定义基座，制作后选择运行到自定义基座
@@ -274,7 +321,7 @@ img.cloud{
 3. 应用登陆功能，默认不勾选同意隐私权限是响应安卓应用市场的规范；请勿修改该逻辑。
 
 ### FAQ：常见问题
-1. 提示“公共模块uni-id缺少配置信息”解决方案：在cloudfunctions右键‘上传所有云函数、公共模块及actions’之后，需要在cloudfunctions--》common--》uni-config-center 目录单独上传一次，右键‘上传公共模块’。
+1. 提示“公共模块uni-id缺少配置信息”解决方案：在cloudfunctions右键‘上传所有云函数、公共模块及actions’之后，需要在cloudfunctions -> common -> uni-config-center 目录单独上传一次，右键‘上传公共模块’。
 2. 本项目代码可以商用，无需为DCloud付费。但不能把本项目的代码改造用于非uni-app和uniCloud的技术体系。即，不能将后台改成php、java等其他后台，这将违反使用许可协议。
 
 ### 第三方插件（感谢插件作者，排名不分前后）：
