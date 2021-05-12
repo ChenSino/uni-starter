@@ -1,7 +1,7 @@
 <template>
 	<view class="root">
 		<checkbox-group @change="setAgree" class="checkbox-group">
-			<checkbox  style="transform: scale(0.8);" />
+			<checkbox  style="transform: scale(0.7);" />
 			<text>同意</text>
 		</checkbox-group>
 		<template v-for="(agreement,index) in agreements">
@@ -47,10 +47,12 @@
 <style>
 .root{
 	flex-direction: row;
+	align-items: center;
 	font-size: 28rpx;
 	color: #8a8f8b;
 }
 .checkbox-group{
+	align-items: center;
 	display: flex;
 	flex-direction: row;
 }
