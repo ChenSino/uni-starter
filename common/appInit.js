@@ -27,17 +27,6 @@ export default function() {
 				const token = uni.getStorageSync('uni_id_token')
 				//获取当前页面路径（即url去掉"?"和"?"后的参数）
 				const url = e.url.split('?')[0]
-				//拦截强制登陆页面
-				if (needLogin.includes(url) && token == '') {
-					uni.showToast({
-						title: '该页面需要登陆才能访问，请先登陆',
-						icon: 'none'
-					})
-					uni.navigateTo({
-						url: "/pages/ucenter/login-page/index/index"
-					})
-					return false
-				}
 				//控制登陆优先级
 				if (url == '/pages/ucenter/login-page/index/index') {
 					//一键登录（univerify）、账号（username）、验证码登陆（短信smsCode）
@@ -47,8 +36,18 @@ export default function() {
 					} else if (login[0] == 'username') {
 						e.url = "/pages/ucenter/login-page/pwd-login/pwd-login"
 					}
+				}else{
+					//拦截强制登陆页面
+					if (needLogin.includes(url) && token == '') {
+						uni.showToast({
+							title: '请先登陆',
+							icon: 'none'
+						})
+						return uni.navigateTo({
+							url: "/pages/ucenter/login-page/index/index"
+						})
+					}
 				}
-				return true
 			},
 			fail(err) { // 失败回调拦截 
 				console.log(err);
