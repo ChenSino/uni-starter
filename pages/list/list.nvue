@@ -84,13 +84,9 @@
 			this.listHight = 'auto'
 			// #endif
 			cdbRef = this.$refs.udb
-			console.log(cdbRef);
-			console.log(9527,getApp().globalData);
-			
 		},
 		onShow() {
 			this.keyword = getApp().globalData.searchText
-			console.log(this.keyword);
 			getApp().globalData.searchText = ''
 			if(this.keyword){
 				// #ifdef APP-PLUS
@@ -104,13 +100,6 @@
 			}
 		},
 		methods: {
-			// testData(data) { //复制同一个数据多遍方便测试，正式项目中不要带
-			// 	var testData = []
-			// 	for (let i = 0; i < 10; i++) {
-			// 		testData.push(...data)
-			// 	}
-			// 	return testData
-			// },
 			searchClick(e) { //点击搜索框
 				uni.hideKeyboard();
 				uni.navigateTo({

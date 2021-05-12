@@ -130,7 +130,7 @@ function initAppVersion() {
 		}
 		// 检查更新小红点
 		callCheckVersion().then(res => {
-			console.log('检查是否有可以更新的版本', res);
+			// console.log('检查是否有可以更新的版本', res);
 			if (res.result.code > 0) {
 				// 有新版本
 				getApp({

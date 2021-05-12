@@ -268,7 +268,7 @@
 	.grid {
 		background-color: #FFFFFF;
 		margin-bottom: 15rpx;
-		padding: 10rpx 0;
+		padding: 5rpx 0;
 	}
 
 	.uni-grid .text {
