@@ -17,7 +17,7 @@
 			// #endif
 
 			// #ifdef APP-PLUS
-			//一键登录 功能预登陆
+			//一键登录 功能预登录
 			plus.oauth.getServices(oauthServices => {
 				// console.log(oauthServices);
 				oauthServices.forEach(({

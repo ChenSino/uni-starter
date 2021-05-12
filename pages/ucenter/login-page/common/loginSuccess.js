@@ -1,9 +1,9 @@
 export default function(result){
 	uni.showToast({
-		title: '登陆成功',
+		title: '登录成功',
 		icon: 'none'
 	});
-	console.log('登陆成功',result);
+	console.log('登录成功',result);
 	uni.setStorageSync('uni_id_uid', result.uid)
 	uni.setStorageSync('uni_id_token', result.token)
 	uni.setStorageSync('uni_id_token_expired', result.tokenExpired)

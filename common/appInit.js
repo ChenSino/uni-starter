@@ -18,7 +18,7 @@ export default function() {
 		这里应用了[拦截器](https://uniapp.dcloud.io/api/interceptor?id=addinterceptor)实现了，路由拦截。当应用无访问摄像头/相册权限，引导跳到设置界面
 	*/
 	//自定义路由拦截
-	const {"router": {needLogin,login} } = uniStarterConfig //需要登陆的页面
+	const {"router": {needLogin,login} } = uniStarterConfig //需要登录的页面
 	let list = ["navigateTo", "redirectTo", "reLaunch", "switchTab"];
 	list.forEach(item => { //用遍历的方式分别为,uni.navigateTo,uni.redirectTo,uni.reLaunch,uni.switchTab这4个路由方法添加拦截器
 		uni.addInterceptor(item, {
@@ -27,9 +27,9 @@ export default function() {
 				const token = uni.getStorageSync('uni_id_token')
 				//获取当前页面路径（即url去掉"?"和"?"后的参数）
 				const url = e.url.split('?')[0]
-				//控制登陆优先级
+				//控制登录优先级
 				if (url == '/pages/ucenter/login-page/index/index') {
-					//一键登录（univerify）、账号（username）、验证码登陆（短信smsCode）
+					//一键登录（univerify）、账号（username）、验证码登录（短信smsCode）
 					if (login[0] == 'univerify') {
 						if(e.url == url) { e.url += '?' } //添加参数之前判断是否带了`？`号如果没有就补上，因为当开发场景本身有参数的情况下是已经带了`？`号
 						e.url += "univerify_first=true"
@@ -37,7 +37,7 @@ export default function() {
 						e.url = "/pages/ucenter/login-page/pwd-login/pwd-login"
 					}
 				}else{
-					//拦截强制登陆页面
+					//拦截强制登录页面
 					if (needLogin.includes(url) && token == '') {
 						uni.showToast({
 							title: '请先登录',

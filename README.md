@@ -33,14 +33,14 @@ img{
 </style>
 
 ### uni-starter集成的功能包括：
-1. 个人中心：登录注册（含用户名密码登录、手机号验证码登录、app一键登陆、微信登录、Apple登录、微信小程序登录）、修改密码、忘记密码、头像更换、昵称修改、积分查看、指纹绑定、退出登陆
+1. 个人中心：登录注册（含用户名密码登录、手机号验证码登录、app一键登录、微信登录、Apple登录、微信小程序登录）、修改密码、忘记密码、头像更换、昵称修改、积分查看、指纹绑定、退出登录
 2. 设置：App更新（整包升级、wgt升级、强制升级，后台搭配uniCloud admin的升级中心插件管理）、权限引导（app）、推送开关（app）、清除缓存（app）、用户协议、隐私协议（app）、问题与反馈、分享推荐、关于
 3. 启动引导：iOS初次启动被用户禁止网络权限后引导开启、Android弹出隐私协议后再申请权限
 4. 首页集成banner（后台搭配uniCloud admin的banner插件管理）、搜索、列表、详情、分享，均为云端一体。实际使用中将clientDB的表名更改为自己业务表名即可
 5. 首页采用nvue，fast编译模式，加快App端启动速度
 6. 内置联网失败的重试页面（不是错误弹框，页面有重试按钮）、更漂亮的分享菜单页面
 7. 内置拦截器：
-	- 页面路由拦截，配置需强制登陆的页面；打开时检测，如果token无效就自动跳转到登陆页
+	- 页面路由拦截，配置需强制登录的页面；打开时检测，如果token无效就自动跳转到登录页
 	- 优雅实现：自动引导打开`选择图片`所需要的权限。当调用`uni.chooseImage`时检测到无权限自动开启引导。并不是在每次调用接口时处理这类问题，你可以参考该例子做更多该类场景的处理。uni-starter也会持续完善
 8. h5版在页面顶部引导用户`点击下载App`
 
@@ -49,7 +49,7 @@ img{
 第三方路由拦截库，一般带有windows对象等问题并不适合在uni-app中使用；另外传统路由拦截方式都是给原生方法做嵌套，首先这种写法并不优雅，另外不同项目的作者可能会不同的第三方路由库，这非常不利于生态的建设。你可能从插件市场拉下来一个项目有太多的学习成本，与你自有项目结合有大量差异需要去磨平。为此`uni-starter`基于`uni.addInterceptor`拦截器。
 拦截器顾名思义，是在框架方法执行的各个环节（包含：拦截前触发、成功回调拦截、失败回调拦截、完成回调拦截）篡改参数或终止运行。
 ```
-	const {"router": {needLogin,login} } = uniStarterConfig //需要登陆的页面
+	const {"router": {needLogin,login} } = uniStarterConfig //需要登录的页面
 	let list = ["navigateTo", "redirectTo", "reLaunch", "switchTab"];
 	list.forEach(item => { //用遍历的方式分别为,uni.navigateTo,uni.redirectTo,uni.reLaunch,uni.switchTab这4个路由方法添加拦截器
 		uni.addInterceptor(item, {
@@ -58,10 +58,10 @@ img{
 				const token = uni.getStorageSync('uni_id_token')
 				//获取当前页面路径（即url去掉"?"和"?"后的参数）
 				const url = e.url.split('?')[0]
-				//拦截强制登陆页面
+				//拦截强制登录页面
 				if (needLogin.includes(url) && token == '') {
 					uni.showToast({
-						title: '该页面需要登陆才能访问，请先登陆',
+						title: '该页面需要登录才能访问，请先登录',
 						icon: 'none'
 					})
 					uni.navigateTo({
@@ -69,9 +69,9 @@ img{
 					})
 					return false
 				}
-				//控制登陆优先级
+				//控制登录优先级
 				if (url == '/pages/ucenter/login-page/index/index') {
-					//一键登录（univerify）、账号（username）、验证码登陆（短信smsCode）
+					//一键登录（univerify）、账号（username）、验证码登录（短信smsCode）
 					if (login[0] == 'univerify') {
 						if(e.url == url) { e.url += '?' } //添加参数之前判断是否带了`？`号如果没有就补上，因为当开发场景本身有参数的情况下是已经带了`？`号
 						e.url += "univerify_first=true"
@@ -88,9 +88,9 @@ img{
 	})
 ```
 
-#### 2.登陆模块
-- uni-start集成的登陆方式有：验证码登陆(smsCode)、读取手机SIM卡一键登陆(univerify)、账号密码登陆(username)、微信登陆(weixin)、苹果登陆(apple)
-- 使用方式：在 `uni-starter.config.js`->`router`->`login`下完全列举你需要的登陆方式。这里支持用[条件编译](https://uniapp.dcloud.io/platform?id=%e6%9d%a1%e4%bb%b6%e7%bc%96%e8%af%91)因此你可以配置在不同平台下拥有的登陆方式。
+#### 2.登录模块
+- uni-start集成的登录方式有：验证码登录(smsCode)、读取手机SIM卡一键登录(univerify)、账号密码登录(username)、微信登录(weixin)、苹果登录(apple)
+- 使用方式：在 `uni-starter.config.js`->`router`->`login`下完全列举你需要的登录方式。这里支持用[条件编译](https://uniapp.dcloud.io/platform?id=%e6%9d%a1%e4%bb%b6%e7%bc%96%e8%af%91)因此你可以配置在不同平台下拥有的登录方式。
 - 优先级策略：
 	如果:配置内容为：["username","smsCode"]，用户执行如下代码：
 	```
@@ -98,9 +98,9 @@ img{
 		url: "/pages/ucenter/login-page/index/index"
 	})
 	```
-	访问登陆页面，但会被拦截器自动切换到“配置的第0项的登陆方式对应的页面”，即账户登陆方式页面，路径：`/pages/ucenter/login-page/pwd-login/pwd-login`。
+	访问登录页面，但会被拦截器自动切换到“配置的第0项的登录方式对应的页面”，即账户登录方式页面，路径：`/pages/ucenter/login-page/pwd-login/pwd-login`。
 
-- 生效策略：未列举到的或设备环境不支持的登陆方式将被隐藏。
+- 生效策略：未列举到的或设备环境不支持的登录方式将被隐藏。
 - 配置：
 	+ 服务端：uni-starter服务端使用[uni-config-center](https://ext.dcloud.net.cn/plugin?id=4425)统一管理这些配置，详情下文[目录结构](#id=catalogue)
 	+ 应用模块：`manifest.json` App模块配置 --> OAuth（登录鉴权）--> 勾选并配置你所需要的模块
@@ -193,16 +193,16 @@ img{
 ```
 onLaunch生命周期执行了
 1. 全局监听clientDB的err事件，
-	- 判断是否为token过期失效等需要重新登陆的问题。自动跳转到登陆页面
-	- 检测本地的token是否有效（存在且并未过期）否则跳转到登陆页面
-2. 预登陆一键登录功能
+	- 判断是否为token过期失效等需要重新登录的问题。自动跳转到登录页面
+	- 检测本地的token是否有效（存在且并未过期）否则跳转到登录页面
+2. 预登录一键登录功能
 3. 执行了initApp()包含以下操作
 	1. 读取uni-starter.config并挂载到globalData的config下
 	2. 读取应用版本号，并存到globalData下
 	3. 检查是否有可更新的应用版本，决定是否启动在线更新版本
 	4. 监听设备的网络变化并以uni.showToast APi的方式提醒用户
 	5. 使用[拦截器](https://uniapp.dcloud.io/api/interceptor?id=addinterceptor) 实现
-		- 页面路由拦截，配置需强制登陆的页面；打开时检测，如果token无效就自动跳转到登陆页
+		- 页面路由拦截，配置需强制登录的页面；打开时检测，如果token无效就自动跳转到登录页
 		- 优雅实现：自动引导打开`选择图片`所需要的权限。当调用`uni.chooseImage`时检测到无权限自动开启引导。并不是在每次调用接口时处理这类问题，你可以参考该例子做更多该类场景的处理。uni-starter也会持续完善
 
 ## 快速体验部署流程
@@ -248,7 +248,7 @@ module.exports = {
 		}
 	},
 	"router": {
-		//配置需要路由拦截的页面地址，在打开这些页面之前会自动检查（无需联网）uni_id_token的值，如果token无效就自动跳转到登陆页
+		//配置需要路由拦截的页面地址，在打开这些页面之前会自动检查（无需联网）uni_id_token的值，如果token无效就自动跳转到登录页
 		"needLogin": [
 			"/pages/ucenter/userinfo/userinfo",
 			"/uni_modules/uni-news-favorite/pages/uni-news-favorite/list",
@@ -256,8 +256,8 @@ module.exports = {
 		],
 		"login": ["smsCode","univerify", "username", "weixin", "apple"],
 		/* 
-			这里会根据数组的第0项，决定登陆方式的第一优先级是哪种登陆方式。
-			所有你希望拥有的登陆方式这里都需要一一列举，未列举到的或设备环境不支持的登陆方式将被隐藏。
+			这里会根据数组的第0项，决定登录方式的第一优先级是哪种登录方式。
+			所有你希望拥有的登录方式这里都需要一一列举，未列举到的或设备环境不支持的登录方式将被隐藏。
 			如果你需要在不同平台有不同的配置，直接用条件编译即可。
 		*/
 	},
@@ -301,7 +301,7 @@ uni-starter
 │	│	|	├─uni-config-center		uni-starter的服务端配置中心，项目所有云函数的配置在这里填写 <a target="_blank" href="https://ext.dcloud.net.cn/plugin?id=4425">详情</a>
 │	│	|	|	├─index.js			config-center入口文件
 │	│	|	|	└─uni-id			uni-id模块配置目录
-│	│	|	|		├─config.json	uni-id对应的配置数据：微信登陆、一键登录、短信验证码登陆等key都在这里填写<a target="_blank" href="https://ext.dcloud.net.cn/plugin?id=4425">详情</a>
+│	│	|	|		├─config.json	uni-id对应的配置数据：微信登录、一键登录、短信验证码登录等key都在这里填写<a target="_blank" href="https://ext.dcloud.net.cn/plugin?id=4425">详情</a>
 │	│	|	|		└─file.cert		uni-id依赖的配置文件,假如你使用微信发红包功能，需要的证书文件就是放到这里
 │	|	|	└───uni-id				uni-id用户体系 <a target="_blank" href="https://uniapp.dcloud.io/uniCloud/uni-id">详情</a>
 │	|	├─uni-analyse-searchhot		云端一体搜索模板依赖的云函数 <a target="_blank" href="https://ext.dcloud.net.cn/plugin?id=3851">详情</a>
@@ -318,7 +318,7 @@ uni-starter
 │		├─opendb-search-hot.schema.json			热门搜索表，表结构文件
 │		├─opendb-search-log.schema.json			搜索记录表，表结构文件
 │		├─opendb-verify-codes.schema.json		验证码表，表结构文件
-│		├─uni-id-log.schema.json	        	登陆日志表，表结构文件
+│		├─uni-id-log.schema.json	        	登录日志表，表结构文件
 │		├─uni-id-scores.schema.json	        	用户积分表，表结构文件
 │		└─uni-id-users.schema.json	        	用户表，表结构文件
 ├─pages										业务页面文件存放的目录
@@ -335,14 +335,14 @@ uni-starter
 │	├─ucenter
 │	│	├─about								关于我们
 │	│	│	└─about
-│	│	├─login-page						登陆模块
-│	|	|	├─common						登陆模块公共库
+│	│	├─login-page						登录模块
+│	|	|	├─common						登录模块公共库
 │	│	│	│	├─login-page.css			公共样式库
 │	│	│	│	├─login-page.mixin.js		公共mixin
-│	│	│	│	└─loginSuccess.js			公共登陆成功后操作
-│	|	|	├─index							短信验证码登陆，手机号码输入页面
-│	|	|	├─phone-code					短信验证码登陆，验证码输入页面
-│	|	|	├─pwd-login						账户密码登陆
+│	│	│	│	└─loginSuccess.js			公共登录成功后操作
+│	|	|	├─index							短信验证码登录，手机号码输入页面
+│	|	|	├─phone-code					短信验证码登录，验证码输入页面
+│	|	|	├─pwd-login						账户密码登录
 │	|	|	├─pwd-retrieve					密码重置
 │	│	│	└─register						注册账户模块
 │	│	│		├─validator.js
@@ -381,8 +381,8 @@ uni-starter
 
 ### 注意事项
 1. 真机运行需要制作自定义基座，制作后选择运行到自定义基座
-2. 苹果登陆的图标，需要满足苹果应用市场的审核规范请勿随便修改；如需修改请先阅读:[Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/sign-in-with-apple/overview/buttons/)
-3. 应用登陆功能，默认不勾选同意隐私权限是响应安卓应用市场的规范；请勿修改该逻辑。
+2. 苹果登录的图标，需要满足苹果应用市场的审核规范请勿随便修改；如需修改请先阅读:[Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/sign-in-with-apple/overview/buttons/)
+3. 应用登录功能，默认不勾选同意隐私权限是响应安卓应用市场的规范；请勿修改该逻辑。
 
 ### FAQ：常见问题
 1. 提示“公共模块uni-id缺少配置信息”解决方案：在cloudfunctions右键‘上传所有云函数、公共模块及actions’之后，需要在cloudfunctions -> common -> uni-config-center 目录单独上传一次，右键‘上传公共模块’。

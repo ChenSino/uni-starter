@@ -18,9 +18,9 @@ exports.main = async (event, context) => {
 	console.log('event : ' + JSON.stringify(event))
 	let params = event.params || {}
 
-	//防止黑客恶意破解登陆，连续登陆失败一定次数后，需要用户提供验证码
+	//防止黑客恶意破解登录，连续登录失败一定次数后，需要用户提供验证码
 	const getNeedCaptcha = async () => {
-		//当用户最近“2小时内(recordDate)”登陆失败达到2次(recordSize)时。要求用户提交验证码
+		//当用户最近“2小时内(recordDate)”登录失败达到2次(recordSize)时。要求用户提交验证码
 		const now = Date.now(),
 			recordDate = 120 * 60 * 1000,
 			recordSize = 2;
@@ -36,7 +36,7 @@ exports.main = async (event, context) => {
 		return recentRecord.data.filter(item => item.state === 0).length === recordSize;
 	}
 
-	//设置某些模块不需要token（也就是登陆成功后）才能操作,如果需要token就获取当前操作账户的uid
+	//设置某些模块不需要token（也就是登录成功后）才能操作,如果需要token就获取当前操作账户的uid
 	let noCheckAction = [
 		'register', 'checkToken', 'login', 'logout', 'sendSmsCode',
 		'createCaptcha', 'verifyCaptcha', 'refreshCaptcha', 'inviteLogin',
@@ -69,7 +69,7 @@ exports.main = async (event, context) => {
 			create_date: Date.now()
 		})
 	}
-	//记录成功登陆的日志
+	//记录成功登录的日志
 	const loginLog = async (res = {}, type = 'login') => {
 		const now = Date.now()
 		const uniIdLogCollection = db.collection('uni-id-log')

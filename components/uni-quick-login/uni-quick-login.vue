@@ -12,7 +12,7 @@
 		mapGetters,
 		mapMutations
 	} from 'vuex';
-	//前一个窗口的页面地址。控制点击切换快捷登陆方式是创建还是返回
+	//前一个窗口的页面地址。控制点击切换快捷登录方式是创建还是返回
 	import loginSuccess from '@/pages/ucenter/login-page/common/loginSuccess.js';
 	export default {
 		computed: {
@@ -24,7 +24,7 @@
 			return {
 				servicesList: [{
 						"id": "username",
-						"text": "账号登陆",
+						"text": "账号登录",
 						"logo": "/static/uni-quick-login/user.png",
 						"path": "/pages/ucenter/login-page/pwd-login/pwd-login"
 					},
@@ -50,34 +50,34 @@
 				default () {
 					return {
 						"weixin": {
-							"text": "微信登陆",
+							"text": "微信登录",
 							"logo": "/static/uni-quick-login/wechat.png",
 							"isChecked": true
 						},
 						"apple": {
-							"text": "苹果登陆",
+							"text": "苹果登录",
 							"logo": "/static/uni-quick-login/apple.png",
 							"isChecked": true
 						},
 						"univerify": {
-							"text": "一键登陆",
+							"text": "一键登录",
 							"logo": "/static/uni-quick-login/univerify.png",
 							"isChecked": true
 						},
 						"qq": {
-							"text": "QQ登陆",
+							"text": "QQ登录",
 							"logo": "/static/uni-quick-login/univerify.png",
-							"isChecked": false //暂未提供该登陆方式的接口示例
+							"isChecked": false //暂未提供该登录方式的接口示例
 						},
 						"xiaomi": {
-							"text": "小米登陆",
+							"text": "小米登录",
 							"logo": "/static/uni-quick-login/univerify.png",
-							"isChecked": false //暂未提供该登陆方式的接口示例
+							"isChecked": false //暂未提供该登录方式的接口示例
 						},
 						"sinaweibo": {
 							"text": "微博登录",
 							"logo": "/static/uni-quick-login/univerify.png",
-							"isChecked": false //暂未提供该登陆方式的接口示例
+							"isChecked": false //暂未提供该登录方式的接口示例
 						}
 					}
 				}
@@ -85,7 +85,7 @@
 			univerifyStyle: {
 				type: Object,
 				default () {
-					return { //一键登陆弹出窗的样式配置参数
+					return { //一键登录弹出窗的样式配置参数
 						"fullScreen": true, // 是否全屏显示，true表示全屏模式，false表示非全屏模式，默认值为false。
 						"backgroundColor": "#ffffff", // 授权页面背景颜色，默认值：#ffffff  
 					}
@@ -96,7 +96,7 @@
 			console.log('loginConfig', this.loginConfig);
 			console.log('this.getRoute(1)', this.getRoute(1));
 			let servicesList = this.servicesList
-			//去掉当前页面对应的登陆选项
+			//去掉当前页面对应的登录选项
 			for (var i = 0; i < servicesList.length; i++) {
 				if (servicesList[i].path == this.getRoute(1)) {
 					servicesList.splice(i, 1)
@@ -112,7 +112,7 @@
 			console.log('servicesList', servicesList);
 		},
 		mounted() {
-			//获取当前环境能用的快捷登陆方式
+			//获取当前环境能用的快捷登录方式
 			// #ifdef APP-PLUS
 			plus.oauth.getServices(oauthServices => {
 				this.oauthServices = oauthServices
@@ -183,7 +183,7 @@
 				// console.log(type);
 
 				// #ifdef APP-PLUS
-				//请勿直接使用前端获取的unionid或openid直接用于登陆，前端的数据都是不可靠的
+				//请勿直接使用前端获取的unionid或openid直接用于登录，前端的数据都是不可靠的
 				if (type == 'weixin') {
 					return oauthService.authorize(({
 							code
@@ -231,23 +231,23 @@
 						if (type == 'univerify') {
 							if (err.metadata.error_data) {
 								uni.showToast({
-									title: "一键登陆:" + err.metadata.error_data,
+									title: "一键登录:" + err.metadata.error_data,
 									icon: 'none'
 								});
 							}
 							switch (err.errCode) {
 								case 30002:
-									console.log('在一键登陆界面，点击其他登陆方式');
+									console.log('在一键登录界面，点击其他登录方式');
 									break;
 								case 30003:
-									console.log('关闭了登陆');
+									console.log('关闭了登录');
 									if (navigateBack) {
 										uni.navigateBack()
 									}
 									break;
 								case 30006:
 									uni.showModal({
-										title: "登陆服务初始化错误",
+										title: "登录服务初始化错误",
 										content: err.metadata.error_data,
 										showCancel: false,
 										confirmText: '知道了',
@@ -260,7 +260,7 @@
 					}
 				})
 			},
-			login(params, type) { //联网验证登陆
+			login(params, type) { //联网验证登录
 				console.log({
 					params,
 					type

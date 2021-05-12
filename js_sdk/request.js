@@ -3,7 +3,7 @@
 2.load自动显示与关闭
 3.统一路由拦截
 	3.1 读取云端接口权限配置，先验证本地token再访问
-	3.2 处理因token过期等问题自动更新本地token，或token无效跳转至登陆页面
+	3.2 处理因token过期等问题自动更新本地token，或token无效跳转至登录页面
 */
 const debug = true;//开启后，会alert错误信息
 export default function request(name,params,callback=false,{showLoading=false,loadText='',fail=()=>{}}={}){

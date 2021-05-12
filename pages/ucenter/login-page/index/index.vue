@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<!-- 顶部文字 -->
-		<text class="title">登陆后即可展示自己</text>
+		<text class="title">登录后即可展示自己</text>
 		<uni-agreements @setAgree="agree = $event"></uni-agreements>
 		<!-- 登录框 -->
 		<input type="number" class="input-box" :inputBorder="false" v-model="phone" maxlength="11" placeholder="请输入手机号"/>
@@ -14,7 +14,7 @@
 </template>
 
 <script>	
-var univerify_first,currentWebview;//是否一键登陆优先
+var univerify_first,currentWebview;//是否一键登录优先
 	export default {
 		data() {
 			return {
@@ -28,7 +28,7 @@ var univerify_first,currentWebview;//是否一键登陆优先
 			}
 		},
 		onLoad(e) {
-			//是否优先启动一键登陆。即：页面一加载就启动一键登录
+			//是否优先启动一键登录。即：页面一加载就启动一键登录
 			univerify_first = e.univerify_first
 			//#ifdef APP-PLUS
 			if(univerify_first){
@@ -43,7 +43,7 @@ var univerify_first,currentWebview;//是否一键登陆优先
 		onReady() {
 			//#ifdef APP-PLUS
 			if(univerify_first){
-				console.log('开始一键登陆');
+				console.log('开始一键登录');
 				setTimeout(()=>{
 					this.$refs.uniQuickLogin.login('univerify')
 				},100)

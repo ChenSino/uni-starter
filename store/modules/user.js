@@ -2,7 +2,7 @@
 let userInfoHistory = uni.getStorageSync('userInfo') || {};
 
 let state = {
-		//是否已经登陆
+		//是否已经登录
 		hasLogin: Boolean(Object.keys(userInfoHistory).length),
 		//用户信息
 		info: userInfoHistory
@@ -16,11 +16,11 @@ let state = {
 		}
 	},
 	mutations = {
-		login(state, info) { //登陆成功后的操作
+		login(state, info) { //登录成功后的操作
 			//原有的结合传来的参数
 			let _info = state.info;
 			state.info = Object.assign({}, _info, info);
-			//设置为已经登陆
+			//设置为已经登录
 			state.hasLogin = true;
 			//存储最新的用户数据到本地持久化存储
 			uni.setStorageSync('userInfo', state.info);

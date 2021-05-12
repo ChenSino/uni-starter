@@ -17,7 +17,7 @@
 		</uni-list>
 		<!-- #endif -->
 		
-		<!-- 退出/登陆 按钮 -->
+		<!-- 退出/登录 按钮 -->
 		<view class="bottom-back" @click="clickLogout">
 			<text class="bottom-back-text" v-if="hasLogin">退出登录</text>
 			<text class="bottom-back-text" v-else>登录</text>

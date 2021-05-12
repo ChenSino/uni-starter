@@ -133,7 +133,7 @@
 			},
 			setFavorite() {
 				if (!this.hasLogin){
-					return console.log('未登陆用户');
+					return console.log('未登录用户');
 				}
 				let article_id = this.id,
 					last_time = Date.now();

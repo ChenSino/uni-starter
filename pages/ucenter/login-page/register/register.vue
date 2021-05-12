@@ -14,7 +14,7 @@
 				<uni-easyinput :inputBorder="false" class="easyinput" placeholder="再次输入密码" type="password" v-model="formData.pwd2" trim="both" />
 			</uni-forms-item>
 			<uni-agreements></uni-agreements>
-			<button class="send-btn" type="primary" @click="submit">注册并登陆</button>
+			<button class="send-btn" type="primary" @click="submit">注册并登录</button>
 		</uni-forms>
 	</view>
 </template>
