@@ -132,6 +132,56 @@ img{
 - 客户端[详情](https://ext.dcloud.net.cn/plugin?id=50)
 - admin端[详情](https://ext.dcloud.net.cn/plugin?id=4992)
 
+#### 9.隐私政策弹框
+根据工业和信息化部关于开展APP侵害用户权益专项整治要求，App提交到应用市场必须满足以下条件：
+- 应用启动运行时需弹出隐私政策协议，说明应用采集用户数据
+- 应用不能强制要求用户授予权限，即不能“不给权限不让用”
++ 如不希望应用启动时申请“读写手机存储”和“访问设备信息”权限，请参考：https://ask.dcloud.net.cn/article/36549
+
+配置弹出“隐私协议和政策”打开项目的manifest.json文件，切换到“源码视图”项
+在`manifest.json` -> `app-plus` -> `privacy` 节点下添加 prompt节点
+```
+"privacy" : {
+	"prompt" : "template",
+	"template" : {
+		"title" : "服务协议和隐私政策",
+		"message" : "　　请你务必审慎阅读、充分理解“服务协议”和“隐私政策”各条款，包括但不限于：为了更好的向你提供服务，我们需要收集你的设备标识、操作日志等信息用于分析、优化应用性能。<br/>　　你可阅读<a href=\"https://ask.dcloud.net.cn/protocol.html\">《服务协议》</a>和<a href=\"https://ask.dcloud.net.cn/protocol.html\">《隐私政策》</a>了解详细信息。如果你同意，请点击下面按钮开始接受我们的服务。",
+		"buttonAccept" : "同意",
+		"buttonRefuse" : "暂不同意"
+	}
+}
+```
+- prompt
+  字符串类型，必填，隐私政策提示框配置策略，可取值template、custom、none，默认值为none
+  + template
+     使用原生提示框模板，可自定义标题、内容已经按钮上的文本
+  + custom
+     自定义隐私政策提示框，uni-app项目中推荐使用nvue页面进行自定义，5+ APP使用html页面进行自定义
+  + none
+    不弹出隐私政策提示框
+- template
+  json格式，可选，模板提示框上显示的内容
+	+ title
+	  模板提示框上的标题，默认为“服务协议和隐私政策”
+	+ message
+	  模板提示框上的内容，richtext类型字符串，支持a/font/br等节点，点击a链接会调用内置页面打开其href属性中链接地址。
+	  **注意：务必配置此提示内容，或参考上面示例内容并修改《服务协议》和《隐私政策》链接地址**
+	+ buttonAccept
+	  模板提示框上接受按钮的文本，默认值为“我知道了”
+	+ buttonRefuse
+	  模板提示框上拒绝按钮的文本，默认不显示此按钮
+	+ second
+	  HBuilderX3.1.12+版本新增支持隐私提示框二次确认提示，用于配置二次确认提示框显示内容，message属性值不为空时弹出二次确认提示框
+		+ title 二次确认提示框上的标题
+		+ message 二次确认提示框上的内容，支持richtext类型字符串
+		+ buttonAccept 二次确认提示框上接受按钮的文本
+		+ buttonRefuse 二次确认提示框上拒绝按钮的文本
+> 更多Android平台隐私与政策提示框配置方法，[详情](https://ask.dcloud.net.cn/article/36937)
+#### 注意：配置后提交云端打包后生效。理论上绝大部分和`manifest.json`生效相关的配置均需要提交云打包后生效
+
+
+
+
 ### 应用启动时序介绍
 文件路径： App.vue
 ```

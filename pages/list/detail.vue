@@ -11,7 +11,7 @@
 		<uni-nav-bar :statusBar="true" :border="false"></uni-nav-bar>
 		<!-- #endif -->
 		<view class="article-title">{{ title }}</view>
-		<unicloud-db v-slot:default="{data, loading, error, options}" :options="formData" :collection="collection"
+		<unicloud-db v-slot:default="{data, loading, error, options}" :options="formData" collection="opendb-news-articles,uni-id-users"
 			:field="field" :getone="true" :where="where" :manual="true" ref="detail"
 			foreignKey="opendb-news-articles.user_id" @load="loadData">
 			<template v-if="!loading && data">
@@ -60,7 +60,6 @@
 				id: "",
 				title: 'title',
 				// 数据表名
-				collection: 'opendb-news-articles,uni-id-users',
 				// 查询字段，多个字段用 , 分割
 				field: 'user_id{username,_id},avatar,excerpt,last_modify_date,comment_count,like_count,title,content',
 				formData: {
