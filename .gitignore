@@ -2,7 +2,5 @@ unpackage/
 .hbuilderx
 node_modules
 .DS_Store
-uni_modules/uni-config-center/uniCloud/cloudfunctions/common/uni-config-center/uni-id/config.json
 pages/grid/banner.json
 pages/list/list.json
-manifest.json
