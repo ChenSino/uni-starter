@@ -111,6 +111,7 @@ img{
 - 一键登录：
 	+ [开通配置](https://dev.dcloud.net.cn/uniLogin)
 	+ [使用指南](https://uniapp.dcloud.io/univerify)
+-  [苹果登陆集成指南](https://ask.dcloud.net.cn/article/36651) 
 #### 3.h5版在页面顶部引导用户`点击下载App`
 - 把h5端用户引流到APP端是一个非常常用的功能，相对于h5，APP端有更高的用户留存和更好的产品体验。
 - 这同时也是一个演示开发者如何在h5端做全局悬浮块的例子。你可以在`/common/openApp.js`中修改他的样式等代码等，注意他只支持普通js语法。
