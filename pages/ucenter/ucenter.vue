@@ -267,14 +267,13 @@
 
 	.grid {
 		background-color: #FFFFFF;
-		margin-bottom: 15rpx;
-		padding: 5rpx 0;
+		margin-bottom: 6px;
 	}
 
 	.uni-grid .text {
 		font-size: 30rpx;
-		height: 30px;
-		line-height: 30px;
+		height: 25px;
+		line-height: 25px;
 		color: #817f82;
 	}
 
@@ -286,13 +285,17 @@
 
 	/*修改边线粗细示例*/
 	/* #ifndef APP-NVUE */
-	.center-list /deep/ .uni-list--border:after,
-	.center-list /deep/ .uni-list--border-top,
-	.center-list /deep/ .uni-list--border-bottom {
+	.center-list /deep/ .uni-list--border:after{
 		-webkit-transform: scaleY(0.2);
 		transform: scaleY(0.2);
+		margin-left: 80rpx;
 	}
-
+	
+	.center-list /deep/ .uni-list--border-top,
+	.center-list /deep/ .uni-list--border-bottom{
+		display: none;
+	}
+	
 	/* #endif */
 	.item-footer {
 		flex-direction: row;

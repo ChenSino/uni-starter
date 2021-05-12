@@ -40,7 +40,7 @@ export default function() {
 					//拦截强制登陆页面
 					if (needLogin.includes(url) && token == '') {
 						uni.showToast({
-							title: '请先登陆',
+							title: '请先登录',
 							icon: 'none'
 						})
 						return uni.navigateTo({
