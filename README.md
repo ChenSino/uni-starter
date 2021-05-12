@@ -102,9 +102,15 @@ img{
 
 - 生效策略：未列举到的或设备环境不支持的登录方式将被隐藏。
 - 配置：
-	+ 服务端：uni-starter服务端使用[uni-config-center](https://ext.dcloud.net.cn/plugin?id=4425)统一管理这些配置，详情下文[目录结构](#id=catalogue)
+	+ 服务端：uni-starter服务端使用[uni-config-center](https://ext.dcloud.net.cn/plugin?id=4425)统一管理这些配置，文件路径`/uni_modules/uni-config-center/uniCloud/cloudfunctions/common/uni-config-center/uni-id/config.json`详情下文[目录结构](#id=catalogue) [配置说明](https://uniapp.dcloud.io/uniCloud/uni-id?id=configjson%e7%9a%84%e8%af%b4%e6%98%8e)
 	+ 应用模块：`manifest.json` App模块配置 --> OAuth（登录鉴权）--> 勾选并配置你所需要的模块
-
+- 短信登陆：
+	+ 使用本功能需要在[DCloud开发者中心](https://dev.dcloud.net.cn/uniSms)开通并充值
+	+ 教程参考[短信服务开通指南](https://ask.dcloud.net.cn/article/37534)
+	+ 修改短信注册/登陆发生验证码的模板id，在文件`/uniCloud-aliyun/cloudfunctions/user-center/index.js` 搜索 `const templateId = '11753'` 替换为自己申请的模板id
+- 一键登录：
+	+ [开通配置](https://dev.dcloud.net.cn/uniLogin)
+	+ [使用指南](https://uniapp.dcloud.io/univerify)
 #### 3.h5版在页面顶部引导用户`点击下载App`
 - 把h5端用户引流到APP端是一个非常常用的功能，相对于h5，APP端有更高的用户留存和更好的产品体验。
 - 这同时也是一个演示开发者如何在h5端做全局悬浮块的例子。你可以在`/common/openApp.js`中修改他的样式等代码等，注意他只支持普通js语法。

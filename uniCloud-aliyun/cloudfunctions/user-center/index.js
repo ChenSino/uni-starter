@@ -201,6 +201,7 @@ exports.main = async (event, context) => {
 			break;
 		case 'sendSmsCode':
 			
+			// 测试期间短信统一用 123456 正式项目删除即可
 			return uniID.setVerifyCode({
 				mobile: params.mobile,
 				code:'123456',
