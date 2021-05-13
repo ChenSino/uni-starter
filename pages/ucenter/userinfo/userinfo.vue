@@ -130,7 +130,6 @@
 				}
 			},
 			setAvatar() {
-				console.log('点击编辑信息');
 				uni.chooseImage({
 					count: 1,
 					success: (res) => {

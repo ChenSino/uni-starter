@@ -59,32 +59,30 @@ export default function() {
 	uni.addInterceptor('chooseImage', {
 		fail(e) { // 失败回调拦截 
 			console.log(e);
-			if (
-				e.errCode === 11 && uni.getSystemInfoSync().platform == "android" ||
-				e.errCode === 2 && uni.getSystemInfoSync().platform == "ios"
-			){
-				uni.showModal({
-					title:"无法访问摄像头",
-					content: "当前无摄像头访问权限，建议前往设置",
-					confirmText: "前往设置",
-					success(e) {
-						if (e.confirm) {
-							openAppPermissionSetting()
+			if(uni.getSystemInfoSync().platform == "android" && e.errMsg == 'chooseImage:fail No Permission'){
+				if(e.code === 11){
+					uni.showModal({
+						title:"无法访问摄像头",
+						content: "当前无摄像头访问权限，建议前往设置",
+						confirmText: "前往设置",
+						success(e) {
+							if (e.confirm) {
+								openAppPermissionSetting()
+							}
 						}
-					}
-				});
-			}
-			if(e.errCode === 12 && uni.getSystemInfoSync().platform == "android"){
-				uni.showModal({
-					title:"无法访问相册",
-					content: "当前无系统相册访问权限，建议前往设置",
-					confirmText: "前往设置",
-					success(e) {
-						if (e.confirm) {
-							openAppPermissionSetting()
+					});
+				}else{
+					uni.showModal({
+						title:"无法访问相册",
+						content: "当前无系统相册访问权限，建议前往设置",
+						confirmText: "前往设置",
+						success(e) {
+							if (e.confirm) {
+								openAppPermissionSetting()
+							}
 						}
-					}
-				});
+					});
+				}
 			}
 		}
 	})
@@ -141,4 +139,30 @@ function initAppVersion() {
 	// 检查更新
 	checkUpdate();
 	// #endif
+}
+
+function openAppPermissionSetting(){
+	// 跳转到**应用**的权限页面
+	if (uni.getSystemInfoSync().platform == "ios") {
+		var UIApplication = plus.ios.import("UIApplication");
+		var application2 = UIApplication.sharedApplication();
+		var NSURL2 = plus.ios.import("NSURL");
+		// var setting2 = NSURL2.URLWithString("prefs:root=LOCATION_SERVICES");		
+		var setting2 = NSURL2.URLWithString("app-settings:");
+		application2.openURL(setting2);
+		plus.ios.deleteObject(setting2);
+		plus.ios.deleteObject(NSURL2);
+		plus.ios.deleteObject(application2);
+	} else {
+		// console.log(plus.device.vendor);
+		var Intent = plus.android.importClass("android.content.Intent");
+		var Settings = plus.android.importClass("android.provider.Settings");
+		var Uri = plus.android.importClass("android.net.Uri");
+		var mainActivity = plus.android.runtimeMainActivity();
+		var intent = new Intent();
+		intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+		var uri = Uri.fromParts("package", mainActivity.getPackageName(), null);
+		intent.setData(uri);
+		mainActivity.startActivity(intent);
+	}
 }

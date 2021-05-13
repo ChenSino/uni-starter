@@ -1,7 +1,7 @@
 <template>
 	<view>
-		<!-- #ifndef H5 -->
-		<uni-nav-bar :border="false"></uni-nav-bar>
+		<!-- #ifdef APP-PLUS -->
+		<statusBar></statusBar>
 		<!-- #endif -->
 		<!-- 搜索功能 -->
 		<uni-search-bar @click="searchClick" class="uni-search-box" v-model="keyword" ref="searchBar" radius="100" cancelButton="none" disabled/>
@@ -58,7 +58,9 @@
 
 <script>
 	var cdbRef, currentWebview;
+	import statusBar from "@/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar";
 	export default {
+		components: { statusBar },
 		data() {
 			return {
 				where: "",
