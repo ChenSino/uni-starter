@@ -47,7 +47,7 @@ img{
 ### 功能模块介绍
 #### 1. 拦截器与路由守卫
 第三方路由拦截库，一般带有windows对象等问题并不适合在uni-app中使用；另外传统路由拦截方式都是给原生方法做嵌套，首先这种写法并不优雅，另外不同项目的作者可能会不同的第三方路由库，这非常不利于生态的建设。你可能从插件市场拉下来一个项目有太多的学习成本，与你自有项目结合有大量差异需要去磨平。为此`uni-starter`基于`uni.addInterceptor`拦截器。
-拦截器顾名思义，是在框架方法执行的各个环节（包含：拦截前触发、成功回调拦截、失败回调拦截、完成回调拦截）篡改参数或终止运行。
+拦截器顾名思义，是在框架方法执行的各个环节（包含：拦截前触发、成功回调拦截、失败回调拦截、完成回调拦截）插入逻辑，篡改参数或终止运行。
 ```
 	const {"router": {needLogin,login} } = uniStarterConfig //需要登录的页面
 	let list = ["navigateTo", "redirectTo", "reLaunch", "switchTab"];
@@ -124,19 +124,19 @@ img{
 #### 5.升级中心相关
 为了解决开发者维护多个 App 升级繁琐，重复逻辑过多，管理不便的问题，升级中心`uni-upgrade-center`应运而生。
 提供了简单、易用、统一的 App 管理、App 版本管理、安装包发布管理，升级检测更新管理。
-- 升级中心分为两个部分：`uni-upgrade-center` Admin管理后台和`uni-upgrade-center-app`前台检测更新。
+- 升级中心分为两个部分：`uni-upgrade-center` Admin管理后台和`uni-upgrade-center - Admin`前台检测更新。
 - `uni-upgrade-center`的介绍 [详情](https://ext.dcloud.net.cn/plugin?id=4542)
-- `uni-upgrade-center-app`的介绍 [详情](https://ext.dcloud.net.cn/plugin?id=4470)
+- `uni-upgrade-center - Admin`的介绍 [详情](https://ext.dcloud.net.cn/plugin?id=4470)
 
-#### 6.指纹识别模块
-- `manifest.json` App模块配置 --> `Fingerprint`指纹识别
-
-#### 7.消息推送模块
-- `manifest.json` App模块配置 --> `push`消息推送
-
-#### 8.意见反馈
+#### 6.意见反馈
 - 客户端[详情](https://ext.dcloud.net.cn/plugin?id=50)
 - admin端[详情](https://ext.dcloud.net.cn/plugin?id=4992)
+
+#### 7.指纹识别模块
+- `manifest.json` App模块配置 --> `Fingerprint`指纹识别
+
+#### 8.消息推送模块
+- `manifest.json` App模块配置 --> `push`消息推送
 
 #### 9.隐私政策弹框
 根据工业和信息化部关于开展APP侵害用户权益专项整治要求，App提交到应用市场必须满足以下条件：
@@ -183,7 +183,10 @@ img{
 		+ buttonAccept 二次确认提示框上接受按钮的文本
 		+ buttonRefuse 二次确认提示框上拒绝按钮的文本
 > 更多Android平台隐私与政策提示框配置方法，[详情](https://ask.dcloud.net.cn/article/36937)
-#### 注意：配置后提交云端打包后生效。理论上绝大部分和`manifest.json`生效相关的配置均需要提交云打包后生效
+
+#### 注意：
+1. 最新的华为应用市场要求，隐私政策提示框上接受按钮的文本，必须为“同意”而不能是其他有歧义的文字。
+2. 配置后提交云端打包后生效。理论上绝大部分和`manifest.json`生效相关的配置均需要提交云打包后生效
 
 
 
