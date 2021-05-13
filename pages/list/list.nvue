@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="pagse">
 		<!-- #ifdef APP-PLUS -->
 		<statusBar></statusBar>
 		<!-- #endif -->
@@ -131,6 +131,9 @@
 </script>
 
 <style scoped>
+	.pagse{
+		background-color: #FFFFFF;
+	}
 	.avatar {
 		width: 200rpx;
 		height: 200rpx;
