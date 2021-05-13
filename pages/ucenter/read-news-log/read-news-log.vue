@@ -3,22 +3,17 @@
 		<unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}" :where="udbWhere"
 			collection="opendb-news-articles" @load="isLoading == false" @error="isLoading == false"
 			field="title,_id" :page-size="10">
-			<view v-if="data && data.length">
-				<uni-list>
-					<uni-list-item v-for="(item, index) in data" :key="index" :clickable="true"
-						@click="handleItemClick(item)">
-						<view slot="body">
-							<text>{{item.title}}</text>
-							<uni-dateformat class="article-date" :date="readNewsLog[index].last_time" format="yyyy-MM-dd hh:mm"
-								:threshold="[0, 0]" />
-						</view>
-					</uni-list-item>
-				</uni-list>
-			</view>
-			<view v-else>
-				<uni-load-more v-if="!loading" status="noMore"></uni-load-more>
-			</view>
-			<uni-load-more v-if="data.length>10" :status="loading?'loading':(hasMore ? 'more' : 'noMore')"></uni-load-more>
+			<uni-list>
+				<uni-list-item v-for="(item, index) in data" :key="index" :clickable="true"
+					@click="handleItemClick(item)">
+					<view slot="body">
+						<text>{{item.title}}</text>
+						<uni-dateformat class="article-date" :date="readNewsLog[index].last_time" format="yyyy-MM-dd hh:mm"
+							:threshold="[0, 0]" />
+					</view>
+				</uni-list-item>
+			</uni-list>
+			<uni-load-state @networkResume="refreshData" :state="{data,pagination,hasMore, loading, error}"></uni-load-state>
 		</unicloud-db>
 	</view>
 </template>

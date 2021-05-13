@@ -1,30 +1,52 @@
 <template>
-	<view class="box" v-if="networkType == 'none'">
-		<image class="icon-image" src="../../static/uni-network/disconnection.png" mode="widthFix"></image>
-		<text class="tip-text">网络异常</text>
-		<view class="btn btn-default" v-if="networkType!='none'" @click="retry">
-			<text class="btn-text">重试</text>
-		</view>
-		<view class="btn btn-default" v-if="networkType=='none'" @click="openSettings">
-			<text class="btn-text">前往设置</text>
+	<view style="flex:1">
+		<template v-if="!state.error">
+			<uni-load-more v-if="state.loading||state.pagination.current!=1||state.data.length!=0" :status="state.loading?'loading':(state.hasMore?'hasMore':'noMore')"></uni-load-more>
+			<text class="noData" v-else>暂无数据</text>
+		</template>
+		<view v-else>
+			<view class="box" v-if="networkType == 'none'">
+				<image class="icon-image" src="@/static/uni-load-state/disconnection.png" mode="widthFix"></image>
+				<text class="tip-text">网络异常</text>
+				<view class="btn btn-default" @click="openSettings">
+					<text class="btn-text">前往设置</text>
+				</view>
+			</view>
+			<view v-else>
+				错误：{{state.error}}
+			</view>
 		</view>
 	</view>
 </template>
 
 <script>
 	export default {
-		name: "uni-network",
+		name: "uni-load-state",
 		data() {
 			return {
 				"networkType": ""
 			};
 		},
+		props: {
+			state:{
+				type: Object,
+				default(){
+					return {
+						"loading":true,
+						"hasMore":false,
+						"pagination":{"pages":0},
+						"data":[],
+						"error":{}
+					}
+				}
+			}
+		},
 		mounted() {
 			uni.onNetworkStatusChange(({
 				networkType
 			}) => {
-				if(this.networkType == 'none' && networkType != 'none'){
-					this.change()
+				if(this.networkType == 'none' && networkType != 'none'){ //之前没网现在有了
+					this.$emit('networkResume')
 				}
 				this.networkType = networkType;
 			});
@@ -54,9 +76,6 @@
 					var intent = new Intent(Settings.ACTION_SETTINGS);
 					mainActivity.startActivity(intent);
 				}
-			},
-			change(){
-				this.$emit('change')
 			}
 		}
 	}
@@ -99,5 +118,11 @@
 		border-style: solid;
 		border-width: 1px;
 		border-radius: 3px;
+	}
+	
+	.noData{
+		text-align: center;
+		padding: 30rpx;
+		flex-direction: 1;
 	}
 </style>

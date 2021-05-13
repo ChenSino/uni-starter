@@ -149,13 +149,12 @@
 				"navigationBarTitleText": "注册",
 				"enablePullDownRefresh": false
 			}
-
 		},
 		{
 			"path": "pages/ucenter/read-news-log/read-news-log",
 			"style": {
 				"navigationBarTitleText": "阅读记录",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": true
 			}
 		}
 	],
