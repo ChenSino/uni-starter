@@ -11,20 +11,14 @@ export default {
 	data() {return {path: '',options:{"width":600,"height":600}}},
 	onLoad({path,options}) {
 		this.path = path
+		console.log('path-path-path-path',path);
 		if(options){
 			this.options = JSON.parse(options)
 		}
 	},
 	methods:{
 		successFn(e){
-			// uni.getImageInfo({
-			// 	src:e.url,
-			// 	complete: (e) => {
-			// 		console.log(e);
-			// 	}
-			// })
 			this.uploadImgToUnicloud(e.url,(url)=>{
-				//console.log(url);
 				this.getOpenerEventChannel().emit('uploadAvatarAfter', {url})
 				uni.navigateBack()
 			})
