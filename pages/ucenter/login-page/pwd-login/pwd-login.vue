@@ -3,7 +3,7 @@
 		<!-- 顶部文字 -->
 		<text class="title">用户名密码登录</text>
 		<uni-agreements @setAgree="agree = $event"></uni-agreements>
-		<input type="number" class="input-box" :inputBorder="false" v-model="username" placeholder="请输入手机号/用户名"></input>
+		<input class="input-box" :inputBorder="false" v-model="username" placeholder="请输入手机号/用户名"></input>
 		<input type="password" class="input-box" :inputBorder="false" v-model="password" placeholder="请输入密码"></input>
 		<view class="captcha-box" v-if="captchaBase64">
 			<image class="captcha-img" @click="createCaptcha" :src="captchaBase64" mode="widthFix"></image>

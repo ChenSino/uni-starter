@@ -123,6 +123,5 @@
 	.noData{
 		text-align: center;
 		padding: 30rpx;
-		flex-direction: 1;
 	}
 </style>
