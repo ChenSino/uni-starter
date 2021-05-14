@@ -1,8 +1,6 @@
 {
 	"bsonType": "object",
-	"required": [
-		"content"
-	],
+	"required": ["content"],
 	"permission": {
 		"create": "auth.uid != null",
 		"read": true,
@@ -15,7 +13,7 @@
 		},
 		"user_id": {
 			"bsonType": "string",
-			"description": "留言反馈用户ID/回复留言用户ID，参考uni-id-users表",
+			"description": "留言反馈用户ID\/回复留言用户ID，参考uni-id-users表",
 			"foreignKey": "uni-id-users._id",
 			"forceDefaultValue": {
 				"$env": "uid"
@@ -23,14 +21,14 @@
 		},
 		"create_date": {
 			"bsonType": "timestamp",
-			"title": "留言时间/回复留言时间",
+			"title": "留言时间\/回复留言时间",
 			"forceDefaultValue": {
 				"$env": "now"
 			}
 		},
 		"content": {
 			"bsonType": "string",
-			"title": "留言内容/回复内容",
+			"title": "留言内容\/回复内容",
 			"componentForEdit": {
 				"name": "textarea"
 			},

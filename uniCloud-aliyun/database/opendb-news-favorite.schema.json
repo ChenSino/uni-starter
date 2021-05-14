@@ -16,7 +16,7 @@
 			"description": "文章id，参考opendb-news-articles表",
 			"foreignKey": "opendb-news-articles._id"
 		},
-		"article_title":{
+		"article_title": {
 			"bsonType": "string",
 			"description": "文章标题"
 		},
@@ -37,7 +37,7 @@
 		},
 		"update_date": {
 			"bsonType": "timestamp",
-			"description": "更新/修改时间",
+			"description": "更新\/修改时间",
 			"forceDefaultValue": {
 				"$env": "now"
 			}
