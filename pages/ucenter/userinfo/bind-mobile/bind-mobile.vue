@@ -80,6 +80,7 @@
 	}
 
 	.input-box {
+		width: 100%;
 		margin-top: 16px;
 		background-color: #f9f9f9;
 		border-radius: 6rpx;

@@ -1,6 +1,6 @@
 <template>
 	<view class="pagse">
-		<!-- #ifdef APP-PLUS -->
+		<!-- #ifndef H5 -->
 		<statusBar></statusBar>
 		<!-- #endif -->
 		<!-- 搜索功能 -->

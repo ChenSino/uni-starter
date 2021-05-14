@@ -141,8 +141,7 @@
 						// 剪裁并上传头像
 						uni.navigateTo({
 							url: '/pages/ucenter/userinfo/uploadCutImageToUnicloud?path=' +
-								res
-								.tempFilePaths[0] +
+								res.tempFilePaths[0] +
 								`&options=${JSON.stringify(options)}`,
 							animationType: "fade-in",
 							events: {
@@ -186,7 +185,6 @@
 		flex-direction: row;
 		justify-content: space-between;
 		align-items: center;
-		height: 60px;
 	}
 	.avatarUrl {
 		width: 50px;

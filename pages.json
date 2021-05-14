@@ -171,12 +171,14 @@
 			},
 			{
 				"path": "pages/ucenter/login-page/index/index"
+			},{
+				"path": "pages/ucenter/userinfo/userinfo"
 			},
 			{
 				"path": "pages/ucenter/settings/settings"
 			}
 		],
-		"current": 0
+		"current": 2
 	},
 	"tabBar": {
 		"color": "#7A7E83",

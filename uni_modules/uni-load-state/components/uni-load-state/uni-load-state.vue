@@ -1,5 +1,5 @@
 <template>
-	<view style="flex:1">
+	<view style="width: 750rpx;">
 		<template v-if="!state.error">
 			<uni-load-more v-if="state.loading||state.pagination.current!=1||state.data.length!=0" :status="state.loading?'loading':(state.hasMore?'hasMore':'noMore')"></uni-load-more>
 			<text class="noData" v-else>暂无数据</text>
@@ -12,9 +12,7 @@
 					<text class="btn-text">前往设置</text>
 				</view>
 			</view>
-			<view v-else>
-				错误：{{state.error}}
-			</view>
+			<text class="err" v-else>错误：{{JSON.stringify(state.error)}}</text>
 		</view>
 	</view>
 </template>
@@ -123,5 +121,9 @@
 	.noData{
 		text-align: center;
 		padding: 30rpx;
+	}
+	.err{
+		width: 750rpx;
+		color: #DD524D;
 	}
 </style>
