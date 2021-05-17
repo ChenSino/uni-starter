@@ -1,10 +1,7 @@
-> uni-starter目前还处于公测阶段，公测QQ群号：869926521，欢迎大家加入！公测期间享受有疑问实时解答的福利。
-### ps:文档处于完善过程中
-
 ### 介绍
 `uni-starter`，是一个云端一体的、集成了商用项目开发常见功能的项目模板。
 如果说uniCloud admin是管理端项目的基础模板，那么uni-starter则是用户端、尤其是移动端的基础模板。
-在HBuilderX新建项目时选择`uni-starter`项目模板，在这个模板基础之上快速填充自己的业务，即可很快完成一个应用。
+在这个模板基础之上快速填充自己的业务，即可很快完成一个应用。
 地址：[https://codechina.csdn.net/dcloud/uni-starter.git](https://codechina.csdn.net/dcloud/uni-starter.git)
 
 #### 项目背景
@@ -22,15 +19,6 @@ uni-starter + uniCloud admin，应用开发从未如此简单快捷！
 <img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/d41b871f-d47f-4e86-b2f1-2b1a74a8a4bd.jpg" />
 <img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/b0d7f5e7-2e16-4b3e-a123-6e9cd97582d7.jpg" />
 <img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/e03ad65d-11bb-4697-81b2-d13af42f0441.jpg" />
-<div style="clear: both;"></div>
-<style>
-img{
-	box-shadow:0 0 2px #eeeeee;
-	width:200px;
-	margin:15px 5vw 0 0;
-	float:left
-}
-</style>
 
 ### uni-starter集成的功能包括：
 1. 个人中心：登录注册（含用户名密码登录、手机号验证码登录、app一键登录、微信登录、Apple登录、微信小程序登录）、修改密码、忘记密码、头像更换、昵称修改、积分查看、指纹绑定、退出登录
@@ -182,6 +170,7 @@ img{
 		+ message 二次确认提示框上的内容，支持richtext类型字符串
 		+ buttonAccept 二次确认提示框上接受按钮的文本
 		+ buttonRefuse 二次确认提示框上拒绝按钮的文本
+
 > 更多Android平台隐私与政策提示框配置方法，[详情](https://ask.dcloud.net.cn/article/36937)
 
 #### 注意：

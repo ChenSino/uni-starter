@@ -1,26 +1,23 @@
 {
 	"id": "uni-starter",
 	"displayName": "uni-starter",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "集成了商用项目开发常见功能的项目模板",
 	"keywords": [
-		"uni-starter",
-		"login",
-		"登录模版",
+        "uni-starter",
+        "login",
+        "登录模版",
         "uniCloud",
-        "搜索",
-        "search",
-        "usearch",
-        "unisearch"
+        "搜索"
     ],
 	"repository": "https://codechina.csdn.net/dcloud/uni-starter.git",
 	"engines": {
-		"HBuilderX": "^3.1.0"
+		"HBuilderX": "^3.1.14"
 	},
 	"dcloudext": {
 		"category": [
 			"uniCloud",
-			"集成了商用项目开发常见功能的项目模板"
+			"云端一体项目模板"
 		],
 		"sale": {
 			"regular": {
@@ -51,7 +48,7 @@
 			"client": {
 				"App": {
 					"app-vue": "y",
-					"app-nvue": "y"
+					"app-nvue": "u"
 				},
 				"H5-mobile": {
 					"Safari": "u",
@@ -60,14 +57,14 @@
 					"QQ浏览器(Android)": "u"
 				},
 				"H5-pc": {
-					"Chrome": "u",
+					"Chrome": "y",
 					"IE": "u",
 					"Edge": "u",
 					"Firefox": "u",
 					"Safari": "u"
 				},
 				"小程序": {
-					"微信": "u",
+					"微信": "y",
 					"阿里": "u",
 					"百度": "u",
 					"字节跳动": "u",

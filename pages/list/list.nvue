@@ -7,7 +7,7 @@
 		<uni-search-bar @click="searchClick" class="uni-search-box" v-model="keyword" ref="searchBar" radius="100" cancelButton="none" disabled/>
 		<unicloud-db ref='udb' v-slot:default="{data,pagination,hasMore, loading, error, options}" @error="onqueryerror"
 			:where="where" collection="opendb-news-articles,uni-id-users" :page-size="10"
-			field="avatar,title,last_modify_date,user_id{username}">
+			field="avatar,title,last_modify_date,user_id.username">
 			<!-- 基于 uni-list 的页面布局 -->
 			<uni-list class="uni-list" :border="false" :bounce="true" :alwaysScrollableVertical="true"  :style="{height:listHight}">
 				<uni-list-item :to="'./detail?id='+item._id+'&title='+item.title"
