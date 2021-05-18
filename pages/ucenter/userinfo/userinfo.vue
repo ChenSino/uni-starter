@@ -52,9 +52,10 @@
 				uni.preLogin({
 					provider: 'univerify',
 					success: this.univerify(), //预登录成功
-					fail(res) { // 预登录失败
+					fail:(res)=> { // 预登录失败
 						// 不显示一键登录选项（或置灰）
 						console.log(res)
+						this.bindMobileBySmsCode()
 					}
 				})
 				// #endif
