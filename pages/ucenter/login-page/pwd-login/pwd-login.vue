@@ -63,7 +63,7 @@
 					});
 				}
 				// 下边是可以登录
-				this.request('user-center/login', {
+				this.request('uni-id-cf/login', {
 					"username": this.username,
 					"password": this.password,
 					"captcha":this.captcha
@@ -91,7 +91,7 @@
 			},
 			createCaptcha(){
 				this.request(
-				'user-center/createCaptcha', {
+				'uni-id-cf/createCaptcha', {
 					scene: "login"
 				},
 				result => {

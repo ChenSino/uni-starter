@@ -42,7 +42,7 @@
 		},
 		methods: {
 			submit(){ //完成并提交
-				this.request('user-center/loginBySms',
+				this.request('uni-id-cf/loginBySms',
 					{
 						"mobile":this.phone,
 						"code":this.code

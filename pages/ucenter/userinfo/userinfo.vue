@@ -69,7 +69,7 @@
 					"univerifyStyle": this.univerifyStyle,
 					success: async e => {
 						console.log(e.authResult);
-						this.request('user-center/bind_mobile_by_univerify',
+						this.request('uni-id-cf/bind_mobile_by_univerify',
 							e.authResult,
 							result=>
 							{

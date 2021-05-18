@@ -265,7 +265,7 @@
 					params,
 					type
 				});
-				this.request('user-center/login_by_' + type, params, result => {
+				this.request('uni-id-cf/login_by_' + type, params, result => {
 					console.log(result);
 					if (result.code === 0) {
 						if (type == 'univerify') {

@@ -135,7 +135,7 @@
 			submit() {
 				this.$refs.form.submit()
 					.then(res => {
-						this.request('user-center/resetPwdBySmsCode', {
+						this.request('uni-id-cf/resetPwdBySmsCode', {
 							"mobile": this.formData.phone,
 							"code": this.formData.code,
 							"password": this.formData.pwd

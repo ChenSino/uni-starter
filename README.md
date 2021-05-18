@@ -95,7 +95,7 @@ uni-starter + uniCloud admin，应用开发从未如此简单快捷！
 - 短信登陆：
 	+ 使用本功能需要在[DCloud开发者中心](https://dev.dcloud.net.cn/uniSms)开通并充值
 	+ 教程参考[短信服务开通指南](https://ask.dcloud.net.cn/article/37534)
-	+ 修改短信注册/登陆发生验证码的模板id，在文件`/uniCloud-aliyun/cloudfunctions/user-center/index.js` 搜索 `const templateId = '11753'` 替换为自己申请的模板id
+	+ 修改短信注册/登陆发生验证码的模板id，在文件`/uniCloud-aliyun/cloudfunctions/uni-id-cf/index.js` 搜索 `const templateId = '11753'` 替换为自己申请的模板id
 - 一键登录：
 	+ [开通配置](https://dev.dcloud.net.cn/uniLogin)
 	+ [使用指南](https://uniapp.dcloud.io/univerify)
@@ -301,7 +301,7 @@ uni-starter
 │	│	|	|		└─file.cert		uni-id依赖的配置文件,假如你使用微信发红包功能，需要的证书文件就是放到这里
 │	|	|	└───uni-id				uni-id用户体系 <a target="_blank" href="https://uniapp.dcloud.io/uniCloud/uni-id">详情</a>
 │	|	├─uni-analyse-searchhot		云端一体搜索模板依赖的云函数 <a target="_blank" href="https://ext.dcloud.net.cn/plugin?id=3851">详情</a>
-│	|	└─user-center				用户中心云函数，实现用户注册、修改密码、发送验证码、快捷登录（微信、短信、账户、一键登录）
+│	|	└─uni-id-cf				用户中心云函数，实现用户注册、修改密码、发送验证码、快捷登录（微信、短信、账户、一键登录）
 │	└──database						云数据目录
 │		├─db_init.json				db_init.json初始化数据库文件，其中不再包含schema <a target="_blank" href="https://uniapp.dcloud.net.cn/uniCloud/hellodb?id=db-init">详情</a>
 │		├─opendb-app-versions.schema.json		应用版本，表结构文件

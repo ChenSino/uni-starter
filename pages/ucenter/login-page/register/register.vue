@@ -63,7 +63,7 @@ import mixin from '../common/login-page.mixin.js';
 					})
 			},
 			submitForm(value) {
-				this.request('user-center/register',value,result=>{
+				this.request('uni-id-cf/register',value,result=>{
 					console.log(result);
 					if(result.code === 0){
 						this.loginSuccess(result)

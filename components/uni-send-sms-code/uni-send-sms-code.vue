@@ -75,7 +75,7 @@
 					icon: 'none'
 				});
 				
-				this.request('user-center/sendSmsCode',
+				this.request('uni-id-cf/sendSmsCode',
 					{
 						"mobile": this.phone,
 						"type": this.codeType

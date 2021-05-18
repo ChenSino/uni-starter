@@ -48,7 +48,7 @@
 			 */
 			submit() {
 				console.log(this.formData);
-				this.request('user-center/bind_mobile_by_sms', {
+				this.request('uni-id-cf/bind_mobile_by_sms', {
 					"mobile": this.formData.phone,
 					"code": this.formData.code
 				}, result=> {
