@@ -6,7 +6,7 @@ import request from './js_sdk/request.js';
 
 Vue.config.productionTip = false
 Vue.prototype.request = request
-//openApp();
+openApp();
 App.mpType = 'app'
 
 const app = new Vue({
