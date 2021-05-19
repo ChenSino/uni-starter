@@ -31,8 +31,8 @@
 	"mp-alipay": {
 		"oauth": {
 			"alipay": {
-				"appid": "alipay appid",
-				"privateKey": "alipay privateKey"
+				"appid": "",
+				"privateKey": ""
 			}
 		}
 	},

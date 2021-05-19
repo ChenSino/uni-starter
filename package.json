@@ -1,7 +1,7 @@
 {
 	"id": "uni-starter",
 	"displayName": "uni-starter",
-	"version": "1.0.2",
+	"version": "1.0.4",
 	"description": "一个集成了商用项目开发常见功能的项目模板",
 	"keywords": [
         "uni-starter",

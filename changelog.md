@@ -1,3 +1,8 @@
+## 1.0.4（2021-05-19）
+12
+## 1.0.3（2021-05-18）
+重大调整，原云函数名称：user-center改名叫uni-id-cf
+修复，绑定手机号码场景。因手机未插SIM导致的一键登录失败后未直接跳到获取短信验证码方式绑定
 ## 1.0.2（2021-05-17）
 添加 uni-config-center/uniCloud/cloudfunctions/common/uni-config-center/uni-id/config.json 文件
 ## 1.0.1（2021-05-17）
