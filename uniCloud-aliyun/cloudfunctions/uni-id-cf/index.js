@@ -200,15 +200,12 @@ exports.main = async (event, context) => {
 			res = await uniID.logout(event.uniIdToken)
 			break;
 		case 'sendSmsCode':
-			
 			// 测试期间短信统一用 123456 正式项目删除即可
 			return uniID.setVerifyCode({
 				mobile: params.mobile,
 				code:'123456',
 				type: params.type
 			})
-		
-		
 			// 简单限制一下客户端调用频率
 			const ipLimit = await db.collection('uni-verify').where({
 				ip: context.CLIENTIP,
@@ -314,6 +311,21 @@ exports.main = async (event, context) => {
 		case 'refreshCaptcha':
 			res = await uniCaptcha.refresh(params)
 			break;
+		case 'registerAdmin':
+			let {username,password} = params
+			let {total} = await db.collection('uni-id-users').where({role: 'admin'}).count()
+			if (total) {
+				return {
+					code: 10001,
+					message: '超级管理员已存在，请登录...'
+				}
+			}
+			return this.ctx.uniID.register({
+				username,
+				password,
+				role: ["admin"]
+			})
+			break;
 		default:
 			res = {
 				code: 403,
@@ -321,7 +333,6 @@ exports.main = async (event, context) => {
 			}
 			break;
 	}
-
 	//返回数据给客户端
 	return res
 };
