@@ -11,12 +11,14 @@
 		<!-- banner -->
 		<unicloud-db ref="bannerdb" v-slot:default="{data, loading, error, options}" collection="opendb-banner"
 			:field="field" @load="load">
-			<uni-swiper-dot class="uni-swiper-dot-box" @clickItem="clickItem" :info="data || bannerFormate(data, loading)"
-				:current="current" :mode="mode" :dots-styles="dotsStyles" field="content">
+			<uni-swiper-dot class="uni-swiper-dot-box" @clickItem="clickItem"
+				:info="data || bannerFormate(data, loading)" :current="current" :mode="mode" :dots-styles="dotsStyles"
+				field="content">
 				<swiper class="swiper-box" @change="changeSwiper" :current="swiperDotIndex">
 					<swiper-item v-for="(item, index) in (data || bannerFormate(data, loading))" :key="item._id">
 						<view :draggable="false" class="swiper-item" @click="clickBannerItem(item)">
-							<image class="swiper-image" :src="item.bannerfile.url" mode="aspectFill" :draggable="false" />
+							<image class="swiper-image" :src="item.bannerfile.url" mode="aspectFill"
+								:draggable="false" />
 						</view>
 					</swiper-item>
 				</swiper>
@@ -26,7 +28,9 @@
 		<uni-section title="宫格组件" style="margin: 0;" type="line"></uni-section>
 		<view class="example-body">
 			<uni-grid :column="3" :highlight="true" @change="change">
-				<uni-grid-item v-for="(item, index) in list" :index="index" :key="index">
+				<uni-grid-item v-for="(item, index) in list" :index="index" :key="index"
+					v-if="index<3?true:(index<6?hasLogin:uniIDHasRole('admin'))"
+				>
 					<view class="grid-item-box" style="background-color: #fff;">
 						<image :src="item.url" class="image" mode="aspectFill" />
 						<text class="text">{{ item.text }}</text>
@@ -38,54 +42,75 @@
 </template>
 
 <script>
+	import {
+		mapGetters,
+	} from 'vuex';
 	import statusBar from "@/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar";
 	export default {
-		components: { statusBar },
+		components: {
+			statusBar
+		},
 		data() {
 			return {
 				list: [{
 						url: '/static/grid/c1.png',
-						text: 'Grid 1',
+						text: '所有人可见',
 						badge: '0',
-						type: "primary"
+						type: "primary",
+						isShow: true
 					},
 					{
 						url: '/static/grid/c2.png',
-						text: 'Grid 2',
+						text: '所有人可见',
 						badge: '1',
-						type: "success"
-					},
-					{
+						type: "success",
+						isShow: true
+					}, {
 						url: '/static/grid/c3.png',
-						text: 'Grid 3',
-						badge: '99',
-						type: "warning"
+						text: '所有人可见',
+						badge: '1',
+						type: "success",
+						isShow: true
 					},
 					{
 						url: '/static/grid/c4.png',
-						text: 'Grid 4',
-						badge: '2',
-						type: "error"
+						text: '游客不可见',
+						badge: '1',
+						type: "success",
+						isShow: "this.hasLogin"
 					},
 					{
 						url: '/static/grid/c5.png',
-						text: 'Grid 5'
+						text: '游客不可见',
+						badge: '1',
+						type: "success",
+						isShow: "hasLogin"
 					},
 					{
 						url: '/static/grid/c6.png',
-						text: 'Grid 6'
+						text: '游客不可见',
+						badge: '1',
+						type: "success",
+						isShow: "hasLogin"
 					},
 					{
 						url: '/static/grid/c7.png',
-						text: 'Grid 7'
+						text: '管理员可见',
+						badge: '99',
+						type: "warning",
+						isShow: "uniIDHasPermission('admin')"
 					},
 					{
 						url: '/static/grid/c8.png',
-						text: 'Grid 8'
+						text: '管理员可见',
+						badge: '2',
+						type: "error",
+						isShow: "uniIDHasPermission('admin')"
 					},
 					{
 						url: '/static/grid/c9.png',
-						text: 'Grid 9'
+						text: '管理员可见',
+						isShow: "uniIDHasPermission('admin')"
 					}
 				],
 				// 查询字段，多个字段用 , 分割
@@ -120,9 +145,13 @@
 				mode: 'default',
 				dotsStyles: {},
 				swiperDotIndex: 0,
-				
-				isLoading:true
+				isLoading: true
 			}
+		},
+		computed: {
+			...mapGetters({
+				hasLogin: 'user/hasLogin'
+			})
 		},
 		methods: {
 			change(e) {
@@ -147,7 +176,7 @@
 			 * banner加载后触发的回调
 			 */
 			load(data) {
-				
+
 			},
 			changeSwiper(e) {
 				this.current = e.detail.current
@@ -172,7 +201,7 @@
 				// 有外部链接-跳转url
 				if (item.open_url) {
 					uni.navigateTo({
-						url: '/pages/common/webview/webview?url='+item.open_url+'&title='+item.title,
+						url: '/pages/common/webview/webview?url=' + item.open_url + '&title=' + item.title,
 						success: res => {},
 						fail: () => {},
 						complete: () => {}
@@ -201,6 +230,7 @@
 
 <style>
 	@charset "UTF-8";
+
 	/* #ifndef APP-NVUE */
 	page {
 		display: flex;
@@ -229,11 +259,12 @@
 	}
 
 	/* #endif */
-	
+
 	/* #ifdef APP-NVUE */
-	.warp{
+	.warp {
 		background-color: #fff;
 	}
+
 	/* #endif */
 
 	.example-body {

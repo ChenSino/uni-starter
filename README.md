@@ -375,6 +375,11 @@ uni-starter
 </pre>
 完整的uni-app目录结构[详情](https://uniapp.dcloud.io/frame?id=%e7%9b%ae%e5%bd%95%e7%bb%93%e6%9e%84)
 
+### 常见API示范
+1. 判断当前用户是否拥有某角色`uniIDHasRole` 演示页面：`/pages/grid/grid` [API文档详情：](https://uniapp.dcloud.io/api/global?id=uniidhasrole)
+2. 指纹解锁、人脸解锁  演示页面：`/pages/ucenter/settings/settings` [API文档详情：](https://uniapp.dcloud.io/api/system/authentication)
+
+
 ### 注意事项
 1. 真机运行需要制作自定义基座，制作后选择运行到自定义基座
 2. 苹果登录的图标，需要满足苹果应用市场的审核规范请勿随便修改；如需修改请先阅读:[Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/sign-in-with-apple/overview/buttons/)

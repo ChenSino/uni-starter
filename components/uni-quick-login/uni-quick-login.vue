@@ -161,7 +161,7 @@
 				return '/' + pages[pages.length - n].route
 			},
 			to(path) {
-				console.log('比较', this.getRoute(2), path)
+				// console.log('比较', this.getRoute(2), path)
 				if (this.getRoute(2) == path) { // 控制路由是重新打开还是返回，避免重复打开页面
 					uni.navigateBack();
 				} else {
