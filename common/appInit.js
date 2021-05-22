@@ -33,7 +33,12 @@ export default function() {
 				//获取当前页面路径（即url去掉"?"和"?"后的参数）
 				const url = e.url.split('?')[0]
 				//控制登录优先级
-				if (url == '/pages/ucenter/login-page/index/index') {
+				let pages = getCurrentPages();
+				if (
+					url == '/pages/ucenter/login-page/index/index'
+					&&
+					pages[pages.length - 1].route.split('/')[2]!='login-page'
+				) {
 					//一键登录（univerify）、账号（username）、验证码登录（短信smsCode）
 					if (login[0] == 'univerify') {
 						if(e.url == url) { e.url += '?' } //添加参数之前判断是否带了`？`号如果没有就补上，因为当开发场景本身有参数的情况下是已经带了`？`号
