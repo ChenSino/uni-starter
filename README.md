@@ -211,15 +211,8 @@ onLaunch生命周期执行了
 <img class="cloud" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/f3f36e4a-77e6-495c-bb85-5fc6999e29e1.jpg" />
 <img class="cloud" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/dd39dfcc-60c8-4f9f-a4d7-6b08f39e737e.jpg" />
 <img class="cloud" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/350f5e46-976e-4c5b-be49-e5c3908b03f4.jpg" />
-<div style="clear: both;"></div>
-<style>
-img.cloud{
-	box-shadow:0 0 2px #eeeeee;
-	width:400px;
-	margin:15px 5vw 0 0;
-	float:left
-}
-</style>
+
+#### 3.根目录`/uniCloud/database` 右键上传`上传所有DB Schema及扩展校验函数`
 
 ##### 配置文件
 uni-starter提供了uni-starter.config.js，可指定该应用是否强制登录才能进入首页，可配置选择登录注册方式以及不同方式的优先级等。配置项内容如下：
