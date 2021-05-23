@@ -17,7 +17,7 @@ exports.main = async (event, context) => {
 	  params：业务数据内容
 	  uniIdToken：系统自动传递的token，数据来源客户端的 uni.getStorageSync('uni_id_token')
 	*/
-	const {action,uniIdToken,params} = event;	
+	const {action,uniIdToken} = event;	
 	let params = event.params || {};
 	/*
 	2.在某些操作之前我们要对用户对身份进行校验（也就是要检查用户的token）再将得到的uid写入params.uid
