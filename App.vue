@@ -37,31 +37,6 @@
 				console.error('获取服务供应商失败：' + JSON.stringify(err));
 			})
 			// #endif
-
-			//clientDB的错误提示
-			const db = uniCloud.database()
-			function onDBError({
-				code, // 错误码详见https://uniapp.dcloud.net.cn/uniCloud/clientdb?id=returnvalue
-				message
-			}) {
-				// 处理错误
-				console.log(code,message);
-				if([
-					'TOKEN_INVALID_INVALID_CLIENTID',
-					'TOKEN_INVALID',
-					'TOKEN_INVALID_TOKEN_EXPIRED',
-					'TOKEN_INVALID_WRONG_TOKEN',
-					'TOKEN_INVALID_ANONYMOUS_USER',
-				].includes(code)){
-					uni.navigateTo({
-						url:'/pages/ucenter/login-page/index/index'
-					})
-				}
-			}
-			// 绑定clientDB错误事件
-			db.on('error', onDBError)
-			// 解绑clientDB错误事件
-			//db.off('error', onDBError)
 		},
 		onShow: function() {
 			console.log('App Show')

@@ -93,8 +93,8 @@
 			},
 		},
 		created() {
-			console.log('loginConfig', this.loginConfig);
-			console.log('this.getRoute(1)', this.getRoute(1));
+			// console.log('loginConfig', this.loginConfig);
+			// console.log('this.getRoute(1)', this.getRoute(1));
 			let servicesList = this.servicesList
 			//去掉当前页面对应的登录选项
 			for (var i = 0; i < servicesList.length; i++) {
@@ -109,7 +109,7 @@
 					servicesList.splice(i, 1)
 				}
 			}
-			console.log('servicesList', servicesList);
+			// console.log('servicesList', servicesList);
 		},
 		mounted() {
 			//获取当前环境能用的快捷登录方式
@@ -265,16 +265,26 @@
 					params,
 					type
 				});
-				this.request('uni-id-cf/login_by_' + type, params, result => {
-					console.log(result);
-					if (result.code === 0) {
-						if (type == 'univerify') {
-							uni.closeAuthView()
+				uniCloud.callFunction({
+					name:'uni-id-cf',
+					data:{
+						action:'login_by_'+type,
+						params
+					},
+					success: ({result}) => {
+						console.log(result);
+						if (result.code === 0) {
+							if (type == 'univerify') {
+								uni.closeAuthView()
+							}
+							uni.hideLoading()
+							loginSuccess(result)
+							delete result.userInfo.token
+							this.setUserInfo(result.userInfo)
 						}
+					},
+					complete: () => {
 						uni.hideLoading()
-						loginSuccess(result)
-						delete result.userInfo.token
-						this.setUserInfo(result.userInfo)
 					}
 				})
 			},

@@ -13,7 +13,7 @@
 	</view>
 </template>
 
-<script>	
+<script>
 var univerify_first,currentWebview;//是否一键登录优先
 	export default {
 		data() {

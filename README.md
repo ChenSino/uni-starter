@@ -177,6 +177,22 @@ uni-starter + uniCloud admin，应用开发从未如此简单快捷！
 1. 最新的华为应用市场要求，隐私政策提示框上接受按钮的文本，必须为“同意”而不能是其他有歧义的文字。
 2. 配置后提交云端打包后生效。理论上绝大部分和`manifest.json`生效相关的配置均需要提交云打包后生效
 
+#### 10.拦截器改造后的uniCloud
+1. Debug，调试期间开启Debug。接口一旦file就会弹出真实错误信息。否则将弹出，系统错误请稍后再试！
+```
+	if(Debug){
+		console.log(e);
+		uni.showModal({
+			content: JSON.stringify(e),
+			showCancel: false
+		});
+	}
+```
+2. 断网自动重试，当callFunction为fail时检测是否因断网引起。如果是会提醒用户并且会在恢复网络之后自动重新发起请求
+3. 常规的errCoder自动执行对应程序，如token无效/过期自动跳转到登陆页面。
+4. token自动续期。
+
+
 ### 应用启动时序介绍
 文件路径： App.vue
 ```

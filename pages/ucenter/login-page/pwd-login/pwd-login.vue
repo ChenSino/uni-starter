@@ -63,40 +63,88 @@
 					});
 				}
 				// 下边是可以登录
-				this.request('uni-id-cf/login', {
-					"username": this.username,
-					"password": this.password,
-					"captcha":this.captcha
-				}, result => {
-					console.log(result);
-					if (result.code === 0) {
-						this.loginSuccess(result)
-					} else {
-						if (result.needCaptcha) {
-							uni.showToast({
-								title: result.msg,
-								icon: 'none'
-							});
-							this.createCaptcha()
-						}else{
-							uni.showModal({
-								title: '错误',
-								content: result.msg,
-								showCancel: false,
-								confirmText: '知道了'
-							});
+				uniCloud.callFunction({
+					name:'uni-id-cf',
+					data:{
+						action:'login',
+						params:{
+							"username": this.username,
+							"password": this.password,
+							"captcha":this.captcha
+						},
+					},
+					success: ({result}) => {
+						console.log(result);
+						if (result.code === 0) {
+							this.loginSuccess(result)
+						} else {
+							if (result.needCaptcha) {
+								uni.showToast({
+									title: result.msg,
+									icon: 'none'
+								});
+								this.createCaptcha()
+							}else{
+								uni.showModal({
+									title: '错误',
+									content: result.msg,
+									showCancel: false,
+									confirmText: '知道了'
+								});
+							}
 						}
 					}
 				})
+				
+				// this.-request('uni-id-cf/login', {
+				// 	"username": this.username,
+				// 	"password": this.password,
+				// 	"captcha":this.captcha
+				// }, result => {
+				// 	console.log(result);
+				// 	if (result.code === 0) {
+				// 		this.loginSuccess(result)
+				// 	} else {
+				// 		if (result.needCaptcha) {
+				// 			uni.showToast({
+				// 				title: result.msg,
+				// 				icon: 'none'
+				// 			});
+				// 			this.createCaptcha()
+				// 		}else{
+				// 			uni.showModal({
+				// 				title: '错误',
+				// 				content: result.msg,
+				// 				showCancel: false,
+				// 				confirmText: '知道了'
+				// 			});
+				// 		}
+				// 	}
+				// })
 			},
 			createCaptcha(){
-				this.request(
-				'uni-id-cf/createCaptcha', {
-					scene: "login"
-				},
-				result => {
-					if (result.code === 0) {
-						this.captchaBase64 = result.captchaBase64
+				// this.-request(
+				// 'uni-id-cf/createCaptcha', {
+				// 	scene: "login"
+				// },
+				// result => {
+				// 	if (result.code === 0) {
+				// 		this.captchaBase64 = result.captchaBase64
+				// 	}
+				// })
+				
+				uniCloud.callFunction({
+					name:'uni-id-cf',
+					data:{
+						action:'createCaptcha',
+						params:{
+							scene: "login"
+						},
+					},
+					success: ({result}) => {
+						if (result.code === 0) {
+							this.captchaBase64 = result.captchaBase64
+						}
 					}
 				})
 			},

@@ -74,12 +74,16 @@
 					title: '手机号格式错误',
 					icon: 'none'
 				});
-				
-				this.request('uni-id-cf/sendSmsCode',
-					{
-						"mobile": this.phone,
-						"type": this.codeType
-					},result=>{
+				uniCloud.callFunction({
+					name:'uni-id-cf',
+					data:{
+						action:'sendSmsCode',
+						params:{
+							"mobile": this.phone,
+							"type": this.codeType
+						},
+					},
+					success: ({result}) => {
 						console.log(result);
 						uni.showToast({
 							title: "短信验证码发送成功",
@@ -89,7 +93,7 @@
 						this.getCode();
 						this.$emit('getCode');
 					}
-				)
+				})
 			},
 			getCode() {
 				if (this.reverseNumber == 0) {

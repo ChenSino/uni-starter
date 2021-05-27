@@ -189,7 +189,7 @@ exports.main = async (event, context) => {
 			res.needCaptcha = needCaptcha;
 			break;
 		case 'login_by_weixin':
-			res = await uniID.loginByWeixin(params);
+			res = await uniID.loginByWeixin({...params});
 			await uniID.updateUser({
 				uid: res.uid,
 				username: "微信用户"

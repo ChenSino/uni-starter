@@ -7,7 +7,7 @@
 					<image class="avatarUrl" :src="userInfo.avatar||nullAvatarUrl" mode="widthFix"></image>
 				</view>
 			</uni-list-item>
-			<uni-list-item class="item" @click="setNickname()" title="昵称" :rightText="userInfo.nickname||'未设置'" link></uni-list-item>
+			<uni-list-item class="item" @click="setNickname('')" title="昵称" :rightText="userInfo.nickname||'未设置'" link></uni-list-item>
 			<uni-list-item class="item" @click="bindMobile" title="手机号" :rightText="userInfo.mobile||'未绑定'" link></uni-list-item>
 		</uni-list>
 		<uni-popup ref="dialog" type="dialog">
@@ -70,10 +70,32 @@
 					"univerifyStyle": this.univerifyStyle,
 					success: async e => {
 						console.log(e.authResult);
-						this.request('uni-id-cf/bind_mobile_by_univerify',
-							e.authResult,
-							result=>
-							{
+						// this.-request('uni-id-cf/bind_mobile_by_univerify',
+						// 	e.authResult,
+						// 	result=>
+						// 	{
+						// 		console.log(result);
+						// 		if(result.code===0){
+						// 			this.setUserInfo({"mobile":result.mobile})
+						// 			uni.closeAuthView()
+						// 		}else{
+						// 			uni.showModal({
+						// 				content: JSON.stringify(result.msg),
+						// 				showCancel: false,
+						// 				complete() {
+						// 					uni.closeAuthView()
+						// 				}
+						// 			});
+						// 		}
+						// 	}
+						// )
+						uniCloud.callFunction({
+							name:'uni-id-cf',
+							data:{
+								action:'bind_mobile_by_univerify',
+								params:e.authResult,
+							},
+							success: ({result}) => {
 								console.log(result);
 								if(result.code===0){
 									this.setUserInfo({"mobile":result.mobile})
@@ -88,7 +110,7 @@
 									});
 								}
 							}
-						)
+						})
 					},
 					fail: (err) => {
 						console.log(err);
@@ -104,7 +126,7 @@
 				})
 			},
 			setNickname(nickname) {
-				console.log(nickname);
+				console.log(9527,nickname);
 				if (nickname) {
 					usersTable.where('_id==$env.uid').update({
 						nickname

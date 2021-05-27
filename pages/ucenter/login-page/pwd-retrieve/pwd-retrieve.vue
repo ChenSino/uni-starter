@@ -5,7 +5,7 @@
 		<uni-forms ref="form" :value="formData" :rules="rules">
 			<uni-forms-item name="phone">
 				<!-- focus规则如果上一页携带来“手机号码”数据就focus验证码输入框，否则focus手机号码输入框 -->
-				<uni-easyinput :focus="formData.phone.length!=11" type="number" class="easyinput" :inputBorder="false"
+				<uni-easyinput :disabled="lock" :focus="formData.phone.length!=11" type="number" class="easyinput" :inputBorder="false"
 					v-model="formData.phone" maxlength="11" placeholder="请输入手机号"></uni-easyinput>
 			</uni-forms-item>
 			<uni-forms-item name="code">
@@ -36,6 +36,7 @@
 		mixins: [mixin],
 		data() {
 			return {
+				lock:false,
 				formData: {
 					"phone": "",
 					'pwd': '',
@@ -121,6 +122,7 @@
 		onLoad(event) {
 			if (event && event.phoneNumber) {
 				this.formData.phone = event.phoneNumber;
+				this.lock = true
 			}
 		},
 		onReady() {
@@ -135,18 +137,39 @@
 			submit() {
 				this.$refs.form.submit()
 					.then(res => {
-						this.request('uni-id-cf/resetPwdBySmsCode', {
-							"mobile": this.formData.phone,
-							"code": this.formData.code,
-							"password": this.formData.pwd
-						}, result => {
-							console.log(result);
-							uni.showToast({
-								title: result.msg,
-								icon: 'none'
-							});
-							if (result.code === 0) {
-								uni.navigateBack()
+						// this.-request('uni-id-cf/resetPwdBySmsCode', {
+						// 	"mobile": this.formData.phone,
+						// 	"code": this.formData.code,
+						// 	"password": this.formData.pwd
+						// }, result => {
+						// 	console.log(result);
+						// 	uni.showToast({
+						// 		title: result.msg,
+						// 		icon: 'none'
+						// 	});
+						// 	if (result.code === 0) {
+						// 		uni.navigateBack()
+						// 	}
+						// })
+						uniCloud.callFunction({
+							name:'uni-id-cf',
+							data:{
+								action:'resetPwdBySmsCode',
+								params:{
+									"mobile": this.formData.phone,
+									"code": this.formData.code,
+									"password": this.formData.pwd
+								},
+							},
+							success: ({result}) => {
+								console.log(result);
+								uni.showToast({
+									title: result.msg,
+									icon: 'none'
+								});
+								if (result.code === 0) {
+									uni.navigateBack()
+								}
 							}
 						})
 					})

@@ -1,10 +1,12 @@
 import uniStarterConfig from '@/uni-starter.config.js';
+import store from '@/store'
 //应用初始化页
 // #ifdef APP-PLUS
 import checkUpdate from '@/uni_modules/uni-upgrade-center-app/utils/check-update';
 import callCheckVersion from '@/uni_modules/uni-upgrade-center-app/utils/call-check-version';
 import interceptorChooseImage from '@/uni_modules/json-interceptor-chooseImage/js_sdk/main.js';
 // #endif
+const db = uniCloud.database()
 export default function() {
 	
 	setTimeout(()=>{
@@ -21,7 +23,132 @@ export default function() {
 	interceptorChooseImage()
 	// #endif
 
-   
+
+	//clientDB的错误提示
+	function onDBError({
+		code, // 错误码详见https://uniapp.dcloud.net.cn/uniCloud/clientdb?id=returnvalue
+		message
+	}) {
+		// 处理错误
+		console.log(code,message);
+		if([
+			'TOKEN_INVALID_INVALID_CLIENTID',
+			'TOKEN_INVALID',
+			'TOKEN_INVALID_TOKEN_EXPIRED',
+			'TOKEN_INVALID_WRONG_TOKEN',
+			'TOKEN_INVALID_ANONYMOUS_USER',
+		].includes(code)){
+			uni.navigateTo({
+				url:'/pages/ucenter/login-page/index/index'
+			})
+		}
+	}
+	// 绑定clientDB错误事件
+	db.on('error', onDBError)
+	
+	// 解绑clientDB错误事件
+	//db.off('error', onDBError)
+
+	db.on('refreshToken', function({
+		token,
+		tokenExpired
+	}) {
+		console.log('监听到clientDB的refreshToken',{token,tokenExpired});
+		store.commit('user/login', {
+			token,
+			tokenExpired
+		})
+	})
+
+
+	const Debug = true;
+	//拦截器封装callFunction
+	let callFunctionOption;
+	uniCloud.addInterceptor('callFunction',{
+		invoke(e){
+			console.log(JSON.stringify(e));
+			callFunctionOption = e
+		},
+		complete(e){
+			// console.log(JSON.stringify(e));
+		},
+		fail(e) { // 失败回调拦截
+			if(Debug){
+				console.log(e);
+				uni.showModal({
+					content: JSON.stringify(e),
+					showCancel: false
+				});
+			}else{
+				uni.showModal({
+					content: "系统错误请稍后再试！",
+					showCancel: false,
+					confirmText:"知道了"
+				});
+			}
+			//如果执行错误，检查是否断网
+			uni.getNetworkType({
+				complete:res => {
+					console.log(res);
+					if (res.networkType == 'none') {
+						uni.showToast({
+							title: '手机网络异常',
+							icon: 'none'
+						});
+						console.log('手机网络异常');
+						let callBack = res=>{
+							console.log(res);
+							if (res.isConnected) {
+								uni.showToast({
+									title: '恢复联网自动重新执行',
+									icon: 'none'
+								});
+								console.log(res.networkType,"恢复联网自动重新执行");
+								uni.offNetworkStatusChange(e=>{
+									console.log("移除监听成功",e);
+								})
+								//恢复联网自动重新执行
+								uniCloud.callFunction(callFunctionOption)
+								uni.offNetworkStatusChange(callBack);
+							}
+						}
+						uni.onNetworkStatusChange(callBack);
+					}
+				}
+			});
+		},
+		success:(e)=>{
+			console.log(e);
+			const {token,tokenExpired} = e.result
+			if (token && tokenExpired) {
+				store.commit('user/login', {
+					token,
+					tokenExpired
+				})
+			}
+			
+			console.log(e.result.code);
+			switch (e.result.code){
+				case 403:
+					uni.showModal({
+						content: '未登陆，跳登陆',
+						showCancel: false
+					});
+					break;
+				case 50101:
+					uni.showToast({
+						title: e.result.msg,
+						icon: 'none',
+						duration:2000
+					});
+					break;
+				default:
+					console.log('code的值是：'+e.result.code,'可以在这里插入，自动处理响应体');
+					break;
+			}
+		}
+	})
+
 	//自定义路由拦截
 	const {"router": {needLogin,login} } = uniStarterConfig //需要登录的页面
 	let list = ["navigateTo", "redirectTo", "reLaunch", "switchTab"];

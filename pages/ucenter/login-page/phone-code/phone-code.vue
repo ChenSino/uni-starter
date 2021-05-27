@@ -42,16 +42,31 @@
 		},
 		methods: {
 			submit(){ //完成并提交
-				this.request('uni-id-cf/loginBySms',
-					{
-						"mobile":this.phone,
-						"code":this.code
+				// this.-request('uni-id-cf/loginBySms',
+				// 	{
+				// 		"mobile":this.phone,
+				// 		"code":this.code
+				// 	},
+				// 	e=>{
+				// 		console.log(e);
+				// 		this.loginSuccess(e)
+				// 	},
+				// {showLoading:true})
+				
+				uniCloud.callFunction({
+					name:'uni-id-cf',
+					data:{
+						action:'loginBySms',
+						params:{
+							"mobile":this.phone,
+							"code":this.code
+						},
 					},
-					e=>{
-						console.log(e);
-						this.loginSuccess(e)
-					},
-				{showLoading:true})
+					success: ({result}) => {
+						this.loginSuccess(result)
+					}
+				})
+				
 			}
 		}
 	}
