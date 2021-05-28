@@ -24,6 +24,11 @@
 			"title": "头像地址",
 			"trim": "both"
 		},
+		"avatar_file": {
+		  "bsonType": "file",
+		  "title": "头像文件",
+		  "description": "用file类型方便使用uni-file-picker组件"
+		},
 		"comment": {
 			"bsonType": "string",
 			"description": "备注",

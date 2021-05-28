@@ -119,7 +119,7 @@
 				oauthServices.forEach(({
 					id
 				}) => {
-					console.log(9527,id);
+					// console.log(9527,id);
 					if (this.config[id].isChecked&&this.loginConfig.includes(id)) {
 						this.servicesList.push({
 							...this.config[id],

@@ -155,6 +155,7 @@ export default function() {
 	list.forEach(item => { //用遍历的方式分别为,uni.navigateTo,uni.redirectTo,uni.reLaunch,uni.switchTab这4个路由方法添加拦截器
 		uni.addInterceptor(item, {
 			invoke(e) { // 调用前拦截
+				console.log(e);
 				//获取用户的token
 				const token = uni.getStorageSync('uni_id_token')
 				//获取当前页面路径（即url去掉"?"和"?"后的参数）
@@ -180,9 +181,10 @@ export default function() {
 							title: '请先登录',
 							icon: 'none'
 						})
-						return uni.navigateTo({
+						uni.navigateTo({
 							url: "/pages/ucenter/login-page/index/index"
 						})
+						return false
 					}
 				}
 			},
