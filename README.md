@@ -1,15 +1,23 @@
 ### 介绍 
 `uni-starter`，是一个云端一体的、集成了商用项目开发常见功能的项目模板。
+
 如果说uniCloud admin是管理端项目的基础模板，那么uni-starter则是用户端、尤其是移动端的基础模板。
+
 在这个模板基础之上快速填充自己的业务，即可很快完成一个应用。
+
 地址：[https://codechina.csdn.net/dcloud/uni-starter.git](https://codechina.csdn.net/dcloud/uni-starter.git)
 
 #### 项目背景
-我们一直想出一个结合uni-app、uniCloud和openDB以及uni-id和uniCloud admin等，uni全家桶的项目模板；
-为了照顾各类应用的开发者，我们取交集最终罗列了如下功能，发现这些就是除业务逻辑外的项目基本功能并把它命名为`uni-starter`。
-uni-starter将节省开发者大量的时间，让开发者集中精力在自己的特色业务上。
+一个应用，其实有很多通用的功能，比如登录注册、头像、设置、拦截器、banner...
+
+`uni-starter`将这些功能都已经集成好。
+
+新建项目选择`uni-starter`模板，即可在此基础上快速开发自己的特色业务。
+
 有了uni-starter，再加上schema2code生成前端页面，一个简单应用就可以快速完成。
-uni-starter + uniCloud admin，应用开发从未如此简单快捷！
+
+uni-starter + uniCloud admin，提供了用户端和管理端的基础模板，应用开发从未如此简单快捷！
+
 ### 界面效果
 <img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/c2362519-8131-4071-b08a-8175e11b9341.jpg" />
 <img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/61e0f3d3-d726-4973-865c-e6ee0bdd0870.jpg" />
