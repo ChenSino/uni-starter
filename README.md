@@ -386,7 +386,7 @@ uni-starter
 ├─uni_modules						存放[uni_module](/uni_modules)规范的插件。
 ├─main.js							Vue初始化入口文件
 ├─App.vue							应用配置，用来配置App全局样式以及监听 <a href="/collocation/frame/lifecycle?id=应用生命周期">应用生命周期</a>
-├─baseconfig						uni-starter的前端的配置文件，项目所有模块的配置在这里填写。详见该文件的代码注释。
+├─uni-starter.config				uni-starter的前端的配置文件，项目所有模块的配置在这里填写。详见该文件的代码注释。
 ├─manifest.json	 					配置应用名称、appid、logo、版本等打包信息，<a href="/collocation/manifest">详见</a>
 └─pages.json						配置页面路由、导航条、选项卡等页面类信息，<a href="/collocation/pages">详见</a>
 </pre>
