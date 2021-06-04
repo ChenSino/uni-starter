@@ -27,10 +27,7 @@
 					"buttons": { // 自定义登陆按钮
 						"iconWidth": "45px", // 图标宽度（高度等比例缩放） 默认值：45px
 						"list": [{
-								"iconPath": "/static/apple.png" // 图标路径仅支持本地图片
-							},
-							{
-								"iconPath": "/static/wechat.png" // 图标路径仅支持本地图片
+								"iconPath": "/static/uni-quick-login/wechat.png" // 图标路径仅支持本地图片
 							}
 						]
 					}
@@ -43,6 +40,18 @@
 			}
 		},
 		onLoad(e) {
+			uni.getProvider({
+			    service: 'oauth',
+			    success:res=>{
+			        if (~res.provider.indexOf('apple')) {
+						this.univerifyStyle.buttons.list.push({
+							"iconPath": "/static/uni-quick-login/apple.png" // 图标路径仅支持本地图片
+						})
+			        }
+			    }
+			});
+			
+			
 			//是否优先启动一键登录。即：页面一加载就启动一键登录
 			univerify_first = e.univerify_first
 			//#ifdef APP-PLUS

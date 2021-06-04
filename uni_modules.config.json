@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "preupload": "node /Users/dcloud_linju/Desktop/uni_modules_tool/tool.js change",
-    "postupload": "node /Users/dcloud_linju/Desktop/uni_modules_tool/tool.js recovery"
+    "preupload": "node uni_modules_tools/main.js change",
+    "postupload": "node uni_modules_tools/main.js recovery"
   }
 }

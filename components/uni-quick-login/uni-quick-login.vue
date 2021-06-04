@@ -196,6 +196,10 @@
 						err => {
 							uni.hideLoading()
 							console.log(err);
+							uni.showModal({
+								content: JSON.stringify(err),
+								showCancel: false
+							});
 						})
 				}
 				// #endif
@@ -229,7 +233,7 @@
 						console.log(err);
 
 						if (type == 'univerify') {
-							if (err.metadata.error_data) {
+							if (err.metadata&&err.metadata.error_data) {
 								uni.showToast({
 									title: "一键登录:" + err.metadata.error_data,
 									icon: 'none'
@@ -253,7 +257,25 @@
 										confirmText: '知道了',
 									});
 									break;
+								case "30008":
+									uni.showToast({
+										title: '点击了第三方登陆',
+										icon: 'none'
+									});
+									switch (err.index){
+										case 0:
+											this.login_before('weixin',false)
+											break;
+										case 1:
+											this.login_before('apple',false)
+											break;
+										default:
+											break;
+									}
+									
+									break;
 								default:
+									console.log(9527,err);
 									break;
 							}
 						}
