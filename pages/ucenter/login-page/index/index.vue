@@ -4,26 +4,41 @@
 		<text class="title">登录后即可展示自己</text>
 		<uni-agreements @setAgree="agree = $event"></uni-agreements>
 		<!-- 登录框 -->
-		<input type="number" class="input-box" :inputBorder="false" v-model="phone" maxlength="11" placeholder="请输入手机号"/>
+		<input type="number" class="input-box" :inputBorder="false" v-model="phone" maxlength="11"
+			placeholder="请输入手机号" />
 		<button class="get-code" :class="{isPhone}" :disabled="!isPhone" :type="isPhone?'primary':'default'"
 			@click="sendShortMsg">获取短信验证码</button>
-		<text class="tip">未注册的手机号验证通过后将自动注册</text>			
+		<text class="tip">未注册的手机号验证通过后将自动注册</text>
 		<!-- 登录按钮弹窗 -->
-		<uni-quick-login :agree="agree" ref="uniQuickLogin"></uni-quick-login>
+		<uni-quick-login :univerifyStyle="univerifyStyle" :agree="agree" ref="uniQuickLogin"></uni-quick-login>
 	</view>
 </template>
 
 <script>
-var univerify_first,currentWebview;//是否一键登录优先
+	var univerify_first, currentWebview; //是否一键登录优先
 	export default {
 		data() {
 			return {
-				phone:"",
-				agree:false
+				phone: "",
+				agree: false,
+				univerifyStyle: {
+					"fullScreen": true, // 是否全屏显示，true表示全屏模式，false表示非全屏模式，默认值为false。
+					"backgroundColor": "#ffffff", // 授权页面背景颜色，默认值：#ffffff
+					"buttons": { // 自定义登陆按钮
+						"iconWidth": "45px", // 图标宽度（高度等比例缩放） 默认值：45px
+						"list": [{
+								"iconPath": "/static/apple.png" // 图标路径仅支持本地图片
+							},
+							{
+								"iconPath": "/static/wechat.png" // 图标路径仅支持本地图片
+							}
+						]
+					}
+				}
 			}
 		},
 		computed: {
-			isPhone(){
+			isPhone() {
 				return /^1\d{10}$/.test(this.phone);
 			}
 		},
@@ -31,31 +46,31 @@ var univerify_first,currentWebview;//是否一键登录优先
 			//是否优先启动一键登录。即：页面一加载就启动一键登录
 			univerify_first = e.univerify_first
 			//#ifdef APP-PLUS
-			if(univerify_first){
+			if (univerify_first) {
 				const pages = getCurrentPages();
 				currentWebview = pages[pages.length - 1].$getAppWebview();
 				currentWebview.setStyle({
-					"top":"2000px"		//隐藏当前页面窗体
+					"top": "2000px" //隐藏当前页面窗体
 				})
 			}
 			//#endif
 		},
 		onReady() {
 			//#ifdef APP-PLUS
-			if(univerify_first){
+			if (univerify_first) {
 				console.log('开始一键登录');
-				setTimeout(()=>{
+				setTimeout(() => {
 					this.$refs.uniQuickLogin.login('univerify')
-				},100)
+				}, 100)
 				setTimeout(() => {
 					currentWebview.setStyle({
-						titleNView:{
-							autoBackButton:true,
-							backgroundColor:"#FFFFFF"
+						titleNView: {
+							autoBackButton: true,
+							backgroundColor: "#FFFFFF"
 						}
 					})
 					currentWebview.setStyle({
-						"top":"0"
+						"top": "0"
 					})
 				}, 1500);
 			}
@@ -63,7 +78,7 @@ var univerify_first,currentWebview;//是否一键登录优先
 		},
 		methods: {
 			sendShortMsg() {
-				if(!this.agree){
+				if (!this.agree) {
 					return uni.showToast({
 						title: '你未同意隐私政策协议',
 						icon: 'none'

@@ -30,7 +30,7 @@ export default {
 				filePath:url
 			})
 			.then(res=>{
-				//console.log(res);
+				console.log(res);
 				callback(res.fileID)
 				uni.hideLoading()
 			})

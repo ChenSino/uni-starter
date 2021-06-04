@@ -1,23 +1,17 @@
 <template>
 	<view>
 		<uni-list>
-			<uni-list-item class="item" link>
+			<uni-list-item class="item" @click="setAvatar" link>
 				<view slot="body" class="item">
-					
 					<text>头像</text>
-					<uni-file-picker file-mediatype="image" return-type="object" v-model="userInfo.avatar" />
-						<!-- <uni-file-picke disable-preview :del-icon="false" return-type="object" fileMediatype="image" /> -->
-						<!-- <image class="avatarUrl" :src="userInfo.avatar||nullAvatarUrl" mode="widthFix"></image> -->
+					<image class="avatarUrl" :src="userInfo.avatar||nullAvatarUrl" mode="widthFix"></image>
 				</view>
 			</uni-list-item>
-			<uni-list-item class="item" @click="setNickname('')" title="昵称" :rightText="userInfo.nickname||'未设置'" link>
-			</uni-list-item>
-			<uni-list-item class="item" @click="bindMobile" title="手机号" :rightText="userInfo.mobile||'未绑定'" link>
-			</uni-list-item>
+			<uni-list-item class="item" @click="setNickname('')" title="昵称" :rightText="userInfo.nickname||'未设置'" link></uni-list-item>
+			<uni-list-item class="item" @click="bindMobile" title="手机号" :rightText="userInfo.mobile||'未绑定'" link></uni-list-item>
 		</uni-list>
 		<uni-popup ref="dialog" type="dialog">
-			<uni-popup-dialog mode="input" :value="userInfo.nickname" @confirm="setNickname" title="设置昵称"
-				placeholder="请输入要设置的昵称">
+			<uni-popup-dialog mode="input" :value="userInfo.nickname" @confirm="setNickname" title="设置昵称" placeholder="请输入要设置的昵称">
 			</uni-popup-dialog>
 		</uni-popup>
 	</view>
@@ -58,7 +52,7 @@
 				uni.preLogin({
 					provider: 'univerify',
 					success: this.univerify(), //预登录成功
-					fail: (res) => { // 预登录失败
+					fail:(res)=> { // 预登录失败
 						// 不显示一键登录选项（或置灰）
 						console.log(res)
 						this.bindMobileBySmsCode()
@@ -66,8 +60,8 @@
 				})
 				// #endif
 				// #ifndef APP-PLUS
-				this.bindMobileBySmsCode()
-				//...去用验证码绑定
+					this.bindMobileBySmsCode()
+					//...去用验证码绑定
 				// #endif
 			},
 			univerify() {
@@ -96,21 +90,17 @@
 						// 	}
 						// )
 						uniCloud.callFunction({
-							name: 'uni-id-cf',
-							data: {
-								action: 'bind_mobile_by_univerify',
-								params: e.authResult,
+							name:'uni-id-cf',
+							data:{
+								action:'bind_mobile_by_univerify',
+								params:e.authResult,
 							},
-							success: ({
-								result
-							}) => {
+							success: ({result}) => {
 								console.log(result);
-								if (result.code === 0) {
-									this.setUserInfo({
-										"mobile": result.mobile
-									})
+								if(result.code===0){
+									this.setUserInfo({"mobile":result.mobile})
 									uni.closeAuthView()
-								} else {
+								}else{
 									uni.showModal({
 										content: JSON.stringify(result.msg),
 										showCancel: false,
@@ -124,7 +114,7 @@
 					},
 					fail: (err) => {
 						console.log(err);
-						if (err.code == '30002') {
+						if(err.code=='30002'){
 							this.bindMobileBySmsCode()
 						}
 					}
@@ -132,11 +122,11 @@
 			},
 			bindMobileBySmsCode() {
 				uni.navigateTo({
-					url: '/pages/ucenter/userinfo/bind-mobile/bind-mobile'
+					url:'/pages/ucenter/userinfo/bind-mobile/bind-mobile'
 				})
 			},
 			setNickname(nickname) {
-				console.log(9527, nickname);
+				console.log(9527,nickname);
 				if (nickname) {
 					usersTable.where('_id==$env.uid').update({
 						nickname
@@ -219,7 +209,6 @@
 		justify-content: space-between;
 		align-items: center;
 	}
-
 	.avatarUrl {
 		width: 50px;
 		height: 50px;
