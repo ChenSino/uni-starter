@@ -13,7 +13,7 @@ module.exports = function(){
 	  shell.echo('Error: Git add failed');
 	  shell.exit(1);
 	}
-	if (exec(`git commit -am "${changelog}"`).code !== 0) {
+	if (exec(`git commit -a -m "${changelog}"`).code !== 0) {
 	  shell.echo('Error: Git commit failed');
 	  shell.exit(1);
 	}
