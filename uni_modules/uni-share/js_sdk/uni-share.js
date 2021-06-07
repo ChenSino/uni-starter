@@ -1,9 +1,10 @@
-import uniImageMenu from 'uni_modules/uni-image-menu/js_sdk/uni-image-menu.js';
+import uniImageMenu from './uni-image-menu.js';
 export default async (param,callback) => {
 	var menus = []
-	plus.oauth.getServices(services => { //只显示有服务的项目
+	plus.share.getServices(services => { //只显示有服务的项目
+		services = services.filter(item=>item.nativeClient)
+		// console.log("servicesList",services);
 		let servicesList = services.map(e => e.id)
-		console.log(servicesList);
 		param.menus.forEach(item => {
 			if (servicesList.includes(item.share.provider) || typeof(item.share) == 'string') {
 				menus.push(item)
@@ -27,6 +28,11 @@ export default async (param,callback) => {
 					},
 					fail: function(err) {
 						console.log("fail:" + JSON.stringify(err));
+						uni.showModal({
+							content: JSON.stringify(err),
+							showCancel: false,
+							confirmText:"知道了"
+						});
 					},
 					complete(e) {
 						uniImageMenu.hide()

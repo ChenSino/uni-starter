@@ -39,9 +39,9 @@
 			}
 		},
 		props: {
-			agree:{
-				type:Boolean,
-				default(){
+			agree: {
+				type: Boolean,
+				default () {
 					return false
 				}
 			},
@@ -105,7 +105,7 @@
 			//去掉配置项中不存在的项
 			for (var i = 0; i < servicesList.length; i++) {
 				if (!this.loginConfig.includes(servicesList[i].id)) {
-					console.log('去掉配置项中不存在的项',servicesList[i].id);
+					console.log('去掉配置项中不存在的项', servicesList[i].id);
 					servicesList.splice(i, 1)
 				}
 			}
@@ -119,15 +119,23 @@
 				oauthServices.forEach(({
 					id
 				}) => {
-					// console.log(9527,id);
-					if (this.config[id].isChecked&&this.loginConfig.includes(id)) {
+					if (this.config[id].isChecked && this.loginConfig.includes(id)) {
+						if (id == 'weixin') {
+							if (~plus.runtime.isApplicationExist({
+									pname: 'com.tencent.mm',
+									action: 'weixin://'
+								})) {
+								// console.log("微信应用未安装");
+								return
+							}
+						}
 						this.servicesList.push({
 							...this.config[id],
 							id
 						})
 					}
 				})
-				// console.log(oauthServices);
+				// console.log('oauthServices',oauthServices);
 			}, err => {
 				uni.hideLoading()
 				uni.showModal({
@@ -171,13 +179,15 @@
 				}
 			},
 			login_before(type, navigateBack = true) {
-				if(!this.agree){
+				if (!this.agree) {
 					return uni.showToast({
 						title: '你未同意隐私政策协议',
 						icon: 'none'
 					});
 				}
-				uni.showLoading({mask:true})
+				uni.showLoading({
+					mask: true
+				})
 				// console.log(arguments);
 				let oauthService = this.oauthServices.find((service) => service.id == type)
 				// console.log(type);
@@ -233,7 +243,7 @@
 						console.log(err);
 
 						if (type == 'univerify') {
-							if (err.metadata&&err.metadata.error_data) {
+							if (err.metadata && err.metadata.error_data) {
 								uni.showToast({
 									title: "一键登录:" + err.metadata.error_data,
 									icon: 'none'
@@ -262,20 +272,20 @@
 										title: '点击了第三方登陆',
 										icon: 'none'
 									});
-									switch (err.index){
+									switch (err.index) {
 										case 0:
-											this.login_before('weixin',false)
+											this.login_before('weixin', false)
 											break;
 										case 1:
-											this.login_before('apple',false)
+											this.login_before('apple', false)
 											break;
 										default:
 											break;
 									}
-									
+
 									break;
 								default:
-									console.log(9527,err);
+									console.log(9527, err);
 									break;
 							}
 						}
@@ -283,17 +293,20 @@
 				})
 			},
 			login(params, type) { //联网验证登录
+				console.log('type--', type);
 				console.log({
 					params,
 					type
 				});
 				uniCloud.callFunction({
-					name:'uni-id-cf',
-					data:{
-						action:'login_by_'+type,
+					name: 'uni-id-cf',
+					data: {
+						action: 'login_by_' + type,
 						params
 					},
-					success: ({result}) => {
+					success: ({
+						result
+					}) => {
 						console.log(result);
 						if (result.code === 0) {
 							if (type == 'univerify') {

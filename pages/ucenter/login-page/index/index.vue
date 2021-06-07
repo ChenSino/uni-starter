@@ -68,8 +68,9 @@
 			//#ifdef APP-PLUS
 			if (univerify_first) {
 				console.log('开始一键登录');
+				this.agree = true
 				setTimeout(() => {
-					this.$refs.uniQuickLogin.login('univerify')
+					this.$refs.uniQuickLogin.login_before('univerify')
 				}, 100)
 				setTimeout(() => {
 					currentWebview.setStyle({
