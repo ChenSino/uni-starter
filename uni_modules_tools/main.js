@@ -5,27 +5,34 @@
 const fs = require('fs'),
 	Hjson = require('hjson'),
 	config = Hjson.rt.parse(fs.readFileSync(__dirname+'/config.js', 'utf-8'))
-
+const change_after = require('./change_after')
 
 if(process.argv[2] == 'change'){
-	change(config)
+	change(config,()=>{
+		console.log('脚本change已经执行成功');
+		change_after()
+	})
 }else{
 	recovery(config)
 }
 
-function change(config){
+function change(config,callback){
+	const total = Object.keys(config).length
+	let index = 0;
 	for (let fileName in config) {
 		let path = process.cwd() + fileName
 		let copyPath = __dirname + '/copy' + fileName
 		let fileText = fs.readFileSync(path, 'utf-8')
-		//保持原文件名先备份一份到脚本目录下
-		writeFileRecursive(copyPath, fileText, function(err) {
+		//保持原文件名先备份一份到/uni_modules_tools/copy目录下，然后再覆盖
+		writeFileRecursive(copyPath, fileText, function(err) { //创建目录并写入文件
 			if (err) {
 				return console.log(err);
 			}
 			//改写
 			let HfileObj = Hjson.rt.parse(fileText)
+			//递归合并,为了保留注释内容
 			mergeJSON(HfileObj,config[fileName])
+			
 			fs.writeFile(path, Hjson.rt.stringify(HfileObj, {
 				quotes: 'all',
 				separator: true,
@@ -34,6 +41,10 @@ function change(config){
 			}), function(err) {
 				if (err) {
 					return console.log(err);
+				}
+				index++
+				if(index == total){
+					callback()
 				}
 			})
 		})

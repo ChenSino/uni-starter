@@ -219,7 +219,7 @@ exports.main = async (event, context) => {
 				type: params.type
 			})
 			// 简单限制一下客户端调用频率
-			const ipLimit = await db.collection('uni-verify').where({
+			const ipLimit = await db.collection('opendb-verify-codes').where({
 				ip: context.CLIENTIP,
 				created_at: dbCmd.gt(Date.now() - 60000)
 			}).get()
