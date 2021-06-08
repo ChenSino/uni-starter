@@ -18,6 +18,7 @@ exports.main = async (event, context) => {
 	  uniIdToken：系统自动传递的token，数据来源客户端的 uni.getStorageSync('uni_id_token')
 	*/
 	const {action,uniIdToken} = event;	
+	const deviceInfo = event.deviceInfo || {};
 	let params = event.params || {};
 	/*
 	2.在某些操作之前我们要对用户对身份进行校验（也就是要检查用户的token）再将得到的uid写入params.uid
@@ -50,9 +51,15 @@ exports.main = async (event, context) => {
 		}
 		params.uid = payload.uid
 	}
+	
 
 	//3.注册成功后创建新用户的积分表方法
 	async function registerSuccess(uid) {
+		//添加当前用户设备信息
+		await db.collection('uni-id-device').add({
+			...deviceInfo,
+			user_id:uid
+		})
 		await db.collection('uni-id-scores').add({
 			user_id: uid,
 			score: 1,
@@ -83,6 +90,11 @@ exports.main = async (event, context) => {
 			})
 		if (res.type == 'register') {
 			await registerSuccess(res.uid)
+		}else{
+			if(deviceInfo){
+				//更新当前用户设备信息
+				await db.collection('uni-id-device').where({user_id:res.uid}).update(deviceInfo)
+			}
 		}
 		return await uniIdLogCollection.add(logData)
 	}
@@ -182,7 +194,9 @@ exports.main = async (event, context) => {
 					...params,
 					queryField: ['username', 'email', 'mobile']
 				});
-				await loginLog(res);
+				if(res.code === 0){
+					await loginLog(res);
+				}
 				needCaptcha = await getNeedCaptcha();
 			}
 
@@ -353,4 +367,4 @@ exports.main = async (event, context) => {
 	}
 	//返回数据给客户端
 	return res
-};
+}

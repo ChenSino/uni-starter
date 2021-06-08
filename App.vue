@@ -36,6 +36,19 @@
 			}, err => {
 				console.error('获取服务供应商失败：' + JSON.stringify(err));
 			})
+			
+			//idfa有需要的用户在应用首次启动时自己获取存储到storage中
+			//https://ask.dcloud.net.cn/article/36107
+			/*if(~plus.storage.getItem('idfa')){
+				plus.device.getInfo({//需要勾选IDFA
+					success:function(e){  
+						console.log('idfa =  '+JSON.stringify(e.idfa));  
+					},
+					fail:function(e){
+						console.log('getDeviceInfo failed: '+JSON.stringify(e));  
+					}  
+				});
+			}*/
 			// #endif
 		},
 		onShow: function() {

@@ -48,7 +48,6 @@ export default function() {
 	
 	// 解绑clientDB错误事件
 	//db.off('error', onDBError)
-
 	db.on('refreshToken', function({
 		token,
 		tokenExpired
@@ -60,14 +59,59 @@ export default function() {
 		})
 	})
 
-
 	const Debug = true;
 	//拦截器封装callFunction
 	let callFunctionOption;
 	uniCloud.addInterceptor('callFunction',{
-		invoke(e){
-			console.log(JSON.stringify(e));
-			callFunctionOption = e
+		async invoke(option){
+			// #ifdef APP-PLUS
+				// 判断如果是执行登陆（无论是哪种登陆方式），就记录用户的相关设备id
+				if(option.name == 'uni-id-cf'&&(option.data.action == 'register' || option.data.action.slice(0,5) =='login')){
+					let oaid =  await new Promise((callBack,fail)=>{
+						if (uni.getSystemInfoSync().platform == "android") {
+							plus.device.getOAID({
+								success:function(e){
+									callBack(e.oaid)
+									console.log('getOAID success: '+JSON.stringify(e));
+								},
+								fail:function(e){
+									fail()
+									console.log('getOAID failed: '+JSON.stringify(e));
+								}
+							});
+						}else{
+							callBack()
+						}
+					})
+					
+					let imei =  await new Promise((callBack,fail)=>{
+						if (uni.getSystemInfoSync().platform == "android") {
+							plus.device.getInfo({
+								success:function(e){
+									callBack(e.imei)
+									console.log('getOAID success: '+JSON.stringify(e));
+								},
+								fail:function(e){
+									fail()
+									console.log('getOAID failed: '+JSON.stringify(e));
+								}
+							});
+						}else{
+							callBack()
+						}
+					})
+					let deviceInfo = {
+						"push_clientid":plus.push.getClientInfo().clientid,// 获取匿名设备标识符
+						"imei":imei,
+						"oaid":oaid,
+						"idfa":plus.storage.getItem('idfa')||'' //idfa有需要的用户在应用首次启动时自己获取存储到storage中
+					}
+					console.log("重新登陆/注册，获取设备id",deviceInfo);
+					option.data.deviceInfo = deviceInfo
+				}
+			// #endif
+			console.log(JSON.stringify(option));
+			callFunctionOption = option
 		},
 		complete(e){
 			// console.log(JSON.stringify(e));
@@ -155,7 +199,7 @@ export default function() {
 	list.forEach(item => { //用遍历的方式分别为,uni.navigateTo,uni.redirectTo,uni.reLaunch,uni.switchTab这4个路由方法添加拦截器
 		uni.addInterceptor(item, {
 			invoke(e) { // 调用前拦截
-				console.log(e);
+				// console.log(e);
 				//获取用户的token
 				const token = uni.getStorageSync('uni_id_token')
 				//获取当前页面路径（即url去掉"?"和"?"后的参数）

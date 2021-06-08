@@ -63,7 +63,7 @@
 				}
 			}
 		},
-		onReady() {
+		async onReady() {
 			// #ifdef APP-NVUE
 			this.listHight = uni.getSystemInfoSync().windowHeight - 96 + 'px'
 			// #endif
