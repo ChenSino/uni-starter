@@ -91,7 +91,7 @@ exports.main = async (event, context) => {
 		if (res.type == 'register') {
 			await registerSuccess(res.uid)
 		}else{
-			if(deviceInfo){
+			if(Object.keys(deviceInfo).length){
 				//更新当前用户设备信息
 				await db.collection('uni-id-device').where({user_id:res.uid}).update(deviceInfo)
 			}
