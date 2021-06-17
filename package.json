@@ -1,8 +1,8 @@
 {
 	"id": "uni-starter",
 	"displayName": "uni-starter",
-	"version": "1.0.17",
-	"description": "云端一体应用快速开发模版",
+	"version": "1.0.19",
+	"description": "云端一体应用快速开发基本项目模版",
 	"keywords": [
         "uni-starter",
         "login",
@@ -12,7 +12,7 @@
     ],
 	"repository": "https://codechina.csdn.net/dcloud/uni-starter.git",
 	"engines": {
-		"HBuilderX": "^3.1.17"
+		"HBuilderX": "^3.1.18"
 	},
 	"dcloudext": {
 		"category": [

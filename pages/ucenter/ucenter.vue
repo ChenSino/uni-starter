@@ -14,11 +14,8 @@
 		</uni-grid>
 		<uni-list class="center-list" v-for="(sublist , index) in ucenterList" :key="index">
 			<uni-list-item v-for="(item,i) in sublist" :title="item.title" link :rightText="item.rightText" :key="i"
-				:clickable="true" :to="item.to" 
-				@click="ucenterListClick(item)"
-				 :show-extra-icon="true"
-				:extraIcon="{type:item.icon,color:'#999'}"
-				>
+				:clickable="true" :to="item.to" @click="ucenterListClick(item)" :show-extra-icon="true"
+				:extraIcon="{type:item.icon,color:'#999'}">
 				<view v-if="item.showBadge" class="item-footer" slot="footer">
 					<text class="item-footer-text">{{item.rightText}}</text>
 					<view class="item-footer-badge"></view>
@@ -35,6 +32,7 @@
 	} from 'vuex';
 	import checkUpdate from '@/uni_modules/uni-upgrade-center-app/utils/check-update';
 	import callCheckVersion from '@/uni_modules/uni-upgrade-center-app/utils/call-check-version';
+	import uniShare from 'uni_modules/uni-share/js_sdk/uni-share.js';
 
 	const db = uniCloud.database();
 	const dbCollectionName = 'uni-id-scores';
@@ -65,34 +63,41 @@
 						{
 							"title": '去评分',
 							"event": 'gotoMarket',
-							"icon":"hand-thumbsup"
+							"icon": "hand-thumbsup"
 						},
 						//#endif
 						{
 							"title": '阅读过的文章',
 							"to": '/pages/ucenter/read-news-log/read-news-log',
-							"icon":"flag"
+							"icon": "flag"
 						},
 						{
 							"title": '我的积分',
 							"to": '',
 							"event": 'getScore',
-							"icon":"paperplane"
+							"icon": "paperplane"
 						}
+						// #ifndef H5
+						,{
+							"title": '分销推荐',
+							"event": 'share',
+							"icon": "redo"
+						}
+						// #endif
 					],
 					[{
 						"title": '问题与反馈',
 						"to": '/uni_modules/uni-feedback/pages/uni-feedback/uni-feedback',
-						"icon":"help"
+						"icon": "help"
 					}, {
 						"title": '设置',
 						"to": '/pages/ucenter/settings/settings',
-						"icon":"gear"
+						"icon": "gear"
 					}],
 					[{
 						"title": '关于',
 						"to": '/pages/ucenter/about/about',
-						"icon":"info"
+						"icon": "info"
 					}]
 				]
 			}
@@ -103,7 +108,7 @@
 				title: '检查更新',
 				rightText: this.appVersion.version + '-' + this.appVersion.versionCode,
 				event: 'checkVersion',
-				icon:'loop',
+				icon: 'loop',
 				showBadge: this.appVersion.hasNew
 			})
 			//#endif
@@ -206,6 +211,79 @@
 				}).finally(() => {
 					uni.hideLoading()
 				})
+			},
+			async share() {
+				let {result} = await uniCloud.callFunction({
+					name: 'uni-id-cf',
+					data: {
+						action: 'getUserInviteCode'
+					}
+				})
+				console.log(result);
+				let myInviteCode = result.myInviteCode || result.userInfo.my_invite_code
+				console.log(myInviteCode);
+				let {
+					appName,
+					logo,
+					company,
+					slogan
+				} = this.appConfig.about
+				// #ifdef APP-PLUS
+				uniShare({
+					content: { //公共的分享类型（type）、链接（herf）、标题（title）、summary（描述）、imageUrl（缩略图）
+						type: 0,
+						href: this.appConfig.h5.url +
+							`/#/pages/ucenter/invite/invite?code=${myInviteCode}`,
+						title: appName,
+						summary: slogan,
+						imageUrl: logo + '?x-oss-process=image/resize,m_fill,h_100,w_100' //压缩图片解决，在ios端分享图过大导致的图片失效问题
+					},
+					menus: [{
+							"img": "/static/app-plus/sharemenu/wechatfriend.png",
+							"text": "微信好友",
+							"share": {
+								"provider": "weixin",
+								"scene": "WXSceneSession"
+							}
+						},
+						{
+							"img": "/static/app-plus/sharemenu/wechatmoments.png",
+							"text": "微信朋友圈",
+							"share": {
+								"provider": "weixin",
+								"scene": "WXSenceTimeline"
+							}
+						},
+						{
+							"img": "/static/app-plus/sharemenu/weibo.png",
+							"text": "微博",
+							"share": {
+								"provider": "sinaweibo"
+							}
+						},
+						{
+							"img": "/static/app-plus/sharemenu/qq.png",
+							"text": "QQ",
+							"share": {
+								"provider": "qq"
+							}
+						},
+						{
+							"img": "/static/app-plus/sharemenu/copyurl.png",
+							"text": "复制",
+							"share": "copyurl"
+						},
+						{
+							"img": "/static/app-plus/sharemenu/more.png",
+							"text": "更多",
+							"share": "shareSystem"
+						}
+					],
+					cancelText: "取消分享",
+				}, e => { //callback
+					console.log(e);
+				})
+				// #endif
 			}
 		}
 	}
@@ -285,17 +363,17 @@
 
 	/*修改边线粗细示例*/
 	/* #ifndef APP-NVUE */
-	.center-list /deep/ .uni-list--border:after{
+	.center-list /deep/ .uni-list--border:after {
 		-webkit-transform: scaleY(0.2);
 		transform: scaleY(0.2);
 		margin-left: 80rpx;
 	}
-	
+
 	.center-list /deep/ .uni-list--border-top,
-	.center-list /deep/ .uni-list--border-bottom{
+	.center-list /deep/ .uni-list--border-bottom {
 		display: none;
 	}
-	
+
 	/* #endif */
 	.item-footer {
 		flex-direction: row;

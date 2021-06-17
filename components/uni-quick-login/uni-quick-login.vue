@@ -121,11 +121,11 @@
 				}) => {
 					if (this.config[id].isChecked && this.loginConfig.includes(id)) {
 						if (id == 'weixin') {
-							if (~plus.runtime.isApplicationExist({
+							if (!plus.runtime.isApplicationExist({
 									pname: 'com.tencent.mm',
 									action: 'weixin://'
 								})) {
-								// console.log("微信应用未安装");
+								console.log("微信应用未安装");
 								return
 							}
 						}
@@ -298,11 +298,11 @@
 					params,
 					type
 				});
+				let action = 'loginBy'+ type.trim().toLowerCase().replace(type[0], type[0].toUpperCase())
 				uniCloud.callFunction({
 					name: 'uni-id-cf',
 					data: {
-						action: 'login_by_' + type,
-						params
+						action,params
 					},
 					success: ({
 						result

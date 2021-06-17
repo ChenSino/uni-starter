@@ -30,7 +30,6 @@
         "modules" : {
             "Fingerprint" : {},
             "Share" : {},
-            "Push" : {},
             "OAuth" : {},
             "FaceID" : {}
         },
@@ -60,7 +59,6 @@
             "ios" : {},
             "sdkConfigs" : {
                 "oauth" : {
-                    "univerify" : {},
                     "apple" : {},
                     "weixin" : {
                         "appid" : "wxffdd8fa6ec4ef2a0",

@@ -1,9 +1,8 @@
 {
-	"pages": [
-		{
+	"pages": [{
 			"path": "pages/list/list",
 			"style": {
-				"navigationStyle":"custom",
+				"navigationStyle": "custom",
 				"enablePullDownRefresh": true
 			}
 		},
@@ -70,7 +69,8 @@
 			"style": {
 				"navigationBarTitleText": "关于"
 					// #ifdef APP-PLUS
-				,"app-plus": {
+					,
+				"app-plus": {
 					"titleNView": {
 						"buttons": [{
 							"type": "share"
@@ -136,7 +136,7 @@
 				"navigationBarTitleText": ""
 			}
 
-		},{
+		}, {
 			"path": "pages/common/webview/webview",
 			"style": {
 				"navigationBarTitleText": "",
@@ -156,6 +156,13 @@
 				"navigationBarTitleText": "阅读记录",
 				"enablePullDownRefresh": true
 			}
+		}, {
+			"path": "pages/ucenter/invite/invite",
+			"style": {
+				"navigationStyle":"custom",
+				"enablePullDownRefresh": false
+			}
+
 		}
 	],
 	"globalStyle": {
@@ -171,7 +178,7 @@
 			},
 			{
 				"path": "pages/ucenter/login-page/index/index"
-			},{
+			}, {
 				"path": "pages/ucenter/userinfo/userinfo"
 			},
 			{

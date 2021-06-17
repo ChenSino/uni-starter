@@ -42,8 +42,10 @@ uni-starter + uniCloud admin，提供了用户端和管理端的基础模板，�
 
 ### 功能模块介绍
 #### 1. 拦截器与路由守卫
-第三方路由拦截库，一般带有window对象等问题并不适合在uni-app中使用；另外传统路由拦截方式都是给原生方法做嵌套，首先这种写法并不优雅，另外不同项目的作者可能会不同的第三方路由库，这非常不利于生态的建设。你可能从插件市场拉下来一个项目有太多的学习成本，与你自有项目结合有大量差异需要去磨平。为此`uni-starter`基于`uni.addInterceptor`拦截器。
-拦截器顾名思义，是在框架方法执行的各个环节（包含：拦截前触发、成功回调拦截、失败回调拦截、完成回调拦截）插入逻辑，篡改参数或终止运行。
+第三方路由拦截库，一般带有window对象等问题，并不适合在uni-app中使用；另外传统路由拦截方式都是给原生方法做嵌套，首先这种写法并不优雅，也不支持ide的代码提示。
+另外不同项目的作者可能会不同的第三方路由库，这非常不利于生态的建设。你可能从插件市场拉下来一个项目有太多的学习成本，与你自有项目结合有大量差异需要去磨平。
+为此`uni-starter`基于`uni.addInterceptor`(拦截器)实现路由守卫。
+拦截器顾名思义，是在框架方法执行的各个环节（包含：拦截前触发、成功回调拦截、失败回调拦截、完成回调拦截）插入逻辑，篡改数据或终止运行。
 ```
 	const {"router": {needLogin,login} } = uniStarterConfig //需要登录的页面
 	let list = ["navigateTo", "redirectTo", "reLaunch", "switchTab"];
@@ -85,7 +87,6 @@ uni-starter + uniCloud admin，提供了用户端和管理端的基础模板，�
 ```
 
 #### 2.登录模块
-- uni-start集成的登录方式有：验证码登录(smsCode)、读取手机SIM卡一键登录(univerify)、账号密码登录(username)、微信登录(weixin)、苹果登录(apple)
 - 使用方式：在 `uni-starter.config.js`->`router`->`login`下完全列举你需要的登录方式。这里支持用[条件编译](https://uniapp.dcloud.io/platform?id=%e6%9d%a1%e4%bb%b6%e7%bc%96%e8%af%91)因此你可以配置在不同平台下拥有的登录方式。
 - 优先级策略：
 	如果:配置内容为：["username","smsCode"]，用户执行如下代码：
@@ -94,10 +95,10 @@ uni-starter + uniCloud admin，提供了用户端和管理端的基础模板，�
 		url: "/pages/ucenter/login-page/index/index"
 	})
 	```
-	访问登录页面，但会被拦截器自动切换到“配置的第0项的登录方式对应的页面”，即账户登录方式页面，路径：`/pages/ucenter/login-page/pwd-login/pwd-login`。
-
-- 生效策略：未列举到的或设备环境不支持的登录方式将被隐藏。
-- 配置：
+	访问登录页面，会被拦截器自动切换到"配置的第0项(这里是`username`)的登录方式对应的页面”，即`账户登录`方式页面，路径：`/pages/ucenter/login-page/pwd-login/pwd-login`。
+- uni-start集成的登录方式有：验证码登录(smsCode)、读取手机SIM卡一键登录(univerify)、账号密码登录(username)、微信登录(weixin)、苹果登录(apple)
+- 生效策略：登陆方式有如上5种，你希望有几种登陆方式就在配置中列举几种。有的登陆方式可能因为设备环境问题而不被支持；比如你正确地配置了微信登陆，但是用户的手机并没有安装微信，这样微信登陆功能就无法使用，并且如果出现这种情况你的app会被iOS的App Store拒绝上架。所以在这里，我们的生效策略在检测：你是否有列举到某个配置项为前提的情况下，增加了检测当前环境是否支持，如果不支持会自动隐藏。
+- 其他配置：
 	+ 服务端：uni-starter服务端使用[uni-config-center](https://ext.dcloud.net.cn/plugin?id=4425)统一管理这些配置，文件路径`/uni_modules/uni-config-center/uniCloud/cloudfunctions/common/uni-config-center/uni-id/config.json`详情下文[目录结构](#id=catalogue) 和[uni-id配置说明](https://uniapp.dcloud.io/uniCloud/uni-id?id=configjson%e7%9a%84%e8%af%b4%e6%98%8e)
 	+ 应用模块：`manifest.json` App模块配置 --> OAuth（登录鉴权）--> 勾选并配置你所需要的模块
 - 短信登陆：
@@ -186,7 +187,7 @@ uni-starter + uniCloud admin，提供了用户端和管理端的基础模板，�
 2. 配置后提交云端打包后生效。理论上绝大部分和`manifest.json`生效相关的配置均需要提交云打包后生效
 
 #### 10.拦截器改造后的uniCloud
-1. Debug，调试期间开启Debug。接口一旦file就会弹出真实错误信息。否则将弹出，系统错误请稍后再试！
+1. Debug，调试期间开启Debug。接口一旦fail就会弹出真实错误信息。否则将弹出，系统错误请稍后再试！
 ```
 	if(Debug){
 		console.log(e);
@@ -409,3 +410,4 @@ uni-starter
 ### 第三方插件（感谢插件作者，排名不分前后）：
 1. 图片裁剪 [limeClipper](https://ext.dcloud.net.cn/plugin?id=3594) @作者： 陌上华年
 2. 二维码生成 [Sansnn-uQRCode](https://ext.dcloud.net.cn/plugin?id=1287) @作者： 3snn
+3. clipboard.js [clipboard](https://clipboardjs.com/)

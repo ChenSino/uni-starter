@@ -48,20 +48,6 @@
 			 */
 			submit() {
 				console.log(this.formData);
-				// this.-request('uni-id-cf/bind_mobile_by_sms', {
-				// 	"mobile": this.formData.phone,
-				// 	"code": this.formData.code
-				// }, result=> {
-				// 	console.log(result);
-				// 	this.setUserInfo({"mobile":result.mobile})
-				// 	uni.showToast({
-				// 		title: result.msg,
-				// 		icon: 'none'
-				// 	});
-				// 	if (result.code === 0) {
-				// 		uni.navigateBack()
-				// 	}
-				// })
 				uniCloud.callFunction({
 					name:'uni-id-cf',
 					data:{

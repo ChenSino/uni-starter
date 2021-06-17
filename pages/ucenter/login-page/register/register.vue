@@ -63,12 +63,6 @@ import mixin from '../common/login-page.mixin.js';
 					})
 			},
 			submitForm(params) {
-				// this.-request('uni-id-cf/register',params,result=>{
-				// 	console.log(result);
-				// 	if(result.code === 0){
-				// 		this.loginSuccess(result)
-				// 	}
-				// })
 				uniCloud.callFunction({
 					name:'uni-id-cf',
 					data:{

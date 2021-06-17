@@ -32,8 +32,6 @@
       },
       "Share": {
       },
-      "Push": {
-      },
       "OAuth": {
       },
       "FaceID": {
@@ -70,8 +68,6 @@
       },
       "sdkConfigs": {
         "oauth": {
-          "univerify": {
-          },
           "apple": {
           },
           "weixin": {

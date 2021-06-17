@@ -70,25 +70,6 @@
 					"univerifyStyle": this.univerifyStyle,
 					success: async e => {
 						console.log(e.authResult);
-						// this.-request('uni-id-cf/bind_mobile_by_univerify',
-						// 	e.authResult,
-						// 	result=>
-						// 	{
-						// 		console.log(result);
-						// 		if(result.code===0){
-						// 			this.setUserInfo({"mobile":result.mobile})
-						// 			uni.closeAuthView()
-						// 		}else{
-						// 			uni.showModal({
-						// 				content: JSON.stringify(result.msg),
-						// 				showCancel: false,
-						// 				complete() {
-						// 					uni.closeAuthView()
-						// 				}
-						// 			});
-						// 		}
-						// 	}
-						// )
 						uniCloud.callFunction({
 							name:'uni-id-cf',
 							data:{
@@ -114,7 +95,7 @@
 					},
 					fail: (err) => {
 						console.log(err);
-						if(err.code=='30002'){
+						if(err.code=='30002'||err.code=='30001'){
 							this.bindMobileBySmsCode()
 						}
 					}

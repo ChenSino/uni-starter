@@ -9,7 +9,9 @@ const db = uniCloud.database()
 const dbCmd = db.command
 exports.main = async (event, context) => {
 	//UNI_WYQ:这里的uniID换成新的，保证多人访问不会冲突
-	uniID = uniID.createInstance({context})
+	uniID = uniID.createInstance({
+		context
+	})
 	console.log('event : ' + JSON.stringify(event))
 	/*
 	1.event为客户端 uniCloud.callFunction填写的data的值，这里介绍一下其中的属性
@@ -17,13 +19,16 @@ exports.main = async (event, context) => {
 	  params：业务数据内容
 	  uniIdToken：系统自动传递的token，数据来源客户端的 uni.getStorageSync('uni_id_token')
 	*/
-	const {action,uniIdToken} = event;	
+	const {
+		action,
+		uniIdToken
+	} = event;
 	const deviceInfo = event.deviceInfo || {};
 	let params = event.params || {};
 	/*
 	2.在某些操作之前我们要对用户对身份进行校验（也就是要检查用户的token）再将得到的uid写入params.uid
 	  校验用到的方法是uniID.checkToken 详情：https://uniapp.dcloud.io/uniCloud/uni-id?id=checktoken
-	  
+
 	  讨论，我们假设一个这样的场景，代码如下。
 	  如：
 		uniCloud.callFunction({
@@ -37,7 +42,10 @@ exports.main = async (event, context) => {
 	  用户就这样轻易地伪造了他人的uid传递给服务端，有一句话叫：前端从来的数据是不可信任的
 	  所以这里我们需要将uniID.checkToken返回的uid写入到params.uid
 	*/
-	let noCheckAction = ['register','checkToken','login','logout','sendSmsCode','createCaptcha','verifyCaptcha','refreshCaptcha','inviteLogin','login_by_weixin','login_by_univerify','login_by_apple','loginBySms','resetPwdBySmsCode']
+	let noCheckAction = ['register', 'checkToken', 'login', 'logout', 'sendSmsCode', 'createCaptcha',
+		'verifyCaptcha', 'refreshCaptcha', 'inviteLogin', 'loginByWeixin', 'loginByUniverify',
+		'loginByApple', 'loginBySms', 'resetPwdBySmsCode', 'registerAdmin'
+	]
 	if (!noCheckAction.includes(action)) {
 		if (!uniIdToken) {
 			return {
@@ -52,13 +60,22 @@ exports.main = async (event, context) => {
 		params.uid = payload.uid
 	}
 	
+	//禁止前台用户传递角色
+	if (action.slice(0,7) == "loginBy") {
+		if (params.role) {
+			return {
+				code: 403,
+				msg: '禁止前台用户传递角色'
+			}
+		}
+	}
 
 	//3.注册成功后创建新用户的积分表方法
 	async function registerSuccess(uid) {
 		//添加当前用户设备信息
 		await db.collection('uni-id-device').add({
 			...deviceInfo,
-			user_id:uid
+			user_id: uid
 		})
 		await db.collection('uni-id-scores').add({
 			user_id: uid,
@@ -70,13 +87,13 @@ exports.main = async (event, context) => {
 		})
 	}
 	//4.记录成功登录的日志方法
-	const loginLog = async (res = {}, type = 'login') => {
+	const loginLog = async (res = {}) => {
 		const now = Date.now()
 		const uniIdLogCollection = db.collection('uni-id-log')
 		let logData = {
 			deviceId: params.deviceId || context.DEVICEID,
 			ip: params.ip || context.CLIENTIP,
-			type,
+			type: res.type,
 			ua: context.CLIENTUA,
 			create_date: now
 		};
@@ -90,17 +107,19 @@ exports.main = async (event, context) => {
 			})
 		if (res.type == 'register') {
 			await registerSuccess(res.uid)
-		}else{
-			if(Object.keys(deviceInfo).length){
+		} else {
+			if (Object.keys(deviceInfo).length) {
 				//更新当前用户设备信息
-				await db.collection('uni-id-device').where({user_id:res.uid}).update(deviceInfo)
+				await db.collection('uni-id-device').where({
+					user_id: res.uid
+				}).update(deviceInfo)
 			}
 		}
 		return await uniIdLogCollection.add(logData)
 	}
 
 	let res = {}
-	switch (action) {	//根据action的值执行对应的操作
+	switch (action) { //根据action的值执行对应的操作
 		case 'bind_mobile_by_univerify':
 			let {
 				appid, apiKey, apiSecret
@@ -122,22 +141,20 @@ exports.main = async (event, context) => {
 			}
 			break;
 		case 'bind_mobile_by_sms':
-			console.log({
-				uid: params.uid,
-				mobile: params.mobile,
-				code: params.code
-			});
+			// console.log({
+			// 	uid: params.uid,
+			// 	mobile: params.mobile,
+			// 	code: params.code
+			// });
 			res = await uniID.bindMobile({
 				uid: params.uid,
 				mobile: params.mobile,
 				code: params.code
 			})
-			console.log(res);
+			// console.log(res);
 			break;
 		case 'register':
-			var {
-				username, password, nickname
-			} = params
+			var {username, password, nickname,inviteCode} = params
 			if (/^1\d{10}$/.test(username)) {
 				return {
 					code: 401,
@@ -150,11 +167,7 @@ exports.main = async (event, context) => {
 					msg: '用户名不能是邮箱'
 				}
 			}
-			res = await uniID.register({
-				username,
-				password,
-				nickname
-			});
+			res = await uniID.register({username, password, nickname,inviteCode});
 			if (res.code === 0) {
 				await registerSuccess(res.uid)
 			}
@@ -177,7 +190,7 @@ exports.main = async (event, context) => {
 					.get();
 				return recentRecord.data.filter(item => item.state === 0).length === recordSize;
 			}
-		
+
 			let passed = false;
 			let needCaptcha = await getNeedCaptcha();
 			console.log('needCaptcha', needCaptcha);
@@ -194,7 +207,7 @@ exports.main = async (event, context) => {
 					...params,
 					queryField: ['username', 'email', 'mobile']
 				});
-				if(res.code === 0){
+				if (res.code === 0) {
 					await loginLog(res);
 				}
 				needCaptcha = await getNeedCaptcha();
@@ -202,8 +215,13 @@ exports.main = async (event, context) => {
 
 			res.needCaptcha = needCaptcha;
 			break;
-		case 'login_by_weixin':
-			res = await uniID.loginByWeixin({...params});
+		case 'loginByWeixin':
+			var {
+				username, password, nickname
+			} = params
+			res = await uniID.loginByWeixin({
+				...params
+			});
 			await uniID.updateUser({
 				uid: res.uid,
 				username: "微信用户"
@@ -211,11 +229,11 @@ exports.main = async (event, context) => {
 			res.userInfo.username = "微信用户"
 			await loginLog(res)
 			break;
-		case 'login_by_univerify':
+		case 'loginByUniverify':
 			res = await uniID.loginByUniverify(params)
 			await loginLog(res)
 			break;
-		case 'login_by_apple':
+		case 'loginByApple':
 			res = await uniID.loginByApple(params)
 			await loginLog(res)
 			break;
@@ -258,7 +276,6 @@ exports.main = async (event, context) => {
 				type: params.type,
 				templateId
 			})
-			await loginLog(res)
 			break;
 		case 'loginBySms':
 			if (!params.code) {
@@ -302,7 +319,7 @@ exports.main = async (event, context) => {
 				}
 			}
 			let loginBySmsRes = await uniID.loginBySms(params)
-			console.log(loginBySmsRes);
+			// console.log(loginBySmsRes);
 			if (loginBySmsRes.code === 0) {
 				res = await uniID.resetPwd({
 					password: params.password,
@@ -337,6 +354,19 @@ exports.main = async (event, context) => {
 		case 'refreshCaptcha':
 			res = await uniCaptcha.refresh(params)
 			break;
+		case 'getUserInviteCode':
+			res = await uniID.getUserInfo({
+				uid: params.uid,
+				field: ['my_invite_code']
+			})
+			if (!res.userInfo.my_invite_code) {
+				res = await uniID.setUserInviteCode({
+					uid: params.uid
+				})
+			}
+			break;
+
+			// -----------  admin api  -----------
 		case 'registerAdmin':
 			var {
 				username, password
@@ -352,10 +382,37 @@ exports.main = async (event, context) => {
 					message: '超级管理员已存在，请登录...'
 				}
 			}
-			return this.ctx.uniID.register({
+			return uniID.register({
 				username,
 				password,
 				role: ["admin"]
+			})
+			break;
+		case 'registerUser':
+			const {
+				userInfo
+			} = await uniID.getUserInfo({
+				uid: params.uid,
+			})
+			if (userInfo.role.indexOf('admin') === -1 && params.role.indexOf('admin') > -1) {
+				res = {
+					code: 403,
+					message: '非法访问, 无权限注册超级管理员',
+				}
+			} else {
+				res = await uniID.register({
+					...params
+				})
+				if (res.code === 0) {
+					delete res.token
+					delete res.tokenExpired
+				}
+			}
+			break;
+		case 'getCurrentUserInfo':
+			res = uniID.getUserInfo({
+				uid: params.uid,
+				...params
 			})
 			break;
 		default:

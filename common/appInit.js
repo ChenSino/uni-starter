@@ -9,11 +9,15 @@ import interceptorChooseImage from '@/uni_modules/json-interceptor-chooseImage/j
 const db = uniCloud.database()
 export default function() {
 	
+	// #ifndef H5
 	setTimeout(()=>{
+	// #endif
 		// uniStarterConfig挂载到getApp().
 		const app = getApp({allowDefault: true})
 		app.globalData.config = uniStarterConfig;
+	// #ifndef H5
 	},30)
+	// #endif
 	
 	// 初始化appVersion（仅app生效）
 	initAppVersion();
@@ -108,6 +112,31 @@ export default function() {
 					}
 					console.log("重新登陆/注册，获取设备id",deviceInfo);
 					option.data.deviceInfo = deviceInfo
+					
+					// #ifndef H5
+						//注册可能不仅仅走register接口，还有登陆并注册的接口
+						option.data.inviteCode = await new Promise((callBack)=>{
+							uni.getClipboardData({
+							    success: function (res) {
+									if(res.data.slice(0,18) =='uniInvitationCode:'){
+										let uniInvitationCode = res.data.slice(18,38)
+										console.log('当前用户是其他用户推荐下载的,推荐者的code是：'+uniInvitationCode);
+										// uni.showModal({
+										// 	content: '当前用户是其他用户推荐下载的,推荐者的code是：'+uniInvitationCode,
+										// 	showCancel: false
+										// });
+										callBack(uniInvitationCode)
+										//当前用户是其他用户推荐下载的。这里登记他的推荐者id 为当前用户的myInviteCode。判断如果是注册
+									}else{
+										callBack(false)
+									}
+							    },
+								fail() {
+									callBack(false)
+								}
+							});
+						})
+					// #endif
 				}
 			// #endif
 			console.log(JSON.stringify(option));
@@ -174,10 +203,14 @@ export default function() {
 			console.log(e.result.code);
 			switch (e.result.code){
 				case 403:
-					uni.showModal({
-						content: '未登陆，跳登陆',
-						showCancel: false
-					});
+					uni.navigateTo({
+						url: "/pages/ucenter/login-page/index/index"
+					})
+					break;
+				case 30203:
+					uni.navigateTo({
+						url: "/pages/ucenter/login-page/index/index"
+					})
 					break;
 				case 50101:
 					uni.showToast({
@@ -234,6 +267,13 @@ export default function() {
 			},
 			fail(err) { // 失败回调拦截 
 				console.log(err);
+				if(Debug){
+					console.log(err);
+					uni.showModal({
+						content: JSON.stringify(err),
+						showCancel: false
+					});
+				}
 			},
 		})
 	})
