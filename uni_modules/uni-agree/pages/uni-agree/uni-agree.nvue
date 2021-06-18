@@ -69,7 +69,22 @@ import {about} from '@/uni-starter.config.js';
                 }, 100)
             },
             disagree() {
-                plus.runtime.quit();
+				// #ifdef APP-PLUS
+				plus.runtime.quit();
+				// #endif
+				// #ifdef H5
+				uni.showModal({
+					content: '确定退出本应用？',
+					cancelText:"退出",
+					confirmText:"取消",
+					success: (e) => {
+						if(!e.confirm){
+							window.location.href="about:blank";
+							window.close();
+						}
+					}
+				});
+				// #endif
             }
         }
     }

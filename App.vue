@@ -11,7 +11,11 @@
 			console.log('App Launch')
 			initApp();
 			// #ifdef APP-PLUS
-			//checkIsAgree(); 暂时先用默认生成的，自定义的等待原生支持后实现。因为启动vue界面时已经，请求了部分权限这并不符合国家的法规
+			//checkIsAgree(); APP端暂时先用原生默认生成的。目前，自定义方式启动vue界面时，原生层已经请求了部分权限这并不符合国家的法规
+			// #endif
+			
+			// #ifdef H5
+			checkIsAgree();
 			// #endif
 
 			// #ifdef APP-PLUS
