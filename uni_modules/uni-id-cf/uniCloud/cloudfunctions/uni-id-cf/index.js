@@ -4,7 +4,7 @@ const uniCaptcha = require('uni-captcha')
 const createConfig = require('uni-config-center')
 const uniIdConfig = createConfig({
 	pluginId: 'uni-id'
-})._config
+}).config()
 const db = uniCloud.database()
 const dbCmd = db.command
 exports.main = async (event, context) => {
