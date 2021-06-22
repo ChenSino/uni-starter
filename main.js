@@ -6,7 +6,6 @@ import openApp from './common/openApp.js';
 Vue.config.productionTip = false
 openApp();
 App.mpType = 'app'
-
 const app = new Vue({
     ...App,
 	store

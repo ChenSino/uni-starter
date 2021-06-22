@@ -18,6 +18,9 @@
 		computed: {
 			loginConfig() {
 				return getApp().globalData.config.router.login
+			},
+			agreements() {
+				return getApp().globalData.config.about.agreements || []
 			}
 		},
 		data() {
@@ -35,7 +38,54 @@
 						"path": "/pages/ucenter/login-page/index/index"
 					}
 				],
-				oauthServices: []
+				oauthServices: [],
+				config: {
+					"weixin": {
+						"text": "微信登录",
+						"logo": "/static/uni-quick-login/wechat.png",
+					},
+					"apple": {
+						"text": "苹果登录",
+						"logo": "/static/uni-quick-login/apple.png",
+					},
+					"univerify": {
+						"text": "一键登录",
+						"logo": "/static/uni-quick-login/univerify.png",
+					},
+					"qq": {
+						"text": "QQ登录",//暂未提供该登录方式的接口示例
+						"logo": "/static/uni-quick-login/univerify.png",
+					},
+					"xiaomi": {
+						"text": "小米登录",//暂未提供该登录方式的接口示例
+						"logo": "/static/uni-quick-login/univerify.png",
+					},
+					"sinaweibo": {
+						"text": "微博登录",//暂未提供该登录方式的接口示例
+						"logo": "/static/uni-quick-login/univerify.png",
+					}
+				},
+				univerifyStyle:{ //一键登录弹出窗的样式配置参数
+					"fullScreen": true, // 是否全屏显示，true表示全屏模式，false表示非全屏模式，默认值为false。
+					"backgroundColor": "#ffffff", // 授权页面背景颜色，默认值：#ffffff
+					"buttons": { // 自定义登陆按钮
+						"iconWidth": "45px", // 图标宽度（高度等比例缩放） 默认值：45px
+						"list": []
+					},
+					"privacyTerms": {
+						"defaultCheckBoxState": false, // 条款勾选框初始状态 默认值： true   
+						"textColor": "#BBBBBB", // 文字颜色 默认值：#BBBBBB  
+						"termsColor": "#5496E3", //  协议文字颜色 默认值： #5496E3  
+						"prefix": "我已阅读并同意", // 条款前的文案 默认值：“我已阅读并同意”  
+						"suffix": "并使用本机号码登录", // 条款后的文案 默认值：“并使用本机号码登录”  
+						"privacyItems": []
+					}
+				}
+			}
+		},
+		watch: {
+			agree(agree) {
+				this.univerifyStyle.privacyTerms.defaultCheckBoxState = agree
 			}
 		},
 		props: {
@@ -44,117 +94,54 @@
 				default () {
 					return false
 				}
-			},
-			config: {
-				type: Object,
-				default () {
-					return {
-						"weixin": {
-							"text": "微信登录",
-							"logo": "/static/uni-quick-login/wechat.png",
-							"isChecked": true
-						},
-						"apple": {
-							"text": "苹果登录",
-							"logo": "/static/uni-quick-login/apple.png",
-							"isChecked": true
-						},
-						"univerify": {
-							"text": "一键登录",
-							"logo": "/static/uni-quick-login/univerify.png",
-							"isChecked": true
-						},
-						"qq": {
-							"text": "QQ登录",
-							"logo": "/static/uni-quick-login/univerify.png",
-							"isChecked": false //暂未提供该登录方式的接口示例
-						},
-						"xiaomi": {
-							"text": "小米登录",
-							"logo": "/static/uni-quick-login/univerify.png",
-							"isChecked": false //暂未提供该登录方式的接口示例
-						},
-						"sinaweibo": {
-							"text": "微博登录",
-							"logo": "/static/uni-quick-login/univerify.png",
-							"isChecked": false //暂未提供该登录方式的接口示例
-						}
-					}
-				}
-			},
-			univerifyStyle: {
-				type: Object,
-				default () {
-					return { //一键登录弹出窗的样式配置参数
-						"fullScreen": true, // 是否全屏显示，true表示全屏模式，false表示非全屏模式，默认值为false。
-						"backgroundColor": "#ffffff", // 授权页面背景颜色，默认值：#ffffff  
-					}
-				}
-			},
+			}
 		},
-		created() {
-			// console.log('loginConfig', this.loginConfig);
-			// console.log('this.getRoute(1)', this.getRoute(1));
+		async created() {
+			this.univerifyStyle.privacyTerms.privacyItems = this.agreements
+			
 			let servicesList = this.servicesList
-			//去掉当前页面对应的登录选项
-			for (var i = 0; i < servicesList.length; i++) {
-				if (servicesList[i].path == this.getRoute(1)) {
-					servicesList.splice(i, 1)
-				}
-			}
-			//去掉配置项中不存在的项
-			for (var i = 0; i < servicesList.length; i++) {
-				if (!this.loginConfig.includes(servicesList[i].id)) {
-					console.log('去掉配置项中不存在的项', servicesList[i].id);
-					servicesList.splice(i, 1)
-				}
-			}
-			// console.log('servicesList', servicesList);
-		},
-		mounted() {
 			//获取当前环境能用的快捷登录方式
-			// #ifdef APP-PLUS
-			plus.oauth.getServices(oauthServices => {
-				this.oauthServices = oauthServices
-				oauthServices.forEach(({
-					id
-				}) => {
-					if (this.config[id].isChecked && this.loginConfig.includes(id)) {
-						if (id == 'weixin') {
-							if (!plus.runtime.isApplicationExist({
-									pname: 'com.tencent.mm',
-									action: 'weixin://'
-								})) {
-								console.log("微信应用未安装");
-								return
-							}
-						}
-						this.servicesList.push({
-							...this.config[id],
-							id
-						})
-					}
-				})
-				// console.log('oauthServices',oauthServices);
-			}, err => {
-				uni.hideLoading()
-				uni.showModal({
-					title: '获取服务供应商失败：' + JSON.stringify(err),
-					showCancel: false,
-					confirmText: '知道了'
-				});
-				console.error('获取服务供应商失败：' + JSON.stringify(err));
-			})
-			// #endif
 			// #ifdef MP-WEIXIN
 			let id = 'weixin'
 			if (this.loginConfig.includes(id)) {
-				this.servicesList.push({
+				servicesList.push({
 					...this.config[id],
 					id
 				})
 			}
 			// #endif
+			// #ifdef APP-PLUS
+			this.oauthServices = await new Promise((callBack)=>{
+				plus.oauth.getServices(oauthServices => {
+					callBack(oauthServices.filter(({nativeClient,id})=>nativeClient&&this.loginConfig.includes(id))) 
+					//只返回1.应用支持 && 2.手机已安装对应客户端 && 3.uni-starter.config.js配置项中存在的快捷登录方式
+				}, err => {
+					callBack([])
+					uni.hideLoading()
+					uni.showModal({
+						title: '获取服务供应商失败：' + JSON.stringify(err),
+						showCancel: false,
+						confirmText: '知道了'
+					});
+					console.error('获取服务供应商失败：' + JSON.stringify(err));
+				})
+			})
+			// #endif
+			//添加已配置且可用的第三方快捷登陆项
+			servicesList = servicesList.concat(this.oauthServices.map( ({id})=>{
+				return {...this.config[id],id}
+			}))
+			//设置一键登录功能底下的快捷登陆按钮
+			servicesList.forEach(({id,logo})=>{
+				if(id != 'univerify'){
+					this.univerifyStyle.buttons.list.push({"iconPath":logo,"provider":id})
+				}
+			})
+			//去掉当前页面对应的登录选项
+			this.servicesList = servicesList.filter(item=>{
+				return item.path != this.getRoute(1)
+			})
+			console.log('servicesList',servicesList,this.servicesList);
 		},
 		methods: {
 			...mapMutations({
@@ -179,7 +166,7 @@
 				}
 			},
 			login_before(type, navigateBack = true) {
-				if (!this.agree) {
+				if (!this.agree&&type!='univerify') {
 					return uni.showToast({
 						title: '你未同意隐私政策协议',
 						icon: 'none'
@@ -218,7 +205,7 @@
 					"provider": type,
 					"univerifyStyle": this.univerifyStyle,
 					complete: (e) => {
-						console.log(9527, e);
+						console.log(e);
 					},
 					success: async e => {
 						console.log(e);
@@ -249,6 +236,12 @@
 									icon: 'none'
 								});
 							}
+							if (err.errMsg) {
+								uni.showToast({
+									title: "一键登录:" + err.errMsg,
+									icon: 'none'
+								});
+							}
 							switch (err.errCode) {
 								case 30002:
 									console.log('在一键登录界面，点击其他登录方式');
@@ -272,17 +265,14 @@
 										title: '点击了第三方登陆',
 										icon: 'none'
 									});
-									switch (err.index) {
-										case 0:
-											this.login_before('weixin', false)
-											break;
-										case 1:
-											this.login_before('apple', false)
-											break;
-										default:
-											break;
+									console.log('点击了第三方登陆，provider：',err.provider);
+									let {path} = this.servicesList.find(item=>item.id==err.provider)||{}
+									console.log('path',path);
+									if(path&&path!=this.getRoute(1)){ //存在路径，且并不是当前已经打开的路径
+										this.to(path)
+									}else{
+										this.login_before(err.provider)
 									}
-
 									break;
 								default:
 									console.log(9527, err);
@@ -298,11 +288,12 @@
 					params,
 					type
 				});
-				let action = 'loginBy'+ type.trim().toLowerCase().replace(type[0], type[0].toUpperCase())
+				let action = 'loginBy' + type.trim().toLowerCase().replace(type[0], type[0].toUpperCase())
 				uniCloud.callFunction({
 					name: 'uni-id-cf',
 					data: {
-						action,params
+						action,
+						params
 					},
 					success: ({
 						result
@@ -316,6 +307,11 @@
 							loginSuccess(result)
 							delete result.userInfo.token
 							this.setUserInfo(result.userInfo)
+						} else {
+							uni.showModal({
+								content: result.msg,
+								showCancel: false
+							});
 						}
 					},
 					complete: () => {

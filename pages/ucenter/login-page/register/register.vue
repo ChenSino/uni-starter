@@ -73,6 +73,11 @@ import mixin from '../common/login-page.mixin.js';
 						console.log(result);
 						if(result.code === 0){
 							this.loginSuccess(result)
+						}else{
+							uni.showModal({
+								content: result.msg,
+								showCancel: false
+							});
 						}
 					}
 				})

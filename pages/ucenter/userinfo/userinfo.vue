@@ -83,7 +83,7 @@
 									uni.closeAuthView()
 								}else{
 									uni.showModal({
-										content: JSON.stringify(result.msg),
+										content: result.msg,
 										showCancel: false,
 										complete() {
 											uni.closeAuthView()

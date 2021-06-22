@@ -8,7 +8,7 @@ import interceptorChooseImage from '@/uni_modules/json-interceptor-chooseImage/j
 // #endif
 const db = uniCloud.database()
 export default function() {
-	
+			
 	// #ifndef H5
 	setTimeout(()=>{
 	// #endif
@@ -33,6 +33,7 @@ export default function() {
 		code, // 错误码详见https://uniapp.dcloud.net.cn/uniCloud/clientdb?id=returnvalue
 		message
 	}) {
+		console.log('onDBError');
 		// 处理错误
 		console.log(code,message);
 		if([
@@ -199,10 +200,13 @@ export default function() {
 					tokenExpired
 				})
 			}
-			
-			console.log(e.result.code);
 			switch (e.result.code){
 				case 403:
+					uni.navigateTo({
+						url: "/pages/ucenter/login-page/index/index"
+					})
+					break;
+				case 30203:
 					uni.navigateTo({
 						url: "/pages/ucenter/login-page/index/index"
 					})
@@ -235,11 +239,13 @@ export default function() {
 				// console.log(e);
 				//获取用户的token
 				const token = uni.getStorageSync('uni_id_token')
+				//token是否已失效
+				const tokenExpired = (uni.getStorageSync('uni_id_token_expired')  - Date.now()) < 0
 				//获取当前页面路径（即url去掉"?"和"?"后的参数）
 				const url = e.url.split('?')[0]
 				//控制登录优先级
 				let pages = getCurrentPages();
-				if (
+				if ( //判断当前窗口是否为登陆页面，如果是则不重定向路由
 					url == '/pages/ucenter/login-page/index/index'
 					&&
 					pages[pages.length - 1].route.split('/')[2]!='login-page'
@@ -253,7 +259,7 @@ export default function() {
 					}
 				}else{
 					//拦截强制登录页面
-					if (needLogin.includes(url) && token == '') {
+					if (needLogin.includes(url) && (token == ''||tokenExpired)) {
 						uni.showToast({
 							title: '请先登录',
 							icon: 'none'

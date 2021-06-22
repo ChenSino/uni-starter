@@ -1,7 +1,7 @@
 const fs = require('fs');
 module.exports = function(){
 	console.log('开始执行脚本change_after');
-	let changelog = fs.readFileSync(process.cwd()+'/changelog.md', 'utf-8').split("\n")[1];
+	let changelog = fs.readFileSync(process.cwd() + '/changelog.md', 'utf-8').split("##")[1].split("\n").slice(1).join(' ');
 	console.log(changelog);
 
 	// 这里是修改完相关敏感配置后执行的脚本，你可以在这里自定义逻辑，

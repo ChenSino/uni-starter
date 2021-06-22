@@ -52,7 +52,14 @@
 						},
 					},
 					success: ({result}) => {
-						this.loginSuccess(result)
+						if(result.code === 0){
+							this.loginSuccess(result)
+						}else{
+							uni.showModal({
+								content: result.msg,
+								showCancel: false
+							});
+						}
 					}
 				})
 				

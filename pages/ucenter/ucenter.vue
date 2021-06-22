@@ -35,7 +35,6 @@
 	import uniShare from 'uni_modules/uni-share/js_sdk/uni-share.js';
 
 	const db = uniCloud.database();
-	const dbCollectionName = 'uni-id-scores';
 	export default {
 		data() {
 			return {
@@ -200,7 +199,8 @@
 				uni.showLoading({
 					mask: true
 				})
-				db.collection(dbCollectionName).where('user_id == $env.uid').field('score,balance').get().then((res) => {
+				db.collection("uni-id-scores").where('user_id == $env.uid').field('score,balance').get().then((res) => {
+					console.log(res);
 					const data = res.result.data[0];
 					let msg = '';
 					msg = data ? ('当前积分为' + data.balance) : '当前无积分';
