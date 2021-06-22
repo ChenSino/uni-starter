@@ -1,3 +1,5 @@
+## 1.0.23（2021-06-22）
+更正调试遗留的uni-config-center/uni-id/config.json的tokenExpiresIn=1配置问题，改为默认值7200
 ## 1.0.22（2021-06-22）
 1. 新增一键登录授权界面的其他快捷登陆按钮
 2. 优化uni-quick-login组件代码 
