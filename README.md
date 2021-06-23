@@ -6,6 +6,10 @@
 在这个模板基础之上快速填充自己的业务，即可很快完成一个应用。
 
 地址：[https://codechina.csdn.net/dcloud/uni-starter.git](https://codechina.csdn.net/dcloud/uni-starter.git)
+#### 视频教程：
+<a target="_blank" href="https://www.bilibili.com/video/BV17p4y1a71x?p=11">
+    <img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f184e7c3-1912-41b2-b81f-435d1b37c7b4/71d310a5-ef69-4ca5-88c8-9a3abf8fb8e3.png" alt="腾讯课堂uniCloud视频教程" style="width: 70%;">
+</a>
 
 #### 项目背景
 一个应用，其实有很多通用的功能，比如登录注册、头像、设置、拦截器、banner...
