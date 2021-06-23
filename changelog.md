@@ -1,3 +1,5 @@
+## 1.0.24（2021-06-23）
+删除callFunction拦截器中多余的代码
 ## 1.0.23（2021-06-22）
 更正调试遗留的uni-config-center/uni-id/config.json的tokenExpiresIn=1配置问题，改为默认值7200
 ## 1.0.22（2021-06-22）

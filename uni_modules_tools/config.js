@@ -1,9 +1,10 @@
 // "文件路径" : {"键名":"改成什么"}
 {
 	"/manifest.json": {
-		"appid": "" //清空appid
+		"appid": "请点击重新获取" //清空appid
 	},
 	"/uni_modules/uni-config-center/uniCloud/cloudfunctions/common/uni-config-center/uni-id/config.json": {
+		"tokenExpiresIn": 7200,
 		"app-plus": {
 			"oauth": {
 				"weixin": {

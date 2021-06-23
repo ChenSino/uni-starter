@@ -385,6 +385,7 @@ uni-starter
 │	|
 ├─static	 						存放应用引用的本地静态资源（如图片、视频等）的目录，<b>注意：</b>静态资源只能存放于此
 ├─uni_modules						存放[uni_module](/uni_modules)规范的插件。
+├─uni_modules_tools					uni_modules插件上传辅助脚本 <a href="https://ext.dcloud.net.cn/plugin?id=5256">详情</a>。
 ├─main.js							Vue初始化入口文件
 ├─App.vue							应用配置，用来配置App全局样式以及监听 <a href="/collocation/frame/lifecycle?id=应用生命周期">应用生命周期</a>
 ├─uni-starter.config				uni-starter的前端的配置文件，项目所有模块的配置在这里填写。详见该文件的代码注释。

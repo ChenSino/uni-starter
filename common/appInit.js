@@ -211,11 +211,6 @@ export default function() {
 						url: "/pages/ucenter/login-page/index/index"
 					})
 					break;
-				case 30203:
-					uni.navigateTo({
-						url: "/pages/ucenter/login-page/index/index"
-					})
-					break;
 				case 50101:
 					uni.showToast({
 						title: e.result.msg,
