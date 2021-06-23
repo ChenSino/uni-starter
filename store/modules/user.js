@@ -24,7 +24,6 @@ let state = {
 			console.log('state.info',state.info);
 			//存储最新的用户数据到本地持久化存储
 			uni.setStorageSync('userInfo', state.info);
-			uni.setStorageSync('uni_id_uid', state.info._id)
 			uni.setStorageSync('uni_id_token', state.info.token)
 			uni.setStorageSync('uni_id_token_expired', state.info.tokenExpired)
 			
@@ -34,6 +33,7 @@ let state = {
 			state.hasLogin = false;
 			uni.setStorageSync('userInfo', {});
 			uni.setStorageSync('uni_id_token', '');
+			uni.setStorageSync('uni_id_token_expired', 0)
 		}
 	},
 	actions = {

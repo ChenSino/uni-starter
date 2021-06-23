@@ -26,7 +26,7 @@ module.exports = {
 			"/pages/ucenter/userinfo/uploadCutImageToUnicloud",
 			"/uni_modules/uni-feedback/pages/uni-feedback/add"
 		],
-		"login": ["univerify","smsCode","username", "weixin", "apple"],
+		"login": ["username","smsCode","univerify", "weixin", "apple"],
 		/* 
 			根据数组的第0项，决定登录方式的第一优先级。
 			未列举到的，或设备环境不支持的选项，将被隐藏。

@@ -1,3 +1,5 @@
+## 1.0.25（2021-06-23）
+预置uniCloud admin依赖的uniCloud文件，方便uniCloud admin与uni-starter配套使用时免做文件迁移
 ## 1.0.24（2021-06-23）
 删除callFunction拦截器中多余的代码
 ## 1.0.23（2021-06-22）
