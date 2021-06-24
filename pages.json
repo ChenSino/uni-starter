@@ -116,7 +116,7 @@
 				"navigationBarTitleText": "个人资料"
 			}
 		}, {
-			"path": "pages/ucenter/userinfo/uploadCutImageToUnicloud",
+			"path": "pages/ucenter/userinfo/cropImage",
 			"style": {
 				"navigationStyle": "custom"
 			}

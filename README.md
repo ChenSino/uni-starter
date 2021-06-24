@@ -270,7 +270,6 @@ module.exports = {
 		"needLogin": [
 			"/pages/ucenter/userinfo/userinfo",
 			"/uni_modules/uni-news-favorite/pages/uni-news-favorite/list",
-			"/pages/ucenter/userinfo/uploadCutImageToUnicloud"
 		],
 		"login": ["smsCode","univerify", "username", "weixin", "apple"],
 		/* 
@@ -383,7 +382,7 @@ uni-starter
 │	│	│	│	├─README.md
 │	│	│	│	└─utils.js
 │	│	│	├─main.js
-│	│	│	├─uploadCutImageToUnicloud.vue	引用limeClipper的图片裁剪模块，为了方便二开可能会出现兼容`vue`与`nvue`，所以做成了`页面`而不是`组件`
+│	│	│	├─cropImage.vue	引用limeClipper的图片裁剪模块，为了方便二开可能会出现兼容`vue`与`nvue`，所以做成了`页面`而不是`组件`
 │	│	│	└─userinfo.vue
 │	|	└─ucenter.vue						用户中心
 │	|

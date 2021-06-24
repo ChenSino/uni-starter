@@ -18,22 +18,8 @@ export default {
 	},
 	methods:{
 		successFn(e){
-			this.uploadImgToUnicloud(e.url,(url)=>{
-				this.getOpenerEventChannel().emit('uploadAvatarAfter', {url})
-				uni.navigateBack()
-			})
-		},
-		uploadImgToUnicloud(url,callback){
-			uni.showLoading()
-			uniCloud.uploadFile({
-				cloudPath:Math.ceil((Math.random()+Math.random()+Math.random()+1)*1000000)+Date.now()+".png",
-				filePath:url
-			})
-			.then(res=>{
-				console.log(res);
-				callback(res.fileID)
-				uni.hideLoading()
-			})
+			this.getOpenerEventChannel().emit('success',e.url)
+			uni.navigateBack()
 		},
 		cancel(){
 			uni.navigateBack()

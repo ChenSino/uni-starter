@@ -1,7 +1,10 @@
 <template>
 	<view class="center">
-		<view class="userInfo" @click="toUserInfo">
-			<image class="logo-img" :src="userInfo.avatar||avatarUrl"></image>
+		<view class="userInfo" @click.capture="toUserInfo">
+			<uni-file-picker v-if="userInfo.avatar_file" v-model="userInfo.avatar_file"
+				fileMediatype="image" :del-icon="false" return-type="object" :image-styles="listStyles" disablePreview
+				disabled />
+			<image v-else class="logo-img" src="/static/uni-center/defaultAvatarUrl.png"></image>
 			<view class="logo-title">
 				<text class="uer-name">{{userInfo.nickname||userInfo.username||userInfo.mobile||'未登录'}}</text>
 			</view>
@@ -38,7 +41,6 @@
 	export default {
 		data() {
 			return {
-				avatarUrl: '/static/uni-center/defaultAvatarUrl.png',
 				gridList: [{
 						"text": "文字1",
 						"icon": "chat"
@@ -98,7 +100,17 @@
 						"to": '/pages/ucenter/about/about',
 						"icon": "info"
 					}]
-				]
+				],
+				listStyles: {
+					"height": "150rpx", // 边框高度
+					"width": "150rpx", // 边框宽度
+					"border": { // 如果为 Boolean 值，可以控制边框显示与否
+						"color": "#eee", // 边框颜色
+						"width": "1px", // 边框宽度
+						"style": "solid", // 边框样式
+						"radius": "100%" // 边框圆角，支持百分比
+					}
+				}
 			}
 		},
 		onLoad() {
