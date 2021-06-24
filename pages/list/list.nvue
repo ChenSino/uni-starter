@@ -1,5 +1,5 @@
 <template>
-	<view class="pagse">
+	<view class="pages">
 		<!-- #ifndef H5 -->
 		<statusBar></statusBar>
 		<!-- #endif -->
@@ -118,7 +118,7 @@
 </script>
 
 <style scoped>
-	.pagse {
+	.pages {
 		background-color: #FFFFFF;
 	}
 

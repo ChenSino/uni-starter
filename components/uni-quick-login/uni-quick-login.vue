@@ -141,7 +141,7 @@
 			this.servicesList = servicesList.filter(item=>{
 				return item.path != this.getRoute(1)
 			})
-			console.log('servicesList',servicesList,this.servicesList);
+			// console.log('servicesList',servicesList,this.servicesList);
 		},
 		methods: {
 			...mapMutations({
@@ -185,7 +185,7 @@
 					return oauthService.authorize(({
 							code
 						}) => {
-							console.log(code);
+							// console.log(code);
 							this.login({
 								code
 							}, type)
@@ -283,7 +283,6 @@
 				})
 			},
 			login(params, type) { //联网验证登录
-				console.log('type--', type);
 				console.log({
 					params,
 					type

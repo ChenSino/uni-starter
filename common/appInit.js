@@ -77,7 +77,7 @@ export default function() {
 							plus.device.getOAID({
 								success:function(e){
 									callBack(e.oaid)
-									console.log('getOAID success: '+JSON.stringify(e));
+									// console.log('getOAID success: '+JSON.stringify(e));
 								},
 								fail:function(e){
 									fail()
@@ -94,7 +94,7 @@ export default function() {
 							plus.device.getInfo({
 								success:function(e){
 									callBack(e.imei)
-									console.log('getOAID success: '+JSON.stringify(e));
+									// console.log('getOAID success: '+JSON.stringify(e));
 								},
 								fail:function(e){
 									fail()
@@ -140,7 +140,7 @@ export default function() {
 					// #endif
 				}
 			// #endif
-			console.log(JSON.stringify(option));
+			// console.log(JSON.stringify(option));
 			callFunctionOption = option
 		},
 		complete(e){
@@ -163,7 +163,7 @@ export default function() {
 			//如果执行错误，检查是否断网
 			uni.getNetworkType({
 				complete:res => {
-					console.log(res);
+					// console.log(res);
 					if (res.networkType == 'none') {
 						uni.showToast({
 							title: '手机网络异常',
