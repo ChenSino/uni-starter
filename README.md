@@ -1,9 +1,9 @@
 ### 介绍 
-`uni-starter`，是一个云端一体的、集成了商用项目开发常见功能的项目模板。
+`uni-starter`，是一个集成了商用项目开发常见功能的云端一体应用快速开发基本项目模版。
 
-如果说uniCloud admin是管理端项目的基础模板，那么uni-starter则是用户端、尤其是移动端的基础模板。
+如果说uniCloud admin是管理端项目的基础模板，那么uni-starter则是用户端、尤其是移动端的基础项目模板。
 
-在这个模板基础之上快速填充自己的业务，即可很快完成一个应用。
+在这个模板基础之上快速填充自己的业务，即可快速完成一个应用。
 
 ##### 演示效果
 ![](https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f184e7c3-1912-41b2-b81f-435d1b37c7b4/0625ae17-1262-45cb-a713-cdbf02df5c0a.png)
@@ -36,8 +36,8 @@ uni-starter + uniCloud admin，提供了用户端和管理端的基础模板，�
 <img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/e03ad65d-11bb-4697-81b2-d13af42f0441.jpg" />
 
 ### uni-starter集成的功能包括：
- 1. 个人中心：登录注册（含用户名密码登录、手机号验证码登录、app一键登录、微信登录、Apple登录、微信小程序登录）、修改密码、忘记密码、头像更换（集成图片裁剪）、昵称修改、积分查看、指纹绑定、退出登录
- 2. 设置：App更新（整包升级、wgt升级、强制升级，后台搭配uniCloud admin的升级中心插件管理）、权限引导（app）、推送开关（app）、指纹解锁（app）、人脸解锁（app）、清除缓存（app）、用户协议、隐私协议、问题与反馈、分享推荐、关于
+ 1. 用户账户：登录注册（含用户名密码登录、手机号验证码登录、app一键登录、微信登录、Apple登录、微信小程序登录）、修改密码、忘记密码、头像更换（集成图片裁剪）、昵称修改、积分查看、退出登录
+ 2. 设置：App更新（整包升级、wgt升级、强制升级，后台搭配uniCloud admin的升级中心插件管理）、推送开关（app）、指纹解锁（app）、人脸解锁（app）、清除缓存（app）、用户协议、隐私协议、问题与反馈、分享推荐、关于
  3. 启动引导：iOS初次启动被用户禁止网络权限后引导开启、Android弹出隐私协议后再申请权限
  4. 权限引导：应用无访问摄像头/相册权限，引导跳到设置界面
  5. 首页集成banner（后台搭配uniCloud admin的banner插件管理）、搜索、列表、详情、分享，均为云端一体。实际使用中将clientDB的表名更改为自己业务表名即可
@@ -46,15 +46,52 @@ uni-starter + uniCloud admin，提供了用户端和管理端的基础模板，�
  8. 内置拦截器：
 	- 页面路由拦截，配置需强制登录的页面；打开时检测，如果token无效就自动跳转到登录页
 	- 优雅实现：自动引导打开`选择图片`所需要的权限。当调用`uni.chooseImage`时检测到无权限自动开启引导。并不是在每次调用接口时处理这类问题，你可以参考该例子做更多该类场景的处理。uni-starter也会持续完善
- 9. h5版在页面顶部引导用户`点击下载App`
- 10. 营销裂变：点击“分销推荐”，生成带用户inviteCode参数的应用下载页（H5）。被邀请人打开下载页面点击下载，设备剪贴板的内容会被设置为邀请者的inviteCode。被邀请人下载app之后通过任何方式登陆（含：注册并登陆），uni-starter框架会自动获取设备剪切板中的inviteCode提交到服务端绑定关联关系。
+ 9. h5版在页面顶部（全局悬浮）引导用户`点击下载App`
+ 10. 营销裂变：点击“分销推荐”，生成带用户inviteCode参数的应用下载页（H5），一键分享到微信或微信朋友圈等。被邀请人打开下载页面点击下载，设备剪贴板的内容会被设置为邀请者的inviteCode。被邀请人下载app之后通过任何方式登陆（含：注册并登陆），uni-starter框架会自动获取设备剪切板中的inviteCode提交到服务端绑定关联关系。
+ 11. 自动完成：
+	- 自动重连由网络导致失败的请求。操作注册/登陆操作自动获取客户端设备：push_clientid、imei、oaid、idfa新增/更新到数据表uni-id-device
+	- 为迎合苹果App Store的规则，登陆与分享功能项显示之前自动检测是否安装了对应客户端。比如：设备未安装微信则不显示微信快捷登陆和微信分享选项
+	- 分析uniCloud.callfunction和clientDB操作的响应体，判断code执行对应的操作如跳转到登陆页，自动续期token
 
 ### 功能模块介绍
-#### 1. 拦截器与路由守卫
-第三方路由拦截库，一般带有window对象等问题，并不适合在uni-app中使用；另外传统路由拦截方式都是给原生方法做嵌套，首先这种写法并不优雅，也不支持ide的代码提示。
-另外不同项目的作者可能会不同的第三方路由库，这非常不利于生态的建设。你可能从插件市场拉下来一个项目有太多的学习成本，与你自有项目结合有大量差异需要去磨平。
-为此`uni-starter`基于`uni.addInterceptor`(拦截器)实现路由守卫。
+#### 1. 拦截器与路由控制
+传统的路由管理方式是对uni-app框架路由写法的二次封装，自定义的写法不支持ide的代码提示。另外不同插件作者封装不同的路由管理方式，这样做出来的插件与用户的项目结合时，路由写法不统一的差异需要去磨平。用拦截器实现路由管理并不需要改变原来路由的写法。
+为此`uni-starter`基于`uni.addInterceptor`(拦截器)实现路由管理。
 拦截器顾名思义，是在框架方法执行的各个环节（包含：拦截前触发、成功回调拦截、失败回调拦截、完成回调拦截）插入逻辑，篡改数据或终止运行。
+
+比如你希望在打开用户中心等页面之前，都检查一下该用户是否登陆，否则就重定向到登陆页面。使用拦截器你可以用以下写法在应用入口定义全局生效：
+	
+```js
+	//定义各个页面，这里为了演示uni-starter框架是把该定义写在全局配置uni-starter.config.js中
+	let needLogin = ["/pages/ucenter/userinfo/userinfo", ... ] 
+	
+	uni.addInterceptor("navigateTo", {
+		invoke(e) { // 调用前拦截
+			//获取用户的token
+			const token = uni.getStorageSync('uni_id_token')
+			//获取当前页面路径（即url去掉"?"和"?"后的参数）
+			const url = e.url.split('?')[0]
+			//判断要打开的页面是否需要验证登陆
+			if (needLogin.includes(url) && token == '') {
+				uni.showToast({
+					title: '该页面需要登录才能访问，请先登录',
+					icon: 'none'
+				})
+				uni.navigateTo({
+					url: "/pages/ucenter/login-page/index/index"
+				})
+				return false
+			}
+		},
+		fail(err) { // 失败回调拦截 
+			console.log(err);
+		},
+	})
+```
+- 而路由跳转方法不仅有`uni.navigateTo`还有`uni.redirectTo`,`uni.reLaunch`,`uni.switchTab`；
+- 另外我们还希望控制直接跳转至哪种登陆类型
+所以在uni-starter框架中我们这样定义：
+> uni-starter/common/appInit.js 的第228-280行
 ```js
 	const {"router": {needLogin,login} } = uniStarterConfig //需要登录的页面
 	let list = ["navigateTo", "redirectTo", "reLaunch", "switchTab"];
@@ -65,7 +102,7 @@ uni-starter + uniCloud admin，提供了用户端和管理端的基础模板，�
 				const token = uni.getStorageSync('uni_id_token')
 				//获取当前页面路径（即url去掉"?"和"?"后的参数）
 				const url = e.url.split('?')[0]
-				//拦截强制登录页面
+				//判断要打开的页面是否需要验证登陆
 				if (needLogin.includes(url) && token == '') {
 					uni.showToast({
 						title: '该页面需要登录才能访问，请先登录',
@@ -95,7 +132,7 @@ uni-starter + uniCloud admin，提供了用户端和管理端的基础模板，�
 	})
 ```
 
-#### 2.登录模块
+#### 2.关于登录
 - 使用方式：在 `uni-starter.config.js`->`router`->`login`下完全列举你需要的登录方式。这里支持用[条件编译](https://uniapp.dcloud.io/platform?id=%e6%9d%a1%e4%bb%b6%e7%bc%96%e8%af%91)因此你可以配置在不同平台下拥有的登录方式。
 - 优先级策略：
 	如果:配置内容为：["username","smsCode"]，用户执行如下代码：
