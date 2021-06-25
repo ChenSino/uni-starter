@@ -25,7 +25,7 @@
         </view>
         <view class="text-item confirm">
             <button class="btn-privacy" type="primary" @click="agree">同意</button>
-			<button class="btn-privacy btn-disagree" v-if="isAndroid" @click="disagree">暂不使用</button>
+			<button class="btn-privacy btn-disagree" @click="disagree">暂不使用</button>
         </view>
         <view class="exit-area">
             
@@ -38,11 +38,9 @@ import {about} from '@/uni-starter.config.js';
     export default {
         data() {
             return {
-                isAndroid: false
             }
         },
         onLoad() {
-            this.isAndroid = (uni.getSystemInfoSync().platform === 'android');
             this._canBack = false;
         },
         onBackPress() {

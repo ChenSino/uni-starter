@@ -5,7 +5,10 @@
 
 在这个模板基础之上快速填充自己的业务，即可很快完成一个应用。
 
-地址：[https://codechina.csdn.net/dcloud/uni-starter.git](https://codechina.csdn.net/dcloud/uni-starter.git)
+##### 演示效果
+![](https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f184e7c3-1912-41b2-b81f-435d1b37c7b4/0625ae17-1262-45cb-a713-cdbf02df5c0a.png)
+> h5版演示链接：[https://uni-starter.dcloud.net.cn](https://uni-starter.dcloud.net.cn)
+
 #### 视频教程：
 <a target="_blank" href="https://www.bilibili.com/video/BV17p4y1a71x?p=11">
     <img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f184e7c3-1912-41b2-b81f-435d1b37c7b4/71d310a5-ef69-4ca5-88c8-9a3abf8fb8e3.png" alt="腾讯课堂uniCloud视频教程" style="width: 70%;">
@@ -33,16 +36,18 @@ uni-starter + uniCloud admin，提供了用户端和管理端的基础模板，�
 <img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/e03ad65d-11bb-4697-81b2-d13af42f0441.jpg" />
 
 ### uni-starter集成的功能包括：
-1. 个人中心：登录注册（含用户名密码登录、手机号验证码登录、app一键登录、微信登录、Apple登录、微信小程序登录）、修改密码、忘记密码、头像更换、昵称修改、积分查看、指纹绑定、退出登录
-2. 设置：App更新（整包升级、wgt升级、强制升级，后台搭配uniCloud admin的升级中心插件管理）、权限引导（app）、推送开关（app）、清除缓存（app）、用户协议、隐私协议（app）、问题与反馈、分享推荐、关于
-3. 启动引导：iOS初次启动被用户禁止网络权限后引导开启、Android弹出隐私协议后再申请权限
-4. 首页集成banner（后台搭配uniCloud admin的banner插件管理）、搜索、列表、详情、分享，均为云端一体。实际使用中将clientDB的表名更改为自己业务表名即可
-5. 首页采用nvue，fast编译模式，加快App端启动速度
-6. 内置联网失败的重试页面（不是错误弹框，页面有重试按钮）、更漂亮的分享菜单页面
-7. 内置拦截器：
+ 1. 个人中心：登录注册（含用户名密码登录、手机号验证码登录、app一键登录、微信登录、Apple登录、微信小程序登录）、修改密码、忘记密码、头像更换（集成图片裁剪）、昵称修改、积分查看、指纹绑定、退出登录
+ 2. 设置：App更新（整包升级、wgt升级、强制升级，后台搭配uniCloud admin的升级中心插件管理）、权限引导（app）、推送开关（app）、指纹解锁（app）、人脸解锁（app）、清除缓存（app）、用户协议、隐私协议、问题与反馈、分享推荐、关于
+ 3. 启动引导：iOS初次启动被用户禁止网络权限后引导开启、Android弹出隐私协议后再申请权限
+ 4. 权限引导：应用无访问摄像头/相册权限，引导跳到设置界面
+ 5. 首页集成banner（后台搭配uniCloud admin的banner插件管理）、搜索、列表、详情、分享，均为云端一体。实际使用中将clientDB的表名更改为自己业务表名即可
+ 6. 首页采用nvue，fast编译模式，加快App端启动速度
+ 7. 内置联网失败的重试页面（不是错误弹框，页面有重试按钮）、更漂亮的分享菜单页面
+ 8. 内置拦截器：
 	- 页面路由拦截，配置需强制登录的页面；打开时检测，如果token无效就自动跳转到登录页
 	- 优雅实现：自动引导打开`选择图片`所需要的权限。当调用`uni.chooseImage`时检测到无权限自动开启引导。并不是在每次调用接口时处理这类问题，你可以参考该例子做更多该类场景的处理。uni-starter也会持续完善
-8. h5版在页面顶部引导用户`点击下载App`
+ 9. h5版在页面顶部引导用户`点击下载App`
+ 10. 营销裂变：点击“分销推荐”，生成带用户inviteCode参数的应用下载页（H5）。被邀请人打开下载页面点击下载，设备剪贴板的内容会被设置为邀请者的inviteCode。被邀请人下载app之后通过任何方式登陆（含：注册并登陆），uni-starter框架会自动获取设备剪切板中的inviteCode提交到服务端绑定关联关系。
 
 ### 功能模块介绍
 #### 1. 拦截器与路由守卫

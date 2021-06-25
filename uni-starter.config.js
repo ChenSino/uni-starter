@@ -1,11 +1,11 @@
 //这是应用的配置页面，App.vue挂载到getApp().globalData.config
 module.exports = {
 	"h5": {
-		"url": "https://static-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e.bspapp.com", //	前端网页托管的域名
+		"url": "https://uni-starter.dcloud.net.cn/", //	前端网页托管的域名
 		 // 在h5端全局悬浮引导用户下载app的功能 更多自定义要求在/common/openApp.js中修改
 		"openApp": {
 			//点击悬浮下载栏后打开的网页链接
-			"openUrl": 'https://sj.qq.com/myapp/detail.htm?apkName=com.tencent.android.qqdownloader&info=6646FD239A6EBA9E2DEE5DFC7E18D867',
+			"openUrl": '/#/pages/ucenter/invite/invite',
 			//左侧显示的应用名称
 			"appname": 'uni-starter',
 			//应用的图标
