@@ -7,6 +7,7 @@ const uniIdConfig = createConfig({
 }).config()
 const db = uniCloud.database()
 const dbCmd = db.command
+const usersDB = db.collection('uni-id-users')
 exports.main = async (event, context) => {
 	//UNI_WYQ:这里的uniID换成新的，保证多人访问不会冲突
 	uniID = uniID.createInstance({
@@ -308,6 +309,7 @@ exports.main = async (event, context) => {
 					msg: '手机号码填写错误'
 				}
 			}
+			params.type = 'login'
 			let loginBySmsRes = await uniID.loginBySms(params)
 			// console.log(loginBySmsRes);
 			if (loginBySmsRes.code === 0) {

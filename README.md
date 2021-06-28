@@ -132,8 +132,9 @@ uni-starter + uniCloud admin，提供了用户端和管理端的基础模板，�
 	})
 ```
 
-#### 2.关于登录
+#### 2.登录功能配置
 - 使用方式：在 `uni-starter.config.js`->`router`->`login`下完全列举你需要的登录方式。这里支持用[条件编译](https://uniapp.dcloud.io/platform?id=%e6%9d%a1%e4%bb%b6%e7%bc%96%e8%af%91)因此你可以配置在不同平台下拥有的登录方式。
+- uni-start集成的登录方式有：验证码登录(smsCode)、读取手机SIM卡一键登录(univerify)、账号密码登录(username)、微信登录(weixin)、苹果登录(apple)
 - 优先级策略：
 	如果:配置内容为：["username","smsCode"]，用户执行如下代码：
 	```js
@@ -142,7 +143,6 @@ uni-starter + uniCloud admin，提供了用户端和管理端的基础模板，�
 	})
 	```
 	访问登录页面，会被拦截器自动切换到"配置的第0项(这里是`username`)的登录方式对应的页面”，即`账户登录`方式页面，路径：`/pages/ucenter/login-page/pwd-login/pwd-login`。
-- uni-start集成的登录方式有：验证码登录(smsCode)、读取手机SIM卡一键登录(univerify)、账号密码登录(username)、微信登录(weixin)、苹果登录(apple)
 - 生效策略：登陆方式有如上5种，你希望有几种登陆方式就在配置中列举几种。有的登陆方式可能因为设备环境问题而不被支持；比如你正确地配置了微信登陆，但是用户的手机并没有安装微信，这样微信登陆功能就无法使用，并且如果出现这种情况你的app会被iOS的App Store拒绝上架。所以在这里，我们的生效策略在检测：你是否有列举到某个配置项为前提的情况下，增加了检测当前环境是否支持，如果不支持会自动隐藏。
 - 其他配置：
 	+ 服务端：uni-starter服务端使用[uni-config-center](https://ext.dcloud.net.cn/plugin?id=4425)统一管理这些配置，文件路径`/uni_modules/uni-config-center/uniCloud/cloudfunctions/common/uni-config-center/uni-id/config.json`详情下文[目录结构](#id=catalogue) 和[uni-id配置说明](https://uniapp.dcloud.io/uniCloud/uni-id?id=configjson%e7%9a%84%e8%af%b4%e6%98%8e)
