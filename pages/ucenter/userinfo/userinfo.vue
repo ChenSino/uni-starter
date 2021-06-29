@@ -31,13 +31,6 @@
 	export default {
 		data() {
 			return {
-				avatar_file: {
-					"extname": "jpg",
-					"fileType": "image",
-					"name": "707756af-e9a9-4d08-8db9-5d1f34b84ea6.jpg",
-					"size": 98513,
-					"url": "cloud://tcb-lseqkmkcq0w1wzwcb18f3-be0d77.7463-tcb-lseqkmkcq0w1wzwcb18f3-be0d77-1304530278/1624523618672_0.jpg"
-				},
 				univerifyStyle: {
 					authButton: {
 						"title": "本机号码一键绑定", // 授权按钮文案
@@ -62,11 +55,12 @@
 			...mapGetters({
 				userInfo: 'user/info',
 				login: 'user/hasLogin'
-			})
-		},
-		onLoad() {
-			this.avatar_file = this.userInfo.avatar_file
-			console.log(this.avatar_file);
+			}),
+			avatar_file(){
+				if(this.userInfo.avatar_file&&this.userInfo.avatar_file.url){
+					return this.userInfo.avatar_file
+				}
+			}
 		},
 		methods: {
 			...mapMutations({
@@ -163,7 +157,13 @@
 				}
 			},
 			removeAvatar(){
-				this.setAvatarFile(null)
+				this.setAvatarFile({
+					"extname": "jpg",
+					"fileType": "image",
+					"name": "",
+					"size": 0,
+					"url": ""
+				})
 			},
 			setAvatarFile(avatar_file){
 				uni.showLoading({
@@ -186,7 +186,6 @@
 							title: '删除成功'
 						})
 					}
-					this.avatar_file = avatar_file
 					this.setUserInfo({
 						avatar_file
 					});
@@ -213,10 +212,10 @@
 						console.log(res);
 						let tempFile = res.tempFiles[0],
 						avatar_file = {
-							// #ifndef APP-PLUS
+							// #ifdef H5
 							extname:tempFile.name.split('.')[tempFile.name.split('.').length-1],
 							// #endif
-							// #ifdef APP-PLUS
+							// #ifndef H5
 							extname:tempFile.path.split('.')[tempFile.path.split('.').length-1]
 							// #endif
 						},

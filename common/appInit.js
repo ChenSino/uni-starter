@@ -8,7 +8,6 @@ import interceptorChooseImage from '@/uni_modules/json-interceptor-chooseImage/j
 // #endif
 const db = uniCloud.database()
 export default function() {
-			
 	// #ifndef H5
 	setTimeout(()=>{
 	// #endif
@@ -80,7 +79,7 @@ export default function() {
 									// console.log('getOAID success: '+JSON.stringify(e));
 								},
 								fail:function(e){
-									fail()
+									callBack()
 									console.log('getOAID failed: '+JSON.stringify(e));
 								}
 							});
@@ -97,7 +96,7 @@ export default function() {
 									// console.log('getOAID success: '+JSON.stringify(e));
 								},
 								fail:function(e){
-									fail()
+									callBack()
 									console.log('getOAID failed: '+JSON.stringify(e));
 								}
 							});
@@ -105,11 +104,24 @@ export default function() {
 							callBack()
 						}
 					})
+					
+					let push_clientid = '',
+					idfa = plus.storage.getItem('idfa')||'';//idfa有需要的用户在应用首次启动时自己获取存储到storage中
+					
+					try{
+						push_clientid = plus.push.getClientInfo().clientid
+					}catch(e){
+						uni.showModal({
+							content: '获取推送标识失败。如果你的应用不需要推送功能，请注释掉本代码块',
+							showCancel: false,
+							confirmText:"好的"
+						});
+						console.log(e)
+					}
+					
 					let deviceInfo = {
-						"push_clientid":plus.push.getClientInfo().clientid,// 获取匿名设备标识符
-						"imei":imei,
-						"oaid":oaid,
-						"idfa":plus.storage.getItem('idfa')||'' //idfa有需要的用户在应用首次启动时自己获取存储到storage中
+						push_clientid,// 获取匿名设备标识符
+						imei,oaid,idfa
 					}
 					console.log("重新登陆/注册，获取设备id",deviceInfo);
 					option.data.deviceInfo = deviceInfo
@@ -148,11 +160,11 @@ export default function() {
 		},
 		fail(e) { // 失败回调拦截
 			if(Debug){
-				console.log(e);
 				uni.showModal({
-					content: JSON.stringify(e),
+					content:JSON.stringify(e),
 					showCancel: false
 				});
+				console.error(e);
 			}else{
 				uni.showModal({
 					content: "系统错误请稍后再试！",
