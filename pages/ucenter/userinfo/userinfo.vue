@@ -92,7 +92,7 @@
 						uniCloud.callFunction({
 							name: 'uni-id-cf',
 							data: {
-								action: 'bind_mobile_by_univerify',
+								action: 'bindMobileByUniverify',
 								params: e.authResult,
 							},
 							success: ({

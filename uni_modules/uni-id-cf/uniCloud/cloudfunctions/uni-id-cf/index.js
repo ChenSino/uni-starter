@@ -130,7 +130,7 @@ exports.main = async (event, context) => {
 
 	let res = {}
 	switch (action) { //根据action的值执行对应的操作
-		case 'bind_mobile_by_univerify':
+		case 'bindMobileByUniverify':
 			let {
 				appid, apiKey, apiSecret
 			} = uniIdConfig.service.univerify
@@ -150,7 +150,7 @@ exports.main = async (event, context) => {
 				res.mobile = univerifyRes.phoneNumber
 			}
 			break;
-		case 'bind_mobile_by_sms':
+		case 'bindMobileBySms':
 			// console.log({
 			// 	uid: params.uid,
 			// 	mobile: params.mobile,
@@ -247,12 +247,14 @@ exports.main = async (event, context) => {
 			res = await uniID.logout(uniIdToken)
 			break;
 		case 'sendSmsCode':
-			// 测试期间短信统一用 123456 正式项目删除即可
-			return uniID.setVerifyCode({
-				mobile: params.mobile,
-				code: '123456',
-				type: params.type
-			})
+			/* -开始- 测试期间，为节约资源。统一虚拟短信验证码为： 123456；开启以下代码块即可  */
+				// return uniID.setVerifyCode({
+				// 	mobile: params.mobile,
+				// 	code: '123456',
+				// 	type: params.type
+				// })
+			/* -结束- */
+			
 			// 简单限制一下客户端调用频率
 			const ipLimit = await db.collection('opendb-verify-codes').where({
 				ip: context.CLIENTIP,

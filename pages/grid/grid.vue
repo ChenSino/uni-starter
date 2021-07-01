@@ -28,14 +28,17 @@
 		<uni-section title="宫格组件" style="margin: 0;" type="line"></uni-section>
 		<view class="example-body">
 			<uni-grid :column="3" :highlight="true" @change="change">
-				<uni-grid-item v-for="(item, index) in list" :index="index" :key="index"
-					v-if="index<3?true:(index<6?hasLogin:uniIDHasRole('admin'))"
-				>
-					<view class="grid-item-box" style="background-color: #fff;">
-						<image :src="item.url" class="image" mode="aspectFill" />
-						<text class="text">{{ item.text }}</text>
-					</view>
-				</uni-grid-item>
+				<template v-for="(item,i) in gridList">
+					<uni-grid-item :index="i" :key="i"
+						v-if="i<3 || i>3&&i<7&&hasLogin || i>7&&uniIDHasRole('admin')"
+					>
+						<view class="grid-item-box" style="background-color: #fff;">
+							<image :src="'/static/grid/c'+(i+1)+'.png'" class="image" mode="aspectFill" />
+							<text class="text">{{item}}</text>
+						</view>
+					</uni-grid-item>
+				</template>
+				
 			</uni-grid>
 		</view>
 	</view>
@@ -52,67 +55,7 @@
 		},
 		data() {
 			return {
-				list: [{
-						url: '/static/grid/c1.png',
-						text: '所有人可见',
-						badge: '0',
-						type: "primary",
-						isShow: true
-					},
-					{
-						url: '/static/grid/c2.png',
-						text: '所有人可见',
-						badge: '1',
-						type: "success",
-						isShow: true
-					}, {
-						url: '/static/grid/c3.png',
-						text: '所有人可见',
-						badge: '1',
-						type: "success",
-						isShow: true
-					},
-					{
-						url: '/static/grid/c4.png',
-						text: '游客不可见',
-						badge: '1',
-						type: "success",
-						isShow: "this.hasLogin"
-					},
-					{
-						url: '/static/grid/c5.png',
-						text: '游客不可见',
-						badge: '1',
-						type: "success",
-						isShow: "hasLogin"
-					},
-					{
-						url: '/static/grid/c6.png',
-						text: '游客不可见',
-						badge: '1',
-						type: "success",
-						isShow: "hasLogin"
-					},
-					{
-						url: '/static/grid/c7.png',
-						text: '管理员可见',
-						badge: '99',
-						type: "warning",
-						isShow: "uniIDHasPermission('admin')"
-					},
-					{
-						url: '/static/grid/c8.png',
-						text: '管理员可见',
-						badge: '2',
-						type: "error",
-						isShow: "uniIDHasPermission('admin')"
-					},
-					{
-						url: '/static/grid/c9.png',
-						text: '管理员可见',
-						isShow: "uniIDHasPermission('admin')"
-					}
-				],
+				gridList: ['所有人可见','所有人可见','所有人可见', '游客不可见', '游客不可见', '游客不可见','管理员可见','管理员可见','管理员可见'],
 				// 查询字段，多个字段用 , 分割
 				field: '_id,bannerfile,open_url,title',
 				where: 'category_id==grid',
@@ -155,13 +98,8 @@
 		},
 		methods: {
 			change(e) {
-				let {
-					index
-				} = e.detail
-				this.list[index].badge && this.list[index].badge++
-
 				uni.showToast({
-					title: `点击第${index+1}个宫格`,
+					title: `点击第${e.detail.index}个宫格`,
 					icon: 'none'
 				})
 			},

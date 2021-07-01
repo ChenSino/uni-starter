@@ -51,7 +51,7 @@
 				uniCloud.callFunction({
 					name:'uni-id-cf',
 					data:{
-						action:'bind_mobile_by_sms',
+						action:'bindMobileBySms',
 						params:{
 							"mobile": this.formData.phone,
 							"code": this.formData.code
