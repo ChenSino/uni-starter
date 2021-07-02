@@ -19,18 +19,18 @@ module.exports = {
 		}
 	},
 	"router": {
-		//配置需要路由拦截的页面地址，在打开这些页面之前会自动检查（不联网）uni_id_token的值是否存在/过期等
+		//needLogin:配置强制需要登陆的页面，在打开这些页面之前会自动检查（前端校验）uni_id_token的值是否有效,如果无效会自动跳转到登陆页面
 		"needLogin": [
 			"/pages/ucenter/userinfo/userinfo",
 			"/uni_modules/uni-news-favorite/pages/uni-news-favorite/list",
 			"/uni_modules/uni-feedback/pages/uni-feedback/add"
 		],
-		"login": ["username","smsCode","univerify", "weixin", "apple"],
-		/* 
+		/*
+		login:配置登陆类型与优先级
+			未列举到的，或设备环境不支持的选项，将被隐藏。如果你需要在不同平台有不同的配置，直接用条件编译即可
 			根据数组的第0项，决定登录方式的第一优先级。
-			未列举到的，或设备环境不支持的选项，将被隐藏。
-			如果你需要在不同平台有不同的配置，直接用条件编译即可
 		*/
+		"login": ["username","smsCode","univerify", "weixin", "apple"],
 	},
 	//关于应用
 	"about": {

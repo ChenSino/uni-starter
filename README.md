@@ -1,39 +1,23 @@
-### 介绍 
-`uni-starter`，是一个集成了商用项目开发常见功能的云端一体应用快速开发基本项目模版。
-
-如果说uniCloud admin是管理端项目的基础模板，那么uni-starter则是用户端、尤其是移动端的基础项目模板。
-
-在这个模板基础之上快速填充自己的业务，即可快速完成一个应用。
-
-##### 演示效果
-![](https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f184e7c3-1912-41b2-b81f-435d1b37c7b4/0625ae17-1262-45cb-a713-cdbf02df5c0a.png)
-> h5版演示链接：[https://uni-starter.dcloud.net.cn](https://uni-starter.dcloud.net.cn)
-
-#### 视频教程：
+#### 看一段视频：
 <a target="_blank" href="https://www.bilibili.com/video/BV17p4y1a71x?p=11">
-    <img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f184e7c3-1912-41b2-b81f-435d1b37c7b4/71d310a5-ef69-4ca5-88c8-9a3abf8fb8e3.png" alt="腾讯课堂uniCloud视频教程" style="width: 70%;">
+    <img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f184e7c3-1912-41b2-b81f-435d1b37c7b4/71d310a5-ef69-4ca5-88c8-9a3abf8fb8e3.png" alt="腾讯课堂uniCloud视频教程" style="width: 70%;margin-bottom:26px;">
 </a>
 
-#### 项目背景
-一个应用，其实有很多通用的功能，比如登录注册、头像、设置、拦截器、banner...
+#### 简介
+`uni-starter`，是一个集成了大量商用项目常见功能的，云端一体应用快速开发基本项目模版。
 
-`uni-starter`将这些功能都已经集成好。
+APP有很多通用的功能，比如登录注册、头像、设置、拦截器、banner...`uni-starter`将这些功能都已经集成好。
 
-新建项目选择`uni-starter`模板，即可在此基础上快速开发自己的特色业务。
+在hbuilderx新建项目选择`uni-starter`模板，即可在此基础上快速开发自己的特色业务。
 
 有了uni-starter，再加上schema2code生成前端页面，一个简单应用就可以快速完成。
 
+如果说uniCloud admin是管理端项目的基础模板，那么uni-starter则是用户端、尤其是移动端的基础项目模板。
+
 uni-starter + uniCloud admin，提供了用户端和管理端的基础模板，应用开发从未如此简单快捷！
 
-### 界面效果
-<img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/c2362519-8131-4071-b08a-8175e11b9341.jpg" />
-<img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/61e0f3d3-d726-4973-865c-e6ee0bdd0870.jpg" />
-<img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/644bab3c-1f90-46ba-a920-f464b52d0e36.jpg" />
-<img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/97db3e92-c3b3-4e32-bfb8-c348f9c9cd61.jpg" />
-<img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/a1d53005-5d45-45d1-b048-a7260a478edf.jpg" />
-<img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/d41b871f-d47f-4e86-b2f1-2b1a74a8a4bd.jpg" />
-<img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/b0d7f5e7-2e16-4b3e-a123-6e9cd97582d7.jpg" />
-<img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/e03ad65d-11bb-4697-81b2-d13af42f0441.jpg" />
+##### 扫码体验：h5版演示效果（链接：[https://uni-starter.dcloud.net.cn](https://uni-starter.dcloud.net.cn)）
+<img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f184e7c3-1912-41b2-b81f-435d1b37c7b4/0625ae17-1262-45cb-a713-cdbf02df5c0a.png" style="width: 120px;">
 
 ### uni-starter集成的功能包括：
  1. 用户账户：登录注册（含用户名密码登录、手机号验证码登录、app一键登录、微信登录、Apple登录、微信小程序登录）、修改密码、忘记密码、头像更换（集成图片裁剪）、昵称修改、积分查看、退出登录
@@ -53,86 +37,49 @@ uni-starter + uniCloud admin，提供了用户端和管理端的基础模板，�
 	- 为迎合苹果App Store的规则，登陆与分享功能项显示之前自动检测是否安装了对应客户端。比如：设备未安装微信则不显示微信快捷登陆和微信分享选项
 	- 分析uniCloud.callfunction和clientDB操作的响应体，判断code执行对应的操作如跳转到登陆页，自动续期token
 
+* 更多功能模块会不断更新，请持续关注本插件 
+
+## 快速体验部署流程
+#### 1. 开通uniCloud
+- 开通`uniCloud`：本项目是云端一体的，它的云端代码需要部署在uniCloud云服务空间里，需要开通uniCloud。在[https://unicloud.dcloud.net.cn/](https://unicloud.dcloud.net.cn/)登录，按云厂商要求进行实名认证。
+- 在uniCloud认证通过后，创建一个服务空间给本项目使用。选择阿里云或腾讯云均可。[参考](https://uniapp.dcloud.net.cn/uniCloud/price)
+- 使用HBuilderX 3.1以上版本（最好是最新版），把本项目导入到HBuilderX中，在项目根目录uniCloud上点右键菜单，关联服务空间 -> 选择之前创建的服务空间
+
+#### 2. 关联项目与云服务空间
+<img class="cloud" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/f3f36e4a-77e6-495c-bb85-5fc6999e29e1.jpg" />
+<img class="cloud" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/dd39dfcc-60c8-4f9f-a4d7-6b08f39e737e.jpg" />
+<img class="cloud" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/350f5e46-976e-4c5b-be49-e5c3908b03f4.jpg" />
+
+#### 3.根目录`/uniCloud/database` 右键上传`上传所有DB Schema及扩展校验函数`
+
+
 ### 功能模块介绍
-#### 1. 拦截器与路由控制
-传统的路由管理方式是对uni-app框架路由写法的二次封装，自定义的写法不支持ide的代码提示。另外不同插件作者封装不同的路由管理方式，这样做出来的插件与用户的项目结合时，路由写法不统一的差异需要去磨平。用拦截器实现路由管理并不需要改变原来路由的写法。
+#### 1. 路由控制
+传统的路由管理方式是对uni-app框架路由写法的二次封装，自定义的写法不支持ide的代码提示。
+另外不同插件作者封装不同的路由管理方式，这样做出来的插件与用户的项目结合时，路由写法不统一的差异需要去磨平。
+用拦截器（下文有详细介绍）实现路由管理并不需要改变原来路由的写法。
 为此`uni-starter`基于`uni.addInterceptor`(拦截器)实现路由管理。
-拦截器顾名思义，是在框架方法执行的各个环节（包含：拦截前触发、成功回调拦截、失败回调拦截、完成回调拦截）插入逻辑，篡改数据或终止运行。
 
-比如你希望在打开用户中心等页面之前，都检查一下该用户是否登陆，否则就重定向到登陆页面。使用拦截器你可以用以下写法在应用入口定义全局生效：
-	
+你只需要在项目根目录的框架配置文件：`uni-starter.config.js`的`router`->`needLogin`和`login`中配置完整的路由名称即可：
 ```js
-	//定义各个页面，这里为了演示uni-starter框架是把该定义写在全局配置uni-starter.config.js中
-	let needLogin = ["/pages/ucenter/userinfo/userinfo", ... ] 
-	
-	uni.addInterceptor("navigateTo", {
-		invoke(e) { // 调用前拦截
-			//获取用户的token
-			const token = uni.getStorageSync('uni_id_token')
-			//获取当前页面路径（即url去掉"?"和"?"后的参数）
-			const url = e.url.split('?')[0]
-			//判断要打开的页面是否需要验证登陆
-			if (needLogin.includes(url) && token == '') {
-				uni.showToast({
-					title: '该页面需要登录才能访问，请先登录',
-					icon: 'none'
-				})
-				uni.navigateTo({
-					url: "/pages/ucenter/login-page/index/index"
-				})
-				return false
-			}
-		},
-		fail(err) { // 失败回调拦截 
-			console.log(err);
-		},
-	})
-```
-- 而路由跳转方法不仅有`uni.navigateTo`还有`uni.redirectTo`,`uni.reLaunch`,`uni.switchTab`；
-- 另外我们还希望控制直接跳转至哪种登陆类型
-所以在uni-starter框架中我们这样定义：
-> uni-starter/common/appInit.js 的第228-280行
-```js
-	const {"router": {needLogin,login} } = uniStarterConfig //需要登录的页面
-	let list = ["navigateTo", "redirectTo", "reLaunch", "switchTab"];
-	list.forEach(item => { //用遍历的方式分别为,uni.navigateTo,uni.redirectTo,uni.reLaunch,uni.switchTab这4个路由方法添加拦截器
-		uni.addInterceptor(item, {
-			invoke(e) { // 调用前拦截
-				//获取用户的token
-				const token = uni.getStorageSync('uni_id_token')
-				//获取当前页面路径（即url去掉"?"和"?"后的参数）
-				const url = e.url.split('?')[0]
-				//判断要打开的页面是否需要验证登陆
-				if (needLogin.includes(url) && token == '') {
-					uni.showToast({
-						title: '该页面需要登录才能访问，请先登录',
-						icon: 'none'
-					})
-					uni.navigateTo({
-						url: "/pages/ucenter/login-page/index/index"
-					})
-					return false
-				}
-				//控制登录优先级
-				if (url == '/pages/ucenter/login-page/index/index') {
-					//一键登录（univerify）、账号（username）、验证码登录（短信smsCode）
-					if (login[0] == 'univerify') {
-						if(e.url == url) { e.url += '?' } //添加参数之前判断是否带了`？`号如果没有就补上，因为当开发场景本身有参数的情况下是已经带了`？`号
-						e.url += "univerify_first=true"
-					} else if (login[0] == 'username') {
-						e.url = "/pages/ucenter/login-page/pwd-login/pwd-login"
-					}
-				}
-				return true
-			},
-			fail(err) { // 失败回调拦截 
-				console.log(err);
-			},
-		})
-	})
+"router": {
+	//needLogin:配置强制需要登陆的页面，在打开这些页面之前会自动检查（前端校验）uni_id_token的值是否有效,如果无效会自动跳转到登陆页面
+	"needLogin": [
+		"/pages/ucenter/userinfo/userinfo",
+		"/uni_modules/uni-news-favorite/pages/uni-news-favorite/list",
+		"/uni_modules/uni-feedback/pages/uni-feedback/add"
+	],
+	/*
+	login:配置登陆类型与优先级
+		未列举到的，或设备环境不支持的选项，将被隐藏。如果你需要在不同平台有不同的配置，直接用条件编译即可
+		根据数组的第0项，决定登录方式的第一优先级。
+		详情下文：2.登录配置详解
+	*/
+	"login": ["username","smsCode","univerify", "weixin", "apple"],
+}
 ```
 
-#### 2.登录功能配置
+#### 2.登录配置详解
 - 使用方式：在 `uni-starter.config.js`->`router`->`login`下完全列举你需要的登录方式。这里支持用[条件编译](https://uniapp.dcloud.io/platform?id=%e6%9d%a1%e4%bb%b6%e7%bc%96%e8%af%91)因此你可以配置在不同平台下拥有的登录方式。
 - uni-start集成的登录方式有：验证码登录(smsCode)、读取手机SIM卡一键登录(univerify)、账号密码登录(username)、微信登录(weixin)、苹果登录(apple)
 - 优先级策略：
@@ -228,7 +175,7 @@ uni-starter + uniCloud admin，提供了用户端和管理端的基础模板，�
 
 > 更多Android平台隐私与政策提示框配置方法，[详情](https://ask.dcloud.net.cn/article/36937)
 
-#### 注意：
+##### 注意：
 1. 最新的华为应用市场要求，隐私政策提示框上接受按钮的文本，必须为“同意”而不能是其他有歧义的文字。
 2. 配置后提交云端打包后生效。理论上绝大部分和`manifest.json`生效相关的配置均需要提交云打包后生效
 
@@ -246,6 +193,80 @@ uni-starter + uniCloud admin，提供了用户端和管理端的基础模板，�
 2. 断网自动重试，当callFunction为fail时检测是否因断网引起。如果是会提醒用户并且会在恢复网络之后自动重新发起请求
 3. 常规的errCoder自动执行对应程序，如token无效/过期自动跳转到登陆页面。
 4. token自动续期。
+
+#### 11.举例路由控制原理，深入了解拦截器的使用
+比如你希望在打开用户中心等页面之前，都检查一下该用户是否登陆，否则就重定向到登陆页面。使用拦截器你可以用以下写法在应用入口定义全局生效：
+	
+```js
+	//定义各个页面，这里为了演示uni-starter框架是把该定义写在全局配置uni-starter.config.js中
+	let needLogin = ["/pages/ucenter/userinfo/userinfo", ... ] 
+	
+	uni.addInterceptor("navigateTo", {
+		invoke(e) { // 调用前拦截
+			//获取用户的token
+			const token = uni.getStorageSync('uni_id_token')
+			//获取当前页面路径（即url去掉"?"和"?"后的参数）
+			const url = e.url.split('?')[0]
+			//判断要打开的页面是否需要验证登陆
+			if (needLogin.includes(url) && token == '') {
+				uni.showToast({
+					title: '该页面需要登录才能访问，请先登录',
+					icon: 'none'
+				})
+				uni.navigateTo({
+					url: "/pages/ucenter/login-page/index/index"
+				})
+				return false
+			}
+		},
+		fail(err) { // 失败回调拦截 
+			console.log(err);
+		},
+	})
+```
+- 而路由跳转方法不仅有`uni.navigateTo`还有`uni.redirectTo`,`uni.reLaunch`,`uni.switchTab`；
+- 另外我们还希望控制直接跳转至哪种登陆类型
+所以在uni-starter框架中我们这样定义：
+> uni-starter/common/appInit.js 的第228-280行
+```js
+	const {"router": {needLogin,login} } = uniStarterConfig //需要登录的页面
+	let list = ["navigateTo", "redirectTo", "reLaunch", "switchTab"];
+	list.forEach(item => { //用遍历的方式分别为,uni.navigateTo,uni.redirectTo,uni.reLaunch,uni.switchTab这4个路由方法添加拦截器
+		uni.addInterceptor(item, {
+			invoke(e) { // 调用前拦截
+				//获取用户的token
+				const token = uni.getStorageSync('uni_id_token')
+				//获取当前页面路径（即url去掉"?"和"?"后的参数）
+				const url = e.url.split('?')[0]
+				//判断要打开的页面是否需要验证登陆
+				if (needLogin.includes(url) && token == '') {
+					uni.showToast({
+						title: '该页面需要登录才能访问，请先登录',
+						icon: 'none'
+					})
+					uni.navigateTo({
+						url: "/pages/ucenter/login-page/index/index"
+					})
+					return false
+				}
+				//控制登录优先级
+				if (url == '/pages/ucenter/login-page/index/index') {
+					//一键登录（univerify）、账号（username）、验证码登录（短信smsCode）
+					if (login[0] == 'univerify') {
+						if(e.url == url) { e.url += '?' } //添加参数之前判断是否带了`？`号如果没有就补上，因为当开发场景本身有参数的情况下是已经带了`？`号
+						e.url += "univerify_first=true"
+					} else if (login[0] == 'username') {
+						e.url = "/pages/ucenter/login-page/pwd-login/pwd-login"
+					}
+				}
+				return true
+			},
+			fail(err) { // 失败回调拦截 
+				console.log(err);
+			},
+		})
+	})
+```
 
 
 ### 应用启动时序介绍
@@ -272,18 +293,6 @@ onLaunch生命周期执行了
 		- 页面路由拦截，配置需强制登录的页面；打开时检测，如果token无效就自动跳转到登录页
 		- 优雅实现：自动引导打开`选择图片`所需要的权限。当调用`uni.chooseImage`时检测到无权限自动开启引导。并不是在每次调用接口时处理这类问题，你可以参考该例子做更多该类场景的处理。uni-starter也会持续完善
 
-## 快速体验部署流程
-#### 1. 开通uniCloud
-- 开通`uniCloud`：本项目是云端一体的，它的云端代码需要部署在uniCloud云服务空间里，需要开通uniCloud。在[https://unicloud.dcloud.net.cn/](https://unicloud.dcloud.net.cn/)登录，按云厂商要求进行实名认证。
-- 在uniCloud认证通过后，创建一个服务空间给本项目使用。选择阿里云或腾讯云均可。[参考](https://uniapp.dcloud.net.cn/uniCloud/price)
-- 使用HBuilderX 3.1以上版本（最好是最新版），把本项目导入到HBuilderX中，在项目根目录uniCloud上点右键菜单，关联服务空间 -> 选择之前创建的服务空间
-
-#### 2. 关联项目与云服务空间
-<img class="cloud" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/f3f36e4a-77e6-495c-bb85-5fc6999e29e1.jpg" />
-<img class="cloud" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/dd39dfcc-60c8-4f9f-a4d7-6b08f39e737e.jpg" />
-<img class="cloud" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/350f5e46-976e-4c5b-be49-e5c3908b03f4.jpg" />
-
-#### 3.根目录`/uniCloud/database` 右键上传`上传所有DB Schema及扩展校验函数`
 
 ##### 配置文件
 uni-starter提供了uni-starter.config.js，可指定该应用是否强制登录才能进入首页，可配置选择登录注册方式以及不同方式的优先级等。配置项内容如下：
