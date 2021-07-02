@@ -2,7 +2,7 @@
 
 > 用途：主要使用在登录、需要人机校验或其他限制调用的场景
 
-> 验证码生成、校验都在服务端。页面使用返回的 base64 显示。[云端一体登录模板](https://ext.dcloud.net.cn/plugin?id=13)已集成，可下载体验。
+> 验证码生成、校验都在服务端。页面使用返回的 base64 显示。[云端一体登陆模板](https://ext.dcloud.net.cn/plugin?id=13)已集成，可下载体验。
 
 > 数据表使用[opendb-verify-codes](https://gitee.com/dcloud/opendb/blob/master/collection/opendb-verify-codes/collection.json)
 
