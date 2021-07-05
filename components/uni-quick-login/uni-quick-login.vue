@@ -97,23 +97,19 @@
 			}
 		},
 		async created() {
-			this.univerifyStyle.privacyTerms.privacyItems = this.agreements
-			
 			let servicesList = this.servicesList
 			//获取当前环境能用的快捷登录方式
 			// #ifdef MP-WEIXIN
 			let id = 'weixin'
-			if (this.loginConfig.includes(id)) {
-				servicesList.push({
-					...this.config[id],
-					id
-				})
-			}
+			servicesList.push({
+				...this.config[id],
+				id
+			})
 			// #endif
 			// #ifdef APP-PLUS
 			this.oauthServices = await new Promise((callBack)=>{
 				plus.oauth.getServices(oauthServices => {
-					callBack(oauthServices.filter(({nativeClient,id})=>nativeClient&&this.loginConfig.includes(id))) 
+					callBack(oauthServices.filter(({nativeClient,id})=>nativeClient)) 
 					//只返回1.应用支持 && 2.手机已安装对应客户端 && 3.uni-starter.config.js配置项中存在的快捷登录方式
 				}, err => {
 					callBack([])
@@ -131,17 +127,29 @@
 			servicesList = servicesList.concat(this.oauthServices.map( ({id})=>{
 				return {...this.config[id],id}
 			}))
+			
+			//去掉配置中不存在的
+			servicesList = servicesList.filter(item=>this.loginConfig.includes(item.id))
+			
+			this.univerifyStyle.privacyTerms.privacyItems = this.agreements
 			//设置一键登录功能底下的快捷登陆按钮
 			servicesList.forEach(({id,logo})=>{
 				if(id != 'univerify'){
 					this.univerifyStyle.buttons.list.push({"iconPath":logo,"provider":id})
 				}
 			})
+			//如果当前页面为默认登陆界面。当前第一优先级的“第三方快捷按钮”要隐藏，因为他已经被渲染在默认登陆界面顶部
+			if(
+				this.getRoute(1)=='/pages/ucenter/login-page/index/index' &&
+				this.config[this.loginConfig[0]]
+			){
+				servicesList = servicesList.filter(item=>item.id!=this.loginConfig[0])
+			}
 			//去掉当前页面对应的登录选项
 			this.servicesList = servicesList.filter(item=>{
 				return item.path != this.getRoute(1)
 			})
-			// console.log('servicesList',servicesList,this.servicesList);
+			console.log('servicesList',servicesList,this.servicesList);
 		},
 		methods: {
 			...mapMutations({

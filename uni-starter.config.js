@@ -30,7 +30,8 @@ module.exports = {
 			未列举到的，或设备环境不支持的选项，将被隐藏。如果你需要在不同平台有不同的配置，直接用条件编译即可
 			根据数组的第0项，决定登录方式的第一优先级。
 		*/
-		"login": ["username","smsCode","univerify", "weixin", "apple"],
+		// "login": ["username","smsCode","univerify", "weixin", "apple"],
+		"login": ["weixin","username"],
 	},
 	//关于应用
 	"about": {

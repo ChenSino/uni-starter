@@ -3,22 +3,24 @@
 		<!-- 顶部文字 -->
 		<text class="title">登录后即可展示自己</text>
 		<!-- 登录框 -->
-		<input type="number" class="input-box" :inputBorder="false" v-model="phone" maxlength="11"
+		<input v-if="first_type=='smsCode'" type="number" class="input-box" :inputBorder="false" v-model="phone" maxlength="11"
 			placeholder="请输入手机号" />
+		<image @click="quickLogin" :src="imgSrc" mode="widthFix" class="quickLoginBtn"></image>
 		<uni-agreements @setAgree="agree = $event"></uni-agreements>
-		<button class="get-code" :disabled="!isPhone" :type="isPhone?'primary':'default'"
+		<button v-if="first_type=='smsCode'" class="get-code" :disabled="!isPhone" :type="isPhone?'primary':'default'"
 			@click="sendShortMsg">获取短信验证码</button>
-		<text class="tip">未注册的手机号验证通过后将自动注册</text>
+		<text v-if="first_type=='smsCode'" class="tip">未注册的手机号验证通过后将自动注册</text>
 		<!-- 登录按钮弹窗 -->
 		<uni-quick-login :agree="agree" ref="uniQuickLogin"></uni-quick-login>
 	</view>
 </template>
 
 <script>
-	var univerify_first, currentWebview; //是否一键登录优先
+	let currentWebview; //是否一键登录优先
 	export default {
 		data() {
 			return {
+				first_type:"",
 				phone: "",
 				agree: false
 			}
@@ -26,13 +28,16 @@
 		computed: {
 			isPhone() {
 				return /^1\d{10}$/.test(this.phone);
+			},
+			imgSrc(){
+				return '/static/login-index/'+this.first_type+'.jpg'
 			}
 		},
 		onLoad(e) {
+			this.first_type = e.first_type
 			//是否优先启动一键登录。即：页面一加载就启动一键登录
-			univerify_first = e.univerify_first
 			//#ifdef APP-PLUS
-			if (univerify_first) {
+			if (this.first_type == "univerify") {
 				const pages = getCurrentPages();
 				currentWebview = pages[pages.length - 1].$getAppWebview();
 				currentWebview.setStyle({
@@ -63,6 +68,9 @@
 			//#endif
 		},
 		methods: {
+			quickLogin(){
+				this.$refs.uniQuickLogin.login_before(this.first_type)
+			},
 			sendShortMsg() {
 				if (!this.agree) {
 					return uni.showToast({
@@ -91,4 +99,8 @@
 
 <style lang="scss">
 	@import url("../common/login-page.css");
+	.quickLoginBtn{
+		width: 500rpx;
+		margin: 100rpx;
+	}
 </style>
