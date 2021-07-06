@@ -7,16 +7,63 @@ import callCheckVersion from '@/uni_modules/uni-upgrade-center-app/utils/call-ch
 import interceptorChooseImage from '@/uni_modules/json-interceptor-chooseImage/js_sdk/main.js';
 // #endif
 const db = uniCloud.database()
-export default function() {
-	// #ifndef H5
+export default async function() {
+	let loginConfig = uniStarterConfig.router.login
+	//清除有配置但设备环境不支持的登陆项
+	// #ifdef APP-PLUS
+	await new Promise((callBack)=>{
+		plus.oauth.getServices(oauthServices => {
+			loginConfig = loginConfig.filter(item=>{
+				if(["univerify", "weixin", "apple"].includes(item)){
+					let index = oauthServices.findIndex(e=>e.id==item)
+					if(index==-1){
+						return false
+					}else{
+						return oauthServices[index].nativeClient
+					}
+				}else{
+					return true
+				}
+			})
+			
+			if(loginConfig.includes('univerify')){ //一键登录 功能预登录
+				uni.preLogin({
+					provider:'univerify',
+					complete: e => {
+						console.log(e);
+					}
+				})
+			}
+			callBack()
+		}, err => {
+			console.error('获取服务供应商失败：' + JSON.stringify(err));
+		})
+	})
+	// #endif
+	
+	// #ifndef APP-PLUS
+		loginConfig = loginConfig.filter(item=>{
+			return ![
+				'univerify',
+				'apple',
+			// #ifdef H5
+				'weixin'
+			// #endif
+			].includes(item)
+		})
+	// #endif
+	
+	uniStarterConfig.router.login = loginConfig
+	
+	// uniStarterConfig挂载到getApp().globalData.config
+	// #ifdef MP-WEIXIN
 	setTimeout(()=>{
 	// #endif
-		// uniStarterConfig挂载到getApp().
-		const app = getApp({allowDefault: true})
-		app.globalData.config = uniStarterConfig;
-	// #ifndef H5
-	},30)
+		getApp({allowDefault: true}).globalData.config = uniStarterConfig;
+	// #ifdef MP-WEIXIN
+	},100)
 	// #endif
+	
 	
 	// 初始化appVersion（仅app生效）
 	initAppVersion();
@@ -257,12 +304,15 @@ export default function() {
 					&&
 					pages[pages.length - 1].route.split('/')[2]!='login-page'
 				) {
+					
+					console.log(9527777,login);
+					
 					//一键登录（univerify）、账号（username）、验证码登录（短信smsCode）
-					if (login[0] == 'univerify') {
-						if(e.url == url) { e.url += '?' } //添加参数之前判断是否带了`？`号如果没有就补上，因为当开发场景本身有参数的情况下是已经带了`？`号
-						e.url += "univerify_first=true"
-					} else if (login[0] == 'username') {
+					if (login[0] == 'username') {
 						e.url = "/pages/ucenter/login-page/pwd-login/pwd-login"
+					}else{
+						if(e.url == url) { e.url += '?' } //添加参数之前判断是否带了`？`号如果没有就补上，因为当开发场景本身有参数的情况下是已经带了`？`号
+						e.url += "type="+login[0]
 					}
 				}else{
 					//拦截强制登录页面

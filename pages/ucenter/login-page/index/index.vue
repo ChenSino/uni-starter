@@ -3,14 +3,20 @@
 		<!-- 顶部文字 -->
 		<text class="title">登录后即可展示自己</text>
 		<!-- 登录框 -->
-		<input v-if="first_type=='smsCode'" type="number" class="input-box" :inputBorder="false" v-model="phone" maxlength="11"
-			placeholder="请输入手机号" />
-		<image @click="quickLogin" :src="imgSrc" mode="widthFix" class="quickLoginBtn"></image>
-		<uni-agreements @setAgree="agree = $event"></uni-agreements>
-		<button v-if="first_type=='smsCode'" class="get-code" :disabled="!isPhone" :type="isPhone?'primary':'default'"
-			@click="sendShortMsg">获取短信验证码</button>
-		<text v-if="first_type=='smsCode'" class="tip">未注册的手机号验证通过后将自动注册</text>
-		<!-- 登录按钮弹窗 -->
+		<view v-if="['apple','weixin'].includes(type)" class="quickLogin">
+			<image @click="quickLogin" :src="imgSrc" mode="widthFix" class="quickLoginBtn"></image>
+			<uni-agreements @setAgree="agree = $event"></uni-agreements>
+		</view>
+		<template v-else>
+			<input type="number" class="input-box" :inputBorder="false" v-model="phone" maxlength="11"
+				placeholder="请输入手机号" />
+			<uni-agreements @setAgree="agree = $event"></uni-agreements>
+			<button class="get-code" :disabled="!isPhone" :type="isPhone?'primary':'default'"
+				@click="sendShortMsg">获取短信验证码</button>
+			<text class="tip">未注册的手机号验证通过后将自动注册</text>
+		</template>
+		
+		<!-- 快捷登录按钮弹窗 -->
 		<uni-quick-login :agree="agree" ref="uniQuickLogin"></uni-quick-login>
 	</view>
 </template>
@@ -20,24 +26,28 @@
 	export default {
 		data() {
 			return {
-				first_type:"",
+				type:"",
 				phone: "",
 				agree: false
 			}
 		},
 		computed: {
+			loginConfig() {
+				return getApp().globalData.config.router.login
+			},
 			isPhone() {
 				return /^1\d{10}$/.test(this.phone);
 			},
 			imgSrc(){
-				return '/static/login-index/'+this.first_type+'.jpg'
+				return '/static/login-index/'+this.type+'.png'
 			}
 		},
 		onLoad(e) {
-			this.first_type = e.first_type
+			this.type = e.type
+			
 			//是否优先启动一键登录。即：页面一加载就启动一键登录
 			//#ifdef APP-PLUS
-			if (this.first_type == "univerify") {
+			if (this.type == "univerify") {
 				const pages = getCurrentPages();
 				currentWebview = pages[pages.length - 1].$getAppWebview();
 				currentWebview.setStyle({
@@ -48,7 +58,8 @@
 		},
 		onReady() {
 			//#ifdef APP-PLUS
-			if (univerify_first) {
+			if (this.type == "univerify") {
+				this.type == loginConfig[1]
 				// console.log('开始一键登录');
 				setTimeout(() => {
 					this.$refs.uniQuickLogin.login_before('univerify')
@@ -69,7 +80,7 @@
 		},
 		methods: {
 			quickLogin(){
-				this.$refs.uniQuickLogin.login_before(this.first_type)
+				this.$refs.uniQuickLogin.login_before(this.type)
 			},
 			sendShortMsg() {
 				if (!this.agree) {
@@ -99,8 +110,14 @@
 
 <style lang="scss">
 	@import url("../common/login-page.css");
+	.quickLogin{
+		width: 650rpx;
+		height: 350px;
+		align-items: center;
+		justify-content: center;
+	}
 	.quickLoginBtn{
-		width: 500rpx;
-		margin: 100rpx;
+		margin-bottom:20px;
+		width: 450rpx;
 	}
 </style>

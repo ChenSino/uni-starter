@@ -4,10 +4,10 @@
 			<checkbox  style="transform: scale(0.7);" />
 			<text>同意</text>
 		</checkbox-group>
-		<template v-for="(agreement,index) in agreements">
+		<view class="item" v-for="(agreement,index) in agreements" :key="index">
 			<text class="agreement" @click="navigateTo(agreement)">{{agreement.title}}</text>
 			<text class="hint" v-if="hasAnd(agreements,index)">和</text>
-		</template>
+		</view>
 	</view>
 </template>
 
@@ -54,6 +54,9 @@
 .checkbox-group{
 	align-items: center;
 	display: flex;
+	flex-direction: row;
+}
+.item{
 	flex-direction: row;
 }
 .agreement{

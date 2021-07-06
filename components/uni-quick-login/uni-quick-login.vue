@@ -123,7 +123,7 @@
 				})
 			})
 			// #endif
-			//添加已配置且可用的第三方快捷登陆项
+			//添加可用的第三方快捷登陆项
 			servicesList = servicesList.concat(this.oauthServices.map( ({id})=>{
 				return {...this.config[id],id}
 			}))
@@ -169,7 +169,8 @@
 					uni.navigateBack();
 				} else {
 					uni.navigateTo({
-						url: path
+						url: path,
+						animationType:'slide-in-left'
 					})
 				}
 			},

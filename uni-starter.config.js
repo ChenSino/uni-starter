@@ -31,7 +31,7 @@ module.exports = {
 			根据数组的第0项，决定登录方式的第一优先级。
 		*/
 		// "login": ["username","smsCode","univerify", "weixin", "apple"],
-		"login": ["weixin","username"],
+		"login": ["username","weixin","apple","smsCode"],
 	},
 	//关于应用
 	"about": {

@@ -19,28 +19,6 @@
 			// #endif
 
 			// #ifdef APP-PLUS
-			//一键登录 功能预登录
-			plus.oauth.getServices(oauthServices => {
-				// console.log(oauthServices);
-				oauthServices.forEach(({
-					_id
-				}, item) => {
-					if (_id == 'provider') {
-						uni.preLogin({
-							provider: item,
-							complete: e => {
-								console.log(e);
-							}
-						})
-					}
-				})
-				uni.preloadPage({
-					url: "/pages/ucenter/login-page/index/index"
-				});
-			}, err => {
-				console.error('获取服务供应商失败：' + JSON.stringify(err));
-			})
-			
 			//idfa有需要的用户在应用首次启动时自己获取存储到storage中
 			//https://ask.dcloud.net.cn/article/36107
 			/*if(~plus.storage.getItem('idfa')){
