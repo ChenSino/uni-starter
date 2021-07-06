@@ -57,14 +57,20 @@
                 ],
                 "abiFilters" : [ "armeabi-v7a", "arm64-v8a", "x86" ]
             },
-            "ios" : {},
+            "ios" : {
+                "capabilities" : {
+                    "entitlements" : {
+                        "com.apple.developer.associated-domains" : [ "applinks:static-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e.bspapp.com" ]
+                    }
+                }
+            },
             "sdkConfigs" : {
                 "oauth" : {
                     "apple" : {},
                     "weixin" : {
                         "appid" : "wxffdd8fa6ec4ef2a0",
                         "appsecret" : "",
-                        "UniversalLinks" : ""
+                        "UniversalLinks" : "https://static-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e.bspapp.com/uni-universallinks/__UNI__03B096E"
                     },
                     "univerify" : {}
                 },
@@ -72,7 +78,7 @@
                 "share" : {
                     "weixin" : {
                         "appid" : "wxffdd8fa6ec4ef2a0",
-                        "UniversalLinks" : ""
+                        "UniversalLinks" : "https://static-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e.bspapp.com/uni-universallinks/__UNI__03B096E"
                     }
                 },
                 "geolocation" : {},
@@ -108,5 +114,6 @@
     },
     "h5" : {
         "template" : ""
-    }
+    },
+    "_spaceID" : "76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e"
 }

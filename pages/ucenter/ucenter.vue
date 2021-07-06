@@ -78,7 +78,7 @@
 							"event": 'getScore',
 							"icon": "paperplane"
 						}
-						// #ifndef H5
+						// #ifdef APP-PLUS
 						,{
 							"title": '分销推荐',
 							"event": 'share',

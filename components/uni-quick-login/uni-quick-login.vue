@@ -36,36 +36,41 @@
 						"text": "短信验证码",
 						"logo": "/static/uni-quick-login/sms.png",
 						"path": "/pages/ucenter/login-page/index/index"
-					}
-				],
-				oauthServices: [],
-				config: {
-					"weixin": {
+					},
+					{
+						"id": "weixin",
 						"text": "微信登录",
 						"logo": "/static/uni-quick-login/wechat.png",
 					},
-					"apple": {
+					{
+						"id": "apple",
 						"text": "苹果登录",
 						"logo": "/static/uni-quick-login/apple.png",
 					},
-					"univerify": {
+					{
+						"id": "univerify",
 						"text": "一键登录",
 						"logo": "/static/uni-quick-login/univerify.png",
 					},
-					"qq": {
-						"text": "QQ登录",//暂未提供该登录方式的接口示例
+					{
+						"id": "qq",
+						"text": "QQ登录", //暂未提供该登录方式的接口示例
 						"logo": "/static/uni-quick-login/univerify.png",
 					},
-					"xiaomi": {
-						"text": "小米登录",//暂未提供该登录方式的接口示例
+					{
+						"id": "xiaomi",
+						"text": "小米登录", //暂未提供该登录方式的接口示例
 						"logo": "/static/uni-quick-login/univerify.png",
 					},
-					"sinaweibo": {
-						"text": "微博登录",//暂未提供该登录方式的接口示例
+					{
+						"id": "sinaweibo",
+						"text": "微博登录", //暂未提供该登录方式的接口示例
 						"logo": "/static/uni-quick-login/univerify.png",
 					}
-				},
-				univerifyStyle:{ //一键登录弹出窗的样式配置参数
+				],
+				oauthServices: [],
+				config: {},
+				univerifyStyle: { //一键登录弹出窗的样式配置参数
 					"fullScreen": true, // 是否全屏显示，true表示全屏模式，false表示非全屏模式，默认值为false。
 					"backgroundColor": "#ffffff", // 授权页面背景颜色，默认值：#ffffff
 					"buttons": { // 自定义登陆按钮
@@ -98,58 +103,47 @@
 		},
 		async created() {
 			let servicesList = this.servicesList
-			//获取当前环境能用的快捷登录方式
-			// #ifdef MP-WEIXIN
-			let id = 'weixin'
-			servicesList.push({
-				...this.config[id],
-				id
-			})
-			// #endif
-			// #ifdef APP-PLUS
-			this.oauthServices = await new Promise((callBack)=>{
-				plus.oauth.getServices(oauthServices => {
-					callBack(oauthServices.filter(({nativeClient,id})=>nativeClient)) 
-					//只返回1.应用支持 && 2.手机已安装对应客户端 && 3.uni-starter.config.js配置项中存在的快捷登录方式
-				}, err => {
-					callBack([])
-					uni.hideLoading()
-					uni.showModal({
-						title: '获取服务供应商失败：' + JSON.stringify(err),
-						showCancel: false,
-						confirmText: '知道了'
-					});
-					console.error('获取服务供应商失败：' + JSON.stringify(err));
-				})
-			})
-			// #endif
-			//添加可用的第三方快捷登陆项
-			servicesList = servicesList.concat(this.oauthServices.map( ({id})=>{
-				return {...this.config[id],id}
-			}))
-			
 			//去掉配置中不存在的
-			servicesList = servicesList.filter(item=>this.loginConfig.includes(item.id))
-			
-			this.univerifyStyle.privacyTerms.privacyItems = this.agreements
-			//设置一键登录功能底下的快捷登陆按钮
-			servicesList.forEach(({id,logo})=>{
-				if(id != 'univerify'){
-					this.univerifyStyle.buttons.list.push({"iconPath":logo,"provider":id})
-				}
-			})
-			//如果当前页面为默认登陆界面。当前第一优先级的“第三方快捷按钮”要隐藏，因为他已经被渲染在默认登陆界面顶部
-			if(
-				this.getRoute(1)=='/pages/ucenter/login-page/index/index' &&
-				this.config[this.loginConfig[0]]
-			){
-				servicesList = servicesList.filter(item=>item.id!=this.loginConfig[0])
+			servicesList = servicesList.filter(item => this.loginConfig.includes(item.id))
+			//处理一键登录
+			if(this.loginConfig.includes('univerify')){
+				this.univerifyStyle.privacyTerms.privacyItems = this.agreements
+				//设置一键登录功能底下的快捷登陆按钮
+				servicesList.forEach(({id,logo}) => {
+					if (id != 'univerify') {
+						this.univerifyStyle.buttons.list.push({
+							"iconPath": logo,
+							"provider": id
+						})
+					}
+				})
+			}
+			//如果当前页面为默认登陆界面。当前第一优先级的“微信和苹果登陆”要隐藏，因为他已经被渲染在默认登陆界面顶部
+			if (
+				this.getRoute(1) == '/pages/ucenter/login-page/index/index' &&
+				['weixin','apple'].includes(this.loginConfig[0])
+			) {
+				servicesList = servicesList.filter(item => item.id != this.loginConfig[0])
 			}
 			//去掉当前页面对应的登录选项
-			this.servicesList = servicesList.filter(item=>{
+			this.servicesList = servicesList.filter(item => {
 				return item.path != this.getRoute(1)
 			})
-			console.log('servicesList',servicesList,this.servicesList);
+			console.log('servicesList', servicesList, this.servicesList);
+		},
+		mounted() {
+			// #ifdef APP-PLUS
+			plus.oauth.getServices(oauthServices => {
+				this.oauthServices = oauthServices
+			}, err => {
+				uni.showModal({
+					title: '获取服务供应商失败：' + JSON.stringify(err),
+					showCancel: false,
+					confirmText: '知道了'
+				});
+				console.error('获取服务供应商失败：' + JSON.stringify(err));
+			})
+			// #endif
 		},
 		methods: {
 			...mapMutations({
@@ -170,12 +164,12 @@
 				} else {
 					uni.navigateTo({
 						url: path,
-						animationType:'slide-in-left'
+						animationType: 'slide-in-left'
 					})
 				}
 			},
 			login_before(type, navigateBack = true) {
-				if (!this.agree&&type!='univerify') {
+				if (!this.agree && type != 'univerify') {
 					return uni.showToast({
 						title: '你未同意隐私政策协议',
 						icon: 'none'
@@ -201,7 +195,7 @@
 						},
 						err => {
 							uni.hideLoading()
-							console.log(err);
+							console.error(err);
 							uni.showModal({
 								content: JSON.stringify(err),
 								showCancel: false
@@ -236,7 +230,7 @@
 					},
 					fail: (err) => {
 						uni.hideLoading()
-						console.log(err);
+						console.error(err);
 
 						if (type == 'univerify') {
 							if (err.metadata && err.metadata.error_data) {
@@ -274,12 +268,14 @@
 										title: '点击了第三方登陆',
 										icon: 'none'
 									});
-									console.log('点击了第三方登陆，provider：',err.provider);
-									let {path} = this.servicesList.find(item=>item.id==err.provider)||{}
-									console.log('path',path);
-									if(path&&path!=this.getRoute(1)){ //存在路径，且并不是当前已经打开的路径
+									console.log('点击了第三方登陆，provider：', err.provider);
+									let {
+										path
+									} = this.servicesList.find(item => item.id == err.provider) || {}
+									console.log('path', path);
+									if (path && path != this.getRoute(1)) { //存在路径，且并不是当前已经打开的路径
 										this.to(path)
-									}else{
+									} else {
 										this.login_before(err.provider)
 									}
 									break;
@@ -292,10 +288,7 @@
 				})
 			},
 			login(params, type) { //联网验证登录
-				console.log({
-					params,
-					type
-				});
+				console.log({params,type});
 				let action = 'loginBy' + type.trim().toLowerCase().replace(type[0], type[0].toUpperCase())
 				uniCloud.callFunction({
 					name: 'uni-id-cf',
@@ -306,7 +299,7 @@
 					success: ({
 						result
 					}) => {
-						console.log(result);
+						console.log("login-result",result);
 						if (result.code === 0) {
 							if (type == 'univerify') {
 								uni.closeAuthView()

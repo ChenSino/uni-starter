@@ -117,7 +117,7 @@
 		justify-content: center;
 	}
 	.quickLoginBtn{
-		margin-bottom:20px;
+		margin:20px 0;
 		width: 450rpx;
 	}
 </style>

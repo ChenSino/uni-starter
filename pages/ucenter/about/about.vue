@@ -9,10 +9,10 @@
 			<text class="tip">扫描二维码，您的朋友也可以下载{{about.appName}}客户端</text>
 		</view>
 		<view class="copyright">
-			<template v-for="(agreement,index) in about.agreements">
+			<view class="agreement-box" v-for="(agreement,index) in about.agreements" :key="index">
 				<text class="agreement" @click="navigateTo(agreement)">《{{agreement.title}}》</text>
 				<text class="hint" v-if="about.agreements.length-1>index">和</text>
-			</template>
+			</view>
 			<text class="hint">Copyright © {{year}}</text>
 			<text class="hint">{{about.company}}</text>
 		</view>
@@ -154,11 +154,15 @@ import uniShare from 'uni_modules/uni-share/js_sdk/uni-share.js';
 	left: 0;
 	position: fixed;
 }
+.agreement-box{
+	justify-content: center;
+}
 .agreement {
 	color:#2285ff;
 	font-size:26rpx;
 }
 .hint {
+	text-align: center;
 	color:#999999;
 	font-size:26rpx;
 }

@@ -9,7 +9,7 @@ import interceptorChooseImage from '@/uni_modules/json-interceptor-chooseImage/j
 const db = uniCloud.database()
 export default async function() {
 	let loginConfig = uniStarterConfig.router.login
-	//清除有配置但设备环境不支持的登陆项
+//清除有配置但设备环境不支持的登陆项
 	// #ifdef APP-PLUS
 	await new Promise((callBack)=>{
 		plus.oauth.getServices(oauthServices => {
@@ -25,7 +25,6 @@ export default async function() {
 					return true
 				}
 			})
-			
 			if(loginConfig.includes('univerify')){ //一键登录 功能预登录
 				uni.preLogin({
 					provider:'univerify',
@@ -41,6 +40,7 @@ export default async function() {
 	})
 	// #endif
 	
+	//非app移除：一键登录、苹果登陆；h5移除微信登陆，如果你做微信公众号登陆需要将此行移除
 	// #ifndef APP-PLUS
 		loginConfig = loginConfig.filter(item=>{
 			return ![
@@ -52,19 +52,15 @@ export default async function() {
 			].includes(item)
 		})
 	// #endif
-	
+
 	uniStarterConfig.router.login = loginConfig
-	
+
 	// uniStarterConfig挂载到getApp().globalData.config
-	// #ifdef MP-WEIXIN
 	setTimeout(()=>{
-	// #endif
 		getApp({allowDefault: true}).globalData.config = uniStarterConfig;
-	// #ifdef MP-WEIXIN
-	},100)
-	// #endif
+	},1)
 	
-	
+
 	// 初始化appVersion（仅app生效）
 	initAppVersion();
 	
