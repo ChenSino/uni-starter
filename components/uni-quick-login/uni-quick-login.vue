@@ -35,7 +35,7 @@
 						"id": "smsCode",
 						"text": "短信验证码",
 						"logo": "/static/uni-quick-login/sms.png",
-						"path": "/pages/ucenter/login-page/index/index"
+						"path": "/pages/ucenter/login-page/index/index?type=smsCode"
 					},
 					{
 						"id": "weixin",
