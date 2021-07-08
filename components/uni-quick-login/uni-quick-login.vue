@@ -127,7 +127,8 @@
 			}
 			//去掉当前页面对应的登录选项
 			this.servicesList = servicesList.filter(item => {
-				return item.path != this.getRoute(1)
+				let path = item.path?item.path.split('?')[0]:'';
+				return path != this.getRoute(1)
 			})
 			console.log('servicesList', servicesList, this.servicesList);
 		},
