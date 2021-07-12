@@ -1,30 +1,25 @@
 <template>
 	<view class="warp">
-		<!-- 搜索 -->
-		<template>
-			<!-- #ifdef APP-PLUS -->
-			<status-bar />
-			<!-- #endif -->
-			<uni-search-bar ref="searchBar" style="flex:1;" radius="100" @click.native="searchClick" cancelButton="none"
-				disabled />
-		</template>
-		<!-- banner -->
+	<!-- 搜索 -->
+		<!-- #ifdef APP-PLUS -->
+		<status-bar />
+		<!-- #endif -->
+		<uni-search-bar ref="searchBar" style="flex:1;" radius="100" @click.native="searchClick" cancelButton="none" disabled />
+	<!-- banner -->
 		<unicloud-db ref="bannerdb" v-slot:default="{data, loading, error, options}" collection="opendb-banner"
-			:field="field" @load="load">
-			<uni-swiper-dot class="uni-swiper-dot-box" @clickItem="clickItem"
-				:info="data || bannerFormate(data, loading)" :current="current" :mode="mode" :dots-styles="dotsStyles"
-				field="content">
+			field="_id,bannerfile,open_url,title" @load="load">
+			<uni-swiper-dot class="uni-swiper-dot-box" @clickItem="clickItem" :info="data || bannerFormate(data, loading)" 
+				:current="current" field="content">
 				<swiper class="swiper-box" @change="changeSwiper" :current="swiperDotIndex">
 					<swiper-item v-for="(item, index) in (data || bannerFormate(data, loading))" :key="item._id">
 						<view :draggable="false" class="swiper-item" @click="clickBannerItem(item)">
-							<image class="swiper-image" :src="item.bannerfile.url" mode="aspectFill"
-								:draggable="false" />
+							<image class="swiper-image" :src="item.bannerfile.url" mode="aspectFill" :draggable="false" />
 						</view>
 					</swiper-item>
 				</swiper>
 			</uni-swiper-dot>
 		</unicloud-db>
-		<!-- 宫格 -->
+	<!-- 宫格 -->
 		<uni-section title="宫格组件" style="margin: 0;" type="line"></uni-section>
 		<view class="example-body">
 			<uni-grid :column="3" :highlight="true" @change="change">
@@ -56,39 +51,8 @@
 		data() {
 			return {
 				gridList: ['所有人可见','所有人可见','所有人可见', '游客不可见', '游客不可见', '游客不可见','管理员可见','管理员可见','管理员可见'],
-				// 查询字段，多个字段用 , 分割
-				field: '_id,bannerfile,open_url,title',
-				where: 'category_id==grid',
-				// info: [],
-				dotStyle: [{
-						backgroundColor: 'rgba(0, 0, 0, .3)',
-						border: '1px rgba(0, 0, 0, .3) solid',
-						color: '#fff',
-						selectedBackgroundColor: 'rgba(0, 0, 0, .9)',
-						selectedBorder: '1px rgba(0, 0, 0, .9) solid'
-					},
-					{
-						backgroundColor: 'rgba(255, 90, 95,0.3)',
-						border: '1px rgba(255, 90, 95,0.3) solid',
-						color: '#fff',
-						selectedBackgroundColor: 'rgba(255, 90, 95,0.9)',
-						selectedBorder: '1px rgba(255, 90, 95,0.9) solid'
-					},
-					{
-						backgroundColor: 'rgba(83, 200, 249,0.3)',
-						border: '1px rgba(83, 200, 249,0.3) solid',
-						color: '#fff',
-						selectedBackgroundColor: 'rgba(83, 200, 249,0.9)',
-						selectedBorder: '1px rgba(83, 200, 249,0.9) solid'
-					}
-				],
-				modeIndex: -1,
-				styleIndex: -1,
 				current: 0,
-				mode: 'default',
-				dotsStyles: {},
-				swiperDotIndex: 0,
-				isLoading: true
+				swiperDotIndex: 0
 			}
 		},
 		computed: {
@@ -118,16 +82,6 @@
 			},
 			changeSwiper(e) {
 				this.current = e.detail.current
-			},
-			selectStyle(index) {
-				this.dotsStyles = this.dotStyle[index]
-				this.styleIndex = index
-			},
-			selectMode(mode, index) {
-				this.mode = mode
-				this.modeIndex = index
-				this.styleIndex = -1
-				this.dotsStyles = this.dotStyle[0]
 			},
 			clickItem(e) {
 				this.swiperDotIndex = e

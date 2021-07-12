@@ -42,6 +42,10 @@
 <script>
 	var cdbRef, currentWebview;
 	import statusBar from "@/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar";
+	
+	import Gps from '@/uni_modules/json-gps/js_sdk/gps.js';
+	const gps = new Gps()
+	
 	export default {
 		components: {
 			statusBar
@@ -72,7 +76,7 @@
 			// #endif
 			cdbRef = this.$refs.udb
 		},
-		onShow() {
+		async onShow() {
 			this.keyword = getApp().globalData.searchText
 			getApp().globalData.searchText = ''
 			if (this.keyword) {
@@ -85,6 +89,22 @@
 				currentWebview.setTitleNViewSearchInputText(this.keyword)
 				// #endif
 			}
+			
+			
+			//这里仅演示如何，在onShow生命周期获取设备位置，并在设备或者应用没有权限时自动引导。设置完毕自动重新获取。
+			//你可以基于他做自己的业务，比如：根据距离由近到远排序列表数据等
+			// uni.showLoading({
+			// 	title:"获取定位中"
+			// });
+			let location = await gps.getLocation({geocode:true})
+			console.log(location);
+			// if(location){
+			// 	uni.showToast({
+			// 		title: JSON.stringify(location),
+			// 		icon: 'none'
+			// 	});
+			// }
+			// uni.hideLoading()
 		},
 		methods: {
 			searchClick(e) { //点击搜索框

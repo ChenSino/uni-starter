@@ -40,21 +40,21 @@ module.exports = {
 		//应用logo
 		"logo": "/static/logo.png",
 		//公司名称
-		"company": "数字天堂（北京）网络技术有限公司",
+		"company": "北京xx网络技术有限公司",
 		//口号
 		"slogan": "云端一体应用快速开发模版",
 		//政策协议
 		"agreements": [{
 				"title": "用户服务协议", //协议名称
-				"url": "https://ask.dcloud.net.cn/protocol.html" //对应的网络链接
+				"url": "请填写用户服务协议链接" //对应的网络链接
 			},
 			{
 				"title": "隐私政策",
-				"url": "https://ask.dcloud.net.cn/protocol.html"
+				"url": "请填写隐私政策链接"
 			}
 		],
 		//应用的链接，用于分享到第三方平台和生成关于我们页的二维码
-		"download": "https://m3w.cn/uniapp",
+		"download": "",
 		//version
 		"version":"1.0.0" //用于非app端显示，app端自动获取
 	},
