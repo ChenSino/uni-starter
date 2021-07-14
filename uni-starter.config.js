@@ -1,7 +1,7 @@
 //这是应用的配置页面，App.vue挂载到getApp().globalData.config
 module.exports = {
 	"h5": {
-		"url": "https://uni-starter.dcloud.net.cn/", //	前端网页托管的域名
+		"url": "https://uni-starter.dcloud.net.cn", //	前端网页托管的域名
 		 // 在h5端全局悬浮引导用户下载app的功能 更多自定义要求在/common/openApp.js中修改
 		"openApp": {
 			//点击悬浮下载栏后打开的网页链接
