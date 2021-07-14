@@ -245,7 +245,7 @@
 					content: { //公共的分享类型（type）、链接（herf）、标题（title）、summary（描述）、imageUrl（缩略图）
 						type: 0,
 						href: this.appConfig.h5.url +
-							`/#/pages/ucenter/invite/invite?code=${myInviteCode}`,
+							`/#/pages/ucenter/invite/invite?code=uniInvitationCode:${myInviteCode}`,
 						title: appName,
 						summary: slogan,
 						imageUrl: logo + '?x-oss-process=image/resize,m_fill,h_100,w_100' //压缩图片解决，在ios端分享图过大导致的图片失效问题
