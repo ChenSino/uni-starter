@@ -1,11 +1,9 @@
 <template>
 	<view class="warp">
-	<!-- 搜索 -->
 		<!-- #ifdef APP-PLUS -->
 		<status-bar />
 		<!-- #endif -->
-		<uni-search-bar ref="searchBar" style="flex:1;" radius="100" @click.native="searchClick" cancelButton="none" disabled />
-	<!-- banner -->
+		<!-- banner -->
 		<unicloud-db ref="bannerdb" v-slot:default="{data, loading, error, options}" collection="opendb-banner"
 			field="_id,bannerfile,open_url,title" @load="load">
 			<uni-swiper-dot class="uni-swiper-dot-box" @clickItem="clickItem" :info="data || bannerFormate(data, loading)" 
@@ -67,13 +65,6 @@
 					icon: 'none'
 				})
 			},
-			searchClick() {
-				uni.hideKeyboard();
-				uni.navigateTo({
-					url: '/pages/list/search/search',
-					animationType: 'fade-in'
-				});
-			},
 			/**
 			 * banner加载后触发的回调
 			 */
@@ -121,8 +112,6 @@
 </script>
 
 <style>
-	@charset "UTF-8";
-
 	/* #ifndef APP-NVUE */
 	page {
 		display: flex;
@@ -132,12 +121,10 @@
 		min-height: 100%;
 		height: auto;
 	}
-
 	view {
 		font-size: 14px;
 		line-height: inherit;
 	}
-
 	.example-body {
 		/* #ifndef APP-NVUE */
 		display: flex;
@@ -149,14 +136,12 @@
 		font-size: 14px;
 		background-color: #ffffff;
 	}
-
 	/* #endif */
 
 	/* #ifdef APP-NVUE */
 	.warp {
 		background-color: #fff;
 	}
-
 	/* #endif */
 
 	.example-body {

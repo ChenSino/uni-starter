@@ -9,25 +9,25 @@ import interceptorChooseImage from '@/uni_modules/json-interceptor-chooseImage/j
 const db = uniCloud.database()
 export default async function() {
 	let loginConfig = uniStarterConfig.router.login
-//清除有配置但设备环境不支持的登陆项
+	//清除有配置但设备环境不支持的登陆项
 	// #ifdef APP-PLUS
-	await new Promise((callBack)=>{
+	await new Promise((callBack) => {
 		plus.oauth.getServices(oauthServices => {
-			loginConfig = loginConfig.filter(item=>{
-				if(["univerify", "weixin", "apple"].includes(item)){
-					let index = oauthServices.findIndex(e=>e.id==item)
-					if(index==-1){
+			loginConfig = loginConfig.filter(item => {
+				if (["univerify", "weixin", "apple"].includes(item)) {
+					let index = oauthServices.findIndex(e => e.id == item)
+					if (index == -1) {
 						return false
-					}else{
+					} else {
 						return oauthServices[index].nativeClient
 					}
-				}else{
+				} else {
 					return true
 				}
 			})
-			if(loginConfig.includes('univerify')){ //一键登录 功能预登录
+			if (loginConfig.includes('univerify')) { //一键登录 功能预登录
 				uni.preLogin({
-					provider:'univerify',
+					provider: 'univerify',
 					complete: e => {
 						console.log(e);
 					}
@@ -39,31 +39,33 @@ export default async function() {
 		})
 	})
 	// #endif
-	
+
 	//非app移除：一键登录、苹果登陆；h5移除微信登陆，如果你做微信公众号登陆需要将此行移除
 	// #ifndef APP-PLUS
-		loginConfig = loginConfig.filter(item=>{
-			return ![
-				'univerify',
-				'apple',
+	loginConfig = loginConfig.filter(item => {
+		return ![
+			'univerify',
+			'apple',
 			// #ifdef H5
-				'weixin'
+			'weixin'
 			// #endif
-			].includes(item)
-		})
+		].includes(item)
+	})
 	// #endif
 
 	uniStarterConfig.router.login = loginConfig
 
 	// uniStarterConfig挂载到getApp().globalData.config
-	setTimeout(()=>{
-		getApp({allowDefault: true}).globalData.config = uniStarterConfig;
-	},1)
-	
+	setTimeout(() => {
+		getApp({
+			allowDefault: true
+		}).globalData.config = uniStarterConfig;
+	}, 1)
+
 
 	// 初始化appVersion（仅app生效）
 	initAppVersion();
-	
+
 	// #ifdef APP-PLUS
 	// 实现，路由拦截。当应用无访问摄像头/相册权限，引导跳到设置界面
 	interceptorChooseImage()
@@ -77,29 +79,32 @@ export default async function() {
 	}) {
 		console.log('onDBError');
 		// 处理错误
-		console.log(code,message);
-		if([
-			'TOKEN_INVALID_INVALID_CLIENTID',
-			'TOKEN_INVALID',
-			'TOKEN_INVALID_TOKEN_EXPIRED',
-			'TOKEN_INVALID_WRONG_TOKEN',
-			'TOKEN_INVALID_ANONYMOUS_USER',
-		].includes(code)){
+		console.log(code, message);
+		if ([
+				'TOKEN_INVALID_INVALID_CLIENTID',
+				'TOKEN_INVALID',
+				'TOKEN_INVALID_TOKEN_EXPIRED',
+				'TOKEN_INVALID_WRONG_TOKEN',
+				'TOKEN_INVALID_ANONYMOUS_USER',
+			].includes(code)) {
 			uni.navigateTo({
-				url:'/pages/ucenter/login-page/index/index'
+				url: '/pages/ucenter/login-page/index/index'
 			})
 		}
 	}
 	// 绑定clientDB错误事件
 	db.on('error', onDBError)
-	
+
 	// 解绑clientDB错误事件
 	//db.off('error', onDBError)
 	db.on('refreshToken', function({
 		token,
 		tokenExpired
 	}) {
-		console.log('监听到clientDB的refreshToken',{token,tokenExpired});
+		console.log('监听到clientDB的refreshToken', {
+			token,
+			tokenExpired
+		});
 		store.commit('user/login', {
 			token,
 			tokenExpired
@@ -109,115 +114,118 @@ export default async function() {
 	const Debug = true;
 	//拦截器封装callFunction
 	let callFunctionOption;
-	uniCloud.addInterceptor('callFunction',{
-		async invoke(option){
+	uniCloud.addInterceptor('callFunction', {
+		async invoke(option) {
 			// #ifdef APP-PLUS
-				// 判断如果是执行登陆（无论是哪种登陆方式），就记录用户的相关设备id
-				if(option.name == 'uni-id-cf'&&(option.data.action == 'register' || option.data.action.slice(0,5) =='login')){
-					let oaid =  await new Promise((callBack,fail)=>{
-						if (uni.getSystemInfoSync().platform == "android") {
-							plus.device.getOAID({
-								success:function(e){
-									callBack(e.oaid)
-									// console.log('getOAID success: '+JSON.stringify(e));
-								},
-								fail:function(e){
-									callBack()
-									console.log('getOAID failed: '+JSON.stringify(e));
-								}
-							});
-						}else{
-							callBack()
-						}
-					})
-					
-					let imei =  await new Promise((callBack,fail)=>{
-						if (uni.getSystemInfoSync().platform == "android") {
-							plus.device.getInfo({
-								success:function(e){
-									callBack(e.imei)
-									// console.log('getOAID success: '+JSON.stringify(e));
-								},
-								fail:function(e){
-									callBack()
-									console.log('getOAID failed: '+JSON.stringify(e));
-								}
-							});
-						}else{
-							callBack()
-						}
-					})
-					
-					let push_clientid = '',
-					idfa = plus.storage.getItem('idfa')||'';//idfa有需要的用户在应用首次启动时自己获取存储到storage中
-					
-					try{
-						push_clientid = plus.push.getClientInfo().clientid
-					}catch(e){
-						uni.showModal({
-							content: '获取推送标识失败。如果你的应用不需要推送功能，请注释掉本代码块',
-							showCancel: false,
-							confirmText:"好的"
+			// 判断如果是执行登陆（无论是哪种登陆方式），就记录用户的相关设备id
+			if (option.name == 'uni-id-cf' && (option.data.action == 'register' || option.data.action.slice(0, 5) == 'login')) {
+				let oaid = await new Promise((callBack, fail) => {
+					if (uni.getSystemInfoSync().platform == "android") {
+						plus.device.getOAID({
+							success: function(e) {
+								callBack(e.oaid)
+								// console.log('getOAID success: '+JSON.stringify(e));
+							},
+							fail: function(e) {
+								callBack()
+								console.log('getOAID failed: ' + JSON.stringify(e));
+							}
 						});
-						console.log(e)
+					} else {
+						callBack()
 					}
-					
-					let deviceInfo = {
-						push_clientid,// 获取匿名设备标识符
-						imei,oaid,idfa
+				})
+
+				let imei = await new Promise((callBack, fail) => {
+					if (uni.getSystemInfoSync().platform == "android") {
+						plus.device.getInfo({
+							success: function(e) {
+								callBack(e.imei)
+								// console.log('getOAID success: '+JSON.stringify(e));
+							},
+							fail: function(e) {
+								callBack()
+								console.log('getOAID failed: ' + JSON.stringify(e));
+							}
+						});
+					} else {
+						callBack()
 					}
-					console.log("重新登陆/注册，获取设备id",deviceInfo);
-					option.data.deviceInfo = deviceInfo
-					
-					// #ifndef H5
-						//注册可能不仅仅走register接口，还有登陆并注册的接口
-						option.data.inviteCode = await new Promise((callBack)=>{
-							uni.getClipboardData({
-							    success: function (res) {
-									if(res.data.slice(0,18) =='uniInvitationCode:'){
-										let uniInvitationCode = res.data.slice(18,38)
-										console.log('当前用户是其他用户推荐下载的,推荐者的code是：'+uniInvitationCode);
-										// uni.showModal({
-										// 	content: '当前用户是其他用户推荐下载的,推荐者的code是：'+uniInvitationCode,
-										// 	showCancel: false
-										// });
-										callBack(uniInvitationCode)
-										//当前用户是其他用户推荐下载的。这里登记他的推荐者id 为当前用户的myInviteCode。判断如果是注册
-									}else{
-										callBack(false)
-									}
-							    },
-								fail() {
-									callBack(false)
-								}
-							});
-						})
-					// #endif
+				})
+
+				let push_clientid = '',
+					idfa = plus.storage.getItem('idfa') || ''; //idfa有需要的用户在应用首次启动时自己获取存储到storage中
+
+				try {
+					push_clientid = plus.push.getClientInfo().clientid
+				} catch (e) {
+					uni.showModal({
+						content: '获取推送标识失败。如果你的应用不需要推送功能，请注释掉本代码块',
+						showCancel: false,
+						confirmText: "好的"
+					});
+					console.log(e)
 				}
+
+				let deviceInfo = {
+					push_clientid, // 获取匿名设备标识符
+					imei,
+					oaid,
+					idfa
+				}
+				console.log("重新登陆/注册，获取设备id", deviceInfo);
+				option.data.deviceInfo = deviceInfo
+
+				// #ifndef H5
+				//注册可能不仅仅走register接口，还有登陆并注册的接口
+				option.data.inviteCode = await new Promise((callBack) => {
+					uni.getClipboardData({
+						success: function(res) {
+							if (res.data.slice(0, 18) == 'uniInvitationCode:') {
+								let uniInvitationCode = res.data.slice(18, 38)
+								console.log('当前用户是其他用户推荐下载的,推荐者的code是：' +
+									uniInvitationCode);
+								// uni.showModal({
+								// 	content: '当前用户是其他用户推荐下载的,推荐者的code是：'+uniInvitationCode,
+								// 	showCancel: false
+								// });
+								callBack(uniInvitationCode)
+								//当前用户是其他用户推荐下载的。这里登记他的推荐者id 为当前用户的myInviteCode。判断如果是注册
+							} else {
+								callBack(false)
+							}
+						},
+						fail() {
+							callBack(false)
+						}
+					});
+				})
+				// #endif
+			}
 			// #endif
 			// console.log(JSON.stringify(option));
 			callFunctionOption = option
 		},
-		complete(e){
+		complete(e) {
 			// console.log(JSON.stringify(e));
 		},
 		fail(e) { // 失败回调拦截
-			if(Debug){
+			if (Debug) {
 				uni.showModal({
-					content:JSON.stringify(e),
+					content: JSON.stringify(e),
 					showCancel: false
 				});
 				console.error(e);
-			}else{
+			} else {
 				uni.showModal({
 					content: "系统错误请稍后再试！",
 					showCancel: false,
-					confirmText:"知道了"
+					confirmText: "知道了"
 				});
 			}
 			//如果执行错误，检查是否断网
 			uni.getNetworkType({
-				complete:res => {
+				complete: res => {
 					// console.log(res);
 					if (res.networkType == 'none') {
 						uni.showToast({
@@ -225,16 +233,16 @@ export default async function() {
 							icon: 'none'
 						});
 						console.log('手机网络异常');
-						let callBack = res=>{
+						let callBack = res => {
 							console.log(res);
 							if (res.isConnected) {
 								uni.showToast({
 									title: '恢复联网自动重新执行',
 									icon: 'none'
 								});
-								console.log(res.networkType,"恢复联网自动重新执行");
-								uni.offNetworkStatusChange(e=>{
-									console.log("移除监听成功",e);
+								console.log(res.networkType, "恢复联网自动重新执行");
+								uni.offNetworkStatusChange(e => {
+									console.log("移除监听成功", e);
 								})
 								//恢复联网自动重新执行
 								uniCloud.callFunction(callFunctionOption)
@@ -246,16 +254,19 @@ export default async function() {
 				}
 			});
 		},
-		success:(e)=>{
+		success: (e) => {
 			console.log(e);
-			const {token,tokenExpired} = e.result
+			const {
+				token,
+				tokenExpired
+			} = e.result
 			if (token && tokenExpired) {
 				store.commit('user/login', {
 					token,
 					tokenExpired
 				})
 			}
-			switch (e.result.code){
+			switch (e.result.code) {
 				case 403:
 					uni.navigateTo({
 						url: "/pages/ucenter/login-page/index/index"
@@ -270,49 +281,81 @@ export default async function() {
 					uni.showToast({
 						title: e.result.msg,
 						icon: 'none',
-						duration:2000
+						duration: 2000
 					});
 					break;
 				default:
-					console.log('code的值是：'+e.result.code,'可以在这里插入，自动处理响应体');
+					console.log('code的值是：' + e.result.code, '可以在这里插入，自动处理响应体');
 					break;
 			}
 		}
 	})
 
 	//自定义路由拦截
-	const {"router": {needLogin,login} } = uniStarterConfig //需要登录的页面
+	const {
+		"router": {
+			needLogin,
+			visitor,
+			login
+		}
+	} = uniStarterConfig //需要登录的页面
 	let list = ["navigateTo", "redirectTo", "reLaunch", "switchTab"];
 	list.forEach(item => { //用遍历的方式分别为,uni.navigateTo,uni.redirectTo,uni.reLaunch,uni.switchTab这4个路由方法添加拦截器
 		uni.addInterceptor(item, {
 			invoke(e) { // 调用前拦截
 				// console.log(e);
 				//获取用户的token
-				const token = uni.getStorageSync('uni_id_token')
-				//token是否已失效
-				const tokenExpired = uni.getStorageSync('uni_id_token_expired') < Date.now()
-				//获取当前页面路径（即url去掉"?"和"?"后的参数）
-				const url = e.url.split('?')[0]
+				const token = uni.getStorageSync('uni_id_token'),
+					//token是否已失效
+					tokenExpired = uni.getStorageSync('uni_id_token_expired') < Date.now(),
+					//获取要跳转的页面路径（url去掉"?"和"?"后的参数）
+					url = e.url.split('?')[0],
+					//获取要前往的页面路径（即url去掉"?"和"?"后的参数）
+					pages = getCurrentPages(),
+					fromUrl = pages[pages.length - 1].route;
+				
+				
+				let inLoginPage = fromUrl.split('/')[2] == 'login-page'
+					
 				//控制登录优先级
-				let pages = getCurrentPages();
 				if ( //判断当前窗口是否为登陆页面，如果是则不重定向路由
-					url == '/pages/ucenter/login-page/index/index'
-					&&
-					pages[pages.length - 1].route.split('/')[2]!='login-page'
+					url == '/pages/ucenter/login-page/index/index' &&
+					!inLoginPage
 				) {
-					
-					console.log(9527777,login);
-					
+					// console.log(9527777,login);
 					//一键登录（univerify）、账号（username）、验证码登录（短信smsCode）
 					if (login[0] == 'username') {
 						e.url = "/pages/ucenter/login-page/pwd-login/pwd-login"
-					}else{
-						if(e.url == url) { e.url += '?' } //添加参数之前判断是否带了`？`号如果没有就补上，因为当开发场景本身有参数的情况下是已经带了`？`号
-						e.url += "type="+login[0]
+					} else {
+						if (e.url == url) {
+							e.url += '?'
+						} //添加参数之前判断是否带了`？`号如果没有就补上，因为当开发场景本身有参数的情况下是已经带了`？`号
+						e.url += "type=" + login[0]
 					}
-				}else{
+				} else {
 					//拦截强制登录页面
-					if (needLogin.includes(url) && (token == ''||tokenExpired)) {
+					let pass = true
+					//pattern
+					if (needLogin) {
+						pass = needLogin.every((item) => {
+							if (item.slice(0, 8) == 'pattern:') {
+								return !eval(item.slice(8, item.length)).test(url)
+							}
+							return url != item
+						})
+						// console.log(pass)
+					}
+					if (visitor&&!inLoginPage) {
+						pass = visitor.some((item) => {
+							if (item.slice(0, 8) == 'pattern:') {
+								return eval(item.slice(8, item.length)).test(url)
+							}
+							return url == item
+						})
+						console.log(pass)
+					}
+
+					if (!pass && (token == '' || tokenExpired)) {
 						uni.showToast({
 							title: '请先登录',
 							icon: 'none'
@@ -323,39 +366,40 @@ export default async function() {
 						return false
 					}
 				}
+				return e
 			},
 			fail(err) { // 失败回调拦截 
 				console.log(err);
-				if(Debug){
+				if (Debug) {
 					console.log(err);
 					uni.showModal({
 						content: JSON.stringify(err),
 						showCancel: false
 					});
 				}
-			},
+			}
 		})
 	})
-// #ifdef APP-PLUS
-// 监听并提示设备网络状态变化
-	uni.onNetworkStatusChange(res=> {
-	    console.log(res.isConnected);
-	    console.log(res.networkType);
-		if(res.networkType!='none'){
+	// #ifdef APP-PLUS
+	// 监听并提示设备网络状态变化
+	uni.onNetworkStatusChange(res => {
+		console.log(res.isConnected);
+		console.log(res.networkType);
+		if (res.networkType != 'none') {
 			uni.showToast({
-				title:'当前网络类型：'+res.networkType,
-				icon:'none',
-				duration:3000
+				title: '当前网络类型：' + res.networkType,
+				icon: 'none',
+				duration: 3000
 			})
-		}else{
+		} else {
 			uni.showToast({
-				title:'网络类型：'+res.networkType,
-				icon:'none',
-				duration:3000
+				title: '网络类型：' + res.networkType,
+				icon: 'none',
+				duration: 3000
 			})
 		}
 	});
-// #endif
+	// #endif
 
 }
 /**

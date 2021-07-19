@@ -40,7 +40,6 @@ import uniShare from 'uni_modules/uni-share/js_sdk/uni-share.js';
 			};
 		},
 		created() {
-			console.log();
 			this.about = this.uniStarterConfig.about
 			uni.setNavigationBarTitle({
 				title:'关于'+this.about.appName

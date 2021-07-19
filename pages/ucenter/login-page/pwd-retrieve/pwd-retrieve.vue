@@ -87,7 +87,7 @@
 							},
 							{
 								validateFunction: function(rule, value, data, callback) {
-									console.log(value);
+									// console.log(value);
 									if (value != data.pwd) {
 										callback('两次输入密码不一致')
 									};

@@ -19,19 +19,33 @@ module.exports = {
 		}
 	},
 	"router": {
-		//needLogin:配置强制需要登陆的页面，在打开这些页面之前会自动检查（前端校验）uni_id_token的值是否有效,如果无效会自动跳转到登陆页面
-		"needLogin": [
-			"/pages/ucenter/userinfo/userinfo",
-			"/uni_modules/uni-news-favorite/pages/uni-news-favorite/list",
-			"/uni_modules/uni-feedback/pages/uni-feedback/add"
+		/*
+			名词解释：“强制登陆页”
+				在打开定义的需强制登陆的页面之前会自动检查（前端校验）uni_id_token的值是否有效,
+				如果无效会自动跳转到登陆页面
+			两种模式：
+				1.needLogin：黑名单模式。枚举游客不可访问的页面。
+				2.visitor：白名单模式。枚举游客可访问的页面。
+			* 注意：黑名单与白名单模式二选一
+		*/
+		// "needLogin" : [
+		//  	"pattern:/^\\/pages\\/userinfo.*/",	//支持正则表达式
+		// 		"/uni_modules/uni-news-favorite/pages/uni-news-favorite/list",
+		// 		"/uni_modules/uni-feedback/pages/uni-feedback/add"
+		// ],
+		"visitor" : [
+			"/",//注意入口页必须直接写 "/"
+			"pattern:/^\\/pages\\/list.*/",	//支持正则表达式
+			"/pages/grid/grid",
+			"/pages/ucenter/ucenter",
+			"/pages/ucenter/about/about",
 		],
 		/*
 		login:配置登陆类型与优先级
 			未列举到的，或设备环境不支持的选项，将被隐藏。如果你需要在不同平台有不同的配置，直接用条件编译即可
 			根据数组的第0项，决定登录方式的第一优先级。
 		*/
-		// "login": ["username","smsCode","univerify", "weixin", "apple"],
-		"login": ["weixin","smsCode","univerify", "username", "apple"],
+		"login": ["weixin","username","univerify", "smsCode", "apple"]
 	},
 	//关于应用
 	"about": {
