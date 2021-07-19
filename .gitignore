@@ -3,3 +3,4 @@ unpackage/
 node_modules
 .DS_Store
 uni_modules_tools/copy
+package-lock.json

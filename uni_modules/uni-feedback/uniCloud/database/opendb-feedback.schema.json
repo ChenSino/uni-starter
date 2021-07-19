@@ -3,9 +3,9 @@
 	"required": ["content"],
 	"permission": {
 		"create": "auth.uid != null",
-		"read": true,
-		"delete": true,
-		"update": true
+		"read": "auth.uid != null",
+		"delete": false,
+		"update": false
 	},
 	"properties": {
 		"_id": {
