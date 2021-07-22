@@ -338,8 +338,8 @@ export default async function() {
 					//pattern
 					if (needLogin) {
 						pass = needLogin.every((item) => {
-							if (item.slice(0, 8) == 'pattern:') {
-								return !eval(item.slice(8, item.length)).test(url)
+							if(typeof(item) == 'object' && item.pattern){
+								return !item.pattern.test(url)
 							}
 							return url != item
 						})
@@ -347,8 +347,8 @@ export default async function() {
 					}
 					if (visitor&&!inLoginPage) {
 						pass = visitor.some((item) => {
-							if (item.slice(0, 8) == 'pattern:') {
-								return eval(item.slice(8, item.length)).test(url)
+							if(typeof(item) == 'object' && item.pattern){
+								return item.pattern.test(url)
 							}
 							return url == item
 						})

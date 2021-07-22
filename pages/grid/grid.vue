@@ -23,7 +23,7 @@
 			<uni-grid :column="3" :highlight="true" @change="change">
 				<template v-for="(item,i) in gridList">
 					<uni-grid-item :index="i" :key="i"
-						v-if="i<3 || i>3&&i<7&&hasLogin || i>7&&uniIDHasRole('admin')"
+						v-if="i<3 || i>2&&i<6&&hasLogin || i>5&&uniIDHasRole('admin')"
 					>
 						<view class="grid-item-box" style="background-color: #fff;">
 							<image :src="'/static/grid/c'+(i+1)+'.png'" class="image" mode="aspectFill" />
@@ -31,7 +31,6 @@
 						</view>
 					</uni-grid-item>
 				</template>
-				
 			</uni-grid>
 		</view>
 	</view>

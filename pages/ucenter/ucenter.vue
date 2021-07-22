@@ -1,5 +1,6 @@
 <template>
 	<view class="center">
+		<uni-sign-in ref="signIn"></uni-sign-in>
 		<view class="userInfo" @click.capture="toUserInfo">
 			<uni-file-picker v-if="userInfo.avatar_file" v-model="userInfo.avatar_file"
 				fileMediatype="image" :del-icon="false" return-type="object" :image-styles="listStyles" disablePreview
@@ -60,6 +61,11 @@
 				],
 				ucenterList: [
 					[
+						{
+							"title": '签到有奖',
+							"event": 'signIn',
+							"icon": "compose"
+						},
 						// #ifdef APP-PLUS
 						{
 							"title": '去评分',
@@ -149,6 +155,9 @@
 					url: "/pages/ucenter/settings/settings"
 				})
 			},
+			signIn(){ 	//签到
+				this.$refs.signIn.open()
+			},
 			/**
 			 * 个人中心项目列表点击事件
 			 */
@@ -211,17 +220,16 @@
 				uni.showLoading({
 					mask: true
 				})
-				db.collection("uni-id-scores").where('user_id == $env.uid').field('score,balance').get().then((res) => {
+				db.collection("uni-id-scores").where('"user_id" == $env.uid').field('score,balance').get().then((res) => {
+					uni.hideLoading()
 					console.log(res);
 					const data = res.result.data[0];
 					let msg = '';
-					msg = data ? ('当前积分为' + data.balance) : '当前无积分';
+					msg = data ? ('当前积分为' + data.score) : '当前无积分';
 					uni.showToast({
 						title: msg,
 						icon: 'none'
 					});
-				}).finally(() => {
-					uni.hideLoading()
 				})
 			},
 			async share() {

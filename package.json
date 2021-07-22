@@ -1,14 +1,13 @@
 {
 	"id": "uni-starter",
 	"displayName": "uni-starter",
-	"version": "1.0.39",
+	"version": "1.0.40",
 	"description": "云端一体应用快速开发基本项目模版",
 	"keywords": [
-        "uni-starter",
         "login",
-        "登录模版",
-        "uniCloud",
-        "搜索"
+        "登录",
+        "搜索",
+        "uni-id例子"
     ],
 	"repository": "https://codechina.csdn.net/dcloud/uni-starter.git",
 	"engines": {

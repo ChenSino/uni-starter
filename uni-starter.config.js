@@ -29,13 +29,13 @@ module.exports = {
 			* 注意：黑名单与白名单模式二选一
 		*/
 		// "needLogin" : [
-		//  	"pattern:/^\\/pages\\/userinfo.*/",	//支持正则表达式
+		//  	{pattern:/^\/pages\/list.*/}",	//支持正则表达式
 		// 		"/uni_modules/uni-news-favorite/pages/uni-news-favorite/list",
 		// 		"/uni_modules/uni-feedback/pages/uni-feedback/add"
 		// ],
 		"visitor" : [
 			"/",//注意入口页必须直接写 "/"
-			"pattern:/^\\/pages\\/list.*/",	//支持正则表达式
+			{"pattern":/^\/pages\/list.*/},	//支持正则表达式
 			"/pages/grid/grid",
 			"/pages/ucenter/ucenter",
 			"/pages/ucenter/about/about",
