@@ -19,7 +19,7 @@
 	</view>
 </template>
 <script>
-import uniShare from 'uni_modules/uni-share/js_sdk/uni-share.js';
+import uniShare from '@/uni_modules/uni-share/js_sdk/uni-share.js';
 	export default {
 		onLoad() {
 			// #ifdef APP-PLUS
@@ -115,6 +115,7 @@ import uniShare from 'uni_modules/uni-share/js_sdk/uni-share.js';
 	}
 </script>
 <style lang="scss" scoped>
+@import '@/common/all-flex.css';
 .about {
 	width: 750upx;
 	flex-direction: column;

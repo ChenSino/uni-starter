@@ -64,10 +64,7 @@
 		<!-- 搜索联想 -->
 		<view class="search-associative" :style="{marginTop:statusBarHeight}" v-if="associativeShow">
 			<uni-list>
-				<template v-for="(item,index) in associativeList">
-					<uni-list-item :key="item._id" :ellipsis="1" :title="item.title" @click="associativeClick(item)" show-extra-icon
-					 clickable :extra-icon="{size:18,color:iconColor,type:'search'}" />
-				</template>
+				<uni-list-item v-for="(item,index) in associativeList" :key="item._id" :ellipsis="1" :title="item.title" @click="associativeClick(item)" show-extra-icon clickable :extra-icon="{size:18,color:iconColor,type:'search'}" />
 			</uni-list>
 		</view>
 	</view>
@@ -152,10 +149,11 @@
 			this.db = uniCloud.database();
 			this.searchLogDb = this.db.collection(this.searchLogDbName);
 			this.mallGoodsDb = this.db.collection(this.mallGoodsDbName);
-
+			// #ifndef H5
 			uni.onKeyboardHeightChange((res) => {
 				this.keyBoardPopup = res.height !== 0;
 			})
+			// #endif
 
 			this.searchText = getApp().globalData.searchText;
 		},
@@ -378,7 +376,7 @@
 	}
 
 	/* #ifdef APP-PLUS */
-	/* #ifndef APP-NVUE */
+	/* #ifndef APP-NVUE  || VUE3*/
 	/deep/
 	/* #endif */
 	.uni-searchbar {
@@ -387,14 +385,14 @@
 
 	/* #endif */
 
-	/* #ifndef APP-NVUE */
+	/* #ifndef APP-NVUE || VUE3*/
 	/deep/
 	/* #endif */
 	.uni-searchbar__box {
 		border-width: 0;
 	}
 
-	/* #ifndef APP-NVUE */
+	/* #ifndef APP-NVUE || VUE3 */
 	/deep/
 	/* #endif */
 	.uni-input-placeholder {

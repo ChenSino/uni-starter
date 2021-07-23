@@ -30,11 +30,11 @@
 				</view>
 				<view v-if="isShowPhotoBtn" @tap="uploadImage">
 					<slot name="photo" v-if="$slots.photo" />
-					<image v-else :src="require('./images/photo.svg')" />
+					<image v-else src="@/static/limeClipper/photo.svg" />
 				</view>
 				<view v-if="isShowRotateBtn" @tap="rotate">
 					<slot name="rotate" v-if="$slots.rotate" />
-					<image v-else :src="require('./images/rotate.svg')" data-type="inverse" />
+					<image v-else src="@/static/limeClipper/rotate.svg" data-type="inverse" />
 				</view>
 				<view v-if="isShowConfirmBtn" @tap="confirm">
 					<slot name="confirm" v-if="$slots.confirm" />
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { pathToBase64, determineDirection, calcImageOffset, calcImageScale, calcImageSize, calcPythagoreanTheorem, clipTouchMoveOfCalculate, imageTouchMoveOfCalcOffset } from './utils';
+import { determineDirection, calcImageOffset, calcImageScale, calcImageSize, calcPythagoreanTheorem, clipTouchMoveOfCalculate, imageTouchMoveOfCalcOffset } from './utils';
 const cache = {}
 export default {
 	// version: '0.6.3',

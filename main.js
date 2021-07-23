@@ -1,13 +1,21 @@
-import Vue from 'vue'
 import App from './App'
-import store from './store/index.js';
-import openApp from './common/openApp.js';
+import store from './store'
 
+// #ifndef VUE3
+import Vue from 'vue'
 Vue.config.productionTip = false
-openApp();
+Vue.prototype.$store = store
 App.mpType = 'app'
 const app = new Vue({
-    ...App,
-	store
+  store,
+  ...App
 })
 app.$mount()
+// #endif
+
+// #ifdef VUE3
+import { createApp } from 'vue'
+const app = createApp(App,{})
+app.use(store)
+app.mount('#app')
+// #endif

@@ -278,13 +278,14 @@
 	.mt10 {
 		margin-top: 10px;
 	}
-
+	/* #ifndef APP-NVUE  || VUE3 */
 	.content /deep/ .uni-list {
 		background-color: #F9F9F9;
 	}
-
 	.content /deep/ .uni-list-item--disabled,.list-item {
 		height: 50px;
 		margin-bottom: 1px;
 	}
+	/* #endif */
+
 </style>

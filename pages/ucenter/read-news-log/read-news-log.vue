@@ -6,11 +6,13 @@
 			<uni-list>
 				<uni-list-item v-for="(item, index) in data" :key="index" :clickable="true"
 					@click="handleItemClick(item)">
-					<view slot="body">
-						<text>{{item.title}}</text>
-						<uni-dateformat class="article-date" :date="readNewsLog[index].last_time" format="yyyy-MM-dd hh:mm"
-							:threshold="[0, 0]" />
-					</view>
+					<template v-slot:body>
+						<view class="item">
+							<text>{{item.title}}</text>
+							<uni-dateformat class="article-date" :date="readNewsLog[index].last_time" format="yyyy-MM-dd hh:mm"
+								:threshold="[0, 0]" />
+						</view>
+					</template>
 				</uni-list-item>
 			</uni-list>
 			<uni-load-state @networkResume="refreshData" :state="{data,pagination,hasMore, loading, error}"></uni-load-state>
@@ -63,6 +65,10 @@
 </script>
 
 <style>
+	.item{
+		display: flex;
+		flex-direction: column;
+	}
 	.article-date {
 		color: #C8C7CC;
 	}

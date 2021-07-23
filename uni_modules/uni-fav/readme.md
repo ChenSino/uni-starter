@@ -1,6 +1,7 @@
 
 
 ## Fav 收藏按钮
+> **组件名：uni-fav**
 > 代码块： `uFav`
 
 
@@ -42,3 +43,8 @@
 |事件称名	|说明					|返回值	|
 |:-:		|:-:					|:-:	|
 |click		|点击 fav按钮 触发事件	|-		|
+
+
+## 组件示例
+
+点击查看：[https://hellouniapp.dcloud.net.cn/pages/extUI/fav/fav](https://hellouniapp.dcloud.net.cn/pages/extUI/fav/fav)

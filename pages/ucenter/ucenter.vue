@@ -36,7 +36,7 @@
 	} from 'vuex';
 	import checkUpdate from '@/uni_modules/uni-upgrade-center-app/utils/check-update';
 	import callCheckVersion from '@/uni_modules/uni-upgrade-center-app/utils/call-check-version';
-	import uniShare from 'uni_modules/uni-share/js_sdk/uni-share.js';
+	import uniShare from '@/uni_modules/uni-share/js_sdk/uni-share.js';
 
 	const db = uniCloud.database();
 	export default {
@@ -309,7 +309,8 @@
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
+@import '@/common/all-flex.css';
 	/* #ifndef APP-PLUS-NVUE */
 	page {
 		background-color: #f8f8f8;
@@ -375,7 +376,7 @@
 		color: #817f82;
 	}
 
-	.uni-grid .item /deep/ .uni-grid-item__box {
+	.uni-grid .item ::v-deep .uni-grid-item__box {
 		justify-content: center;
 		align-items: center;
 	}
@@ -383,14 +384,14 @@
 
 	/*修改边线粗细示例*/
 	/* #ifndef APP-NVUE */
-	.center-list /deep/ .uni-list--border:after {
+	.center-list ::v-deep .uni-list--border:after {
 		-webkit-transform: scaleY(0.2);
 		transform: scaleY(0.2);
 		margin-left: 80rpx;
 	}
 
-	.center-list /deep/ .uni-list--border-top,
-	.center-list /deep/ .uni-list--border-bottom {
+	.center-list ::v-deep .uni-list--border-top,
+	.center-list ::v-deep .uni-list--border-bottom {
 		display: none;
 	}
 

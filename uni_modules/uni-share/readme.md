@@ -5,7 +5,7 @@
 	<button type="default" @click="uniShare">显示</button>
 </template>
 <script>
-	import uniShare from 'uni_modules/uni-share/js_sdk/uni-share.js';
+	import uniShare from '@/uni_modules/uni-share/js_sdk/uni-share.js';
 	export default {
 		methods: {
 			uniShare() {

@@ -342,7 +342,8 @@
 	}
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+	@import '@/common/all-flex.css';
 	.quick-login-box {
 		flex-direction: row;
 		width: 750rpx;

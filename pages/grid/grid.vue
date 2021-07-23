@@ -203,14 +203,14 @@
 		background-color: #fff;
 	}
 
-	/* #ifndef APP-NVUE */
+	/* #ifndef APP-NVUE || VUE3*/
 	/deep/
 	/* #endif */
 	.uni-searchbar__box {
 		border-width: 0;
 	}
 
-	/* #ifndef APP-NVUE */
+	/* #ifndef APP-NVUE || VUE3 */
 	/deep/
 	/* #endif */
 	.uni-input-placeholder {

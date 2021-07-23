@@ -2,12 +2,13 @@
 	<view>
 		<uni-list>
 			<uni-list-item class="item">
-				<view slot="body" class="item">
-					<text>头像</text>
-					<uni-file-picker @click.native="uploadAvatarImg" @delete="removeAvatar" v-model="avatar_file"
-						fileMediatype="image" return-type="object" :image-styles="listStyles"
-						disabled />
-				</view>
+				<template v-slot:body>
+					<view class="item">
+						<text>头像</text>
+						<uni-file-picker @click.native="uploadAvatarImg" @delete="removeAvatar" v-model="avatar_file"
+							fileMediatype="image" return-type="object" :image-styles="listStyles" disabled />
+					</view>
+				</template>
 			</uni-list-item>
 			<uni-list-item class="item" @click="setNickname('')" title="昵称" :rightText="userInfo.nickname||'未设置'" link>
 			</uni-list-item>
@@ -56,8 +57,8 @@
 				userInfo: 'user/info',
 				login: 'user/hasLogin'
 			}),
-			avatar_file(){
-				if(this.userInfo.avatar_file&&this.userInfo.avatar_file.url){
+			avatar_file() {
+				if (this.userInfo.avatar_file && this.userInfo.avatar_file.url) {
 					return this.userInfo.avatar_file
 				}
 			}
@@ -156,7 +157,7 @@
 					this.$refs.dialog.open()
 				}
 			},
-			removeAvatar(){
+			removeAvatar() {
 				this.setAvatarFile({
 					"extname": "jpg",
 					"fileType": "image",
@@ -165,7 +166,7 @@
 					"url": ""
 				})
 			},
-			setAvatarFile(avatar_file){
+			setAvatarFile(avatar_file) {
 				uni.showLoading({
 					title: '设置中',
 					mask: true
@@ -175,12 +176,12 @@
 					avatar_file
 				}).then((res) => {
 					console.log(res);
-					if(avatar_file){
+					if (avatar_file) {
 						uni.showToast({
 							icon: 'none',
 							title: '设置成功'
 						})
-					}else{
+					} else {
 						uni.showToast({
 							icon: 'none',
 							title: '删除成功'
@@ -207,19 +208,20 @@
 					resize: true
 				};
 				uni.chooseImage({
-					count: 1,crop,
+					count: 1,
+					crop,
 					success: async (res) => {
 						console.log(res);
 						let tempFile = res.tempFiles[0],
-						avatar_file = {
-							// #ifdef H5
-							extname:tempFile.name.split('.')[tempFile.name.split('.').length-1],
-							// #endif
-							// #ifndef H5
-							extname:tempFile.path.split('.')[tempFile.path.split('.').length-1]
-							// #endif
-						},
-						filePath = res.tempFilePaths[0]
+							avatar_file = {
+								// #ifdef H5
+								extname: tempFile.name.split('.')[tempFile.name.split('.').length - 1],
+								// #endif
+								// #ifndef H5
+								extname: tempFile.path.split('.')[tempFile.path.split('.').length - 1]
+								// #endif
+							},
+							filePath = res.tempFilePaths[0]
 						// #ifndef APP-PLUS
 						//非app端用前端组件剪裁头像，app端用内置的原生裁剪
 						filePath = await new Promise((callback) => {
@@ -228,7 +230,7 @@
 									`&options=${JSON.stringify(crop)}`,
 								animationType: "fade-in",
 								events: {
-									success: url=> {
+									success: url => {
 										callback(url)
 									}
 								}
@@ -236,21 +238,26 @@
 						})
 						// #endif
 						console.log(this.userInfo);
-						let cloudPath = this.userInfo._id+''+Date.now()
+						let cloudPath = this.userInfo._id + '' + Date.now()
 						avatar_file.name = cloudPath
 						uni.showLoading({
 							title: '正在上传',
 							mask: true
 						});
-						let {fileID} = await uniCloud.uploadFile({
-							filePath,cloudPath,
-							fileType:"image"
+						let {
+							fileID
+						} = await uniCloud.uploadFile({
+							filePath,
+							cloudPath,
+							fileType: "image"
 						});
 						// console.log(result)
 						avatar_file.url = fileID
-						console.log({avatar_file});
+						console.log({
+							avatar_file
+						});
 						uni.hideLoading()
-						
+
 						this.setAvatarFile(avatar_file)
 					}
 				})
@@ -258,7 +265,8 @@
 		}
 	}
 </script>
-<style>
+<style lang="scss" scoped>
+	@import '@/common/all-flex.css';
 	.item {
 		width: 750rpx;
 		flex-direction: row;

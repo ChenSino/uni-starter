@@ -17,7 +17,6 @@
 			</view>
 		</view>
 		<text @click="cancel" class="uni-searchbar__cancel" v-if="cancelButton ==='always' || show && cancelButton ==='auto'">{{cancelText}}</text>
-		<view v-if="disabled" @click.stop="searchCoverClick" class="uni-search-cover"></view>
 	</view>
 </template>
 
@@ -83,11 +82,11 @@
 				type: [Number, String],
 				default: ""
 			},
-			focus: {
-				type: Boolean,
-				default: false
+			modelValue: {
+				type: [Number, String],
+				default: ""
 			},
-			disabled: {
+			focus: {
 				type: Boolean,
 				default: false
 			}
@@ -109,6 +108,15 @@
 					}
 				}
 			},
+			modelValue: {
+				immediate: true,
+				handler(newVal) {
+					this.searchVal = newVal
+					if (newVal) {
+						this.show = true
+					}
+				}
+			},
 			focus: {
 				immediate: true,
 				handler(newVal) {
@@ -122,12 +130,10 @@
 			},
 			searchVal(newVal, oldVal) {
 				this.$emit("input", newVal)
+				this.$emit("update:modelValue", newVal)
 			}
 		},
 		methods: {
-			searchCoverClick(){
-				this.$emit('click')
-			},
 			searchClick() {
 				if (this.show) {
 					return
@@ -216,6 +222,7 @@
 		border-style: solid;
 		border-color: $uni-border-color;
 	}
+
 	.uni-searchbar__box-icon-search {
 		/* #ifndef APP-NVUE */
 		display: flex;
@@ -256,17 +263,6 @@
 		color: $uni-text-color;
 		/* #ifdef H5 */
 		cursor: pointer;
-		/* #endif */
-	}
-	.uni-search-cover{
-		height: $uni-searchbar-height;
-		margin-top: $uni-spacing-col-base;
-		width: 750rpx;
-		position: absolute;
-		top: 0;
-		left: 0;
-		/* #ifndef APP-NVUE */
-		z-index: 99;
 		/* #endif */
 	}
 </style>

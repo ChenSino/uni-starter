@@ -1,12 +1,14 @@
 
 
 ## Rate 评分
+> **组件名：uni-rate**
 > 代码块： `uRate`
 > 关联组件：`uni-icons`
 
 
 评分组件，多用于购买商品后，对商品进行评价等场景
 
+> **注意事项**
 > 为了避免错误使用，给大家带来不好的开发体验，请在使用组件前仔细阅读下面的使用说明，可以帮你避免一些错误。
 > - 暂时不支持零星选择
 > - 当前版本暂不支持修改图标，后续版本会继续优化
@@ -98,3 +100,8 @@ touchable		|	Boolean 	| true		|	是否支持滑动手势
 事件称名			|	说明						|	返回参数			
 :-:				|	:-:						|	:-:	
 @change			|	改变 value 的值返回		|	e = { value:number }		
+
+
+## 组件示例
+
+点击查看：[https://hellouniapp.dcloud.net.cn/pages/extUI/rate/rate](https://hellouniapp.dcloud.net.cn/pages/extUI/rate/rate)

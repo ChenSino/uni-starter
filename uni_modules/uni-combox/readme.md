@@ -1,6 +1,7 @@
 
 
 ## Combox 组合框
+> **组件名：uni-combox**
 > 代码块： `uCombox`
 
 
@@ -44,3 +45,8 @@
 
 
 
+
+
+## 组件示例
+
+点击查看：[https://hellouniapp.dcloud.net.cn/pages/extUI/combox/combox](https://hellouniapp.dcloud.net.cn/pages/extUI/combox/combox)

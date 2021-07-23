@@ -81,11 +81,11 @@
 		padding: 50rpx;
 		padding-top: 10px;
 	}
-
+/* #ifndef APP-NVUE  || VUE3 */
 	.box /deep/ .uni-easyinput__content {
 		height: 50px;
 	}
-
+/* #endif */
 	.input-box {
 		width: 100%;
 		margin-top: 16px;

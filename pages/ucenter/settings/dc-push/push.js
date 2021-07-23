@@ -109,7 +109,7 @@ function setting(){
 	}
 }
 
-module.exports = {
+export default {
 	isOn: isTurnedOnPush,
 	iosSetting: settingInIos,
 	on: turnOnPush,

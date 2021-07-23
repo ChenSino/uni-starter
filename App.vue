@@ -44,20 +44,4 @@
 
 <style>
 	/*每个页面公共css */
-/* #ifndef APP-NVUE */
-	view,
-	scroll-view,
-	text,
-	image,
-	switch,
-	navigator,
-	icons {
-		display: flex;
-		box-sizing: border-box;
-		flex-direction: column;
-	}
-	scroll-view {
-		-webkit-overflow-scrolling: touch;
-	}
-/* #endif */
 </style>

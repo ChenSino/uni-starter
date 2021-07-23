@@ -46,7 +46,7 @@
 </template>
 
 <script>
-	import uniShare from 'uni_modules/uni-share/js_sdk/uni-share.js';
+	import uniShare from '@/uni_modules/uni-share/js_sdk/uni-share.js';
 
 	const db = uniCloud.database();
 	const readNewsLog = db.collection('read-news-log')

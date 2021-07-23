@@ -15,7 +15,7 @@
 				@click="sendShortMsg">获取短信验证码</button>
 			<text class="tip">未注册的手机号验证通过后将自动注册</text>
 		</template>
-		
+
 		<!-- 快捷登录按钮弹窗 -->
 		<uni-quick-login :agree="agree" ref="uniQuickLogin"></uni-quick-login>
 	</view>
@@ -26,7 +26,7 @@
 	export default {
 		data() {
 			return {
-				type:"",
+				type: "",
 				phone: "",
 				agree: false
 			}
@@ -38,13 +38,13 @@
 			isPhone() {
 				return /^1\d{10}$/.test(this.phone);
 			},
-			imgSrc(){
-				return '/static/login-index/'+this.type+'.png'
+			imgSrc() {
+				return '/static/login-index/' + this.type + '.png'
 			}
 		},
 		onLoad(e) {
 			this.type = e.type
-			
+
 			//是否优先启动一键登录。即：页面一加载就启动一键登录
 			//#ifdef APP-PLUS
 			if (this.type == "univerify") {
@@ -79,7 +79,7 @@
 			//#endif
 		},
 		methods: {
-			quickLogin(){
+			quickLogin() {
 				this.$refs.uniQuickLogin.login_before(this.type)
 			},
 			sendShortMsg() {
@@ -108,16 +108,18 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+	@import '@/common/all-flex.css';
 	@import url("../common/login-page.css");
-	.quickLogin{
+	.quickLogin {
 		width: 650rpx;
 		height: 350px;
 		align-items: center;
 		justify-content: center;
 	}
-	.quickLoginBtn{
-		margin:20px 0;
+
+	.quickLoginBtn {
+		margin: 20px 0;
 		width: 450rpx;
 	}
 </style>

@@ -2,11 +2,11 @@
 	<view class="content">
 		<!-- 顶部文字 -->
 		<text class="title">用户名密码登录</text>
-		<input class="input-box" :inputBorder="false" v-model="username" placeholder="请输入手机号/用户名"></input>
-		<input type="password" class="input-box" :inputBorder="false" v-model="password" placeholder="请输入密码"></input>
+		<input class="input-box" :inputBorder="false" v-model="username" placeholder="请输入手机号/用户名"/>
+		<input type="password" class="input-box" :inputBorder="false" v-model="password" placeholder="请输入密码"/>
 		<view class="captcha-box" v-if="captchaBase64">
 			<image class="captcha-img" @click="createCaptcha" :src="captchaBase64" mode="widthFix"></image>
-			<input type="text" class="input-box captcha" :inputBorder="false" v-model="captcha" placeholder="请输入验证码"></input>
+			<input type="text" class="input-box captcha" :inputBorder="false" v-model="captcha" placeholder="请输入验证码"/>
 		</view>
 		<uni-agreements @setAgree="agree = $event"></uni-agreements>
 		<button class="send-btn" :disabled="!canLogin" :type="canLogin?'primary':'default'"

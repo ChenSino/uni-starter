@@ -1,6 +1,7 @@
 
 
 ## NoticeBar 通告栏
+> **组件名：uni-notice-bar**
 > 代码块： `uNoticeBar`
 
 
@@ -34,6 +35,7 @@
  <uni-notice-bar @getmore="getMore" :showGetMore="true" moreText="查看更多" single="true" text="[单行] 这是 NoticeBar 通告栏，这是 NoticeBar 通告栏，这是 NoticeBar 通告栏"></uni-notice-bar>
 ```
 
+> **注意**
 > 如果需要异步获取内容后展示需要使用`v-if`进行控制，`<uni-notice-bar v-if="text" :text="text"></uni-notice-bar>`
 
 
@@ -62,3 +64,8 @@
 |@click		|点击 NoticeBar 触发事件	|-		|
 |@close		|关闭 NoticeBar 触发事件	|-		|
 |@getmore	|点击”查看更多“时触发事件	|-		|
+
+
+## 组件示例
+
+点击查看：[https://hellouniapp.dcloud.net.cn/pages/extUI/notice-bar/notice-bar](https://hellouniapp.dcloud.net.cn/pages/extUI/notice-bar/notice-bar)

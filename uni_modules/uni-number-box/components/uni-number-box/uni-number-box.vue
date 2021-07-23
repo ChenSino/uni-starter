@@ -3,7 +3,7 @@
 		<view @click="_calcValue('minus')" class="uni-numbox__minus uni-cursor-point">
 			<text class="uni-numbox--text" :class="{ 'uni-numbox--disabled': inputValue <= min || disabled }">-</text>
 		</view>
-		<input :disabled="disabled" @focus="_onFocus" @blur="_onBlur" class="uni-numbox__value" type="number" v-model="inputValue" />
+		<input :disabled="disabled" @focus="_onFocus" @blur="_onBlur" class="uni-numbox__value" type="number" v-model="inputValue"/>
 		<view @click="_calcValue('plus')" class="uni-numbox__plus uni-cursor-point">
 			<text class="uni-numbox--text" :class="{ 'uni-numbox--disabled': inputValue >= max || disabled }">+</text>
 		</view>
@@ -26,6 +26,10 @@
 		name: "UniNumberBox",
 		props: {
 			value: {
+				type: [Number, String],
+				default: 1
+			},
+			modelValue:{
 				type: [Number, String],
 				default: 1
 			},
@@ -55,15 +59,17 @@
 			value(val) {
 				this.inputValue = +val;
 			},
-			inputValue(newVal, oldVal) {
-				if (+newVal !== +oldVal) {
-					this.$emit("change", newVal);
-					this.$emit("input", newVal);
-				}
+			modelValue(val){
+				this.inputValue = +val;
 			}
 		},
 		created() {
-			this.inputValue = +this.value;
+			if(this.value === 1){
+				this.inputValue = +this.modelValue;
+			}
+			if(this.modelValue === 1){
+				this.inputValue = +this.value;
+			}
 		},
 		methods: {
 			_calcValue(type) {
@@ -81,7 +87,9 @@
 					if (value > (this.max * scale)) {
 						value = this.max * scale
 					}
-				} else if (type === "plus") {
+				}
+
+				if (type === "plus") {
 					value += step;
 					if (value > (this.max * scale)) {
 						return;
@@ -91,13 +99,19 @@
 					}
 				}
 
-				this.inputValue = String(value / scale);
+				this.inputValue = (value / scale).toFixed(String(scale).length - 1);
+				this.$emit("change", +this.inputValue);
+				// TODO vue2 兼容
+				this.$emit("input", +this.inputValue);
+				// TODO vue3 兼容
+				this.$emit("update:modelValue", +this.inputValue);
 			},
 			_getDecimalScale() {
+
 				let scale = 1;
 				// 浮点型
 				if (~~this.step !== this.step) {
-					scale = Math.pow(10, (this.step + "").split(".")[1].length);
+					scale = Math.pow(10, String(this.step).split(".")[1].length);
 				}
 				return scale;
 			},
@@ -114,7 +128,10 @@
 				} else if (value < this.min) {
 					value = this.min;
 				}
-				this.inputValue = value;
+				const scale = this._getDecimalScale();
+				this.inputValue = value.toFixed(String(scale).length - 1);
+				this.$emit("change", +this.inputValue);
+				this.$emit("input", +this.inputValue);
 			},
 			_onFocus(event) {
 				this.$emit('focus', event)
@@ -148,7 +165,7 @@
 
 	.uni-numbox__value {
 		background-color: $uni-bg-color;
-		width: 40px;
+		width: 50px;
 		height: $box-height;
 		text-align: center;
 		font-size: $uni-font-size-lg;

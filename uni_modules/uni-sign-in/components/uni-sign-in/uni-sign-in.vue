@@ -22,7 +22,7 @@
 							<template v-if="signInRes.days.includes(item-1)||item>signInRes.n">
 								<text class="day" :class="{grey:item>signInRes.n}">第{{item}}天</text>
 							</template>
-							
+
 							<text v-else class="day">缺卡</text>
 						</view>
 					</view>
@@ -66,46 +66,62 @@
 				uni.showLoading({
 					mask: true
 				});
-				const date = new Date(new Date().toLocaleDateString()).getTime()
-				let res = await signInTable
-					.action('signIn')
-					.where(`'user_id' == $env.uid && 'date' == ${date} && 'isDelete' == false`)
-					.get()
-				this.signInRes = res.result
-				console.log(res);
-				if (res.result.data.length) {
-					uni.hideLoading()
-					uni.showToast({
-						title: '今日已签过',
-						duration:3000,
-						icon: 'none'
-					});
-				} else {
-					let res = await signInTable.action('signIn').add({});
-					console.log(res);
-					uni.hideLoading()
+				try{
+					const date = new Date(new Date().toLocaleDateString()).getTime()
+					let res = await signInTable
+						.action('signIn')
+						.where(`'user_id' == $env.uid && 'date' == ${date} && 'isDelete' == false`)
+						.get()
 					this.signInRes = res.result
-					if(this.signInRes.days.length==7){
+					console.log(res);
+					if (res.result.data.length) {
+						uni.hideLoading()
 						uni.showToast({
-							title:"你已完成7日连续签到，获得60积分！",
-							icon:"none",
-							duration:5000
-						})
-					}else{
-						uni.showToast({
-							title:"签到成功,获得10积分！",
-							icon:"none",
-							duration:5000
-						})
+							title: '今日已签过',
+							duration: 3000,
+							icon: 'none'
+						});
+					} else {
+						let res = await signInTable.action('signIn').add({});
+						console.log(res);
+						uni.hideLoading()
+						this.signInRes = res.result
+						if (this.signInRes.days.length == 7) {
+							uni.showToast({
+								title: "你已完成7日连续签到，获得60积分！",
+								icon: "none",
+								duration: 5000
+							})
+						} else {
+							uni.showToast({
+								title: "签到成功,获得10积分！",
+								icon: "none",
+								duration: 5000
+							})
+						}
 					}
+					this.$refs.popup.open()
+				}catch(e){
+					console.error(e)
+					uni.hideLoading()
 				}
-				this.$refs.popup.open()
+				
 			}
 		}
 	}
 </script>
 
 <style lang="scss">
+	view {
+		display: flex;
+		box-sizing: border-box;
+		flex-direction: column;
+	}
+
+	scroll-view {
+		-webkit-overflow-scrolling: touch;
+	}
+
 	.background-img {
 		width: 600rpx;
 		height: 600rpx;
@@ -162,10 +178,11 @@
 		align-items: center;
 		color: #f8692c;
 	}
-	
-	.grey{
+
+	.grey {
 		color: #C0C0C0;
 	}
+
 	.days-box .icon {
 		background-color: #feefeb;
 		border-radius: 100px;

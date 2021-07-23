@@ -139,8 +139,9 @@
 		line-height: 1;
 		margin: 0;
 	}
-
+	/* #ifndef APP-NVUE  || VUE3 */
 	.uni-container /deep/ .uni-file-picker__container {
 		flex-direction: row;
 	}
+	/* #endif */
 </style>
