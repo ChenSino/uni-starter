@@ -281,7 +281,7 @@ export default {
 				data = this.backObject(newFils)
 			}
 			this.formItem && this.formItem.setValue(data)
-			this.files = newFils
+			if(newFils.length) 			this.files = newFils
 		},
 		/**
 		 * 获取父元素实例

@@ -2,7 +2,7 @@
 	<view class="center">
 		<uni-sign-in ref="signIn"></uni-sign-in>
 		<view class="userInfo" @click.capture="toUserInfo">
-			<uni-file-picker v-if="userInfo.avatar_file" v-model="userInfo.avatar_file"
+			<uni-file-picker v-if="userInfo.avatar_file&&userInfo.avatar_file.url" v-model="userInfo.avatar_file"
 				fileMediatype="image" :del-icon="false" return-type="object" :image-styles="listStyles" disablePreview
 				disabled />
 			<image v-else class="logo-img" src="/static/uni-center/defaultAvatarUrl.png"></image>
