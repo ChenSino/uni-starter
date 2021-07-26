@@ -44,7 +44,8 @@
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
+@import '@/common/all-flex.css';
 .root{
 	flex-direction: row;
 	align-items: center;

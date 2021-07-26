@@ -16,10 +16,10 @@ export default async (param,callback) => {
 			if (typeof(menus[e]['share']) == 'string') {
 				eval(menus[e]['share']+'()')
 			} else {
-				console.log(9527,{
-					...param.content,
-					...menus[e].share,
-				});
+				// console.log(123456,{
+				// 	...param.content,
+				// 	...menus[e].share,
+				// });
 				uni.share({
 					...param.content,
 					...menus[e].share,

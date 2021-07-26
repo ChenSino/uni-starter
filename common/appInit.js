@@ -322,7 +322,6 @@ export default async function() {
 					url == '/pages/ucenter/login-page/index/index' &&
 					!inLoginPage
 				) {
-					// console.log(9527777,login);
 					//一键登录（univerify）、账号（username）、验证码登录（短信smsCode）
 					if (login[0] == 'username') {
 						e.url = "/pages/ucenter/login-page/pwd-login/pwd-login"
@@ -343,7 +342,7 @@ export default async function() {
 							}
 							return url != item
 						})
-						// console.log(pass)
+						console.log({pass})
 					}
 					if (visitor&&!inLoginPage) {
 						pass = visitor.some((item) => {
@@ -352,7 +351,7 @@ export default async function() {
 							}
 							return url == item
 						})
-						console.log(pass)
+						console.log({pass})
 					}
 
 					if (!pass && (token == '' || tokenExpired)) {

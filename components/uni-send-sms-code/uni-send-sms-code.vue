@@ -117,7 +117,8 @@
 	}
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '@/common/all-flex.css';
 	.short-code-btn {
 		width: 200rpx;
 		height: 85rpx;

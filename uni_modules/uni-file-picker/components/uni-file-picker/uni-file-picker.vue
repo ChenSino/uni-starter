@@ -98,6 +98,12 @@ export default {
 				return []
 			}
 		},
+		modelValue: {
+			type: [Array, Object],
+			default() {
+				return []
+			}
+		},
 		disabled: {
 			type: Boolean,
 			default: false
@@ -174,32 +180,24 @@ export default {
 		returnType: {
 			type: String,
 			default: 'array'
+		},
+		sizeType:{
+			type: Array,
+			default(){
+				return ['original','compressed']
+			}
 		}
 	},
 	watch: {
 		value: {
 			handler(newVal) {
-				let newFils = []
-				let newData = [].concat(newVal || [])
-				newData.forEach(v => {
-					const files = this.files.find(i => i.url === v.url)
-					const reg = /cloud:\/\/([\w.]+\/?)\S*/
-					if (!v.path) {
-						v.path = v.url
-					}
-					if (reg.test(v.url)) {
-						this.getTempFileURL(v, v.url)
-					}
-					newFils.push(files ? files : v)
-				})
-				let data  = null
-				if (this.returnType === 'object') {
-					data = this.backObject(newFils)[0]
-				} else {
-					data = this.backObject(newFils)
-				}
-				this.formItem && this.formItem.setValue(data)
-				this.files = newFils
+				this.setValue(newVal)
+			},
+			immediate: true
+		},
+		modelValue:{
+			handler(newVal) {
+				this.setValue(newVal)
 			},
 			immediate: true
 		}
@@ -262,6 +260,29 @@ export default {
 		}
 	},
 	methods: {
+		setValue(newVal){
+			let newFils = []
+			let newData = [].concat(newVal || [])
+			newData.forEach(v => {
+				const files = this.files.find(i => i.url === v.url)
+				const reg = /cloud:\/\/([\w.]+\/?)\S*/
+				if (!v.path) {
+					v.path = v.url
+				}
+				if (reg.test(v.url)) {
+					this.getTempFileURL(v, v.url)
+				}
+				newFils.push(files ? files : v)
+			})
+			let data  = null
+			if (this.returnType === 'object') {
+				data = this.backObject(newFils)[0]
+			} else {
+				data = this.backObject(newFils)
+			}
+			this.formItem && this.formItem.setValue(data)
+			this.files = newFils
+		},
 		/**
 		 * 获取父元素实例
 		 */
@@ -301,7 +322,7 @@ export default {
 		 * 选择文件
 		 */
 		choose() {
-			
+
 			if (this.disabled) return
 			if (this.files.length >= Number(this.limitLength) && this.showType !== 'grid' && this.returnType === 'array') {
 				uni.showToast({
@@ -331,6 +352,7 @@ export default {
 				.chooseAndUploadFile({
 					type: this.fileMediatype,
 					compressed: false,
+					sizeType:this.sizeType,
 					// TODO 如果为空，video 有问题
 					extension: this.extname.length > 0 ? this.extname : undefined,
 					count: this.limitLength - this.files.length, //默认9

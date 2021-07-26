@@ -131,7 +131,7 @@
 				})
 			},
 			setNickname(nickname) {
-				console.log(9527, nickname);
+				console.log(nickname);
 				if (nickname) {
 					usersTable.where('_id==$env.uid').update({
 						nickname

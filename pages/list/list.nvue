@@ -82,13 +82,8 @@
 			cdbRef = this.$refs.udb
 		},
 		async onShow() {
-			
-			console.log(999,getApp().globalData.searchText);
-			
 			this.keyword = getApp().globalData.searchText
 			getApp().globalData.searchText = ''
-			
-			
 			//这里仅演示如何，在onShow生命周期获取设备位置，并在设备或者应用没有权限时自动引导。设置完毕自动重新获取。
 			//你可以基于他做自己的业务，比如：根据距离由近到远排序列表数据等
 			// uni.showLoading({
