@@ -303,7 +303,6 @@ export default async function() {
 	list.forEach(item => { //用遍历的方式分别为,uni.navigateTo,uni.redirectTo,uni.reLaunch,uni.switchTab这4个路由方法添加拦截器
 		uni.addInterceptor(item, {
 			invoke(e) { // 调用前拦截
-				// console.log(e);
 				//获取用户的token
 				const token = uni.getStorageSync('uni_id_token'),
 					//token是否已失效

@@ -184,6 +184,9 @@
 		/* #ifndef APP-PLUS */
 		z-index: 9;
 		/* #endif */
+		/* #ifdef MP-WEIXIN */
+		width: 580rpx;
+		/* #endif */
 	}
 
 	.show-refresh-tip {

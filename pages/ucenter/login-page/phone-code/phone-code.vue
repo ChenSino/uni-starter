@@ -3,10 +3,11 @@
 		<!-- 顶部文字 -->
 		<text class="tit">请输入验证码</text>
 		<text class="tip">{{tipText}}</text>
+		<uni-forms>
 		<!-- 登录框 (选择手机号所属国家和地区需要另行实现) -->
 			<uni-easyinput type="number" class="easyinput" :inputBorder="false"
 				v-model="code" maxlength="6" placeholder="请输入验证码">
-				<template slot="right">
+				<template v-slot:right>
 					<uni-send-sms-code :phone="phone" ref="sendSmsCode"></uni-send-sms-code>
 				</template>
 			</uni-easyinput>

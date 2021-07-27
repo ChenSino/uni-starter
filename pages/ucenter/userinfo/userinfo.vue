@@ -266,7 +266,13 @@
 	}
 </script>
 <style lang="scss" scoped>
-	@import '@/common/all-flex.css';
+	/* #ifndef APP-NVUE */
+	view {
+		display: flex;
+		box-sizing: border-box;
+		flex-direction: column;
+	}
+	/* #endif */
 	.item {
 		width: 750rpx;
 		flex-direction: row;

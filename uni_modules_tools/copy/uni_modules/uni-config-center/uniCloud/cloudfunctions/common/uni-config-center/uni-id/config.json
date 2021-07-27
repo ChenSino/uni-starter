@@ -44,9 +44,9 @@
 			"smsSecret": "短信密钥secret，开通短信服务处可以看到"
 		},
 		"univerify": {
-			"appid": "__UNI__03B096E",
-			"apiKey": "3fc28519d90d74173bcecf2daf4ffcc4",
-			"apiSecret": "dd793e5bc4b372ce932f35bbb4c5d61b"
+			"appid": "当前应用的appid，使用云函数URL化，此项必须配置",
+			"apiKey": "apiKey 和 apiSecret 在开发者中心获取，开发者中心：https://dev.dcloud.net.cn/uniLogin/index?type=0，文档：https://ask.dcloud.net.cn/article/37965",
+			"apiSecret": ""
 		}
 	}
 }

@@ -4,7 +4,9 @@
 		"appid": "请点击重新获取" ,//清空appid
 		"mp-weixin" : {
 		    "appid" : ""
-		}
+		},
+		"_spaceID" : "",
+		"vueVersion" : "2"
 	},
 	"/uni_modules/uni-config-center/uniCloud/cloudfunctions/common/uni-config-center/uni-id/config.json": {
 		"tokenExpiresIn": 7200,

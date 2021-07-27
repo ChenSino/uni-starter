@@ -1,54 +1,61 @@
-@import '@/common/all-flex.css';
+/* #ifndef APP-NVUE */
+view {
+	display: flex;
+	box-sizing: border-box;
+	flex-direction: column;
+}
 
-	.content {
-		padding: 0 50rpx;
-		width: 750rpx;
-		flex: 1;
-	}
+/* #endif */
 
-	.input-box {
-		padding: 0 15px;
-		margin-bottom: 10px;
-		background-color: #F8F8F8;
-		border-radius: 6px;
-		font-size: 28rpx;
-	}
+.content {
+	padding: 0 50rpx;
+	width: 750rpx;
+	flex: 1;
+}
 
-	.get-code {
-		margin: 0;
-		margin-top: 15px;
-		background-color: #007aff;
-		color: #FFFFFF;
-	}
+.input-box {
+	padding: 0 15px;
+	margin-bottom: 10px;
+	background-color: #F8F8F8;
+	border-radius: 6px;
+	font-size: 28rpx;
+}
 
-	.input-box,
-	.get-code {
-		height: 45px;
-		line-height: 45px;
-	}
+.get-code {
+	margin: 0;
+	margin-top: 15px;
+	background-color: #007aff;
+	color: #FFFFFF;
+}
 
-	.title {
-		text-align: center;
-		padding-bottom: 5px;
-	}
+.input-box,
+.get-code {
+	height: 45px;
+	line-height: 45px;
+}
 
-	.tip {
-		color: #666666;
-		font-size: 26rpx;
-		margin: 6px 0;
-	}
+.title {
+	text-align: center;
+	padding-bottom: 5px;
+}
 
-	.easyinput {
-		background-color: #F8F8F8;
-		border-radius: 6rpx;
-	}
+.tip {
+	color: #666666;
+	font-size: 26rpx;
+	margin: 6px 0;
+}
 
-	.send-btn {
-		width: 100%;
-		margin-top: 15px;
-		border-radius: 6rpx;
-	}
+.easyinput {
+	background-color: #F8F8F8;
+	border-radius: 6rpx;
+}
 
-	.link {
-		color: #04498c;
-	}
+.send-btn {
+	width: 100%;
+	margin-top: 15px;
+	border-radius: 6rpx;
+}
+
+.link {
+	color: #04498c;
+}

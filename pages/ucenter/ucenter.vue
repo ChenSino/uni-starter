@@ -60,8 +60,7 @@
 					}
 				],
 				ucenterList: [
-					[
-						{
+					[{
 							"title": '签到有奖',
 							"event": 'signIn',
 							"icon": "compose"
@@ -85,7 +84,7 @@
 							"icon": "paperplane"
 						}
 						// #ifdef APP-PLUS
-						,{
+						, {
 							"title": '分销推荐',
 							"event": 'share',
 							"icon": "redo"
@@ -155,7 +154,7 @@
 					url: "/pages/ucenter/settings/settings"
 				})
 			},
-			signIn(){ 	//签到
+			signIn() { //签到
 				this.$refs.signIn.open()
 			},
 			/**
@@ -233,7 +232,9 @@
 				})
 			},
 			async share() {
-				let {result} = await uniCloud.callFunction({
+				let {
+					result
+				} = await uniCloud.callFunction({
 					name: 'uni-id-cf',
 					data: {
 						action: 'getUserInviteCode'
@@ -256,7 +257,8 @@
 							`/#/pages/ucenter/invite/invite?code=uniInvitationCode:${myInviteCode}`,
 						title: appName,
 						summary: slogan,
-						imageUrl: logo + '?x-oss-process=image/resize,m_fill,h_100,w_100' //压缩图片解决，在ios端分享图过大导致的图片失效问题
+						imageUrl: logo +
+							'?x-oss-process=image/resize,m_fill,h_100,w_100' //压缩图片解决，在ios端分享图过大导致的图片失效问题
 					},
 					menus: [{
 							"img": "/static/app-plus/sharemenu/wechatfriend.png",
@@ -310,8 +312,13 @@
 </script>
 
 <style lang="scss" scoped>
-@import '@/common/all-flex.css';
-	/* #ifndef APP-PLUS-NVUE */
+	/* #ifndef APP-NVUE */
+	view {
+		display: flex;
+		box-sizing: border-box;
+		flex-direction: column;
+	}
+
 	page {
 		background-color: #f8f8f8;
 	}

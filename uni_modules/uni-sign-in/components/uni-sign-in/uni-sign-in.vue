@@ -188,7 +188,7 @@
 		border-radius: 100px;
 		height: 50rpx;
 		line-height: 50rpx;
-		justify-content: center;
+		text-align: center;
 		width: 50rpx;
 		margin-bottom: 6rpx;
 	}

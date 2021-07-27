@@ -343,7 +343,13 @@
 </script>
 
 <style lang="scss" scoped>
-	@import '@/common/all-flex.css';
+	/* #ifndef APP-NVUE */
+view{
+	display: flex;
+	box-sizing: border-box;
+	flex-direction: column;
+}
+/* #endif */
 	.quick-login-box {
 		flex-direction: row;
 		width: 750rpx;

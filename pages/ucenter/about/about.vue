@@ -19,42 +19,47 @@
 	</view>
 </template>
 <script>
-import uniShare from '@/uni_modules/uni-share/js_sdk/uni-share.js';
+	import uniShare from '@/uni_modules/uni-share/js_sdk/uni-share.js';
 	export default {
 		onLoad() {
 			// #ifdef APP-PLUS
 			this.version = plus.runtime.version
 			// #endif
 		},
-		computed:{
-			uniStarterConfig(){
+		computed: {
+			uniStarterConfig() {
 				console.log(getApp());
 				return getApp().globalData.config
 			}
 		},
 		data() {
 			return {
-				version:"V1.0.0",
-				year:"2020",
-				about:{}
+				version: "V1.0.0",
+				year: "2020",
+				about: {}
 			};
 		},
 		created() {
 			this.about = this.uniStarterConfig.about
 			uni.setNavigationBarTitle({
-				title:'关于'+this.about.appName
+				title: '关于' + this.about.appName
 			})
 			this.year = (new Date).getFullYear()
 		},
 		onNavigationBarButtonTap() {
-			let {download,appName,slogan,logo} = this.about
+			let {
+				download,
+				appName,
+				slogan,
+				logo
+			} = this.about
 			uniShare({
 				content: { //公共的分享类型（type）、链接（herf）、标题（title）、summary（描述）、imageUrl（缩略图）
 					type: 0,
 					href: download,
 					title: appName,
 					summary: slogan,
-					imageUrl: logo+'?x-oss-process=image/resize,m_fill,h_100,w_100' //压缩图片解决，在ios端分享图过大导致的图片失效问题
+					imageUrl: logo + '?x-oss-process=image/resize,m_fill,h_100,w_100' //压缩图片解决，在ios端分享图过大导致的图片失效问题
 				},
 				menus: [{
 						"img": "/static/app-plus/sharemenu/wechatfriend.png",
@@ -102,10 +107,13 @@ import uniShare from '@/uni_modules/uni-share/js_sdk/uni-share.js';
 				console.log(e);
 			})
 		},
-		methods:{
-			navigateTo({url,title}){
+		methods: {
+			navigateTo({
+				url,
+				title
+			}) {
 				uni.navigateTo({
-					url: '/pages/common/webview/webview?url='+url+'&title='+title,
+					url: '/pages/common/webview/webview?url=' + url + '&title=' + title,
 					success: res => {},
 					fail: () => {},
 					complete: () => {}
@@ -115,55 +123,71 @@ import uniShare from '@/uni_modules/uni-share/js_sdk/uni-share.js';
 	}
 </script>
 <style lang="scss" scoped>
-@import '@/common/all-flex.css';
-.about {
-	width: 750upx;
-	flex-direction: column;
-}
-.box {
-	margin-top: 100px;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-}
-.logoImg{
-	margin-bottom: 10upx;
-	width:160upx;
-	height:160upx;
-	border-radius: 15px;
-}
-.tip{
-	font-size:24rpx;
-	margin-top: 10px;
-}
-.appName{
-	margin-top: 20px;
-	font-size:42rpx;
-	font-weight: 500;
-}
-.qrcode{
-	margin-top: 50px;
-}
-.copyright {
-	width: 750upx;
-	font-size:32rpx;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	bottom:20px;
-	left: 0;
-	position: fixed;
-}
-.agreement-box{
-	justify-content: center;
-}
-.agreement {
-	color:#2285ff;
-	font-size:26rpx;
-}
-.hint {
-	text-align: center;
-	color:#999999;
-	font-size:26rpx;
-}
+	/* #ifndef APP-NVUE */
+	view {
+		display: flex;
+		box-sizing: border-box;
+		flex-direction: column;
+	}
+
+	/* #endif */
+	.about {
+		width: 750upx;
+		flex-direction: column;
+	}
+
+	.box {
+		margin-top: 100px;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.logoImg {
+		margin-bottom: 10upx;
+		width: 160upx;
+		height: 160upx;
+		border-radius: 15px;
+	}
+
+	.tip {
+		font-size: 24rpx;
+		margin-top: 10px;
+	}
+
+	.appName {
+		margin-top: 20px;
+		font-size: 42rpx;
+		font-weight: 500;
+	}
+
+	.qrcode {
+		margin-top: 50px;
+	}
+
+	.copyright {
+		width: 750upx;
+		font-size: 32rpx;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		bottom: 20px;
+		left: 0;
+		position: fixed;
+	}
+
+	.agreement-box {
+		justify-content: center;
+	}
+
+	.agreement {
+		color: #2285ff;
+		font-size: 26rpx;
+	}
+
+	.hint {
+		text-align: center;
+		color: #999999;
+		font-size: 26rpx;
+	}
 </style>

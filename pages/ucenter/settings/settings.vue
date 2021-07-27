@@ -240,7 +240,6 @@
 		border: none;
 		border-radius: 0;
 	}
-
 	/* #endif */
 	.content {
 		/* #ifndef APP-NVUE */
