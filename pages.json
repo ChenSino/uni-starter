@@ -159,7 +159,7 @@
 		}, {
 			"path": "pages/ucenter/invite/invite",
 			"style": {
-				"navigationStyle":"custom",
+				"navigationStyle": "custom",
 				"enablePullDownRefresh": false
 			}
 

@@ -3,20 +3,25 @@
 		<!-- #ifdef APP-PLUS -->
 		<status-bar />
 		<!-- #endif -->
+		
 		<!-- banner -->
 		<unicloud-db ref="bannerdb" v-slot:default="{data, loading, error, options}" collection="opendb-banner"
-			field="_id,bannerfile,open_url,title" @load="load">
-			<uni-swiper-dot class="uni-swiper-dot-box" @clickItem="clickItem" :info="data || bannerFormate(data, loading)" 
+			field="_id,bannerfile,open_url,title" @load="onqueryload">
+			<!-- 当无banner数据时显示占位图 -->
+			<image v-if="!(loading||data.length)" class="banner-image" src="/static/grid/empty.png" mode="aspectFill" :draggable="false" />
+			<uni-swiper-dot v-else class="uni-swiper-dot-box" @clickItem="clickItem" :info="data" 
 				:current="current" field="content">
 				<swiper class="swiper-box" @change="changeSwiper" :current="swiperDotIndex">
-					<swiper-item v-for="(item, index) in (data || bannerFormate(data, loading))" :key="item._id">
-						<view :draggable="false" class="swiper-item" @click="clickBannerItem(item)">
-							<image class="swiper-image" :src="item.bannerfile.url" mode="aspectFill" :draggable="false" />
+					<swiper-item v-for="(item, index) in data" :key="item._id">
+						<view class="swiper-item" @click="clickBannerItem(item)">
+							<image class="banner-image" :src="item.bannerfile.url" mode="aspectFill" :draggable="false" />
 						</view>
 					</swiper-item>
 				</swiper>
 			</uni-swiper-dot>
 		</unicloud-db>
+		
+		
 	<!-- 宫格 -->
 		<uni-section title="宫格组件" style="margin: 0;" type="line"></uni-section>
 		<view class="example-body">
@@ -67,8 +72,7 @@
 			/**
 			 * banner加载后触发的回调
 			 */
-			load(data) {
-
+			onqueryload(data) {
 			},
 			changeSwiper(e) {
 				this.current = e.detail.current
@@ -90,21 +94,6 @@
 					});
 				}
 				// 其余业务处理
-			},
-			/**
-			 * banner数据过滤
-			 */
-			bannerFormate(bannerList, loading) {
-				if (loading) return [];
-				if (bannerList.length > 0) return bannerList;
-				// 无数据添加默认值
-				let list = [{
-					"_id": -1,
-					"bannerfile": "/static/grid/empty.png",
-					"open_url": "https://www.dcloud.io/",
-					"title": "内容 A",
-				}]
-				return list;
 			}
 		}
 	}
@@ -176,7 +165,7 @@
 		padding: 15px 0;
 	}
 
-	.swiper-image {
+	.banner-image {
 		width: 750rpx;
 		height: 400rpx;
 	}

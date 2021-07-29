@@ -8,7 +8,6 @@
 			<uni-search-bar class="uni-search-box" v-model="keyword" ref="searchBar" radius="100"
 				cancelButton="none" />
 		</view>
-		
 		<unicloud-db ref='udb' v-slot:default="{data,pagination,hasMore, loading, error, options}" @error="onqueryerror"
 			:where="where" collection="opendb-news-articles,uni-id-users" :page-size="10"
 			field="avatar,title,last_modify_date,user_id.username">

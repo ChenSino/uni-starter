@@ -299,6 +299,7 @@ export default async function() {
 			login
 		}
 	} = uniStarterConfig //需要登录的页面
+	
 	let list = ["navigateTo", "redirectTo", "reLaunch", "switchTab"];
 	list.forEach(item => { //用遍历的方式分别为,uni.navigateTo,uni.redirectTo,uni.reLaunch,uni.switchTab这4个路由方法添加拦截器
 		uni.addInterceptor(item, {
@@ -341,7 +342,7 @@ export default async function() {
 							}
 							return url != item
 						})
-						console.log({pass})
+						// console.log({pass})
 					}
 					if (visitor&&!inLoginPage) {
 						pass = visitor.some((item) => {
@@ -350,7 +351,7 @@ export default async function() {
 							}
 							return url == item
 						})
-						console.log({pass})
+						// console.log({pass})
 					}
 
 					if (!pass && (token == '' || tokenExpired)) {
@@ -378,6 +379,7 @@ export default async function() {
 			}
 		})
 	})
+	
 	// #ifdef APP-PLUS
 	// 监听并提示设备网络状态变化
 	uni.onNetworkStatusChange(res => {

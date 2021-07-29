@@ -151,11 +151,6 @@ exports.main = async (event, context) => {
 			}
 			break;
 		case 'bindMobileBySms':
-			// console.log({
-			// 	uid: params.uid,
-			// 	mobile: params.mobile,
-			// 	code: params.code
-			// });
 			res = await uniID.bindMobile({
 				uid: params.uid,
 				mobile: params.mobile,

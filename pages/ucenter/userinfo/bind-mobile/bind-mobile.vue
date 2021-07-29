@@ -9,7 +9,7 @@
 				<uni-send-sms-code ref="shortCode" code-type="bind" :phone="formData.phone"></uni-send-sms-code>
 			</template>
 		</uni-easyinput>
-		<button class="send-btn-box" type="primary" @click="submit">提交</button>
+		<button class="send-btn-box" :disabled="!canSubmit" :type="canSubmit?'primary':'default'" @click="submit">提交</button>
 	</view>
 </template>
 <script>
@@ -32,7 +32,7 @@
 				return `验证码已通过短信发送至${this.currenPhoneArea} ${this.formData.phone}。密码为6 - 20位`
 			},
 			canSubmit() {
-				return this.isPhone && this.isPwd && this.isCode;
+				return true//this.isPhone() && this.isCode();
 			}
 		},
 		onLoad(event) {
@@ -69,6 +69,16 @@
 						}
 					}
 				})
+			},
+			isPhone() {
+				let reg_phone = /^1\d{10}$/;
+				let isPhone = reg_phone.test(this.formData.phone);
+				return isPhone;
+			},
+			isCode() {
+				let reg_code = /^\d{6}$/;
+				let isCode = reg_code.test(this.formData.code);
+				return isCode;
 			}
 		}
 	}

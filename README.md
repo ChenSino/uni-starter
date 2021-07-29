@@ -78,6 +78,9 @@ uni-starter + uniCloud admin，提供了用户端和管理端的基础模板，�
 	"login": ["username","smsCode","univerify", "weixin", "apple"],
 }
 ```
+*** 注意：首页需要强制登陆才能访问的场景
+- 这种情况不由路由控制。而是uni-starter的callFunction拦截器，根据响应体决定是否跳转到登陆页。
+- uni-starter框架不能将登陆页面设置为首页，否则由拦截器实现的路由管理将生效。
 
 #### 2.登录配置详解
 - 使用方式：在 `uni-starter.config.js`->`router`->`login`下完全列举你需要的登录方式。这里支持用[条件编译](https://uniapp.dcloud.io/platform?id=%e6%9d%a1%e4%bb%b6%e7%bc%96%e8%af%91)因此你可以配置在不同平台下拥有的登录方式。

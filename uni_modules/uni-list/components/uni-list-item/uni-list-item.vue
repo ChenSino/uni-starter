@@ -163,6 +163,7 @@ export default {
 		}
 	},
 	// inject: ['list'],
+	emits:['click'],
 	data() {
 		return {
 			isFirstChild: false

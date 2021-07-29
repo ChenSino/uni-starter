@@ -10,7 +10,7 @@ class Gps {
 	}) {
 		return new Promise(async (callback) => {
 			if (this.lock) {
-				console.log('已锁，已有另一个请求正在执行。无需重复请求');
+				// console.log('已锁，已有另一个请求正在执行。无需重复请求');
 				callback(false);
 				return false
 			}
