@@ -37,6 +37,8 @@
       "FaceID": {
       },
       "Push": {
+      },
+      "Geolocation": {
       }
     },
     "distribute": {
@@ -50,7 +52,6 @@
           "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
           "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
           "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
-          "<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
           "<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>",
           "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
           "<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
@@ -80,9 +81,9 @@
           "apple": {
           },
           "weixin": {
-            "appid": "wxffdd8fa6ec4ef2a0",
+            "appid": "",
             "appsecret": "",
-            "UniversalLinks": "https://static-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e.bspapp.com/uni-universallinks/__UNI__03B096E"
+            "UniversalLinks": ""
           },
           "univerify": {
           }
@@ -91,11 +92,19 @@
         },
         "share": {
           "weixin": {
-            "appid": "wxffdd8fa6ec4ef2a0",
-            "UniversalLinks": "https://static-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e.bspapp.com/uni-universallinks/__UNI__03B096E"
+            "appid": "",
+            "UniversalLinks": ""
           }
         },
         "geolocation": {
+          "baidu": {
+            "__platform__": [
+              "ios",
+              "android"
+            ],
+            "appkey_ios": "请填写地图的key",
+            "appkey_android": "请填写地图的key"
+          }
         },
         "push": {
           "unipush": {
@@ -103,6 +112,42 @@
         },
         "payment": {
         }
+      },
+      "icons": {
+        "android": {
+          "hdpi": "",
+          "xhdpi": "",
+          "xxhdpi": "",
+          "xxxhdpi": ""
+        },
+        "ios": {
+          "appstore": "",
+          "ipad": {
+            "app": "",
+            "app@2x": "",
+            "notification": "",
+            "notification@2x": "",
+            "proapp@2x": "",
+            "settings": "",
+            "settings@2x": "",
+            "spotlight": "",
+            "spotlight@2x": ""
+          },
+          "iphone": {
+            "app@2x": "",
+            "app@3x": "",
+            "notification@2x": "",
+            "notification@3x": "",
+            "settings@2x": "",
+            "settings@3x": "",
+            "spotlight@2x": "",
+            "spotlight@3x": ""
+          }
+        }
+      },
+      "splashscreen": {
+        "iosStyle": "common",
+        "androidStyle": "common"
       }
     },
     "nvueLaunchMode": ""
@@ -116,7 +161,12 @@
       "es6": false
     },
     "usingComponents": true,
-    "betterScopedSlots": true
+    "betterScopedSlots": true,
+    "permission": {
+      "scope.userLocation": {
+        "desc": "演示在onShow生命周期获取地理位置"
+      }
+    }
   },
   "mp-alipay": {
     "usingComponents": true

@@ -1,10 +1,15 @@
 <template>
-	<view class="quick-login-box">
-		<view class="item" v-for="(item,index) in servicesList" :key="index"
-			@click="item.path?to(item.path):login_before(item.id,false)">
-			<image class="logo" :src="item.logo" mode="widthFix"></image>
-			<text class="login-title">{{item.text}}</text>
+	<view>
+		<view class="quick-login-box">
+			<view class="item" v-for="(item,index) in servicesList" :key="index"
+				@click="item.path?to(item.path):login_before(item.id,false)">
+				<image class="logo" :src="item.logo" mode="widthFix"></image>
+				<text class="login-title">{{item.text}}</text>
+			</view>
 		</view>
+		<!-- #ifdef MP-WEIXIN -->
+		<uni-user-profile @next="doUserProfileNext" ref="userProfile"></uni-user-profile>
+		<!-- #endif -->
 	</view>
 </template>
 <script>
@@ -14,6 +19,8 @@
 	} from 'vuex';
 	//前一个窗口的页面地址。控制点击切换快捷登录方式是创建还是返回
 	import loginSuccess from '@/pages/ucenter/login-page/common/loginSuccess.js';
+	const db = uniCloud.database();
+	const usersTable = db.collection('uni-id-users')
 	export default {
 		computed: {
 			loginConfig() {
@@ -106,10 +113,13 @@
 			//去掉配置中不存在的
 			servicesList = servicesList.filter(item => this.loginConfig.includes(item.id))
 			//处理一键登录
-			if(this.loginConfig.includes('univerify')){
+			if (this.loginConfig.includes('univerify')) {
 				this.univerifyStyle.privacyTerms.privacyItems = this.agreements
 				//设置一键登录功能底下的快捷登陆按钮
-				servicesList.forEach(({id,logo}) => {
+				servicesList.forEach(({
+					id,
+					logo
+				}) => {
 					if (id != 'univerify') {
 						this.univerifyStyle.buttons.list.push({
 							"iconPath": logo,
@@ -120,14 +130,14 @@
 			}
 			//如果当前页面为默认登陆界面。当前第一优先级的“微信和苹果登陆”要隐藏，因为他已经被渲染在默认登陆界面顶部
 			if (
-				this.getRoute(1) == '/pages/ucenter/login-page/index/index' &&
-				['weixin','apple'].includes(this.loginConfig[0])
+				this.getRoute(1) == '/pages/ucenter/login-page/index/index' && ['weixin', 'apple'].includes(this
+					.loginConfig[0])
 			) {
 				servicesList = servicesList.filter(item => item.id != this.loginConfig[0])
 			}
 			//去掉当前页面对应的登录选项
 			this.servicesList = servicesList.filter(item => {
-				let path = item.path?item.path.split('?')[0]:'';
+				let path = item.path ? item.path.split('?')[0] : '';
 				return path != this.getRoute(1)
 			})
 			console.log('servicesList', servicesList, this.servicesList);
@@ -289,7 +299,10 @@
 				})
 			},
 			login(params, type) { //联网验证登录
-				console.log({params,type});
+				console.log({
+					params,
+					type
+				});
 				let action = 'loginBy' + type.trim().toLowerCase().replace(type[0], type[0].toUpperCase())
 				uniCloud.callFunction({
 					name: 'uni-id-cf',
@@ -297,18 +310,25 @@
 						action,
 						params
 					},
-					success: ({
+					success: async ({
 						result
 					}) => {
-						console.log("login-result",result);
+						console.log("login-result", result);
 						if (result.code === 0) {
 							if (type == 'univerify') {
 								uni.closeAuthView()
 							}
 							uni.hideLoading()
-							loginSuccess(result)
 							delete result.userInfo.token
+							
+							// #ifdef MP-WEIXIN
+							if (type == 'weixin' && !result.userInfo.nickname) {
+								return this.$refs.userProfile.open(result.uid)
+							}
+							// #endif
+							
 							this.setUserInfo(result.userInfo)
+							loginSuccess(result)
 						} else {
 							uni.showModal({
 								content: result.msg,
@@ -320,6 +340,9 @@
 						uni.hideLoading()
 					}
 				})
+			},
+			doUserProfileNext(){
+				loginSuccess()
 			},
 			async getUserInfo(e) {
 				return new Promise((resolve, reject) => {
@@ -344,12 +367,13 @@
 
 <style lang="scss" scoped>
 	/* #ifndef APP-NVUE */
-view{
-	display: flex;
-	box-sizing: border-box;
-	flex-direction: column;
-}
-/* #endif */
+	view {
+		display: flex;
+		box-sizing: border-box;
+		flex-direction: column;
+	}
+
+	/* #endif */
 	.quick-login-box {
 		flex-direction: row;
 		width: 750rpx;

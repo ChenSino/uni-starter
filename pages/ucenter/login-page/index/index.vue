@@ -110,13 +110,15 @@
 
 <style lang="scss" scoped>
 	/* #ifndef APP-NVUE */
-view{
-	display: flex;
-	box-sizing: border-box;
-	flex-direction: column;
-}
-/* #endif */
+	view {
+		display: flex;
+		box-sizing: border-box;
+		flex-direction: column;
+	}
+	/* #endif */
+	
 	@import url("../common/login-page.css");
+
 	.quickLogin {
 		width: 650rpx;
 		height: 350px;

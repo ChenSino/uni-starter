@@ -5,6 +5,33 @@
 		"mp-weixin" : {
 		    "appid" : ""
 		},
+		"app-plus" : {
+			"distribute" :{
+				"sdkConfigs" : {
+				    "oauth" : {
+				        "weixin" : {
+				            "appid" : "",
+				            "appsecret" : "",
+				            "UniversalLinks" : ""
+				        },
+				        "univerify" : {}
+				    },
+				    "share" : {
+				        "weixin" : {
+				            "appid" : "",
+				            "UniversalLinks" : ""
+				        }
+				    },
+				    "geolocation" : {
+				        "baidu" : {
+				            "__platform__" : [ "ios", "android" ],
+				            "appkey_ios" : "请填写地图的key",
+				            "appkey_android" : "请填写地图的key"
+				        }
+				    }
+				}
+			}
+		},
 		"_spaceID" : "",
 		"vueVersion" : "2"
 	},

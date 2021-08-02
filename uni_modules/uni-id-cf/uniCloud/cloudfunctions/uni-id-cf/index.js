@@ -219,12 +219,52 @@ exports.main = async (event, context) => {
 			res.needCaptcha = needCaptcha;
 			break;
 		case 'loginByWeixin':
-			res = await uniID.loginByWeixin(params);
-			await uniID.updateUser({
-				uid: res.uid,
-				username: "微信用户"
-			});
-			res.userInfo.username = "微信用户"
+			let loginRes = await uniID.loginByWeixin(params);
+			if(loginRes.code===0){
+				//用户完善资料（昵称、头像）
+				if(context.PLATFORM == "app-plus" && !loginRes.userInfo.nickname){
+					let {accessToken:access_token,openid} = loginRes,
+						{appid,appsecret:secret} = uniIdConfig['app-plus'].oauth.weixin;
+					let wxRes = await uniCloud.httpclient.request(
+						`https://api.weixin.qq.com/sns/userinfo?access_token=${access_token}&openid=${openid}&scope=snsapi_userinfo&appid=${appid}&secret=${secret}`, {
+							method: 'POST',
+							contentType: 'json', // 指定以application/json发送data内的数据
+							dataType: 'json' // 指定返回值为json格式，自动进行parse
+						})
+					if(wxRes.status == 200){
+						let {nickname,headimgurl} = wxRes.data;
+						let headimgurlFile = {},cloudPath = loginRes.uid+'/'+Date.now()+"headimgurl.jpg";
+						let getImgBuffer = await uniCloud.httpclient.request(headimgurl)
+						if(getImgBuffer.status == 200){
+							let {fileID} = await uniCloud.uploadFile({
+							    cloudPath,
+							    fileContent: getImgBuffer.data
+							});
+							headimgurlFile = {
+								name:cloudPath,
+								extname:"jpg",
+								url:fileID
+							}
+						}else{
+							return getImgBuffer
+						}
+						await uniID.updateUser({
+							uid: loginRes.uid,
+							nickname,
+							avatar_file:headimgurlFile
+						})
+						loginRes.userInfo.nickname = nickname;
+						loginRes.userInfo.avatar_file = headimgurlFile;
+					}else{
+						return wxRes
+					}
+				}
+				delete loginRes.accessToken
+				delete loginRes.refreshToken
+				return loginRes
+			}else{
+				return loginRes
+			}
 			await loginLog(res)
 			break;
 		case 'loginByUniverify':

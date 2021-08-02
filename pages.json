@@ -164,7 +164,7 @@
 			}
 
 		}
-	],
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-starter",
