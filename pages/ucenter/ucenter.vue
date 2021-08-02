@@ -7,7 +7,8 @@
 				disabled />
 			<image v-else class="logo-img" src="/static/uni-center/defaultAvatarUrl.png"></image>
 			<view class="logo-title">
-				<text class="uer-name">{{userInfo.nickname||userInfo.username||userInfo.mobile||'未登录'}}</text>
+				<text class="uer-name" v-if="hasLogin">{{userInfo.nickname||userInfo.username||userInfo.mobile}}</text>
+				<text class="uer-name" v-else>未登陆</text>
 			</view>
 		</view>
 		<uni-grid class="grid" :column="4" :showBorder="false" :square="true">
@@ -119,6 +120,7 @@
 			}
 		},
 		onLoad() {
+			console.log(313,this.userInfo,this.hasLogin);
 			//#ifdef APP-PLUS
 			this.ucenterList[this.ucenterList.length - 2].unshift({
 				title: '检查更新',
@@ -132,7 +134,7 @@
 		computed: {
 			...mapGetters({
 				userInfo: 'user/info',
-				login: 'user/hasLogin'
+				hasLogin: 'user/hasLogin'
 			})
 			// #ifdef APP-PLUS
 			,
