@@ -97,7 +97,7 @@
 				}
 			}
 		}, {
-			"path": "uni_modules/uni-agree/pages/uni-agree/uni-agree",
+			"path": "pages/uni-agree/uni-agree",
 			"style": {
 				"navigationStyle": "custom",
 				"app-plus": {

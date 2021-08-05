@@ -1,6 +1,6 @@
 <script>
 	import initApp from '@/common/appInit.js';
-	import checkIsAgree from '@/uni_modules/uni-agree/utils/uni-agree.js';
+	import checkIsAgree from '@/pages/uni-agree/utils/uni-agree.js';
 	export default {
 		globalData: {
 			searchText: '',
@@ -15,7 +15,8 @@
 			// #endif
 
 			// #ifdef H5
-			// checkIsAgree(); 默认不开启。目前全球，仅欧盟国家有网页端同意隐私权限的需要。如果需要
+			checkIsAgree();
+			 // 默认不开启。目前全球，仅欧盟国家有网页端同意隐私权限的需要。如果需要
 			// #endif
 
 			// #ifdef APP-PLUS

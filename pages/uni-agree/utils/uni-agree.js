@@ -4,7 +4,7 @@ export default function(){
 	console.log('userprotocol',userprotocol);
 	if(!userprotocol){
 		uni.navigateTo({
-			url:'uni_modules/uni-agree/pages/uni-agree/uni-agree',
+			url:'/pages/uni-agree/uni-agree',
 			animationType:"none"
 		})
 	}
