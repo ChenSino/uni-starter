@@ -1,17 +1,12 @@
 var nvMask,nvImageMenu;
 export default {
 	show({list,cancelText},callback){
+		console.log(789789879);
 		if(!list){
 			list = [{
-				"img":"https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-dc-site/9a952c80-6080-11eb-a16f-5b3e54966275.png",
+				"img":"/static/sharemenu/wechatfriend.png",
 				"text":"图标文字"
 			}]
-		}
-		if(list.length>8){
-			return uni.showToast({
-				title: '目前版本最多支持8个图标',
-				icon: 'none'
-			});
 		}
 		//以下为计算菜单的nview绘制布局，为固定算法，使用者无关关心
 		var screenWidth = plus.screen.resolutionWidth
@@ -36,6 +31,9 @@ export default {
 		var left4 = left1 + (iconWidth + iconSpace) * 3
 		var top1 = left1
 		var top2 = top1 + iconWidth + icontextSpace + textHeight + left1
+		
+		const TOP = {top1,top2}, LEFT = {left1,left2,left3,left4};
+		
 		nvMask = new plus.nativeObj.View("nvMask", { //先创建遮罩层
 			top: '0px',
 			left: '0px',
@@ -61,8 +59,8 @@ export default {
 				tag: 'img',
 				src: item.img,
 				position: {
-					top: eval('top'+( parseInt(i/4) +1)),
-					left: eval('left'+(1+i%4)),
+					top: TOP['top'+( parseInt(i/4) +1)],
+					left: LEFT['left'+(1+i%4)],
 					width: iconWidth,
 					height: iconWidth
 				}
@@ -74,8 +72,8 @@ export default {
 					size: textHeight
 				},
 				position: {
-					top: eval('top'+(parseInt(i/4)+1)) + iconWidth + icontextSpace,
-					left: eval('left'+(1+i%4)),
+					top: TOP['top'+(parseInt(i/4)+1)] + iconWidth + icontextSpace,
+					left: LEFT['left'+(1+i%4)],
 					width: iconWidth,
 					height: textHeight
 				}

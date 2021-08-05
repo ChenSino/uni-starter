@@ -1,6 +1,7 @@
 var nvMask,nvImageMenu;
 export default {
 	show({list,cancelText},callback){
+		console.log(789789879);
 		if(!list){
 			list = [{
 				"img":"/static/sharemenu/wechatfriend.png",
@@ -30,6 +31,9 @@ export default {
 		var left4 = left1 + (iconWidth + iconSpace) * 3
 		var top1 = left1
 		var top2 = top1 + iconWidth + icontextSpace + textHeight + left1
+		
+		const TOP = {top1,top2}, LEFT = {left1,left2,left3,left4};
+		
 		nvMask = new plus.nativeObj.View("nvMask", { //先创建遮罩层
 			top: '0px',
 			left: '0px',
@@ -55,8 +59,8 @@ export default {
 				tag: 'img',
 				src: item.img,
 				position: {
-					top: eval('top'+( parseInt(i/4) +1)),
-					left: eval('left'+(1+i%4)),
+					top: TOP['top'+( parseInt(i/4) +1)],
+					left: LEFT['left'+(1+i%4)],
 					width: iconWidth,
 					height: iconWidth
 				}
@@ -68,8 +72,8 @@ export default {
 					size: textHeight
 				},
 				position: {
-					top: eval('top'+(parseInt(i/4)+1)) + iconWidth + icontextSpace,
-					left: eval('left'+(1+i%4)),
+					top: TOP['top'+(parseInt(i/4)+1)] + iconWidth + icontextSpace,
+					left: LEFT['left'+(1+i%4)],
 					width: iconWidth,
 					height: textHeight
 				}

@@ -34,7 +34,8 @@
 </template>
 
 <script>
-import {about} from '@/uni-starter.config.js';
+import config from '@/uni-starter.config.js';
+const { about } = config
     export default {
         data() {
             return {

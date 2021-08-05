@@ -66,6 +66,9 @@
 					        }
 							callBack()
 					    },
+						fail: (err) => {
+							console.error(err)
+						},
 						complete: (e) => {
 							// console.log("downloadFile",e);
 						}

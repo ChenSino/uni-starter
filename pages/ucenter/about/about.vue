@@ -129,7 +129,6 @@
 		box-sizing: border-box;
 		flex-direction: column;
 	}
-
 	/* #endif */
 	.about {
 		width: 750upx;

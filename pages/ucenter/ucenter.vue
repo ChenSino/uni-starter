@@ -231,6 +231,8 @@
 						title: msg,
 						icon: 'none'
 					});
+				}).finally(()=>{
+					uni.hideLoading()
 				})
 			},
 			async share() {
@@ -324,7 +326,6 @@
 	page {
 		background-color: #f8f8f8;
 	}
-
 	/* #endif*/
 
 	.center {

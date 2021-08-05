@@ -78,13 +78,11 @@ export default {
 </style>
 <style lang="scss">
 /* 如果使用 scss 需要使用 /deep/  */
-/* #ifndef APP-NVUE  || VUE3 */
 .content /deep/ .custom-transition {
 	width:100px;
 	height:100px;
 	background-color:red;
 }
-/* #endif */
 </style>
 ```
 

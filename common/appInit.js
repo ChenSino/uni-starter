@@ -309,12 +309,14 @@ export default async function() {
 					//token是否已失效
 					tokenExpired = uni.getStorageSync('uni_id_token_expired') < Date.now(),
 					//获取要跳转的页面路径（url去掉"?"和"?"后的参数）
-					url = e.url.split('?')[0],
+					url = e.url.split('?')[0];
 					//获取要前往的页面路径（即url去掉"?"和"?"后的参数）
-					pages = getCurrentPages(),
-					fromUrl = pages[pages.length - 1].route;
-				
-				
+				const pages = getCurrentPages();
+				if(!pages.length){
+					return e
+				}
+				const fromUrl = pages[pages.length - 1].route;
+			
 				let inLoginPage = fromUrl.split('/')[2] == 'login-page'
 					
 				//控制登录优先级
@@ -430,6 +432,5 @@ function initAppVersion() {
 		})
 	});
 	// 检查更新
-	checkUpdate();
 	// #endif
 }
