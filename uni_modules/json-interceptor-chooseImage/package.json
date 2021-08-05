@@ -1,8 +1,8 @@
 {
   "id": "json-interceptor-chooseImage",
-  "displayName": "拦截器应用示例：图片选择api时无权限，引导用户快捷打开系统设置",
-  "version": "1.0.1",
-  "description": "拦截器应用示例：图片选择api时无权限，引导用户快捷打开系统设置",
+  "displayName": "拦截器应用示例 — 图片选择",
+  "version": "1.0.2",
+  "description": "当选择图片遇到权限问题时引导用户快捷打开系统设置",
   "keywords": [
     "interceptor,拦截器，相册权限"
 ],
