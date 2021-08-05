@@ -241,7 +241,7 @@
 					},
 					fail: (err) => {
 						uni.hideLoading()
-						console.error(err);
+						console.log(err);
 
 						if (type == 'univerify') {
 							if (err.metadata && err.metadata.error_data) {

@@ -4,10 +4,12 @@
 		<statusBar></statusBar>
 		<!-- #endif -->
 		<!-- 搜索功能 -->
-		<view @click.capture="searchClick">
-			<uni-search-bar class="uni-search-box" v-model="keyword" ref="searchBar" radius="100"
-				cancelButton="none" />
-		</view>
+		
+		<uni-search-bar @click="searchClick" class="uni-search-box" v-model="keyword" ref="searchBar" radius="100"
+				cancelButton="none" disabled />
+		<view class="cover-search-bar" @click="searchClick"></view>
+		
+		
 		<unicloud-db ref='udb' v-slot:default="{data,pagination,hasMore, loading, error, options}" @error="onqueryerror"
 			:where="where" collection="opendb-news-articles,uni-id-users" :page-size="10"
 			field="avatar,title,last_modify_date,user_id.username">
@@ -223,5 +225,14 @@
 
 	.f1 {
 		flex: 1;
+	}
+	.cover-search-bar{
+		height: 50px;
+		position: relative;
+		top: -50px;
+		margin-bottom: -50px;
+		/* #ifndef APP-NVUE */
+		z-index:999;
+		/* #endif */
 	}
 </style>

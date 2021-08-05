@@ -15,8 +15,7 @@
 			// #endif
 
 			// #ifdef H5
-			checkIsAgree();
-			 // 默认不开启。目前全球，仅欧盟国家有网页端同意隐私权限的需要。如果需要
+			// checkIsAgree(); // 默认不开启。目前全球，仅欧盟国家有网页端同意隐私权限的需要。如果需要
 			// #endif
 
 			// #ifdef APP-PLUS
