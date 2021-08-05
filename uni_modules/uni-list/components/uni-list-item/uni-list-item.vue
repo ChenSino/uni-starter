@@ -74,6 +74,7 @@
  */
 export default {
 	name: 'UniListItem',
+	emits:['click','switchChange'],
 	props: {
 		direction: {
 			type: String,
@@ -163,7 +164,6 @@ export default {
 		}
 	},
 	// inject: ['list'],
-	emits:['click'],
 	data() {
 		return {
 			isFirstChild: false

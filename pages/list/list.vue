@@ -133,6 +133,13 @@
 </script>
 
 <style scoped>
+	/* #ifndef APP-NVUE */
+	view {
+		display: flex;
+		box-sizing: border-box;
+		flex-direction: column;
+	}
+	/* #endif */
 	.pages {
 		background-color: #FFFFFF;
 	}

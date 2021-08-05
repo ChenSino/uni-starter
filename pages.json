@@ -1,5 +1,6 @@
 {
-	"pages": [{
+	"pages": [
+		{
 			"path": "pages/list/list",
 			"style": {
 				"navigationStyle": "custom",
@@ -42,7 +43,6 @@
 				},
 				"h5": {
 					"titleNView": {
-						"buttons": [],
 						"type": "transparent"
 					}
 				},
@@ -174,6 +174,8 @@
 	},
 	"condition": {
 		"list": [{
+				"path": "pages/list/detail"
+			},{
 				"path": "pages/list/list"
 			},
 			{
@@ -185,7 +187,7 @@
 				"path": "pages/ucenter/settings/settings"
 			}
 		],
-		"current": 0
+		"current": 1
 	},
 	"tabBar": {
 		"color": "#7A7E83",

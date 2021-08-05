@@ -82,6 +82,8 @@
 			}
 		},
 		onLoad(event) {
+			console.log(event);
+			event = {"id":"60783c5cb781700001375672","title":"阿里小程序IDE官方内嵌uni-app，为开发者提供多端开发服务","excerpt":"阿里小程序IDE官方内嵌uni-app，为开发者提供多端开发服务","avatar":"https://vkceyugu.cdn.bspapp.com/VKCEYUGU-aliyun-gacrhzeynhss7c6d04/249516a0-3941-11eb-899d-733ae62bed2f.jpg"}
 			//获取真实新闻id，通常 id 来自上一个页面
 			if (event.id) {
 				this.id = event.id
@@ -184,6 +186,12 @@
 					excerpt,
 					avatar
 				} = this.$refs.detail.dataList
+				console.log( JSON.stringify({
+					_id,
+					title,
+					excerpt,
+					avatar
+				}) );
 				uniShare({
 					content: { //公共的分享类型（type）、链接（herf）、标题（title）、summary（描述）、imageUrl（缩略图）
 						type: 0,
@@ -251,7 +259,7 @@
 					],
 					cancelText: "取消分享",
 				}, e => { //callback
-					console.log(e);
+					// console.log(e);
 				})
 			},
 		}

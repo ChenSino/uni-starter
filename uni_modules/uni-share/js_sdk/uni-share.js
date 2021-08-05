@@ -10,16 +10,25 @@ export default async (param,callback) => {
 				menus.push(item)
 			}
 		})
-		console.log(menus);
+		// console.log(menus);
 		uniImageMenu.show({list:menus,cancelText:param.cancelText}, e => {
-			console.log(e);
 			if (typeof(menus[e]['share']) == 'string') {
-				eval(menus[e]['share']+'()')
+				switch (menus[e]['share']){
+					case "copyurl":
+						copyurl()
+						break;
+					case "shareSystem":
+						shareSystem()
+						break;
+					default:
+						console.error('未知事件名称:'+menus[e]['share']);
+						break;
+				}
 			} else {
-				// console.log(123456,{
-				// 	...param.content,
-				// 	...menus[e].share,
-				// });
+				console.log(123456,{
+					...param.content,
+					...menus[e].share,
+				});
 				uni.share({
 					...param.content,
 					...menus[e].share,

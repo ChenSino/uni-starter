@@ -60,6 +60,7 @@
 			prop: 'modelValue',
 			event: 'update:modelValue'
 		},
+		emits:['update:modelValue','input','reset','validate','submit'],
 		props: {
 			// 即将弃用
 			value: {
@@ -252,6 +253,7 @@
 					if (inputComp) {
 						inputComp.errMsg = '';
 						inputComp.$emit('input', inputComp.multiple ? [] : '');
+						inputComp.$emit('update:modelValue', inputComp.multiple ? [] : '');
 					}
 				});
 

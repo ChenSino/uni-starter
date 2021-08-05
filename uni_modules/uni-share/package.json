@@ -1,7 +1,7 @@
 {
   "id": "uni-share",
   "displayName": "uni-share",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "底部弹出宫格图标式的分享菜单，可覆盖原生组件。",
   "keywords": [
     "分享菜单"
@@ -69,6 +69,10 @@
         "快应用": {
           "华为": "n",
           "联盟": "n"
+        },
+        "Vue": {
+            "vue2": "y",
+            "vue3": "u"
         }
       }
     }

@@ -264,7 +264,7 @@ function checkSystemEnableLocation() {
 	}
 }
 
-module.exports = {
+export default {
 	judgeIosPermission: judgeIosPermission,
 	requestAndroidPermission: requestAndroidPermission,
 	checkSystemEnableLocation: checkSystemEnableLocation,
