@@ -394,16 +394,29 @@
 
 	/*修改边线粗细示例*/
 	/* #ifndef APP-NVUE */
-	.center-list ::v-deep .uni-list--border:after {
-		-webkit-transform: scaleY(0.2);
-		transform: scaleY(0.2);
-		margin-left: 80rpx;
-	}
-
-	.center-list ::v-deep .uni-list--border-top,
-	.center-list ::v-deep .uni-list--border-bottom {
-		display: none;
-	}
+		/* #ifdef VUE2 */
+		.center-list ::v-deep .uni-list--border:after{
+		/* #endif */
+		/* #ifdef VUE3 */
+		.center-list :deep(.uni-list--border:after){
+		/* #endif */
+			-webkit-transform: scaleY(0.2);
+			transform: scaleY(0.2);
+			margin-left: 80rpx;
+		}
+		
+		/* #ifdef VUE2 */
+		.center-list ::v-deep .uni-list--border-top,
+		.center-list ::v-deep .uni-list--border-bottom{
+		/* #endif */
+		
+		/* #ifdef VUE3 */
+		.center-list :deep(.uni-list--border-top),
+		.center-list :deep(.uni-list--border-bottom){
+		/* #endif */
+		
+			display: none;
+		}
 
 	/* #endif */
 	.item-footer {
