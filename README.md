@@ -12,7 +12,7 @@ APP有很多通用的功能，比如登录注册、头像、设置、拦截器�
 
 有了uni-starter，再加上schema2code生成前端页面，一个简单应用就可以快速完成。
 
-如果说uniCloud admin是管理端项目的基础模板，那么uni-starter则是用户端、尤其是移动端的基础项目模板。
+如果说[uniCloud admin](https://uniapp.dcloud.io/uniCloud/admin)是管理端项目的基础模板，那么uni-starter则是用户端、尤其是移动端的基础项目模板。
 
 uni-starter + uniCloud admin，提供了用户端和管理端的基础模板，应用开发从未如此简单快捷！
 
@@ -42,15 +42,13 @@ uni-starter + uniCloud admin，提供了用户端和管理端的基础模板，�
 ## 快速体验部署流程
 #### 1. 开通uniCloud
 - 开通`uniCloud`：本项目是云端一体的，它的云端代码需要部署在uniCloud云服务空间里，需要开通uniCloud。在[https://unicloud.dcloud.net.cn/](https://unicloud.dcloud.net.cn/)登录，按云厂商要求进行实名认证。
-- 在uniCloud认证通过后，创建一个服务空间给本项目使用。选择阿里云或腾讯云均可。[参考](https://uniapp.dcloud.net.cn/uniCloud/price)
-- 使用HBuilderX 3.1以上版本（最好是最新版），把本项目导入到HBuilderX中，在项目根目录uniCloud上点右键菜单，关联服务空间 -> 选择之前创建的服务空间
+- 在uniCloud认证通过后，创建一个服务空间给本项目使用。选择阿里云或腾讯云均可，两种服务空间差异[详情](https://uniapp.dcloud.net.cn/uniCloud/price)
 
-#### 2. 关联项目与云服务空间
-<img class="cloud" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/f3f36e4a-77e6-495c-bb85-5fc6999e29e1.jpg" />
-<img class="cloud" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/dd39dfcc-60c8-4f9f-a4d7-6b08f39e737e.jpg" />
-<img class="cloud" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/350f5e46-976e-4c5b-be49-e5c3908b03f4.jpg" />
+#### 2. 运行云服务空间初始化向导
+<img class="cloud" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f184e7c3-1912-41b2-b81f-435d1b37c7b4/472d8525-4e64-4a86-a77a-8c37c4379610.jpg" />
+<img class="cloud" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f184e7c3-1912-41b2-b81f-435d1b37c7b4/78b3f17c-cf70-4cdf-9ada-1796753ffeac.jpg" />
+<img class="cloud" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f184e7c3-1912-41b2-b81f-435d1b37c7b4/09916d79-4753-4baa-9b95-baa831f1a873.jpg" />
 
-#### 3.根目录`/uniCloud/database` 右键上传`上传所有DB Schema及扩展校验函数`
 
 
 ### 功能模块介绍
@@ -78,9 +76,11 @@ uni-starter + uniCloud admin，提供了用户端和管理端的基础模板，�
 	"login": ["username","smsCode","univerify", "weixin", "apple"],
 }
 ```
-*** 注意：首页需要强制登陆才能访问的场景
-- 这种情况不由路由控制。而是uni-starter的callFunction拦截器，根据响应体决定是否跳转到登陆页。
+
+##### 注意：
+- 首页需要强制登陆才能访问的场景，不由路由控制。而是uni-starter的callFunction拦截器，根据响应体决定是否跳转到登陆页。
 - uni-starter框架不能将登陆页面设置为首页，否则由拦截器实现的路由管理将生效。
+- 拦截器实现的路由控制，是在路由跳转未完成之前触发。路由切换方式（navigateTo、redirectTo、reLaunch、switchTab）URL参数必须使用绝对路径路
 
 #### 2.登录配置详解
 - 使用方式：在 `uni-starter.config.js`->`router`->`login`下完全列举你需要的登录方式。这里支持用[条件编译](https://uniapp.dcloud.io/platform?id=%e6%9d%a1%e4%bb%b6%e7%bc%96%e8%af%91)因此你可以配置在不同平台下拥有的登录方式。
@@ -271,6 +271,14 @@ uni-starter + uniCloud admin，提供了用户端和管理端的基础模板，�
 	})
 ```
 
+### 12. 关于升级
+- 项目升级
+
+	uni-starter遵循uni-app的插件模块化规范，即：[uni_modules](https://uniapp.dcloud.io/uni_modules) 。他是个项目类型的插件。在项目的根目录下有一个符合uni_modules规范的package.json文件，在这个文件右键-从插件市场更新即可更新该插件。
+	
+- 插件升级
+
+	非项目类型的uni_modules插件，是项目根目录下的uni_modules目录下。以插件ID为插件文件夹命名，在该目录右键也会看到“从插件市场更新”选项，点击即可更新该插件。
 
 ### 应用启动时序介绍
 文件路径： App.vue

@@ -135,7 +135,7 @@
 			 * 完成并提交
 			 */
 			submit() {
-				this.$refs.form.submit()
+				this.$refs.form.validate()
 					.then(res => {
 						uniCloud.callFunction({
 							name:'uni-id-cf',

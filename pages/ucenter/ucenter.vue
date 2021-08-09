@@ -120,7 +120,7 @@
 			}
 		},
 		onLoad() {
-			console.log(313,this.userInfo,this.hasLogin);
+			// console.log(313,this.userInfo,this.hasLogin);
 			//#ifdef APP-PLUS
 			this.ucenterList[this.ucenterList.length - 2].unshift({
 				title: '检查更新',
