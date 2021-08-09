@@ -59,7 +59,7 @@
 		onReady() {
 			//#ifdef APP-PLUS
 			if (this.type == "univerify") {
-				this.type == loginConfig[1]
+				this.type == this.loginConfig[1]
 				// console.log('开始一键登录');
 				setTimeout(() => {
 					this.$refs.uniQuickLogin.login_before('univerify')

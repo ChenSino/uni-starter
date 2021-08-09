@@ -112,6 +112,8 @@
 				this.refresh()
 			},
 			refresh() {
+				console.log('----platform----');
+				console.log(JSON.stringify(process.env.VUE_APP_PLATFORM));
 				cdbRef.loadData({
 					clear: true
 				}, () => {
