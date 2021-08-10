@@ -181,7 +181,14 @@
     "enable": false
   },
   "h5": {
-    "template": ""
+    "template": "",
+    "sdkConfigs": {
+      "maps": {
+        "qqmap": {
+          "key": ""
+        }
+      }
+    }
   },
   "_spaceID": "",
   "vueVersion": "2"
