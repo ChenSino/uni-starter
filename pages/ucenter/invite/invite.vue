@@ -7,7 +7,7 @@
 			<view @click="download" type="default" id="download">
 				<image v-if="isIos" class="icon" src="@/static/h5/download-app/ios.png" mode="widthFix"></image>
 				<image v-else class="icon" src="@/static/h5/download-app/android.png" mode="widthFix"></image>
-				<text class="download-text">下载</text>
+				<text class="download-text">{{$t('invite.download')}}</text>
 			</view>
 			<text class="tip">version {{about.version}}</text>
 		</view>

@@ -80,6 +80,7 @@
 			uniStarterConfig() {
 				return getApp().globalData.config
 			}
+			
 		},
 		onLoad(event) {
 			console.log(event);
@@ -108,7 +109,7 @@
 			} else {
 				uni.showToast({
 					icon: 'none',
-					title: '出错了，新闻ID为空'
+					title: this.$t('listDetail').newsErr
 				})
 			}
 		},
@@ -172,7 +173,7 @@
 			 */
 			followClick() {
 				uni.showToast({
-					title: '点击关注',
+					title:this.$t('listDetail').follow,
 					icon: 'none'
 				});
 			},
@@ -202,7 +203,7 @@
 					},
 					menus: [{
 							"img": "/static/app-plus/sharemenu/wechatfriend.png",
-							"text": "微信好友",
+							"text": this.$t('common').wechatFriends,
 							"share": {
 								"provider": "weixin",
 								"scene": "WXSceneSession"
@@ -210,7 +211,7 @@
 						},
 						{
 							"img": "/static/app-plus/sharemenu/wechatmoments.png",
-							"text": "微信朋友圈",
+							"text": this.$t('common').wechatBbs,
 							"share": {
 								"provider": "weixin",
 								"scene": "WXSenceTimeline"
@@ -218,7 +219,7 @@
 						},
 						{
 							"img": "/static/app-plus/sharemenu/mp_weixin.png",
-							"text": "微信小程序",
+							"text": this.$t('common').wechatApplet,
 							"share": {
 								provider: "weixin",
 								scene: "WXSceneSession",
@@ -234,7 +235,7 @@
 						},
 						{
 							"img": "/static/app-plus/sharemenu/weibo.png",
-							"text": "微博",
+							"text": this.$t('common').weibo,
 							"share": {
 								"provider": "sinaweibo"
 							}
@@ -248,16 +249,16 @@
 						},
 						{
 							"img": "/static/app-plus/sharemenu/copyurl.png",
-							"text": "复制",
+							"text": this.$t('common').copy,
 							"share": "copyurl"
 						},
 						{
 							"img": "/static/app-plus/sharemenu/more.png",
-							"text": "更多",
+							"text": this.$t('common').more,
 							"share": "shareSystem"
 						}
 					],
-					cancelText: "取消分享",
+					cancelText: this.$t('common').cancelShare,
 				}, e => { //callback
 					// console.log(e);
 				})

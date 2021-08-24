@@ -6,12 +6,12 @@
 			<text class="tip">Version {{version}}</text>
 			<!--Sansnn-uQRCode组件来源，插件市场：https://ext.dcloud.net.cn/plugin?id=1287 微调后-->
 			<Sansnn-uQRCode :text="about.download" :makeOnLoad="true" class="qrcode"></Sansnn-uQRCode>
-			<text class="tip">扫描二维码，您的朋友也可以下载{{about.appName}}客户端</text>
+			<text class="tip">{{$t('about.sacnQR')}} {{about.appName}} {{$t('about.client')}}</text>
 		</view>
 		<view class="copyright">
 			<view class="agreement-box" v-for="(agreement,index) in about.agreements" :key="index">
 				<text class="agreement" @click="navigateTo(agreement)">《{{agreement.title}}》</text>
-				<text class="hint" v-if="about.agreements.length-1>index">和</text>
+				<text class="hint" v-if="about.agreements.length-1>index">{{$t('about.and')}}</text>
 			</view>
 			<text class="hint">Copyright © {{year}}</text>
 			<text class="hint">{{about.company}}</text>
@@ -42,7 +42,7 @@
 		created() {
 			this.about = this.uniStarterConfig.about
 			uni.setNavigationBarTitle({
-				title: '关于' + this.about.appName
+				title: this.$t('about.about')+ " " + this.about.appName
 			})
 			this.year = (new Date).getFullYear()
 		},
@@ -63,7 +63,7 @@
 				},
 				menus: [{
 						"img": "/static/app-plus/sharemenu/wechatfriend.png",
-						"text": "微信好友",
+						"text": this.$t('common').wechatFriends,
 						"share": {
 							"provider": "weixin",
 							"scene": "WXSceneSession"
@@ -71,7 +71,7 @@
 					},
 					{
 						"img": "/static/app-plus/sharemenu/wechatmoments.png",
-						"text": "微信朋友圈",
+						"text":  this.$t('common').wechatBbs,
 						"share": {
 							"provider": "weixin",
 							"scene": "WXSenceTimeline"
@@ -79,7 +79,7 @@
 					},
 					{
 						"img": "/static/app-plus/sharemenu/weibo.png",
-						"text": "微博",
+						"text":  this.$t('common').weibo,
 						"share": {
 							"provider": "sinaweibo"
 						}
@@ -93,16 +93,16 @@
 					},
 					{
 						"img": "/static/app-plus/sharemenu/copyurl.png",
-						"text": "复制",
+						"text": this.$t('common').copy,
 						"share": "copyurl"
 					},
 					{
 						"img": "/static/app-plus/sharemenu/more.png",
-						"text": "更多",
+						"text": this.$t('common').more,
 						"share": "shareSystem"
 					}
 				],
-				cancelText: "取消分享",
+				cancelText: this.$t('common').cancelShare,
 			}, e => { //callback
 				console.log(e);
 			})
@@ -131,7 +131,7 @@
 	}
 	/* #endif */
 	.about {
-		width: 750upx;
+		width: 750rpx;
 		flex-direction: column;
 	}
 
@@ -143,15 +143,17 @@
 	}
 
 	.logoImg {
-		margin-bottom: 10upx;
-		width: 160upx;
-		height: 160upx;
+		margin-bottom: 10rpx;
+		width: 160rpx;
+		height: 160rpx;
 		border-radius: 15px;
 	}
 
 	.tip {
+		text-align: center;
 		font-size: 24rpx;
 		margin-top: 10px;
+		padding: 10rpx;
 	}
 
 	.appName {
@@ -161,11 +163,11 @@
 	}
 
 	.qrcode {
-		margin-top: 50px;
+		margin-top: 60rpx;
 	}
 
 	.copyright {
-		width: 750upx;
+		width: 750rpx;
 		font-size: 32rpx;
 		flex-direction: column;
 		justify-content: center;

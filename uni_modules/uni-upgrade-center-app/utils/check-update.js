@@ -3,7 +3,7 @@ import callCheckVersion from './call-check-version'
 // 推荐再App.vue中使用
 const PACKAGE_INFO_KEY = '__package_info__'
 
-export default function () {
+export default function() {
 	// #ifdef APP-PLUS
 	return new Promise((resolve, reject) => {
 		callCheckVersion().then(async (e) => {
@@ -25,8 +25,9 @@ export default function () {
 				} = await uniCloud.getTempFileURL({
 					fileList: [url]
 				});
-				e.result.url = fileList[0].tempFileURL
-				
+				if (fileList[0].tempFileURL)
+					e.result.url = fileList[0].tempFileURL;
+
 				resolve(e)
 
 				// 静默更新，只有wgt有

@@ -38,7 +38,8 @@ export default {
 			{"pattern":/^\/pages\/list.*/},	//支持正则表达式
 			"/pages/grid/grid",
 			"/pages/ucenter/ucenter",
-			"/pages/ucenter/about/about"
+			"/pages/ucenter/about/about",
+			"/pages/ucenter/guestbook/guestbook"
 		],
 		/*
 		login:配置登陆类型与优先级

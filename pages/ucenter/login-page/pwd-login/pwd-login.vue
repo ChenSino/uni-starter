@@ -1,20 +1,20 @@
 <template>
 	<view class="content">
 		<!-- 顶部文字 -->
-		<text class="title">用户名密码登录</text>
-		<input class="input-box" :inputBorder="false" v-model="username" placeholder="请输入手机号/用户名"/>
-		<input type="password" class="input-box" :inputBorder="false" v-model="password" placeholder="请输入密码"/>
+		<text class="title">{{$t('pwdLogin.pwdLogin')}}</text>
+		<input class="input-box" :inputBorder="false" v-model="username" :placeholder="$t('pwdLogin.placeholder')"/>
+		<input type="password" class="input-box" :inputBorder="false" v-model="password" :placeholder="$t('pwdLogin.passwordPlaceholder')"/>
 		<view class="captcha-box" v-if="captchaBase64">
 			<image class="captcha-img" @click="createCaptcha" :src="captchaBase64" mode="widthFix"></image>
-			<input type="text" class="input-box captcha" :inputBorder="false" v-model="captcha" placeholder="请输入验证码"/>
+			<input type="text" class="input-box captcha" :inputBorder="false" v-model="captcha" :placeholder="$t('pwdLogin.verifyCodePlaceholder')"/>
 		</view>
 		<uni-agreements @setAgree="agree = $event"></uni-agreements>
 		<button class="send-btn" :disabled="!canLogin" :type="canLogin?'primary':'default'"
-			@click="pwdLogin">登录</button>
+			@click="pwdLogin">{{$t('pwdLogin.login')}}</button>
 		<!-- 忘记密码 -->
 		<view class="auth-box">
-			<text class="link" @click="toRetrievePwd">忘记密码</text>
-			<text class="link" @click="toRegister">注册账号</text>
+			<text class="link" @click="toRetrievePwd">{{$t('pwdLogin.forgetPassword')}}</text>
+			<text class="link" @click="toRegister">{{$t('pwdLogin.register')}}</text>
 		</view>
 		<uni-quick-login :agree="agree" ref="uniQuickLogin"></uni-quick-login>
 	</view>
@@ -58,7 +58,7 @@
 			pwdLogin() {
 				if (!this.agree) {
 					return uni.showToast({
-						title: '你未同意隐私政策协议',
+						title: this.$t('common').noAgree,
 						icon: 'none'
 					});
 				}
@@ -86,10 +86,10 @@
 								this.createCaptcha()
 							}else{
 								uni.showModal({
-									title: '错误',
+									title: this.$t('common').error,
 									content: result.msg,
 									showCancel: false,
-									confirmText: '知道了'
+									confirmText: this.$t('common').gotIt
 								});
 							}
 						}

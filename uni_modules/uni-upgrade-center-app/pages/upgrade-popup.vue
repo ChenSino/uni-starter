@@ -138,7 +138,7 @@
 				subTitle: '发现新版本',
 				downLoadBtnTextiOS: '立即跳转更新',
 				downLoadBtnText: '立即下载更新',
-				downLoadingText: '安装包下载中，请稍后…'
+				downLoadingText: '安装包下载中，请稍后'
 			}
 		},
 		onLoad({
@@ -192,15 +192,17 @@
 				if (localFilePathRecord) {
 					const {
 						version,
-						savedFilePath
+						savedFilePath,
+						installed
 					} = localFilePathRecord
+					
 					// 比对版本
-					if (compare(version, this.version) === 0) {
+					if (!installed && compare(version, this.version) === 0) {
 						this.downloadSuccess = true;
 						this.installForBeforeFilePath = savedFilePath;
 						this.tempFilePath = savedFilePath
 					} else {
-						// 如果保存的包版本小，则直接删除
+						// 如果保存的包版本小 或 已安装过，则直接删除
 						this.deleteSavedFile(savedFilePath)
 					}
 				}
@@ -284,12 +286,6 @@
 					this.installing = false;
 					this.installed = true;
 
-					// 如果是安装之前的包，安装成功后删除之前的包
-					if (this.installForBeforeFilePath) {
-						await this.deleteSavedFile(this.installForBeforeFilePath)
-						this.installForBeforeFilePath = '';
-					}
-
 					// wgt包，安装后会提示 安装成功，是否重启
 					if (this.isWGT) {
 						// 强制更新安装完成重启
@@ -310,6 +306,12 @@
 								duration: 1000
 							})
 						}
+					} else {
+						const localFilePathRecord = uni.getStorageSync(localFilePathKey)
+						uni.setStorageSync(localFilePathKey, {
+							...localFilePathRecord,
+							installed: true
+						})
 					}
 				}, async err => {
 					// 如果是安装之前的包，安装失败后删除之前的包
@@ -319,10 +321,11 @@
 					}
 
 					// 安装失败需要重新下载安装包
+					this.installing = false;
 					this.installed = false;
 
 					uni.showModal({
-						title: '更新失败',
+						title: `更新失败${this.isWGT ? '' : '，APK文件不存在'}，请重新下载`,
 						content: err.message,
 						showCancel: false
 					});
@@ -486,11 +489,13 @@
 		font-size: 30rpx;
 		font-weight: 400;
 		color: #FFFFFF;
+		border-radius: 40rpx;
+		margin: 0 18rpx;
 
 		height: 80rpx;
 		line-height: 80rpx;
 
-		background: url(../static/button_bg.png) no-repeat center/contain;
+		background: linear-gradient(to right, #1785ff, #3DA7FF);
 	}
 
 	.flex-column {

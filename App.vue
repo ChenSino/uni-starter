@@ -5,10 +5,18 @@
 		globalData: {
 			searchText: '',
 			appVersion: {},
-			config: {}
+			config: {},
+			$i18n: {},
+			$t: {}
+		},
+		setup() {
 		},
 		onLaunch: function() {
 			console.log('App Launch')
+			
+			this.globalData.$i18n = this.$i18n
+			this.globalData.$t = str => this.$t(str)
+
 			initApp();
 			// #ifdef APP-PLUS
 			//checkIsAgree(); APP端暂时先用原生默认生成的。目前，自定义方式启动vue界面时，原生层已经请求了部分权限这并不符合国家的法规
@@ -31,7 +39,25 @@
 					}  
 				});
 			}*/
+			console.log("国际化语言检测：" + plus.os.language);
 			// #endif
+
+			let updateTabbar = () => {
+				this.$t('tabbar').split(',').forEach((text, index) => {
+					uni.setTabBarItem({
+						index,
+						text,
+						complete: e => {
+							// console.log("e: " + JSON.stringify(e));
+						}
+					})
+				})
+			}
+			updateTabbar()
+			uni.$on('changeLanguage', e => {
+				console.log('changeLanguage',e);
+				updateTabbar()
+			})
 		},
 		onShow: function() {
 			console.log('App Show')

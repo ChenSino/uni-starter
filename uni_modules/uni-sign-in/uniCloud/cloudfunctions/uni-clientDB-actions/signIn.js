@@ -42,6 +42,17 @@ module.exports = {
 			return (n*10000 - (date - item.date)/3600/24/1000*10000)/10000  -1
 		})
 		
+		//查出来用户当前有多少积分
+		let {data: [userScore]} = await scoresTable
+										.where({user_id:state.auth.uid})
+										.orderBy("create_date", "desc")
+										.limit(1)
+										.get()
+		let balance = 0
+		if(userScore){
+			balance = userScore.balance
+		}
+		
 		if(state.type == 'create'){
 			if(n == 7){ //如果已经满一轮就软删除之前的内容
 				let setIsDeleteRes = await signInTable.where({
@@ -51,15 +62,16 @@ module.exports = {
 				console.log({setIsDeleteRes});
 			}
 			//给加积分
-			let addScores = await scoresTable.where({user_id:state.auth.uid}).update({
+			let score = n==7?60:10 //如果是第七天就多加50分，也就是60分
+			balance += score
+			let addScores = await scoresTable.add({
 				user_id:state.auth.uid,
-				score:dbCmd.inc(n==7?60:10) //如果是第七天就多加50分，也就是60分
+				balance,
+				score,
+				create_date:Date.now()
 			})
 			console.log({addScores});
 		}
-		
-		//查出来有多少积分
-		let {data:[{score}]} = await scoresTable.where({user_id:state.auth.uid}).get()
-		return {...result,score,signInData,n,days}
+		return {...result,score:balance,signInData,n,days}
 	}
 }

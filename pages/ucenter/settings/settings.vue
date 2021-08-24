@@ -2,25 +2,30 @@
 	<view class="content">
 		<!-- 功能列表 -->
 		<uni-list class="mt10" :border="false">
-			<uni-list-item title="个人资料" to="/pages/ucenter/userinfo/userinfo" link="navigateTo"></uni-list-item>
-			<uni-list-item v-if="userInfo.mobile" title="修改密码" :to="'/pages/ucenter/login-page/pwd-retrieve/pwd-retrieve?phoneNumber='+ userInfo.mobile" link="navigateTo"></uni-list-item>
+			<uni-list-item :title="$t('settings.userInfo')" to="/pages/ucenter/userinfo/userinfo" link="navigateTo"></uni-list-item>
+			<uni-list-item v-if="userInfo.mobile" :title="$t('settings.changePassword')" :to="'/pages/ucenter/login-page/pwd-retrieve/pwd-retrieve?phoneNumber='+ userInfo.mobile" link="navigateTo"></uni-list-item>
 		</uni-list>
-		<!-- #ifndef H5 -->
 		<uni-list class="mt10" :border="false">
+		<!-- #ifndef H5 -->
 			<!-- #ifdef APP-PLUS -->
 			<!-- 检查push过程未结束不显示，push设置项 -->
-			<uni-list-item title="清理缓存" @click="clearTmp" link></uni-list-item>
-			<uni-list-item v-if="pushIsOn != 'wait'" @click.native="pushIsOn?pushServer.off():pushServer.on()" title="推送功能" showSwitch :switchChecked="pushIsOn"></uni-list-item>
+			<uni-list-item :title="$t('settings.clearTmp')" @click="clearTmp" link></uni-list-item>
+			<uni-list-item v-if="pushIsOn != 'wait'" @click.native="pushIsOn?pushServer.off():pushServer.on()" :title="$t('settings.pushServer')" showSwitch :switchChecked="pushIsOn"></uni-list-item>
 			<!-- #endif -->
-			<uni-list-item v-if="supportMode.includes('fingerPrint')" title="指纹解锁" @click.native="startSoterAuthentication('fingerPrint')" link></uni-list-item>
-			<uni-list-item v-if="supportMode.includes('facial')" title="人脸解锁" @click="startSoterAuthentication('facial')" link></uni-list-item>
-		</uni-list>
+			<uni-list-item v-if="supportMode.includes('fingerPrint')" :title="$t('settings.fingerPrint')" @click.native="startSoterAuthentication('fingerPrint')" link></uni-list-item>
+			<uni-list-item v-if="supportMode.includes('facial')" :title="$t('settings.facial')" @click="startSoterAuthentication('facial')" link></uni-list-item>
 		<!-- #endif -->
+			<uni-list-item :title="$t('settings.changeLanguage')" @click="changeLanguage" :rightText="currentLanguage" link></uni-list-item>
+		</uni-list>
+		
+		<uni-list class="mt10" :border="false">
+			<uni-list-item @click="deactivate" :title="$t('settings.deactivate')" link="navigateTo"></uni-list-item>
+		</uni-list>
 		
 		<!-- 退出/登录 按钮 -->
 		<view class="bottom-back" @click="clickLogout">
-			<text class="bottom-back-text" v-if="hasLogin">退出登录</text>
-			<text class="bottom-back-text" v-else>登录</text>
+			<text class="bottom-back-text" v-if="hasLogin">{{$t('settings.logOut')}}</text>
+			<text class="bottom-back-text" v-else>{{$t('settings.login')}}</text>
 		</view>
 	</view>
 </template>
@@ -36,7 +41,8 @@
 			return {
 				pushServer:pushServer,
 				supportMode:[],
-				pushIsOn:"wait"
+				pushIsOn:"wait",
+				currentLanguage:""
 			}
 		},
 		computed: {
@@ -46,6 +52,11 @@
 			})
 		},
 		onLoad() {
+			this.currentLanguage = uni.getStorageSync('CURRENT_LANG') == "en"?'English':'简体中文'
+			
+			uni.setNavigationBarTitle({
+				title: this.$t('settings.navigationBarTitle')
+			})
 			// #ifdef APP-PLUS || MP-WEIXIN
 			uni.checkIsSupportSoterAuthentication({
 				success: (res) => {
@@ -75,6 +86,11 @@
 					url: '/pages/ucenter/userinfo/userinfo'
 				});
 			},
+			deactivate(){
+				uni.navigateTo({
+					url:"/pages/ucenter/settings/deactivate/deactivate"
+				})
+			},
 			changePwd() {
 				uni.navigateTo({
 					url: '/pages/ucenter/login-page/pwd-retrieve/pwd-retrieve?phoneNumber='
@@ -89,7 +105,7 @@
 			 */
 			startSoterAuthentication(checkAuthMode) {
 				console.log(checkAuthMode);
-				let title = {"fingerPrint":"指纹解锁","facial":"人脸解锁"}[checkAuthMode]
+				let title = {"fingerPrint":this.$t('settings.fingerPrint'),"facial":this.$t('settings.facial')}[checkAuthMode]
 				// 检查是否开启认证
 				this.checkIsSoterEnrolledInDevice({checkAuthMode,title})
 					.then(() => {
@@ -98,7 +114,7 @@
 						uni.startSoterAuthentication({
 							requestAuthModes: [checkAuthMode],
 							challenge: '123456', // 微信端挑战因子
-							authContent: `请用${title}`,
+							authContent: this.$t('settings.please')+ " " + `${title}`,
 							complete: (res) => {
 								console.log(res);
 							},
@@ -113,12 +129,12 @@
 									 * 微信小程序需要再次通过后台验证resultJSON与resultJSONSignature获取最终结果
 									 */
 									return uni.showToast({
-										title: `${title}成功`,
+										title: `${title}`+this.$t('settings.successText'),
 										icon: 'none'
 									});
 								}
 								uni.showToast({
-									title: '认证失败请重试',
+									title:this.$t('settings.failTip'),
 									icon: 'none'
 								});
 							},
@@ -126,7 +142,8 @@
 								console.log(err);
 								console.log(`认证失败:${err.errCode}`);
 								uni.showToast({
-									title: `认证失败`,
+									title:this.$t('settings.authFailed'),
+									// title: `认证失败`,
 									icon: 'none'
 								});
 							}
@@ -143,7 +160,7 @@
 								return resolve(res);
 							}
 							uni.showToast({
-								title: `设备未开启${title}`,
+								title: this.$t('settings.deviceNoOpen')+ `${title}`,
 								icon: 'none'
 							});
 							reject(res);
@@ -151,7 +168,7 @@
 						fail: (err) => {
 							console.log(err);
 							uni.showToast({
-								title: `${title}失败`,
+								title: `${title}` + this.$t('settings.fail'),
 								icon: 'none'
 							});
 							reject(err);
@@ -162,10 +179,10 @@
 			clickLogout() {
 				if (this.hasLogin) {
 					uni.showModal({
-						title: '提示',
-						content: '是否退出登录',
-						cancelText: '取消',
-						confirmText: '确定',
+						title: this.$t('settings.tips'),
+						content: this.$t('settings.exitLogin'),
+						cancelText: this.$t('settings.cancelText'),
+						confirmText: this.$t('settings.confirmText'),
 						success: res => {
 							if (res.confirm) {
 								this.logout();
@@ -183,7 +200,7 @@
 			},
 			clearTmp() {
 				uni.showLoading({
-					title: '清除中',
+					title: this.$t('settings.clearing'),
 					mask: true
 				});
 				/*
@@ -206,7 +223,7 @@
 									console.log(res);
 									uni.hideLoading()
 									uni.showToast({
-										title: '清除成功',
+										title: this.$t('settings.clearedSuccessed'),
 										icon: 'none'
 									});
 								}
@@ -214,7 +231,7 @@
 						}else{
 							uni.hideLoading()
 							uni.showToast({
-								title: '清除成功',
+								title: this.$t('settings.clearedSuccessed'),
 								icon: 'none'
 							});
 						}
@@ -222,6 +239,37 @@
 					complete:e=>{
 						console.log(e);
 					}
+				});
+			},
+			changeLanguage(){
+				console.log('语言切换')
+				uni.showActionSheet({
+					itemList: ["English","简体中文"],
+					success: res => {
+						console.log(res.tapIndex); 
+						let language = uni.getStorageSync('CURRENT_LANG')
+						if(
+							!res.tapIndex && language=='zh-CN' || res.tapIndex && language=='en'
+						){
+							const globalData = getApp().globalData
+							if (language === 'en') {
+								language = globalData.locale = 'zh-CN'
+							} else {
+								language = globalData.locale = 'en'
+							}
+							uni.setStorageSync('CURRENT_LANG', language)
+							getApp().$i18n.locale = language
+							this.currentLanguage = res.tapIndex?'简体中文':'English'
+							uni.reLaunch({
+								url: '/pages/list/list',
+								complete: () => {
+									uni.$emit("changeLanguage",language)
+								}
+							})
+						}
+					},
+					fail: () => {},
+					complete: () => {}
 				});
 			}
 		}

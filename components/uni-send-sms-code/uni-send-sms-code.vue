@@ -54,8 +54,8 @@
 		},
 		computed: {
 			innerText() {
-				if (this.reverseNumber == 0) return '获取验证码';
-				return '重新发送('+this.reverseNumber+'s)';
+				if (this.reverseNumber == 0) return this.$t('common').getVerifyCode;
+				return this.$t('smsCode.resendVerifyCode ')+ '('+this.reverseNumber+'s)';
 			}
 		},
 		created() {
@@ -71,7 +71,7 @@
 			sendMsg() {
 				let reg_phone = /^1\d{10}$/;
 				if(!reg_phone.test(this.phone))return uni.showToast({
-					title: '手机号格式错误',
+					title: this.$t('smsCode.phoneErrTip'),
 					icon: 'none'
 				});
 				uniCloud.callFunction({
@@ -87,7 +87,7 @@
 						console.log(result);
 						if(result.code===0){
 							uni.showToast({
-								title: "短信验证码发送成功",
+								title: this.$t('smsCode.sendSuccessTip'),
 								icon: 'none'
 							});
 							this.reverseNumber = Number(this.count);

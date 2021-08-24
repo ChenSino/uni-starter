@@ -1,22 +1,22 @@
 <template>
 	<view class="uni-container">
 		<uni-forms ref="form" :value="formData" validate-trigger="submit" err-show-type="toast">
-			<uni-forms-item name="content" label="留言内容" required>
+			<uni-forms-item name="content" :label="$t('uniFeedback.msgTitle')" required>
 				<textarea @input="binddata('content', $event.detail.value)" class="uni-textarea-border"
 					:value="formData.content" trim="right"></textarea>
 			</uni-forms-item>
-			<uni-forms-item name="imgs" label="图片列表">
+			<uni-forms-item name="imgs" :label="$t('uniFeedback.imgTitle')">
 				<uni-file-picker file-mediatype="image" :limit="6" return-type="array" v-model="formData.imgs" />
 			</uni-forms-item>
-			<uni-forms-item name="contact" label="联系人">
+			<uni-forms-item name="contact" :label="$t('uniFeedback.contacts')">
 				<uni-easyinput v-model="formData.contact" trim="both" />
 			</uni-forms-item>
-			<uni-forms-item name="mobile" label="联系电话">
+			<uni-forms-item name="mobile" :label="$t('uniFeedback.phone')">
 				<uni-easyinput v-model="formData.mobile" trim="both" />
 			</uni-forms-item>
 
 			<view class="uni-button-group">
-				<button type="primary" class="uni-button" @click="submit">提交</button>
+				<button type="primary" class="uni-button" @click="submit">{{$t('uniFeedback.submit')}}</button>
 			</view>
 		</uni-forms>
 	</view>
@@ -55,6 +55,11 @@
 				}
 			}
 		},
+		onLoad() {
+			uni.setNavigationBarTitle({
+				title:this.$t('uniFeedback.navigationBarTitle')
+			})
+		},
 		onReady() {
 			this.$refs.form.setRules(this.rules)
 		},
@@ -82,7 +87,7 @@
 						confirmText:"关闭",
 						complete:()=>{
 							this.getOpenerEventChannel().emit('refreshData')
-							setTimeout(() => uni.navigateBack(), 500)
+							// setTimeout(() => uni.navigateBack(), 500)
 						}
 					});
 				}).catch((err) => {

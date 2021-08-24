@@ -77,15 +77,19 @@ export default async function() {
 		code, // 错误码详见https://uniapp.dcloud.net.cn/uniCloud/clientdb?id=returnvalue
 		message
 	}) {
-		console.log('onDBError');
+		console.log('onDBError', {
+			code,
+			message
+		});
 		// 处理错误
-		console.log(code, message);
+		console.error(code, message);
 		if ([
 				'TOKEN_INVALID_INVALID_CLIENTID',
 				'TOKEN_INVALID',
 				'TOKEN_INVALID_TOKEN_EXPIRED',
 				'TOKEN_INVALID_WRONG_TOKEN',
 				'TOKEN_INVALID_ANONYMOUS_USER',
+
 			].includes(code)) {
 			uni.navigateTo({
 				url: '/pages/ucenter/login-page/index/index'
@@ -118,7 +122,8 @@ export default async function() {
 		async invoke(option) {
 			// #ifdef APP-PLUS
 			// 判断如果是执行登陆（无论是哪种登陆方式），就记录用户的相关设备id
-			if (option.name == 'uni-id-cf' && (option.data.action == 'register' || option.data.action.slice(0, 5) == 'login')) {
+			if (option.name == 'uni-id-cf' && (option.data.action == 'register' || option.data.action
+					.slice(0, 5) == 'login')) {
 				let oaid = await new Promise((callBack, fail) => {
 					if (uni.getSystemInfoSync().platform == "android") {
 						plus.device.getOAID({
@@ -288,6 +293,20 @@ export default async function() {
 					console.log('code的值是：' + e.result.code, '可以在这里插入，自动处理响应体');
 					break;
 			}
+			
+			switch (e.result.errCode){
+				case 'uni-id-token-not-exist':
+					uni.showToast({
+						title: '登陆信息失效',
+						icon: 'none'
+					});
+					uni.navigateTo({
+						url: "/pages/ucenter/login-page/index/index"
+					})
+					break;
+				default:
+					break;
+			}
 		}
 	})
 
@@ -299,7 +318,7 @@ export default async function() {
 			login
 		}
 	} = uniStarterConfig //需要登录的页面
-	
+
 	let list = ["navigateTo", "redirectTo", "reLaunch", "switchTab"];
 	list.forEach(item => { //用遍历的方式分别为,uni.navigateTo,uni.redirectTo,uni.reLaunch,uni.switchTab这4个路由方法添加拦截器
 		uni.addInterceptor(item, {
@@ -310,15 +329,16 @@ export default async function() {
 					tokenExpired = uni.getStorageSync('uni_id_token_expired') < Date.now(),
 					//获取要跳转的页面路径（url去掉"?"和"?"后的参数）
 					url = e.url.split('?')[0];
-					//获取要前往的页面路径（即url去掉"?"和"?"后的参数）
+				//获取要前往的页面路径（即url去掉"?"和"?"后的参数）
 				const pages = getCurrentPages();
-				if(!pages.length){
+				if (!pages.length) {
+					console.log("首页启动调用了");
 					return e
 				}
 				const fromUrl = pages[pages.length - 1].route;
-			
+
 				let inLoginPage = fromUrl.split('/')[2] == 'login-page'
-					
+
 				//控制登录优先级
 				if ( //判断当前窗口是否为登陆页面，如果是则不重定向路由
 					url == '/pages/ucenter/login-page/index/index' &&
@@ -339,16 +359,16 @@ export default async function() {
 					//pattern
 					if (needLogin) {
 						pass = needLogin.every((item) => {
-							if(typeof(item) == 'object' && item.pattern){
+							if (typeof(item) == 'object' && item.pattern) {
 								return !item.pattern.test(url)
 							}
 							return url != item
 						})
 						// console.log({pass})
 					}
-					if (visitor&&!inLoginPage) {
+					if (visitor && !inLoginPage) {
 						pass = visitor.some((item) => {
-							if(typeof(item) == 'object' && item.pattern){
+							if (typeof(item) == 'object' && item.pattern) {
 								return item.pattern.test(url)
 							}
 							return url == item
@@ -381,7 +401,7 @@ export default async function() {
 			}
 		})
 	})
-	
+
 	// #ifdef APP-PLUS
 	// 监听并提示设备网络状态变化
 	uni.onNetworkStatusChange(res => {

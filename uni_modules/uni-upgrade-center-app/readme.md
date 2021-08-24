@@ -20,7 +20,7 @@
 
 5. 找到`/uni_modules/uni-upgrade-center-app/uniCloud/cloudfunctions/check-version`，右键上传部署
 
-6. 在`pages.json`中添加页面路径
+6. 在`pages.json`中添加页面路径。**注：请不要设置为pages.json中第一项**
 ```json
 "pages": [
 		// ……其他页面配置
@@ -43,9 +43,11 @@
 ]
 ```
 
-7. 将`/uni_modules/uni-upgrade-center-app/utils/check-update`import到需要用到的地方，调用一下即可
+7. 将`@/uni_modules/uni-upgrade-center-app/utils/check-update`import到需要用到的地方，调用一下即可
 
 8. 升级弹框可自行编写，也可以使用`uni.showModal`，或使用现有的升级弹框样式，如果不满足UI需求请自行替换资源文件。在`utils/check-update.js`中都有实例。
+
+9. wgt更新时，打包前请务必将manifest.json中的版本修改为更高版本。
 
 ### 更新下载安装`check-update.js`
 

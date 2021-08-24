@@ -39,6 +39,9 @@
 			let readNewsLogIds = this.readNewsLog.map(({article_id})=>article_id)
 			console.log(typeof readNewsLogIds,readNewsLogIds);
 			this.udbWhere = `"_id" in ${JSON.stringify(readNewsLogIds)}`
+			uni.setNavigationBarTitle({
+				title: this.$t('newsLog.navigationBarTitle')
+			})
 		},
 		onPullDownRefresh() {
 			this.refreshData();

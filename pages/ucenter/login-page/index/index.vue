@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<!-- 顶部文字 -->
-		<text class="title">登录后即可展示自己</text>
+		<text class="title">{{$t('login.phoneLogin')}}</text>
 		<!-- 登录框 -->
 		<view v-if="['apple','weixin'].includes(type)" class="quickLogin">
 			<image @click="quickLogin" :src="imgSrc" mode="widthFix" class="quickLoginBtn"></image>
@@ -9,11 +9,11 @@
 		</view>
 		<template v-else>
 			<input type="number" class="input-box" :inputBorder="false" v-model="phone" maxlength="11"
-				placeholder="请输入手机号" />
+				:placeholder="$t('common.phonePlaceholder')" />
 			<uni-agreements @setAgree="agree = $event"></uni-agreements>
 			<button class="get-code" :disabled="!isPhone" :type="isPhone?'primary':'default'"
-				@click="sendShortMsg">获取短信验证码</button>
-			<text class="tip">未注册的手机号验证通过后将自动注册</text>
+				@click="sendShortMsg">{{$t('login.getVerifyCode')}}</button>
+			<text class="tip">{{$t('login.phoneLoginTip')}}</text>
 		</template>
 
 		<!-- 快捷登录按钮弹窗 -->
@@ -85,7 +85,7 @@
 			sendShortMsg() {
 				if (!this.agree) {
 					return uni.showToast({
-						title: '你未同意隐私政策协议',
+						title: this.$t('common').noAgree,
 						icon: 'none'
 					});
 				}

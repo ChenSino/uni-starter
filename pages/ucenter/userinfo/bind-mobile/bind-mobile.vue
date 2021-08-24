@@ -2,14 +2,14 @@
 	<view class="box">
 		<!-- 登录框 (选择手机号所属国家和地区需要另行实现) -->
 		<uni-easyinput clearable focus type="number" class="input-box" :inputBorder="false" v-model="formData.phone"
-			maxlength="11" placeholder="请输入手机号"></uni-easyinput>
+			maxlength="11" :placeholder="$t('common.phonePlaceholder')"></uni-easyinput>
 		<uni-easyinput clearable type="number" class="input-box" :inputBorder="false" v-model="formData.code" maxlength="6"
-			placeholder="请输入验证码">
+			:placeholder="$t('common.verifyCodePlaceholder')">
 			<template slot="right">
 				<uni-send-sms-code ref="shortCode" code-type="bind" :phone="formData.phone"></uni-send-sms-code>
 			</template>
 		</uni-easyinput>
-		<button class="send-btn-box" :disabled="!canSubmit" :type="canSubmit?'primary':'default'" @click="submit">提交</button>
+		<button class="send-btn-box" :disabled="!canSubmit" :type="canSubmit?'primary':'default'" @click="submit">{{$t('common.submit')}}</button>
 	</view>
 </template>
 <script>
@@ -29,13 +29,16 @@
 		},
 		computed: {
 			tipText() {
-				return `验证码已通过短信发送至${this.currenPhoneArea} ${this.formData.phone}。密码为6 - 20位`
+				return this.$t('common.verifyCodeSend')+ `${this.currenPhoneArea} ${this.formData.phone}。` + this.$t('common.passwordDigits')
 			},
 			canSubmit() {
 				return true//this.isPhone() && this.isCode();
 			}
 		},
 		onLoad(event) {
+			uni.setNavigationBarTitle({
+				title:this.$t('bindMobile.navigationBarTitle')
+			})
 		},
 		onReady() {
 		},

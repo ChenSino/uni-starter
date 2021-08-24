@@ -4,11 +4,11 @@
 	"version": "1.0.48",
 	"description": "云端一体应用快速开发基本项目模版",
 	"keywords": [
-        "login",
-        "登录",
-        "搜索",
-        "uni-id例子"
-    ],
+		"login",
+		"登录",
+		"搜索",
+		"uni-id例子"
+	],
 	"repository": "https://codechina.csdn.net/dcloud/uni-starter.git",
 	"engines": {
 		"HBuilderX": "^3.1.20"
@@ -72,12 +72,14 @@
 				"快应用": {
 					"华为": "u",
 					"联盟": "u"
-                },
-                "Vue": {
-                    "vue2": "y",
-                    "vue3": "y"
-                }
+				},
+				"Vue": {
+					"vue2": "y",
+					"vue3": "y"
+				}
 			}
 		}
+	},
+	"dependencies": {
 	}
 }

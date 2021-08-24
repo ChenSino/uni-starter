@@ -24,7 +24,7 @@
 				"write":false
 			}
 		},
-		"create_time":{
+		"create_date":{
 			"bsonType":"timestamp",
 			"description":"签到的时间戳",
 			"forceDefaultValue":{

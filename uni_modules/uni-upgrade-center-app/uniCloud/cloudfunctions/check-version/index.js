@@ -107,7 +107,7 @@ exports.main = async (event, context) => {
 
 			return {
 				code: 0,
-				message: '已经是最新版本'
+				message: '当前版本已经是最新的，不需要更新'
 			};
 		}
 

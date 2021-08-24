@@ -34,44 +34,44 @@
 			return {
 				servicesList: [{
 						"id": "username",
-						"text": "账号登录",
+						"text": this.$t('uniQuickLogin').accountLogin,
 						"logo": "/static/uni-quick-login/user.png",
 						"path": "/pages/ucenter/login-page/pwd-login/pwd-login"
 					},
 					{
 						"id": "smsCode",
-						"text": "短信验证码",
+						"text": this.$t('uniQuickLogin').SMSLogin,
 						"logo": "/static/uni-quick-login/sms.png",
 						"path": "/pages/ucenter/login-page/index/index?type=smsCode"
 					},
 					{
 						"id": "weixin",
-						"text": "微信登录",
+						"text": this.$t('uniQuickLogin').wechatLogin,
 						"logo": "/static/uni-quick-login/wechat.png",
 					},
 					{
 						"id": "apple",
-						"text": "苹果登录",
+						"text": this.$t('uniQuickLogin').appleLogin,
 						"logo": "/static/uni-quick-login/apple.png",
 					},
 					{
 						"id": "univerify",
-						"text": "一键登录",
+						"text":this.$t('uniQuickLogin').oneClickLogin,
 						"logo": "/static/uni-quick-login/univerify.png",
 					},
 					{
 						"id": "qq",
-						"text": "QQ登录", //暂未提供该登录方式的接口示例
+						"text": this.$t('uniQuickLogin').QQLogin, //暂未提供该登录方式的接口示例
 						"logo": "/static/uni-quick-login/univerify.png",
 					},
 					{
 						"id": "xiaomi",
-						"text": "小米登录", //暂未提供该登录方式的接口示例
+						"text": this.$t('uniQuickLogin').xiaomiLogin, //暂未提供该登录方式的接口示例
 						"logo": "/static/uni-quick-login/univerify.png",
 					},
 					{
 						"id": "sinaweibo",
-						"text": "微博登录", //暂未提供该登录方式的接口示例
+						"text": this.$t('common').weibo, //暂未提供该登录方式的接口示例
 						"logo": "/static/uni-quick-login/univerify.png",
 					}
 				],
@@ -148,9 +148,9 @@
 				this.oauthServices = oauthServices
 			}, err => {
 				uni.showModal({
-					title: '获取服务供应商失败：' + JSON.stringify(err),
+					title: this.$t('uniQuickLogin').getProviderFail + '：' + JSON.stringify(err),
 					showCancel: false,
-					confirmText: '知道了'
+					confirmText: this.$t('common').gotIt
 				});
 				console.error('获取服务供应商失败：' + JSON.stringify(err));
 			})
@@ -182,7 +182,7 @@
 			login_before(type, navigateBack = true) {
 				if (!this.agree && type != 'univerify') {
 					return uni.showToast({
-						title: '你未同意隐私政策协议',
+						title: this.$t('common').noAgree,
 						icon: 'none'
 					});
 				}
@@ -246,13 +246,13 @@
 						if (type == 'univerify') {
 							if (err.metadata && err.metadata.error_data) {
 								uni.showToast({
-									title: "一键登录:" + err.metadata.error_data,
+									title: this.$t('uniQuickLogin').oneClickLogin + ":" + err.metadata.error_data,
 									icon: 'none'
 								});
 							}
 							if (err.errMsg) {
 								uni.showToast({
-									title: "一键登录:" + err.errMsg,
+									title:this.$t('uniQuickLogin').oneClickLogin + ":" + err.errMsg,
 									icon: 'none'
 								});
 							}
@@ -268,15 +268,15 @@
 									break;
 								case 30006:
 									uni.showModal({
-										title: "登录服务初始化错误",
+										title: this.$t('uniQuickLogin').loginErr,
 										content: err.metadata.error_data,
 										showCancel: false,
-										confirmText: '知道了',
+										confirmText: this.$t('common').gotIt,
 									});
 									break;
 								case "30008":
 									uni.showToast({
-										title: '点击了第三方登陆',
+										title: this.$t('uniQuickLogin').chooseOtherLogin,
 										icon: 'none'
 									});
 									console.log('点击了第三方登陆，provider：', err.provider);

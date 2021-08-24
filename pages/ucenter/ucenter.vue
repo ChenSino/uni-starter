@@ -2,13 +2,11 @@
 	<view class="center">
 		<uni-sign-in ref="signIn"></uni-sign-in>
 		<view class="userInfo" @click.capture="toUserInfo">
-			<uni-file-picker v-if="userInfo.avatar_file&&userInfo.avatar_file.url" v-model="userInfo.avatar_file"
-				fileMediatype="image" :del-icon="false" return-type="object" :image-styles="listStyles" disablePreview
-				disabled />
-			<image v-else class="logo-img" src="/static/uni-center/defaultAvatarUrl.png"></image>
+			<cloud-image width="150rpx" height="150rpx" v-if="userInfo.avatar_file&&userInfo.avatar_file.url" :src="userInfo.avatar_file.url"></cloud-image>
+			<image v-else class="logo-img" src="@/static/uni-center/defaultAvatarUrl.png"></image>
 			<view class="logo-title">
 				<text class="uer-name" v-if="hasLogin">{{userInfo.nickname||userInfo.username||userInfo.mobile}}</text>
-				<text class="uer-name" v-else>未登陆</text>
+				<text class="uer-name" v-else>{{$t('mine.notLogged')}}</text>
 			</view>
 		</view>
 		<uni-grid class="grid" :column="4" :showBorder="false" :square="true">
@@ -44,65 +42,69 @@
 		data() {
 			return {
 				gridList: [{
-						"text": "文字1",
+						"text": this.$t('mine.showText'),
 						"icon": "chat"
 					},
 					{
-						"text": "文字2",
+						"text": this.$t('mine.showText'),
 						"icon": "cloud-upload"
 					},
 					{
-						"text": "文字3",
+						"text": this.$t('mine.showText'),
 						"icon": "contact"
 					},
 					{
-						"text": "文字4",
+						"text": this.$t('mine.showText'),
 						"icon": "download"
 					}
 				],
 				ucenterList: [
 					[{
-							"title": '签到有奖',
+							"title": this.$t('mine.signIn'),
 							"event": 'signIn',
 							"icon": "compose"
 						},
 						// #ifdef APP-PLUS
 						{
-							"title": '去评分',
+							"title": this.$t('mine.toEvaluate'),
 							"event": 'gotoMarket',
 							"icon": "hand-thumbsup"
 						},
 						//#endif
 						{
-							"title": '阅读过的文章',
+							"title":this.$t('mine.readArticles'),
 							"to": '/pages/ucenter/read-news-log/read-news-log',
 							"icon": "flag"
 						},
 						{
-							"title": '我的积分',
+							"title": this.$t('mine.myScore'),
 							"to": '',
 							"event": 'getScore',
 							"icon": "paperplane"
 						}
 						// #ifdef APP-PLUS
 						, {
-							"title": '分销推荐',
+							"title": this.$t('mine.invite'),
 							"event": 'share',
 							"icon": "redo"
 						}
 						// #endif
 					],
 					[{
-						"title": '问题与反馈',
+						"title": this.$t('mine.guestBook'),
+						"to": '/pages/ucenter/guestbook/guestbook',
+						"icon": "chat"
+					},{
+						"title": this.$t('mine.feedback'),
 						"to": '/uni_modules/uni-feedback/pages/uni-feedback/uni-feedback',
 						"icon": "help"
 					}, {
-						"title": '设置',
+						"title": this.$t('mine.settings'),
 						"to": '/pages/ucenter/settings/settings',
 						"icon": "gear"
 					}],
 					[{
-						"title": '关于',
+						"title": this.$t('mine.about'),
 						"to": '/pages/ucenter/about/about',
 						"icon": "info"
 					}]
@@ -123,7 +125,7 @@
 			// console.log(313,this.userInfo,this.hasLogin);
 			//#ifdef APP-PLUS
 			this.ucenterList[this.ucenterList.length - 2].unshift({
-				title: '检查更新',
+				title:this.$t('mine.checkUpdate'),// this.this.$t('mine.checkUpdate')"检查更新"
 				rightText: this.appVersion.version + '-' + this.appVersion.versionCode,
 				event: 'checkVersion',
 				icon: 'loop',
@@ -186,7 +188,8 @@
 			},
 			tapGrid(index) {
 				uni.showToast({
-					title: '你点击了，第' + (index + 1) + '个',
+					// title: '你点击了，第' + (index + 1) + '个',
+					title: this.$t('mine.clicked') + " " + (index + 1) ,
 					icon: 'none'
 				});
 			},
@@ -215,25 +218,30 @@
 			 */
 			getScore() {
 				if (!this.userInfo) return uni.showToast({
-					title: '请登录后查看积分',
+					title: this.$t('mine.checkScore'),
 					icon: 'none'
 				});
 				uni.showLoading({
 					mask: true
 				})
-				db.collection("uni-id-scores").where('"user_id" == $env.uid').field('score,balance').get().then((res) => {
-					uni.hideLoading()
-					console.log(res);
-					const data = res.result.data[0];
-					let msg = '';
-					msg = data ? ('当前积分为' + data.score) : '当前无积分';
-					uni.showToast({
-						title: msg,
-						icon: 'none'
-					});
-				}).finally(()=>{
-					uni.hideLoading()
-				})
+				db.collection("uni-id-scores")
+					.where('"user_id" == $env.uid')
+					.field('score,balance')
+					.orderBy("create_date", "desc")
+					.limit(1)
+					.get()
+					.then((res) => {
+						console.log(res);
+						const data = res.result.data[0];
+						let msg = '';
+						msg = data ? (this.$t('mine.currentScore')+ data.balance) : this.$t('mine.noScore');
+						uni.showToast({
+							title: msg,
+							icon: 'none'
+						});
+					}).finally(()=>{
+						uni.hideLoading()
+					})
 			},
 			async share() {
 				let {
@@ -266,7 +274,7 @@
 					},
 					menus: [{
 							"img": "/static/app-plus/sharemenu/wechatfriend.png",
-							"text": "微信好友",
+							"text": this.$t('common').wechatFriends,
 							"share": {
 								"provider": "weixin",
 								"scene": "WXSceneSession"
@@ -274,7 +282,7 @@
 						},
 						{
 							"img": "/static/app-plus/sharemenu/wechatmoments.png",
-							"text": "微信朋友圈",
+							"text": this.$t('common').wechatBbs,
 							"share": {
 								"provider": "weixin",
 								"scene": "WXSenceTimeline"
@@ -282,7 +290,7 @@
 						},
 						{
 							"img": "/static/app-plus/sharemenu/weibo.png",
-							"text": "微博",
+							"text": this.$t('common').weibo,
 							"share": {
 								"provider": "sinaweibo"
 							}
@@ -296,16 +304,16 @@
 						},
 						{
 							"img": "/static/app-plus/sharemenu/copyurl.png",
-							"text": "复制",
+							"text": this.$t('common').copy,
 							"share": "copyurl"
 						},
 						{
 							"img": "/static/app-plus/sharemenu/more.png",
-							"text": "更多",
+							"text": this.$t('common').more,
 							"share": "shareSystem"
 						}
 					],
-					cancelText: "取消分享",
+					cancelText: this.$t('common').cancelShare,
 				}, e => { //callback
 					console.log(e);
 				})

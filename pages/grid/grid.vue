@@ -23,7 +23,7 @@
 		
 		
 	<!-- 宫格 -->
-		<uni-section title="宫格组件" style="margin: 0;" type="line"></uni-section>
+		<uni-section :title="$t('grid.grid')" style="margin: 0;" type="line"></uni-section>
 		<view class="example-body">
 			<uni-grid :column="3" :highlight="true" @change="change">
 				<template v-for="(item,i) in gridList">
@@ -52,7 +52,7 @@
 		},
 		data() {
 			return {
-				gridList: ['所有人可见','所有人可见','所有人可见', '游客不可见', '游客不可见', '游客不可见','管理员可见','管理员可见','管理员可见'],
+				gridList: [],
 				current: 0,
 				swiperDotIndex: 0
 			}
@@ -62,10 +62,23 @@
 				hasLogin: 'user/hasLogin'
 			})
 		},
+		onLoad() {
+			let gridList = []
+			for (var i = 0; i < 3; i++) {
+				gridList.push( this.$t('grid.visibleToAll') )
+			}
+			for (var i = 0; i < 3; i++) {
+				gridList.push( this.$t('grid.invisibleToTourists') )
+			}
+			for (var i = 0; i < 3; i++) {
+				gridList.push( this.$t('grid.adminVisible') )
+			}
+			this.gridList = gridList
+		},
 		methods: {
 			change(e) {
 				uni.showToast({
-					title: `点击第${e.detail.index}个宫格`,
+					title:this.$t('grid.clickTip') + " " + `${e.detail.index}` + " " + this.$t('grid.clickTipGrid'),
 					icon: 'none'
 				})
 			},
@@ -144,6 +157,7 @@
 	}
 
 	.text {
+		text-align: center;
 		font-size: 26rpx;
 		margin-top: 10rpx;
 	}

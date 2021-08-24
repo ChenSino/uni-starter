@@ -1,7 +1,7 @@
 {
   "id": "uni-sign-in",
   "displayName": "签到插件",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "uni-sign-in",
   "keywords": [
     "uni-sign-in",

@@ -4,9 +4,8 @@
 		<statusBar></statusBar>
 		<!-- #endif -->
 		<!-- 搜索功能 -->
-		
 		<uni-search-bar @click="searchClick" class="uni-search-box" v-model="keyword" ref="searchBar" radius="100"
-				cancelButton="none" disabled />
+				cancelButton="none" disabled :placeholder="$t('list.inputPlaceholder')" />
 		<view class="cover-search-bar" @click="searchClick"></view>
 		
 		

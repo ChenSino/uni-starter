@@ -72,7 +72,7 @@ exports.main = async (event, context) => {
 		}
 	}
 
-	//3.注册成功后创建新用户的积分表方法
+	// 3.注册成功后触发。
 	async function registerSuccess(uid) {
 		//用户接受邀请
 		if (inviteCode) {
@@ -85,14 +85,6 @@ exports.main = async (event, context) => {
 		await db.collection('uni-id-device').add({
 			...deviceInfo,
 			user_id: uid
-		})
-		await db.collection('uni-id-scores').add({
-			user_id: uid,
-			score: 1,
-			type: 1,
-			balance: 1,
-			comment: "",
-			create_date: Date.now()
 		})
 	}
 	//4.记录成功登录的日志方法

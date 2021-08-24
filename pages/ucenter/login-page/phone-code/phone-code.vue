@@ -1,18 +1,18 @@
 <template>
 	<view class="content">
 		<!-- 顶部文字 -->
-		<text class="tit">请输入验证码</text>
+		<text class="tit">{{$t('common.verifyCodePlaceholder')}}</text>
 		<text class="tip">{{tipText}}</text>
 		<uni-forms>
 		<!-- 登录框 (选择手机号所属国家和地区需要另行实现) -->
 			<uni-easyinput type="number" class="easyinput" :inputBorder="false"
-				v-model="code" maxlength="6" placeholder="请输入验证码">
+				v-model="code" maxlength="6" :placeholder="$t('common.verifyCodePlaceholder')">
 				<template v-slot:right>
 					<uni-send-sms-code :phone="phone" ref="sendSmsCode"></uni-send-sms-code>
 				</template>
 			</uni-easyinput>
 			<button class="send-btn" :disabled="!canSubmit" :type="canSubmit?'primary':'default'"
-				@click="submit">登录</button>
+				@click="submit">{{$t('common.login')}}</button>
 		</uni-forms>
 		<uni-quick-login></uni-quick-login>
 	</view>
@@ -29,7 +29,7 @@
 		},
 		computed: {
 			tipText() {
-				return `验证码已通过短信发送至${this.phone}。`;
+				return this.$t('common.verifyCodeSend')+ `${this.phone}。`;
 			},
 			canSubmit(){
 				return this.code.length==6;
@@ -39,7 +39,7 @@
 			this.phone = phoneNumber;
 		},
 		onReady() {
-			this.$refs.sendSmsCode.start();
+			// this.$refs.sendSmsCode.start();
 		},
 		methods: {
 			submit(){ //完成并提交
@@ -63,7 +63,6 @@
 						}
 					}
 				})
-				
 			}
 		}
 	}

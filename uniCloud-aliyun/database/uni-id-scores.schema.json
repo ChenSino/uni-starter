@@ -2,9 +2,9 @@
 	"bsonType": "object",
 	"required": ["user_id", "score", "balance"],
 	"permission": {
-		"read": true,
-		"create": true,
-		"update": "doc._id == auth.uid",
+		"read": "doc.user_id == auth.uid",
+		"create": false,
+		"update": false,
 		"delete": false
 	},
 	"properties": {

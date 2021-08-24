@@ -9,19 +9,19 @@
 				<!-- #endif -->
 				<!-- :cancelText="keyBoardPopup ? '取消' : '搜索'" -->
 				<uni-search-bar ref="searchBar" style="flex:1;" radius="100" v-model="searchText" :focus="focus" :placeholder="hotWorld"
-				 clearButton="auto" cancelButton="always" @clear="clear" @confirm="confirm" @cancel="backPage" />
+				 clearButton="auto" :cancelText="$t('search.cancelText')" cancelButton="always" @clear="clear" @confirm="confirm" @cancel="backPage" />
 			</view>
 		</view>
 		<view class="search-body">
 			<!-- 搜索历史 -->
 			<view class="word-container" v-if="localSearchList.length">
 				<view class="word-container_header">
-					<text class="word-container_header-text">搜索历史</text>
+					<text class="word-container_header-text">{{$t('search.searchHistory')}}</text>
 					<uni-icons v-if="!localSearchListDel" @click="localSearchListDel = true" class="search-icons" style="padding-right: 0;"
 					 :color="iconColor" size="18" type="trash"></uni-icons>
 					<view v-else class="flex-center flex-row" style="font-weight: 500;justify-content: space-between;">
-						<text style="font-size: 22rpx;color: #666;padding-top:4rpx;padding-bottom:4rpx;padding-right:20rpx;" @click="LocalSearchListClear">全部删除</text>
-						<text style="font-size: 22rpx;color: #c0402b;padding-top:4rpx;padding-bottom:4rpx;padding-left:20rpx;" @click="localSearchListDel = false">完成</text>
+						<text style="font-size: 22rpx;color: #666;padding-top:4rpx;padding-bottom:4rpx;padding-right:20rpx;" @click="LocalSearchListClear">{{$t('search.deleteAll')}}</text>
+						<text style="font-size: 22rpx;color: #c0402b;padding-top:4rpx;padding-bottom:4rpx;padding-left:20rpx;" @click="localSearchListDel = false">{{$t('search.complete')}}</text>
 					</view>
 				</view>
 
@@ -37,7 +37,7 @@
 			<view class="word-container">
 				<view class="word-container_header">
 					<view class="flex-center flex-row">
-						<text class="word-container_header-text">搜索发现</text>
+						<text class="word-container_header-text">{{$t('search.searchDiscovery')}}</text>
 						<uni-icons v-if="!netHotListIsHide" class="search-icons" :color="iconColor" size="14" type="reload" @click="searchHotRefresh"></uni-icons>
 					</view>
 					<uni-icons class="search-icons" style="padding-right: 0;" :color="iconColor" size="18" :type="netHotListIsHide ? 'eye-slash' : 'eye'"
@@ -55,7 +55,7 @@
 							</template>
 						</template>
 						<view v-else style="flex:1;">
-							<text class="word-container_body-info">当前搜索发现已隐藏</text>
+							<text class="word-container_body-info">{{$t('search.searchHiddenTip')}}</text>
 						</view>
 					</view>
 				</unicloud-db>
@@ -139,7 +139,6 @@
 				iconColor: '#999999',
 				associativeList: [],
 				keyBoardPopup: false,
-
 				hotWorld: 'DCloud', //	搜索热词，如果没有输入即回车，则搜索热词，但是不会加入搜索记录
 				focus: true, //	是否自动聚焦
 				speechEngine: 'iFly' //	语音识别引擎 iFly 讯飞 baidu 百度
@@ -156,6 +155,11 @@
 			// #endif
 
 			this.searchText = getApp().globalData.searchText;
+		},
+		computed: {
+			associativeShow() {
+				return this.searchText && this.associativeList.length;
+			}
 		},
 		onLoad() {
 			//#ifdef APP-PLUS
@@ -209,8 +213,8 @@
 			},
 			LocalSearchListClear() {
 				uni.showModal({
-					content: '确认清空搜索历史吗？',
-					confirmText: '删除',
+					content: this.$t('search.deleteTip'),
+					confirmText: this.$t('search.delete'),
 					confirmColor: 'red',
 					cancelColor: '#808080',
 					success: res => {
@@ -302,11 +306,7 @@
 				uni.navigateBack();
 			}
 		},
-		computed: {
-			associativeShow() {
-				return this.searchText && this.associativeList.length;
-			}
-		},
+		
 		watch: {
 			searchText: debounce(function(value) {
 				if (value) {
