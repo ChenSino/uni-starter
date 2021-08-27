@@ -7,7 +7,8 @@
         "login",
         "登录",
         "搜索",
-        "uni-id例子"
+        "uni-id例子",
+        "留言板"
     ],
 	"repository": "https://codechina.csdn.net/dcloud/uni-starter.git",
 	"engines": {
