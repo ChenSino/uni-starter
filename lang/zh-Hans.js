@@ -5,6 +5,7 @@ export default {
 		wechatBbs: "微信朋友圈",
 		weibo:"微博",
 		more: "更多",
+		agree:"同意",
 		copy: "复制",
 		wechatApplet: "微信小程序",
 		cancelShare: "取消分享",

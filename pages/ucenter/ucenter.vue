@@ -96,7 +96,7 @@
 						"icon": "chat"
 					},{
 						"title": this.$t('mine.feedback'),
-						"to": '/uni_modules/uni-feedback/pages/uni-feedback/uni-feedback',
+						"to": '/uni_modules/uni-feedback/pages/opendb-feedback/opendb-feedback',
 						"icon": "help"
 					}, {
 						"title": this.$t('mine.settings'),

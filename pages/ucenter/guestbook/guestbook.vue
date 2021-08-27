@@ -1,18 +1,14 @@
 <template>
 	<view class="page">
 		<unicloud-db ref="udb" class="content" v-slot:default="{data,pagination,hasMore, loading, error}"
-			collection="guestbook,uni-id-users" :where="udbWhere" field="uid.username,uid._id,uid.avatar_file,text,_id,state">
+			collection="guestbook,uni-id-users" :where="udbWhere" field="user_id.nickname,user_id._id,user_id.avatar_file,text,_id,state">
 			<view v-if="error">{{error.message}}</view>
 			<view v-else>
 				<view v-for="(item,index) in data" :key="index" class="item">
 					<view class="main">
-						<!-- <uni-file-picker v-if="item.uid[0].avatar_file" v-model="item.uid[0].avatar_file"
-							fileMediatype="image" :del-icon="false" return-type="object" :image-styles="listStyles" disablePreview
-							disabled
-						></uni-file-picker> -->
-						<cloud-image :src="item.uid[0].avatar_file.url"></cloud-image>
+						<cloud-image :src="item.user_id[0].avatar_file.url"></cloud-image>
 						<view>
-							<text class="username">{{item.uid[0].username}}</text>
+							<text class="nickname">{{item.user_id[0].nickname}}</text>
 							<text>{{item.text}}</text>
 						</view>
 					</view>
@@ -46,7 +42,15 @@
 				hasLogin: 'user/hasLogin'
 			}),
 			udbWhere(){
-				return  this.hasLogin?'':{state:true}
+				if(this.hasLogin){
+					if( this.uniIDHasRole('AUDITOR') ){
+						return ''
+					}else{
+						return 'state==true || user_id._id==$cloudEnv_uid'
+					}
+				}else{
+					return '"state"==true'
+				}
 			}
 		},
 		data() {
@@ -103,6 +107,7 @@
 					success: (res) => { // 新增成功后的回调
 						let {code,message} = res
 						console.log(code,message);
+						this.text = ''
 						this.$refs.udb.refresh() //{clear:true}
 					},
 					fail: (err) => { // 新增失败后的回调
@@ -162,7 +167,7 @@
 		font-size: 24rpx;
 	}
 
-	.item .main .username {
+	.item .main .nickname {
 		font-weight: 600;
 	}
 

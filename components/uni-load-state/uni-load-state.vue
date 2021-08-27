@@ -2,24 +2,44 @@
 	<view style="width: 750rpx;">
 		<template v-if="!state.error">
 			<uni-load-more v-if="state.loading||state.pagination.current!=1||state.data.length!=0" :status="state.loading?'loading':(state.hasMore?'hasMore':'noMore')"></uni-load-more>
-			<text class="noData" v-else>{{$t('loadMore.noData')}}</text>
+			<text class="noData" v-else>{{noData}}</text>
 		</template>
 		<view v-else>
 			<view class="box" v-if="networkType == 'none'">
 				<image class="icon-image" src="@/static/uni-load-state/disconnection.png" mode="widthFix"></image>
-				<text class="tip-text">{{$t('loadMore.noNetwork')}}</text>
+				<text class="tip-text">{{noNetwork}}</text>
 				<view class="btn btn-default" @click="openSettings">
-					<text class="btn-text">{{$t('loadMore.toSet')}}</text>
+					<text class="btn-text">{{toSet}}</text>
 				</view>
 			</view>
-			<text class="err" v-else>{{$t('loadMore.error')}}：{{JSON.stringify(state.error)}}</text>
+			<text class="err" v-else>{{error}}：{{JSON.stringify(state.error)}}</text>
 		</view>
 	</view>
 </template>
 
 <script>
+	import {
+	initVueI18n
+	} from '@dcloudio/uni-i18n'
+	import messages from './i18n/index.js'
+	const {	t	} = initVueI18n(messages)
+	
 	export default {
 		name: "uni-load-state",
+		computed:{
+			noData(){
+				return t('noData')
+			},
+			noNetwork(){
+				return t('noNetwork')
+			},
+			toSet(){
+				return t('toSet')
+			},
+			error(){
+				return t('error')
+			}
+		},
 		data() {
 			return {
 				"networkType": ""
@@ -122,7 +142,7 @@
 		text-align: center;
 		padding: 30rpx;
 		width: 750rpx;
-		/* #ifndef APP-NVUE */
+		/* #ifndef APP-PLUS-NVUE */
 		display: block;
 		/* #endif */
 	}

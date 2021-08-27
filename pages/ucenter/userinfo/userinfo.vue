@@ -5,8 +5,8 @@
 				<template v-slot:body>
 					<view class="item">
 						<text>{{$t('userinfo.ProfilePhoto')}}</text>
-						<cloud-image  @click.native="uploadAvatarImg" v-if="avatar_file" :src="avatar_file.url" width="50px" height="50px"></cloud-image>
-						<uni-icons v-else class="chooseAvatar" type="plusempty" size="30" color="#dddddd"></uni-icons>
+						<cloud-image @click="uploadAvatarImg" v-if="avatar_file" :src="avatar_file.url" width="50px" height="50px"></cloud-image>
+						<uni-icons @click="uploadAvatarImg" v-else class="chooseAvatar" type="plusempty" size="30" color="#dddddd"></uni-icons>
 					</view>
 				</template>
 			</uni-list-item>

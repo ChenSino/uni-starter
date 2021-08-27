@@ -1,14 +1,14 @@
 {
 	"id": "uni-starter",
 	"displayName": "uni-starter",
-	"version": "1.0.48",
+	"version": "1.0.49",
 	"description": "云端一体应用快速开发基本项目模版",
 	"keywords": [
-		"login",
-		"登录",
-		"搜索",
-		"uni-id例子"
-	],
+        "login",
+        "登录",
+        "搜索",
+        "uni-id例子"
+    ],
 	"repository": "https://codechina.csdn.net/dcloud/uni-starter.git",
 	"engines": {
 		"HBuilderX": "^3.1.20"

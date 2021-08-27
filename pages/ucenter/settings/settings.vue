@@ -10,7 +10,7 @@
 			<!-- #ifdef APP-PLUS -->
 			<!-- 检查push过程未结束不显示，push设置项 -->
 			<uni-list-item :title="$t('settings.clearTmp')" @click="clearTmp" link></uni-list-item>
-			<uni-list-item v-if="pushIsOn != 'wait'" @click.native="pushIsOn?pushServer.off():pushServer.on()" :title="$t('settings.pushServer')" showSwitch :switchChecked="pushIsOn"></uni-list-item>
+			<uni-list-item v-show="pushIsOn != 'wait'" :title="$t('settings.pushServer')" @click.native="pushIsOn?pushServer.off():pushServer.on()"  showSwitch :switchChecked="pushIsOn"></uni-list-item>
 			<!-- #endif -->
 			<uni-list-item v-if="supportMode.includes('fingerPrint')" :title="$t('settings.fingerPrint')" @click.native="startSoterAuthentication('fingerPrint')" link></uni-list-item>
 			<uni-list-item v-if="supportMode.includes('facial')" :title="$t('settings.facial')" @click="startSoterAuthentication('facial')" link></uni-list-item>
@@ -249,17 +249,18 @@
 						console.log(res.tapIndex); 
 						let language = uni.getStorageSync('CURRENT_LANG')
 						if(
-							!res.tapIndex && language=='zh-CN' || res.tapIndex && language=='en'
+							!res.tapIndex && language=='zh-Hans' || res.tapIndex && language=='en'
 						){
 							const globalData = getApp().globalData
 							if (language === 'en') {
-								language = globalData.locale = 'zh-CN'
+								language = globalData.locale = 'zh-Hans'
 							} else {
 								language = globalData.locale = 'en'
 							}
 							uni.setStorageSync('CURRENT_LANG', language)
 							getApp().$i18n.locale = language
 							this.currentLanguage = res.tapIndex?'简体中文':'English'
+							uni.setLocale(language)
 							uni.reLaunch({
 								url: '/pages/list/list',
 								complete: () => {

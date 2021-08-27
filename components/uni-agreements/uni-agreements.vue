@@ -2,11 +2,11 @@
 	<view class="root">
 		<checkbox-group @change="setAgree" class="checkbox-group">
 			<checkbox  style="transform: scale(0.7);" />
-			<text>同意</text>
+			<text>{{$t('common.agree')}}</text>
 		</checkbox-group>
 		<view class="item" v-for="(agreement,index) in agreements" :key="index">
 			<text class="agreement" @click="navigateTo(agreement)">{{agreement.title}}</text>
-			<text class="hint" v-if="hasAnd(agreements,index)">和</text>
+			<text class="hint" v-if="hasAnd(agreements,index)">&</text>
 		</view>
 	</view>
 </template>

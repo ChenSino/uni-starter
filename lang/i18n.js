@@ -1,18 +1,42 @@
 import langEn from './en'
-import langZhCN from './zh-CN'
+import zhHans from './zh-Hans'
 const messages = {
 	'en': langEn,
-	'zh-CN': langZhCN
+	'zh-Hans': zhHans
 }
 let currentLang = uni.getStorageSync('CURRENT_LANG')
 if (!currentLang) {
-	// 获取设备信息
-	uni.getSystemInfo({
-		success: function (res) {
-			uni.setStorageSync('CURRENT_LANG', res.language)
-			currentLang = res.language
+	if(uni.getLocale){
+		console.log('获取应用语言:',uni.getLocale() );
+		let language = 'zh-Hans' 
+		if(uni.getLocale() != 'zh-Hans'){
+			language = 'en'
 		}
-	})
+		uni.setStorageSync('CURRENT_LANG', language)
+		currentLang = language
+	}else{
+		uni.getSystemInfo({
+			success: function (res) {
+				uni.getSystemInfo({
+					success: function (res) {
+						console.log('获取设备信息:',res);
+						let language = 'zh-Hans' 
+						if(res.language != 'zh-Hans'){
+							language = 'en'
+						}
+						uni.setStorageSync('CURRENT_LANG', language)
+						currentLang = language
+					},
+					fail: (err) => {
+						console.error(err)
+					}
+				})
+			},
+			fail: (err) => {
+				console.error(err)
+			}
+		})
+	}
 }
 let i18nConfig = {
 	locale: currentLang, // set locale

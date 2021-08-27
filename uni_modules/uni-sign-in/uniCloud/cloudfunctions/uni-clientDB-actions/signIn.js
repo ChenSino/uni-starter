@@ -7,7 +7,7 @@ module.exports = {
 	before: async (state, event) => {
 		// console.log({state});
 		if(state.type == 'create'){
-			let date = new Date(new Date().toLocaleDateString()).getTime()
+			let date = todayTimestamp()
 			let {total} = await signInTable.where({
 				user_id:state.auth.uid,
 				date,
@@ -25,7 +25,7 @@ module.exports = {
 		if (error) {
 			throw error
 		}
-		let date = new Date(new Date().toLocaleDateString()).getTime()
+		let date = todayTimestamp()
 		//查最近7天的签到情况
 		let {data:signInData} = await signInTable.where({
 			user_id:state.auth.uid,
@@ -68,10 +68,23 @@ module.exports = {
 				user_id:state.auth.uid,
 				balance,
 				score,
+				type:1,
 				create_date:Date.now()
 			})
 			console.log({addScores});
 		}
 		return {...result,score:balance,signInData,n,days}
 	}
+}
+
+
+function todayTimestamp(){
+	//时区
+	let timeZone = new Date().getTimezoneOffset()/60
+	//获得相对于北京时间的时间戳
+	let timestamp = Date.now()+3600*1000*(8+timeZone)
+	//一天一共多少毫秒
+	const D = 3600*24*1000
+	//去掉余数，再减去东8区的8小时 得到当天凌晨的时间戳
+	return parseInt(timestamp/D)*D - 3600*1000*8
 }

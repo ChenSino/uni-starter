@@ -14,6 +14,7 @@
 		onLaunch: function() {
 			console.log('App Launch')
 			
+			
 			this.globalData.$i18n = this.$i18n
 			this.globalData.$t = str => this.$t(str)
 
@@ -39,10 +40,11 @@
 					}  
 				});
 			}*/
-			console.log("国际化语言检测：" + plus.os.language);
 			// #endif
 
-			let updateTabbar = () => {
+			let initLanguageAfter = () => {
+				console.log(this.$t('tabbar'));
+				//底部tabbar更新
 				this.$t('tabbar').split(',').forEach((text, index) => {
 					uni.setTabBarItem({
 						index,
@@ -52,11 +54,37 @@
 						}
 					})
 				})
+				//更新 uni-starter.config
+					//agreements
+					let agreements = [{
+							"title": "用户服务协议", //协议名称
+							"url": "请填写用户服务协议链接" //对应的网络链接
+						},
+						{
+							"title": "隐私政策",
+							"url": "请填写隐私政策链接"
+						}
+					]
+					if(getApp().$i18n.locale == 'en'){
+						agreements = [{
+								"title": "User service agreement", //协议名称
+								"url": "请填写用户服务协议链接" //对应的网络链接
+							},
+							{
+								"title": "Privacy policy",
+								"url": "请填写隐私政策链接"
+							}
+						]
+					}
+					console.log(getApp().globalData.config)
+					getApp().globalData.config.about.agreements = agreements
 			}
-			updateTabbar()
+			setTimeout(()=>{
+				initLanguageAfter()
+			},1000)
 			uni.$on('changeLanguage', e => {
 				console.log('changeLanguage',e);
-				updateTabbar()
+				initLanguageAfter(e)
 			})
 		},
 		onShow: function() {

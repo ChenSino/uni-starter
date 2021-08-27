@@ -43,7 +43,7 @@
 
 <script>
 	const db = uniCloud.database();
-	const signInTable = db.collection('opendb-sign-in')
+	const signInTable = db.action('signIn').collection('opendb-sign-in')
 	export default {
 		name: "uni-signIn",
 		data() {
@@ -69,7 +69,6 @@
 				try{
 					const date = new Date(new Date().toLocaleDateString()).getTime()
 					let res = await signInTable
-						.action('signIn')
 						.where(`'user_id' == $env.uid && 'date' == ${date} && 'isDelete' == false`)
 						.get()
 					this.signInRes = res.result
@@ -82,7 +81,7 @@
 							icon: 'none'
 						});
 					} else {
-						let res = await signInTable.action('signIn').add({});
+						let res = await signInTable.add({});
 						console.log(res);
 						uni.hideLoading()
 						this.signInRes = res.result

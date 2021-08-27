@@ -94,24 +94,24 @@
                 "oauth" : {
                     "apple" : {},
                     "weixin" : {
-                        "appid" : "wxffdd8fa6ec4ef2a0",
+                        "appid" : "wx81dbb061d2258234",
                         "appsecret" : "",
-                        "UniversalLinks" : "https://static-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e.bspapp.com/uni-universallinks/__UNI__03B096E"
+                        "UniversalLinks" : ""
                     },
                     "univerify" : {}
                 },
                 "ad" : {},
                 "share" : {
                     "weixin" : {
-                        "appid" : "wxffdd8fa6ec4ef2a0",
-                        "UniversalLinks" : "https://static-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e.bspapp.com/uni-universallinks/__UNI__03B096E"
+                        "appid" : "wx81dbb061d2258234",
+                        "UniversalLinks" : ""
                     }
                 },
                 "geolocation" : {
                     "baidu" : {
                         "__platform__" : [ "ios", "android" ],
-                        "appkey_ios" : "111",
-                        "appkey_android" : "111"
+                        "appkey_ios" : "请填写地图的key",
+                        "appkey_android" : "请填写地图的key"
                     }
                 },
                 "push" : {
@@ -160,7 +160,7 @@
     },
     "quickapp" : {},
     "mp-weixin" : {
-        "appid" : "wx81dbb061d2258234",
+        "appid" : "",
         "setting" : {
             "urlCheck" : false,
             "es6" : false
@@ -195,8 +195,8 @@
             }
         }
     },
-    "_spaceID" : "76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e",
-    "vueVersion" : "2"
+    "_spaceID" : "",
+    "vueVersion" : "3"
 }
 //...  
 // 中文（简体）

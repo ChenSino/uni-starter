@@ -1,5 +1,5 @@
 <template>
-	<view :style="{width,height}">
+	<view @click="onClick" :style="{width,height}">
 		<image v-if="cSrc" :style="{width,height}" :src="cSrc" :mode="mode"></image>
 	</view>
 </template>
@@ -7,6 +7,7 @@
 <script>
 	export default {
 		name: "cloud-image",
+		emits:['click','switchChange'],
 		props: {
 			mode: {
 				type:String,
@@ -54,6 +55,11 @@
 		},
 		async mounted() {
 
+		},
+		methods:{
+			onClick(){
+				this.$emit('click')
+			}
 		},
 		data() {
 			return {

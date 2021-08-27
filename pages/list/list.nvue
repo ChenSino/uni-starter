@@ -5,9 +5,8 @@
 		<!-- #endif -->
 		<!-- 搜索功能 -->
 		<uni-search-bar @click="searchClick" class="uni-search-box" v-model="keyword" ref="searchBar" radius="100"
-				cancelButton="none" disabled :placeholder="$t('list.inputPlaceholder')" />
+				cancelButton="none" disabled :placeholder="inputPlaceholder" />
 		<view class="cover-search-bar" @click="searchClick"></view>
-		
 		
 		<unicloud-db ref='udb' v-slot:default="{data,pagination,hasMore, loading, error, options}" @error="onqueryerror"
 			:where="where" collection="opendb-news-articles,uni-id-users" :page-size="10"
@@ -55,6 +54,15 @@
 		components: {
 			statusBar
 		},
+		computed:{
+			inputPlaceholder(e){
+				if(uni.getStorageSync('CURRENT_LANG') == "en"){
+					return 'Please enter the search content'
+				}else{
+					return '请输入搜索内容'
+				}
+			}
+		},
 		data() {
 			return {
 				where: "",
@@ -80,6 +88,15 @@
 			this.listHight = 'auto'
 			// #endif
 			cdbRef = this.$refs.udb
+			
+			// #ifdef VUE3
+			console.log('vue3')
+			// #endif
+			
+			// #ifdef VUE2
+			console.log('vue2')
+			// #endif
+			
 		},
 		async onShow() {
 			this.keyword = getApp().globalData.searchText
@@ -89,8 +106,11 @@
 			// uni.showLoading({
 			// 	title:"获取定位中"
 			// });
+			// #ifndef H5
 			let location = await gps.getLocation({geocode:true})
 			console.log(location);
+			// #endif
+			
 			// if(location){
 			// 	uni.showToast({
 			// 		title: JSON.stringify(location),
