@@ -258,7 +258,7 @@
 								language = globalData.locale = 'en'
 							}
 							uni.setStorageSync('CURRENT_LANG', language)
-							getApp().$i18n.locale = language
+							getApp().globalData.$i18n.locale = language
 							this.currentLanguage = res.tapIndex?'简体中文':'English'
 							if(uni.setLocale){
 								uni.setLocale(language)

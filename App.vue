@@ -65,7 +65,7 @@
 							"url": "请填写隐私政策链接"
 						}
 					]
-					if(getApp().$i18n.locale == 'en'){
+					if(getApp().globalData.$i18n.locale == 'en'){
 						agreements = [{
 								"title": "User service agreement", //协议名称
 								"url": "请填写用户服务协议链接" //对应的网络链接
