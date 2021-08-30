@@ -260,7 +260,9 @@
 							uni.setStorageSync('CURRENT_LANG', language)
 							getApp().$i18n.locale = language
 							this.currentLanguage = res.tapIndex?'简体中文':'English'
-							uni.setLocale(language)
+							if(uni.setLocale){
+								uni.setLocale(language)
+							}
 							uni.reLaunch({
 								url: '/pages/list/list',
 								complete: () => {
