@@ -11,7 +11,7 @@
 			<uni-forms-item name="code">
 				<uni-easyinput :focus="formData.phone.length==11" type="number" class="easyinput" :inputBorder="false"
 					v-model="formData.code" maxlength="6" :placeholder="$t('common.verifyCodePlaceholder')">
-					<template slot="right">
+					<template v-slot:right>
 						<uni-send-sms-code ref="shortCode" :phone="formData.phone"></uni-send-sms-code>
 					</template>
 				</uni-easyinput>

@@ -19,10 +19,12 @@
 			<uni-list-item v-for="(item,i) in sublist" :title="item.title" link :rightText="item.rightText" :key="i"
 				:clickable="true" :to="item.to" @click="ucenterListClick(item)" :show-extra-icon="true"
 				:extraIcon="{type:item.icon,color:'#999'}">
-				<view v-if="item.showBadge" class="item-footer" slot="footer">
-					<text class="item-footer-text">{{item.rightText}}</text>
-					<view class="item-footer-badge"></view>
-				</view>
+				<template v-slot:footer>
+					<view v-if="item.showBadge" class="item-footer">
+						<text class="item-footer-text">{{item.rightText}}</text>
+						<view class="item-footer-badge"></view>
+					</view>
+				</template>
 			</uni-list-item>
 		</uni-list>
 	</view>

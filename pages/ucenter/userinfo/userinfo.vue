@@ -270,6 +270,7 @@
 	.chooseAvatar {
 		border: dotted 1px #ddd;
 		border-radius: 10px;
+		text-align: center;
 		width: 50px;
 		height: 50px;
 		line-height: 50px;

@@ -117,10 +117,6 @@
 		flex-direction: column;
 	}
 
-	scroll-view {
-		-webkit-overflow-scrolling: touch;
-	}
-
 	.background-img {
 		width: 600rpx;
 		height: 600rpx;

@@ -18,15 +18,19 @@
 				<uni-list :border="false">
 					<uni-list-item thumbSize="lg" :thumb="data.image">
 						<!-- 通过body插槽定义作者信息内容 -->
-						<view slot="body" class="header-content">
-							<view class="uni-title">{{data.user_id && data.user_id[0].username}}</view>
-						</view>
-						<view slot="footer" class="footer">
-							<view class="uni-note">更新于
-								<uni-dateformat :date="data.last_modify_date" format="yyyy-MM-dd hh:mm"
-									:threshold="[60000, 2592000000]" />
+						<template v-slot:body>
+							<view class="header-content">
+								<view class="uni-title">{{data.user_id && data.user_id[0].username}}</view>
 							</view>
-						</view>
+						</template>
+						<template v-slot:footer>
+							<view class="footer">
+								<view class="uni-note">更新于
+									<uni-dateformat :date="data.last_modify_date" format="yyyy-MM-dd hh:mm"
+										:threshold="[60000, 2592000000]" />
+								</view>
+							</view>
+						</template>
 					</uni-list-item>
 				</uni-list>
 				<view class="banner">

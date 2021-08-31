@@ -5,7 +5,7 @@
 			maxlength="11" :placeholder="$t('common.phonePlaceholder')"></uni-easyinput>
 		<uni-easyinput clearable type="number" class="input-box" :inputBorder="false" v-model="formData.code" maxlength="6"
 			:placeholder="$t('common.verifyCodePlaceholder')">
-			<template slot="right">
+			<template v-slot:right>
 				<uni-send-sms-code ref="shortCode" code-type="bind" :phone="formData.phone"></uni-send-sms-code>
 			</template>
 		</uni-easyinput>
