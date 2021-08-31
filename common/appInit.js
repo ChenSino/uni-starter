@@ -290,7 +290,7 @@ export default async function() {
 					});
 					break;
 				default:
-					console.log('code的值是：' + e.result.code, '可以在这里插入，自动处理响应体');
+					console.log('code的值是：' + e.result.code, '可以在上面添加case，自动处理响应体');
 					break;
 			}
 			

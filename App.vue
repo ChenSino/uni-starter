@@ -76,7 +76,7 @@
 							}
 						]
 					}
-					console.log(getApp().globalData.config)
+					// console.log(getApp().globalData.config)
 					getApp().globalData.config.about.agreements = agreements
 			}
 			setTimeout(()=>{

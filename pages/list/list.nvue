@@ -88,15 +88,6 @@
 			this.listHight = 'auto'
 			// #endif
 			cdbRef = this.$refs.udb
-			
-			// #ifdef VUE3
-			console.log('vue3')
-			// #endif
-			
-			// #ifdef VUE2
-			console.log('vue2')
-			// #endif
-			
 		},
 		async onShow() {
 			this.keyword = getApp().globalData.searchText
@@ -106,11 +97,11 @@
 			// uni.showLoading({
 			// 	title:"获取定位中"
 			// });
+			//默认h5端不获取定位
 			// #ifndef H5
 			let location = await gps.getLocation({geocode:true})
 			console.log(location);
 			// #endif
-			
 			// if(location){
 			// 	uni.showToast({
 			// 		title: JSON.stringify(location),

@@ -17,20 +17,13 @@ if (!currentLang) {
 	}else{
 		uni.getSystemInfo({
 			success: function (res) {
-				uni.getSystemInfo({
-					success: function (res) {
-						console.log('获取设备信息:',res);
-						let language = 'zh-Hans' 
-						if(res.language != 'zh-Hans'){
-							language = 'en'
-						}
-						uni.setStorageSync('CURRENT_LANG', language)
-						currentLang = language
-					},
-					fail: (err) => {
-						console.error(err)
-					}
-				})
+				console.log('获取设备信息:',res);
+				let language = 'zh-Hans' 
+				if(res.language == 'en'){
+					language = 'en'
+				}
+				uni.setStorageSync('CURRENT_LANG', language)
+				currentLang = language
 			},
 			fail: (err) => {
 				console.error(err)
