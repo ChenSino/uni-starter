@@ -36,9 +36,11 @@ export default {
 		"visitor" : [
 			"/",//注意入口页必须直接写 "/"
 			{"pattern":/^\/pages\/list.*/},	//支持正则表达式
+			{"pattern":/^\/pages\/ucenter\/login-page.*/},
+			"/pages/common/webview/webview",
 			"/pages/grid/grid",
 			"/pages/ucenter/ucenter",
-			"/pages/ucenter/about/about",
+			"/pages/ucenter/guestbook/guestbook",
 			"/pages/ucenter/guestbook/guestbook"
 		],
 		/*

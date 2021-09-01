@@ -366,7 +366,7 @@ export default async function() {
 						})
 						// console.log({pass})
 					}
-					if (visitor && !inLoginPage) {
+					if (visitor) {
 						pass = visitor.some((item) => {
 							if (typeof(item) == 'object' && item.pattern) {
 								return item.pattern.test(url)

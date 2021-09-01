@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<web-view :src="url"></web-view>
+		<web-view v-if="url" :src="url"></web-view>
 	</view>
 </template>
 
@@ -8,7 +8,7 @@
 	export default {
 		onLoad({url,title}) {
 			if(url.substring(0, 4) != 'http'){
-				return uni.showModal({
+				uni.showModal({
 					title:"错误",
 					content: '不是一个有效的网站链接,'+'"'+url+'"',
 					showCancel: false,
@@ -17,10 +17,11 @@
 						uni.navigateBack()
 					}
 				});
-				
+				title = "页面路径错误"
+			}else{
+				console.log(url,title);
+				this.url = url;
 			}
-			console.log(url,title);
-			this.url = url;
 			if(title){
 				uni.setNavigationBarTitle({title});
 			}
