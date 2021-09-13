@@ -14,7 +14,6 @@
 		onLaunch: function() {
 			console.log('App Launch')
 			
-			
 			this.globalData.$i18n = this.$i18n
 			this.globalData.$t = str => this.$t(str)
 
@@ -43,7 +42,7 @@
 			// #endif
 
 			let initLanguageAfter = () => {
-				console.log(this.$t('tabbar'));
+				console.log('作用于多语言国际化功能，这里获取语言包lang/en.js、lang/zh-Hans.js的tabbar中配置的值更新当前应用的底部tabbar，如果你不需要多语言国际化。直接删除App.vue页面的47-55行即可');
 				//底部tabbar更新
 				this.$t('tabbar').split(',').forEach((text, index) => {
 					uni.setTabBarItem({
@@ -55,29 +54,29 @@
 					})
 				})
 				//更新 uni-starter.config
-					//agreements
-					let agreements = [{
-							"title": "用户服务协议", //协议名称
+				//agreements
+				let agreements = [{
+						"title": "用户服务协议", //协议名称
+						"url": "请填写用户服务协议链接" //对应的网络链接
+					},
+					{
+						"title": "隐私政策",
+						"url": "请填写隐私政策链接"
+					}
+				]
+				if(getApp().globalData.$i18n.locale == 'en'){
+					agreements = [{
+							"title": "User service agreement", //协议名称
 							"url": "请填写用户服务协议链接" //对应的网络链接
 						},
 						{
-							"title": "隐私政策",
+							"title": "Privacy policy",
 							"url": "请填写隐私政策链接"
 						}
 					]
-					if(getApp().globalData.$i18n.locale == 'en'){
-						agreements = [{
-								"title": "User service agreement", //协议名称
-								"url": "请填写用户服务协议链接" //对应的网络链接
-							},
-							{
-								"title": "Privacy policy",
-								"url": "请填写隐私政策链接"
-							}
-						]
-					}
-					// console.log(getApp().globalData.config)
-					getApp().globalData.config.about.agreements = agreements
+				}
+				// console.log(getApp().globalData.config)
+				getApp().globalData.config.about.agreements = agreements
 			}
 			setTimeout(()=>{
 				initLanguageAfter()

@@ -6,8 +6,8 @@
 	"permission": {
 		"read": true,
 		"create": "auth.uid != null && get(`database.opendb-news-article.${doc.article_id}`).comment_status == 1",
-		"update": "doc.uid == auth.uid",
-		"delete": "doc.uid == auth.uid"
+		"update": "doc.user_id == auth.uid",
+		"delete": "doc.user_id == auth.uid"
 	},
 	"properties": {
 		"_id": {

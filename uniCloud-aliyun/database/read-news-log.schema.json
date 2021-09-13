@@ -2,10 +2,10 @@
 	"bsonType": "object",
 	"required": ["user_id", "article_id"],
 	"permission": {
-		"read": "doc.uid == auth.uid",
+		"read": "doc.user_id == auth.uid",
 		"create": "auth.uid != null",
-		"update": "doc.uid == auth.uid"
-		//"delete": "doc.uid == auth.uid"
+		"update": "doc.user_id == auth.uid"
+		//"delete": "doc.user_id == auth.uid"
 	},
 	"properties": {
 		"_id": {
