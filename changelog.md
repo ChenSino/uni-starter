@@ -1,3 +1,5 @@
+## 1.1.7（2021-09-14）
+更新数据表opendb-news-articles的schema中的权限配置
 ## 1.1.6（2021-09-13）
 纠正错误schema权限表达式`doc.uid`为`doc.user_id`
 ## 1.1.5（2021-09-01）

@@ -49,7 +49,7 @@ uni-starter + uniCloud admin，提供了用户端和管理端的基础模板，�
 <img class="cloud" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f184e7c3-1912-41b2-b81f-435d1b37c7b4/78b3f17c-cf70-4cdf-9ada-1796753ffeac.jpg" />
 <img class="cloud" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f184e7c3-1912-41b2-b81f-435d1b37c7b4/09916d79-4753-4baa-9b95-baa831f1a873.jpg" />
 
-
+关于国际化 [详情文档](https://uniapp.dcloud.io/collocation/i18n)
 
 ### 功能模块介绍
 #### 1. 路由控制
@@ -271,7 +271,7 @@ uni-starter + uniCloud admin，提供了用户端和管理端的基础模板，�
 	})
 ```
 
-### 12. 关于升级
+#### 12. 关于升级
 - 项目升级
 
 	uni-starter遵循uni-app的插件模块化规范，即：[uni_modules](https://uniapp.dcloud.io/uni_modules) 。他是个项目类型的插件。在项目的根目录下有一个符合uni_modules规范的package.json文件，在这个文件右键-从插件市场更新即可更新该插件。
@@ -279,7 +279,6 @@ uni-starter + uniCloud admin，提供了用户端和管理端的基础模板，�
 - 插件升级
 
 	非项目类型的uni_modules插件，是项目根目录下的uni_modules目录下。以插件ID为插件文件夹命名，在该目录右键也会看到“从插件市场更新”选项，点击即可更新该插件。
-
 ### 应用启动时序介绍
 文件路径： App.vue
 ```js
