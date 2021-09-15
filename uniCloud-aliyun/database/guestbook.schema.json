@@ -5,40 +5,52 @@
 	"permission": {
 		"read":  "doc.state || auth.uid == doc.user_id || 'AUDITOR' in auth.role",
 		"create": "auth.uid != null",
-		"update": true,
+		"update": "'AUDITOR' in auth.role",
 		"delete": "auth.uid == doc.user_id"
 	},
 	"properties": {
 		"_id": {
-			"description": "ID，系统自动生成"
+			"description": "ID，系统自动生成",
+			"permission":{
+				"write":false
+			}
 		},
 		"text": {
 			"bsonType": "string",
 			"permission":{
-				"update":"'AUDITOR' in auth.role"
+				"write":false
 			}
 		},
 		"user_id": {
 			"forceDefaultValue": {
 				"$env": "uid"
 			},
-			"foreignKey": "uni-id-users._id"
+			"foreignKey": "uni-id-users._id",
+			"permission":{
+				"write":false
+			}
 		},
 		"ip": {
 			"forceDefaultValue": {
 				"$env": "clientIP"
+			},
+			"permission":{
+				"write":false
 			}
 		},
 		"create_time": {
 			"forceDefaultValue": {
 				"$env": "now"
+			},
+			"permission":{
+				"write":false
 			}
 		},
 		"state": {
 			"bsonType": "bool",
 			"forceDefaultValue":false,
 			"permission":{
-				"write":"'AUDITOR' in auth.role"
+				"write":true
 			}
 		}
 	}
