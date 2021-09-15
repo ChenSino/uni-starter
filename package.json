@@ -58,7 +58,7 @@
 				},
 				"H5-pc": {
 					"Chrome": "y",
-					"IE": "u",
+					"IE": "n",
 					"Edge": "u",
 					"Firefox": "u",
 					"Safari": "u"
