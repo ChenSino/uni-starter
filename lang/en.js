@@ -1,5 +1,6 @@
 export default {
 	tabbar:'List,Grid,Mine',
+	agreementsTitle:'User service agreement,Privacy policy',
 	common: {
 		wechatFriends: "friends",
 		wechatBbs: "bbs",

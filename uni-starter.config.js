@@ -29,7 +29,7 @@ export default {
 			* 注意：黑名单与白名单模式二选一
 		*/
 		// "needLogin" : [
-		//  	{pattern:/^\/pages\/list.*/}",	//支持正则表达式
+		//  	{pattern:/^\/pages\/list.*/},	//支持正则表达式
 		// 		"/uni_modules/uni-news-favorite/pages/uni-news-favorite/list",
 		// 		"/uni_modules/uni-feedback/pages/uni-feedback/add"
 		// ],
@@ -41,7 +41,8 @@ export default {
 			"/pages/grid/grid",
 			"/pages/ucenter/ucenter",
 			"/pages/ucenter/guestbook/guestbook",
-			"/pages/ucenter/guestbook/guestbook"
+			"/pages/ucenter/about/about",
+			"/pages/ucenter/settings/settings"
 		],
 		/*
 		login:配置登陆类型与优先级
@@ -62,11 +63,11 @@ export default {
 		"slogan": "云端一体应用快速开发模版",
 		//政策协议
 		"agreements": [{
-				"title": "用户服务协议", //协议名称
+				// "title": "为了多语言国际化请在 lang/en.js 和 lang/zh-Hans.js中配置", 
 				"url": "请填写用户服务协议链接" //对应的网络链接
 			},
 			{
-				"title": "隐私政策",
+				// "title": "为了多语言国际化请在 lang/en.js 和 lang/zh-Hans.js中配置",
 				"url": "请填写隐私政策链接"
 			}
 		],
