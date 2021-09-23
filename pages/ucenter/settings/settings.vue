@@ -2,7 +2,7 @@
 	<view class="content">
 		<!-- 功能列表 -->
 		<uni-list class="mt10" :border="false">
-			<uni-list-item class="userInfo-class" :title="$t('settings.userInfo')" to="/pages/ucenter/userinfo/userinfo" link="navigateTo"></uni-list-item>
+			<uni-list-item :title="$t('settings.userInfo')" to="/pages/ucenter/userinfo/userinfo" link="navigateTo"></uni-list-item>
 			<uni-list-item v-if="userInfo.mobile" :title="$t('settings.changePassword')" :to="'/pages/ucenter/login-page/pwd-retrieve/pwd-retrieve?phoneNumber='+ userInfo.mobile" link="navigateTo"></uni-list-item>
 		</uni-list>
 		<uni-list class="mt10" :border="false">

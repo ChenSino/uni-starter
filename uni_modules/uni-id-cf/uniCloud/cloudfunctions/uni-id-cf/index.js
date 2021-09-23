@@ -271,11 +271,9 @@ exports.main = async (event, context) => {
 				}
 				delete loginRes.accessToken
 				delete loginRes.refreshToken
-				return loginRes
-			}else{
-				return loginRes
 			}
-			await loginLog(res)
+			await loginLog(loginRes)
+			return loginRes
 			break;
 		case 'loginByUniverify':
 			res = await uniID.loginByUniverify(params)

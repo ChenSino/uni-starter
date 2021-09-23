@@ -54,8 +54,8 @@
 		},
 		computed: {
 			innerText() {
-				if (this.reverseNumber == 0) return this.$t('common').getVerifyCode;
-				return this.$t('smsCode.resendVerifyCode') + '(' + this.reverseNumber + 's)';
+				if (this.reverseNumber == 0) return this.$t('common.getVerifyCode');
+				return this.$t('smsCode.resendVerifyCode')+ '('+this.reverseNumber+'s)';
 			}
 		},
 		created() {
