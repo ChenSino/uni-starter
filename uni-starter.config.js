@@ -1,14 +1,14 @@
 //这是应用的配置页面，App.vue挂载到getApp().globalData.config
 export default {
 	"h5": {
-		"url": "https://uni-starter.dcloud.net.cn", //	前端网页托管的域名
-		 // 在h5端全局悬浮引导用户下载app的功能 更多自定义要求在/common/openApp.js中修改
-		"openApp": {
+		"url": "https://uni-starter.dcloud.net.cn", //	前端网页托管的域名	
+		 // 在h5端全局悬浮引导用户下载app的功能 更多自定义要求在/common/openApp.js中修改	
+		"openApp": { //如不需要本功能直接移除本节点即可	
 			//点击悬浮下载栏后打开的网页链接
 			"openUrl": '/#/pages/ucenter/invite/invite',
-			//左侧显示的应用名称
+			//左侧显示的应用名称	
 			"appname": 'uni-starter',
-			//应用的图标
+			//应用的图标	
 			"logo": './static/logo.png',
 		}
 	},
