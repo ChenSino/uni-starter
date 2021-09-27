@@ -42,8 +42,8 @@
 			// this.$refs.sendSmsCode.start();
 		},
 		methods: {
-			submit(){ //完成并提交
-				uniCloud.callFunction({
+			async submit(){ //完成并提交
+				return await uniCloud.callFunction({
 					name:'uni-id-cf',
 					data:{
 						action:'loginBySms',
@@ -51,18 +51,40 @@
 							"mobile":this.phone,
 							"code":this.code
 						},
-					},
-					success: ({result}) => {
-						if(result.code === 0){
-							this.loginSuccess(result)
-						}else{
-							uni.showModal({
-								content: result.msg,
-								showCancel: false
-							});
-						}
 					}
+				}).then(({result})=>{
+					if(result.code === 0){
+						this.loginSuccess(result)
+					}else{
+						uni.showModal({
+							content: result.msg,
+							showCancel: false
+						});
+					}
+					return result
 				})
+			
+				// uniCloud.callFunction({
+				// 	name:'uni-id-cf',
+				// 	data:{
+				// 		action:'loginBySms',
+				// 		params:{
+				// 			"mobile":this.phone,
+				// 			"code":this.code
+				// 		},
+				// 	},
+				// 	success: ({result}) => {
+				// 		if(result.code === 0){
+				// 			this.loginSuccess(result)
+				// 		}else{
+				// 			uni.showModal({
+				// 				content: result.msg,
+				// 				showCancel: false
+				// 			});
+				// 		}
+				// 	}
+				// })
+				
 			}
 		}
 	}

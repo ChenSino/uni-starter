@@ -39,10 +39,14 @@
 					otherLoginButton: {
 						"title": "其他号码绑定",
 					}
-				}
+				},
+				uniToken:''
 			}
 		},
 		onLoad() {
+			this.uniToken = uni.getStorageSync('uni_id_token')
+			console.log("uniToken: ",this.uniToken);
+			
 			this.univerifyStyle.authButton.title = this.$t('userinfo.bindPhoneNumber')
 			this.univerifyStyle.otherLoginButton.title = this.$t('userinfo.bindOtherLogin')
 			uni.setNavigationBarTitle({
@@ -127,13 +131,13 @@
 					url: '/pages/ucenter/userinfo/bind-mobile/bind-mobile'
 				})
 			},
-			setNickname(nickname) {
+			async setNickname(nickname) {
 				console.log(nickname);
 				if (nickname) {
-					usersTable.where('_id==$env.uid').update({
+					return await usersTable.where('_id==$env.uid').update({
 						nickname
 					}).then(e => {
-						console.log(e);
+						console.log(e.result,"e.result---------");
 						if (e.result.updated) {
 							uni.showToast({
 								title:this.$t('common.updateSucceeded'),
@@ -148,6 +152,7 @@
 								icon: 'none'
 							});
 						}
+						return e.result
 					})
 					this.$refs.dialog.close()
 				} else {

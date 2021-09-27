@@ -51,19 +51,22 @@
 					url: '../pwd-retrieve/pwd-retrieve?phoneNumber=' + (this.isPhone ? this.username : '') +
 						'&phoneArea=' + this.currenPhoneArea
 				})
+				// uni.redirectTo({
+				// 	url: '../pwd-retrieve/pwd-retrieve?phoneNumber=' + (this.isPhone ? this.username : '') +
+				// 		'&phoneArea=' + this.currenPhoneArea
+				// })
 			},
 			/**
 			 * 密码登录
 			 */
-			pwdLogin() {
+			async pwdLogin() {
 				if (!this.agree) {
 					return uni.showToast({
 						title: this.$t('common').noAgree,
 						icon: 'none'
 					});
 				}
-				// 下边是可以登录
-				uniCloud.callFunction({
+				return await uniCloud.callFunction({
 					name:'uni-id-cf',
 					data:{
 						action:'login',
@@ -73,28 +76,61 @@
 							"captcha":this.captcha
 						},
 					},
-					success: ({result}) => {
-						console.log(result);
-						if (result.code === 0) {
-							this.loginSuccess(result)
-						} else {
-							if (result.needCaptcha) {
-								uni.showToast({
-									title: result.msg,
-									icon: 'none'
-								});
-								this.createCaptcha()
-							}else{
-								uni.showModal({
-									title: this.$t('common').error,
-									content: result.msg,
-									showCancel: false,
-									confirmText: this.$t('common').gotIt
-								});
-							}
+				}).then(({result}) => {
+					console.log(result);
+					if (result.code === 0) {
+						this.loginSuccess(result)
+					} else {
+						if (result.needCaptcha) {
+							uni.showToast({
+								title: result.msg,
+								icon: 'none'
+							});
+							this.createCaptcha()
+						}else{
+							uni.showModal({
+								title: this.$t('common').error,
+								content: result.msg,
+								showCancel: false,
+								confirmText: this.$t('common').gotIt
+							});
 						}
 					}
+					return result
 				})
+				// 下边是可以登录
+				// uniCloud.callFunction({
+				// 	name:'uni-id-cf',
+				// 	data:{
+				// 		action:'login',
+				// 		params:{
+				// 			"username": this.username,
+				// 			"password": this.password,
+				// 			"captcha":this.captcha
+				// 		},
+				// 	},
+				// 	success: ({result}) => {
+				// 		console.log(result);
+				// 		if (result.code === 0) {
+				// 			this.loginSuccess(result)
+				// 		} else {
+				// 			if (result.needCaptcha) {
+				// 				uni.showToast({
+				// 					title: result.msg,
+				// 					icon: 'none'
+				// 				});
+				// 				this.createCaptcha()
+				// 			}else{
+				// 				uni.showModal({
+				// 					title: this.$t('common').error,
+				// 					content: result.msg,
+				// 					showCancel: false,
+				// 					confirmText: this.$t('common').gotIt
+				// 				});
+				// 			}
+				// 		}
+				// 	}
+				// })
 			},
 			createCaptcha(){
 				uniCloud.callFunction({
@@ -123,6 +159,9 @@
 				uni.navigateTo({
 					url: '/pages/ucenter/login-page/register/register'
 				})
+				// uni.redirectTo({
+				// 	url: '/pages/ucenter/login-page/register/register'
+				// })
 			}
 		}
 	}

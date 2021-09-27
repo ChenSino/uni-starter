@@ -4,12 +4,12 @@
 	"version": "1.1.9",
 	"description": "云端一体应用快速开发基本项目模版",
 	"keywords": [
-        "login",
-        "登录",
-        "搜索",
-        "uni-id例子",
-        "留言板"
-    ],
+		"login",
+		"登录",
+		"搜索",
+		"uni-id例子",
+		"留言板"
+	],
 	"repository": "https://codechina.csdn.net/dcloud/uni-starter.git",
 	"engines": {
 		"HBuilderX": "^3.1.20"
@@ -81,5 +81,7 @@
 			}
 		}
 	},
-	"dependencies": {}
+	"dependencies": {
+		"@jest/test-sequencer": "^27.0.6"
+	}
 }

@@ -38,7 +38,7 @@
 	import checkUpdate from '@/uni_modules/uni-upgrade-center-app/utils/check-update';
 	import callCheckVersion from '@/uni_modules/uni-upgrade-center-app/utils/call-check-version';
 	import uniShare from '@/uni_modules/uni-share/js_sdk/uni-share.js';
-
+	// import pwdLogin from '../../common/toLogin.js';
 	const db = uniCloud.database();
 	export default {
 		data() {
@@ -120,10 +120,14 @@
 						"style": "solid", // 边框样式
 						"radius": "100%" // 边框圆角，支持百分比
 					}
-				}
+				},
+				uniToken:""
 			}
 		},
-		onLoad() {
+		async onLoad() {
+			// const loginRes = await pwdLogin()
+			// console.log(loginRes,'-------------');
+			// this.uniToken = loginRes.token
 			// console.log(313,this.userInfo,this.hasLogin);
 			//#ifdef APP-PLUS
 			this.ucenterList[this.ucenterList.length - 2].unshift({
@@ -134,6 +138,8 @@
 				showBadge: this.appVersion.hasNew
 			})
 			//#endif
+			this.uniToken = uni.getStorageSync('uni_id_token')
+			console.log("uniToken: ",this.uniToken);
 		},
 		computed: {
 			...mapGetters({
@@ -218,7 +224,8 @@
 			/**
 			 * 获取积分信息
 			 */
-			getScore() {
+			async getScore() {
+				console.log("this.userInfo:------------- ",this.userInfo);
 				if (!this.userInfo) return uni.showToast({
 					title: this.$t('mine.checkScore'),
 					icon: 'none'
@@ -226,7 +233,7 @@
 				uni.showLoading({
 					mask: true
 				})
-				db.collection("uni-id-scores")
+				return await db.collection("uni-id-scores")
 					.where('"user_id" == $env.uid')
 					.field('score,balance')
 					.orderBy("create_date", "desc")
@@ -241,8 +248,10 @@
 							title: msg,
 							icon: 'none'
 						});
-					}).finally(()=>{
+						return data
+					}).finally((e)=>{
 						uni.hideLoading()
+						return e
 					})
 			},
 			async share() {

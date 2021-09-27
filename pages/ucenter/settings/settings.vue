@@ -2,7 +2,7 @@
 	<view class="content">
 		<!-- 功能列表 -->
 		<uni-list class="mt10" :border="false">
-			<uni-list-item :title="$t('settings.userInfo')" to="/pages/ucenter/userinfo/userinfo" link="navigateTo"></uni-list-item>
+			<uni-list-item class="userInfo-class" :title="$t('settings.userInfo')" to="/pages/ucenter/userinfo/userinfo" link="navigateTo"></uni-list-item>
 			<uni-list-item v-if="userInfo.mobile" :title="$t('settings.changePassword')" :to="'/pages/ucenter/login-page/pwd-retrieve/pwd-retrieve?phoneNumber='+ userInfo.mobile" link="navigateTo"></uni-list-item>
 		</uni-list>
 		<uni-list class="mt10" :border="false">
@@ -42,7 +42,8 @@
 				pushServer:pushServer,
 				supportMode:[],
 				pushIsOn:"wait",
-				currentLanguage:""
+				currentLanguage:"",
+				uniToken:""
 			}
 		},
 		computed: {
@@ -52,6 +53,8 @@
 			})
 		},
 		onLoad() {
+			this.uniToken = uni.getStorageSync('uni_id_token')
+			console.log("uniToken: ",this.uniToken);
 			this.currentLanguage = uni.getStorageSync('CURRENT_LANG') == "en"?'English':'简体中文'
 			
 			uni.setNavigationBarTitle({
@@ -177,21 +180,24 @@
 				})
 			},
 			clickLogout() {
+				console.log("this.hasLogin:---------------- ",this.hasLogin);
 				if (this.hasLogin) {
-					uni.showModal({
-						title: this.$t('settings.tips'),
-						content: this.$t('settings.exitLogin'),
-						cancelText: this.$t('settings.cancelText'),
-						confirmText: this.$t('settings.confirmText'),
-						success: res => {
-							if (res.confirm) {
-								this.logout();
-								uni.navigateBack();
-							}
-						},
-						fail: () => {},
-						complete: () => {}
-					});
+					this.logout();
+					uni.navigateBack();
+					// uni.showModal({
+					// 	title: this.$t('settings.tips'),
+					// 	content: this.$t('settings.exitLogin'),
+					// 	cancelText: this.$t('settings.cancelText'),
+					// 	confirmText: this.$t('settings.confirmText'),
+					// 	success: res => {
+					// 		if (res.confirm) {
+					// 			this.logout();
+					// 			uni.navigateBack();
+					// 		}
+					// 	},
+					// 	fail: () => {},
+					// 	complete: () => {}
+					// });
 				} else {
 					uni.navigateTo({
 						url: '/pages/ucenter/login-page/index/index'

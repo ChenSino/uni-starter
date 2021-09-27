@@ -137,10 +137,10 @@
 			/**
 			 * 完成并提交
 			 */
-			submit() {
+			 submit() {
 				this.$refs.form.validate()
-					.then(res => {
-						uniCloud.callFunction({
+					.then( async res => {
+						return await uniCloud.callFunction({
 							name:'uni-id-cf',
 							data:{
 								action:'resetPwdBySmsCode',
@@ -149,18 +149,40 @@
 									"code": this.formData.code,
 									"password": this.formData.pwd
 								},
-							},
-							success: ({result}) => {
-								console.log(result);
-								uni.showToast({
-									title: result.msg,
-									icon: 'none'
-								});
-								if (result.code === 0) {
-									uni.navigateBack()
-								}
 							}
+						}).then(({result})=>{
+							console.log(result);
+							// uni.showToast({
+							// 	title: result.msg,
+							// 	icon: 'none'
+							// });
+							if (result.code === 0) {
+								uni.navigateBack()
+							}
+							return result
 						})
+						
+						// uniCloud.callFunction({
+						// 	name:'uni-id-cf',
+						// 	data:{
+						// 		action:'resetPwdBySmsCode',
+						// 		params:{
+						// 			"mobile": this.formData.phone,
+						// 			"code": this.formData.code,
+						// 			"password": this.formData.pwd
+						// 		},
+						// 	},
+						// 	success: ({result}) => {
+						// 		console.log(result);
+						// 		uni.showToast({
+						// 			title: result.msg,
+						// 			icon: 'none'
+						// 		});
+						// 		if (result.code === 0) {
+						// 			uni.navigateBack()
+						// 		}
+						// 	}
+						// })
 					})
 			}
 		}

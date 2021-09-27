@@ -58,34 +58,56 @@ import mixin from '../common/login-page.mixin.js';
 				uni.showLoading({
 					mask: true
 				})
-				this.$refs.form.validate().then((res) => {
-						this.submitForm(res)
+				return this.$refs.form.validate().then(async(res) => {
+					console.log("res: ",res);
+						let msg = await this.submitForm(res)
+						console.log("msg: --------------",msg);
+						return msg
 					}).catch((errors) => {
 						console.log(errors);
+						return errors
 					})
 					.finally(() => {
 						uni.hideLoading()
 					})
 			},
-			submitForm(params) {
-				uniCloud.callFunction({
+			async submitForm(params) {
+				return await uniCloud.callFunction({
 					name:'uni-id-cf',
 					data:{
 						action:'register',
 						params,
 					},
-					success: ({result}) => {
-						console.log(result);
-						if(result.code === 0){
-							this.loginSuccess(result)
-						}else{
-							uni.showModal({
-								content: result.msg,
-								showCancel: false
-							});
-						}
+				}).then(({result}) => {
+					if(result.code === 0){
+						this.loginSuccess(result)
+					}else{
+						uni.showModal({
+							content: result.msg,
+							showCancel: false
+						});
 					}
+					console.log(result);
+					return result
 				})
+				// uniCloud.callFunction({
+				// 	name:'uni-id-cf',
+				// 	data:{
+				// 		action:'register',
+				// 		params,
+				// 	},
+				// 	success: ({result}) => {
+				// 		console.log(result);
+				// 		if(result.code === 0){
+				// 			this.loginSuccess(result)
+				// 		}else{
+				// 			uni.showModal({
+				// 				content: result.msg,
+				// 				showCancel: false
+				// 			});
+				// 		}
+				// 	}
+				// })
 			}
 		}
 	}

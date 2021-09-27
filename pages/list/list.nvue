@@ -10,7 +10,8 @@
 		
 		<unicloud-db ref='udb' v-slot:default="{data,pagination,hasMore, loading, error, options}" @error="onqueryerror"
 			:where="where" collection="opendb-news-articles,uni-id-users" :page-size="10"
-			field="avatar,title,last_modify_date,user_id.username">
+			field="avatar,title,last_modify_date,user_id.username" @load="loadData"
+			>
 			<!-- 基于 uni-list 的页面布局 -->
 			<uni-list class="uni-list" :border="false" :bounce="true" :alwaysScrollableVertical="true"
 				:style="{height:listHight}">
@@ -68,7 +69,8 @@
 				where: "",
 				keyword: "",
 				refreshState: 0,
-				listHight: 0
+				listHight: 0,
+				dataList:[]
 			}
 		},
 		watch: {
@@ -89,6 +91,7 @@
 			this.listHight = 'auto'
 			// #endif
 			cdbRef = this.$refs.udb
+			
 		},
 		async onShow() {
 			this.keyword = getApp().globalData.searchText
@@ -99,10 +102,8 @@
 			// 	title:"获取定位中"
 			// });
 			//默认h5端不获取定位
-			// #ifndef H5
-			let location = await gps.getLocation({geocode:true})
-			console.log(location);
-			// #endif
+			// let location = await gps.getLocation({geocode:true})
+			// console.log(location);
 			// if(location){
 			// 	uni.showToast({
 			// 		title: JSON.stringify(location),
@@ -112,6 +113,11 @@
 			// uni.hideLoading()
 		},
 		methods: {
+			loadData(e){
+				console.log("e: ----",e[0]);
+				this.dataList = e[0]
+				console.log("this.dataList: ",this.dataList);
+			},
 			searchClick(e) { //点击搜索框
 				uni.hideKeyboard();
 				uni.navigateTo({
