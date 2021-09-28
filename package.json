@@ -12,7 +12,7 @@
 	],
 	"repository": "https://codechina.csdn.net/dcloud/uni-starter.git",
 	"engines": {
-		"HBuilderX": "^3.1.20"
+		"HBuilderX": "^3.2.6"
 	},
 	"dcloudext": {
 		"category": [
