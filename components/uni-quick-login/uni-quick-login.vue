@@ -75,7 +75,6 @@
 						"logo": "/static/uni-quick-login/univerify.png",
 					}
 				],
-				oauthServices: [],
 				config: {},
 				univerifyStyle: { //一键登录弹出窗的样式配置参数
 					"fullScreen": true, // 是否全屏显示，true表示全屏模式，false表示非全屏模式，默认值为false。
@@ -110,7 +109,7 @@
 		},
 		async created() {
 			let servicesList = this.servicesList
-			//去掉配置中不存在的
+			//去掉配置中不存在的 注意，在/common/appInit.js中已清除有配置但设备环境不支持的登陆项
 			servicesList = servicesList.filter(item => this.loginConfig.includes(item.id))
 			//处理一键登录
 			if (this.loginConfig.includes('univerify')) {
@@ -128,6 +127,7 @@
 					}
 				})
 			}
+			console.log(servicesList);
 			//如果当前页面为默认登陆界面。当前第一优先级的“微信和苹果登陆”要隐藏，因为他已经被渲染在默认登陆界面顶部
 			if (
 				this.getRoute(1) == '/pages/ucenter/login-page/index/index' && ['weixin', 'apple'].includes(this
@@ -143,18 +143,6 @@
 			console.log('servicesList', servicesList, this.servicesList);
 		},
 		mounted() {
-			// #ifdef APP-PLUS
-			plus.oauth.getServices(oauthServices => {
-				this.oauthServices = oauthServices
-			}, err => {
-				uni.showModal({
-					title: this.$t('uniQuickLogin').getProviderFail + '：' + JSON.stringify(err),
-					showCancel: false,
-					confirmText: this.$t('common').gotIt
-				});
-				console.error('获取服务供应商失败：' + JSON.stringify(err));
-			})
-			// #endif
 		},
 		methods: {
 			...mapMutations({
@@ -189,36 +177,12 @@
 				uni.showLoading({
 					mask: true
 				})
-				// console.log(arguments);
-				let oauthService = this.oauthServices.find((service) => service.id == type)
-				// console.log(type);
-
-				// #ifdef APP-PLUS
-				//请勿直接使用前端获取的unionid或openid直接用于登录，前端的数据都是不可靠的
-				if (type == 'weixin') {
-					return oauthService.authorize(({
-							code
-						}) => {
-							// console.log(code);
-							this.login({
-								code
-							}, type)
-						},
-						err => {
-							uni.hideLoading()
-							console.error(err);
-							uni.showModal({
-								content: JSON.stringify(err),
-								showCancel: false
-							});
-						})
-				}
-				// #endif
-
 				uni.login({
 					"provider": type,
+					"onlyAuthorize":true, //请勿直接使用前端获取的unionid或openid直接用于登录，前端的数据都是不可靠的
 					"univerifyStyle": this.univerifyStyle,
 					complete: (e) => {
+						uni.hideLoading()
 						console.log(e);
 					},
 					success: async e => {
@@ -227,22 +191,12 @@
 							let res = await this.getUserInfo({
 								provider: "apple"
 							})
-							uni.hideLoading()
 							Object.assign(e.authResult, res.userInfo)
 						}
-						// #ifdef MP-WEIXIN
-						if (type == 'weixin') {
-							return this.login({
-								code: e.code
-							}, type)
-						}
-						// #endif
-						this.login(e.authResult, type)
+						this.login( type == 'weixin'?e.code:e.authResult , type)
 					},
-					fail: (err) => {
-						uni.hideLoading()
+					fail:async (err) => {
 						console.log(err);
-
 						if (type == 'univerify') {
 							if (err.metadata && err.metadata.error_data) {
 								uni.showToast({
@@ -280,6 +234,11 @@
 										icon: 'none'
 									});
 									console.log('点击了第三方登陆，provider：', err.provider);
+									
+									//同步一键登陆弹出层隐私协议框是否打勾
+									let agree = (await uni.getCheckBoxState())[1].state
+									console.log('agree',agree);
+									uni.$emit('setAgreementsAgree',agree)
 									let {
 										path
 									} = this.servicesList.find(item => item.id == err.provider) || {}
@@ -287,7 +246,10 @@
 									if (path && path != this.getRoute(1)) { //存在路径，且并不是当前已经打开的路径
 										this.to(path)
 									} else {
-										this.login_before(err.provider)
+										setTimeout(()=>{
+											console.log('agree',this.agree);
+											this.login_before(err.provider)
+										},500)
 									}
 									break;
 								default:

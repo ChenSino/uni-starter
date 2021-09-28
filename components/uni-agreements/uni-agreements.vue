@@ -36,6 +36,11 @@
 				this.$emit('setAgree',this.isAgree)
 			}
 		},
+		created() {
+			uni.$on('setAgreementsAgree',state=>{
+				this.$emit('setAgree',state)
+			})
+		},
 		data() {
 			return {
 				isAgree:false
