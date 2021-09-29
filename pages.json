@@ -25,9 +25,7 @@
 		}, {
 			"path": "pages/list/search/search",
 			"style": {
-				//#ifndef MP
-				"navigationStyle": "custom"
-				//#endif
+				"navigationBarTitleText":"搜索"
 			}
 		}, {
 			"path": "pages/list/detail",

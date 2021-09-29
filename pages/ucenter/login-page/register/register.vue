@@ -5,7 +5,7 @@
 				<uni-easyinput :inputBorder="false" class="easyinput" :placeholder="$t('register.usernamePlaceholder')" v-model="formData.username" trim="both" />
 			</uni-forms-item>
 			<uni-forms-item name="nickname">
-				<uni-easyinput :inputBorder="false" class="easyinput" :placeholder="$t('register.nicknamePlaceholder')" v-model="formData.nickname" trim="both" />
+				<uni-easyinput :inputBorder="false" class="easyinput" :placeholder="$t('register.nicknamePlaceholder')" v-model="formData.nickname" trim="both" style="width: 660rpx;" />
 			</uni-forms-item>
 			<uni-forms-item name="password" v-model="formData.password" required>
 				<uni-easyinput :inputBorder="false" class="easyinput" :placeholder="$t('register.passwordDigitsPlaceholder')" type="password" v-model="formData.password" trim="both" />
@@ -120,5 +120,8 @@ import mixin from '../common/login-page.mixin.js';
 	}
 	.send-btn{
 		margin-top: 5px;
+	}
+	.uni-container ::v-deep .uni-forms-item__label{
+		width: 15px !important;
 	}
 </style>
