@@ -8,21 +8,23 @@ describe('pages/ucenter/about/about.vue', () => {
 		await page.waitFor(500)
 	})
 
-	it('检测标题', async () => {
-		// expect.assertions(1);
-		// const perPage = await page.$('.about')
-		// await page.waitFor(500)
+	it('about', async () => {
+		expect.assertions(2);
 		const getData = await page.data('about')
 		console.log("getData-----------: ", getData);
-		// expect(getData.appName).toBe('uni-starter')
-		// expect(getData.slogan).toBe('云端一体应用快速开发模版')
+		expect(getData.appName).toBe('uni-starter')
+		expect(getData.slogan).toBe('云端一体应用快速开发模版')
 	})
 
-	it('隐私政策协议-点击跳转', async () => {
-		// expect.assertions(1);
-		const elAgree = await page.$('.agreement')
-		// console.log("elAgree: ", elAgree);
+	it('screenshot', async () => {
+		var image = await program.screenshot({
+			path: "static/screenshot/about.png" // 默认项目根目录
+		})
+		console.log(image,"image--------------------")
+	})
 
+
+	it('隐私政策协议-点击跳转', async () => {
 		await page.callMethod('navigateTo', {
 			url: "https://ask.dcloud.net.cn/protocol.html",
 			title: "用户服务条款"

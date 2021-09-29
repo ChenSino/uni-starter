@@ -8,13 +8,15 @@ describe('pages/list/search/search.vue', () => {
 		await page.waitFor(500)
 	})
 	it('搜索发现-显示-影藏', async () => {
-		expect.assertions(2);
+		// expect.assertions(2);
 		await page.callMethod('searchHotRefresh')
 		await page.waitFor(300)
 		const getShow = await page.data('netHotListIsHide')
+		console.log(getShow,"0000000000000");
 		expect(getShow).toBeFalsy()
 		if(!getShow){
 			await page.setData({netHotListIsHide: true})
+			console.log(await page.data('netHotListIsHide'),"1111111111");
 			expect(await page.data('netHotListIsHide')).toBeTruthy()
 		}
 	})

@@ -18,15 +18,27 @@ describe('pages/ucenter/login-page/pwd-retrieve/pwd-retrieve.vue', () => {
 			}
 		})
 		
-		if (process.env.UNI_PLATFORM === "h5") {
-			const submitRes = await page.callMethod('submit')
-			console.log("submitRes: ",submitRes);
-			// expect(submitRes.msg).toBe('密码重置成功')
-			await page.waitFor(500)
-		}
+		// if (process.env.UNI_PLATFORM === "h5") {
+			
+		// }
 		
 		console.log(await program.currentPage());
 		// expect((await program.currentPage()).path).toBe('/pages/ucenter/settings/settings')
 		
+		
+		const submitRes = await page.callMethod('submit')
+		console.log("submitRes: ",submitRes);
+		if(submitRes){
+			switch (submitRes.code){
+				case 0:
+					expect(submitRes.msg).toBe('密码重置成功')
+					break;
+				case 10202:
+					expect(submitRes.msg).toBe('此手机号尚未注册')
+					break;
+				default:
+					break;
+			}
+		}		
 	})
 })

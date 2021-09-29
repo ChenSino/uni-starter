@@ -9,6 +9,43 @@ describe('pages/ucenter/settings/settings', () => {
 		await page.waitFor(500)
 	})
 	
+	
+	
+	it('切换语言', async () => {
+		console.log(await page.data('uniToken'),'uniToken-------------------------');
+		// await page.callMethod('changeLanguage') 弹框不支持点击
+		console.log((await program.currentPage()).path);
+		
+		
+		if (process.env.UNI_PLATFORM === "app-plus") {
+			//清理缓存
+			await page.callMethod('clearTmp')
+			console.log("clearTmp: -------------");
+			
+			
+			
+			console.log(await page.data('pushIsOn'),"pushIsOn-------------");
+			
+			
+			 const pushRes = await page.data('pushIsOn')
+			
+			if(pushRes == "wait"){
+				await page.callMethod('pushServer.off')
+				
+				console.log("pushServer---------");
+			}
+			
+			
+		}
+		
+		
+		
+		
+		
+		
+	})
+	
+	
 	it('退出登录', async () => {
 		const perPage = await page.$('.content')
 		const uList = await perPage.$('.userInfo-class')

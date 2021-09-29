@@ -14,7 +14,6 @@ describe('pages/ucenter/userinfo/bind-mobile/bind-mobile.vue', () => {
 				"phone":phone
 			}
 		})
-		// console.log(await page.data("formData"));
 		expect(phone).toMatch(/^1\d{10}$/);
 		
 		if (process.env.UNI_PLATFORM === "mp-weixin") {
