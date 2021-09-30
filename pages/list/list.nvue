@@ -5,9 +5,8 @@
 		<!-- #endif -->
 		<!-- 搜索功能 -->
 		<uni-search-bar @click="searchClick" class="uni-search-box" v-model="keyword" ref="searchBar" radius="100"
-				cancelButton="none" disabled :placeholder="inputPlaceholder" />
+			cancelButton="none" disabled :placeholder="inputPlaceholder" />
 		<view class="cover-search-bar" @click="searchClick"></view>
-		
 		<unicloud-db ref='udb' v-slot:default="{data,pagination,hasMore, loading, error, options}" @error="onqueryerror"
 			:where="where" collection="opendb-news-articles,uni-id-users" :page-size="10"
 			field="avatar,title,last_modify_date,user_id.username" @load="loadData"
@@ -27,8 +26,8 @@
 							<text class="title">{{item.title}}</text>
 							<view class="info">
 								<text class="author">{{item.user_id[0].username}}</text>
-								<uni-dateformat class="last_modify_date" :date="item.last_modify_date" format="yyyy-MM-dd"
-									:threshold="[60000, 2592000000]" />
+								<uni-dateformat class="last_modify_date" :date="item.last_modify_date"
+									format="yyyy-MM-dd" :threshold="[60000, 2592000000]" />
 							</view>
 						</view>
 					</template>
@@ -47,19 +46,19 @@
 <script>
 	var cdbRef, currentWebview;
 	import statusBar from "@/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar";
-	
+
 	import Gps from '@/uni_modules/json-gps/js_sdk/gps.js';
 	const gps = new Gps()
-	
+
 	export default {
 		components: {
 			statusBar
 		},
-		computed:{
-			inputPlaceholder(e){
-				if(uni.getStorageSync('CURRENT_LANG') == "en"){
+		computed: {
+			inputPlaceholder(e) {
+				if (uni.getStorageSync('CURRENT_LANG') == "en") {
 					return 'Please enter the search content'
-				}else{
+				} else {
 					return '请输入搜索内容'
 				}
 			}
@@ -138,7 +137,7 @@
 				})
 				console.log('refresh');
 			},
-			onqueryerror(e){
+			onqueryerror(e) {
 				console.log(e);
 			}
 		},
@@ -160,6 +159,7 @@
 		box-sizing: border-box;
 		flex-direction: column;
 	}
+
 	/* #endif */
 	.pages {
 		background-color: #FFFFFF;
@@ -245,13 +245,14 @@
 	.f1 {
 		flex: 1;
 	}
-	.cover-search-bar{
+
+	.cover-search-bar {
 		height: 50px;
 		position: relative;
 		top: -50px;
 		margin-bottom: -50px;
 		/* #ifndef APP-NVUE */
-		z-index:999;
+		z-index: 999;
 		/* #endif */
 	}
 </style>

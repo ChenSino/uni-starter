@@ -127,6 +127,42 @@ exports.main = async (event, context) => {
 
 	let res = {}
 	switch (action) { //根据action的值执行对应的操作
+		case 'refreshSessionKey':
+			let getSessionKey = await uniID.code2SessionWeixin({code:params.code});
+			if(getSessionKey.code){
+				return getSessionKey
+			}
+			res =  await uniID.updateUser({
+				uid: params.uid,
+				sessionKey:getSessionKey.sessionKey
+			})
+			console.log(res);
+			break;
+		case 'bindMobileByMpWeixin':
+			console.log(params);
+			let getSessionKeyRes = await uniID.getUserInfo({
+				uid: params.uid,
+				field: ['sessionKey']
+			})
+			if(getSessionKeyRes.code){
+				return getSessionKeyRes
+			}
+			let sessionKey = getSessionKeyRes.userInfo.sessionKey
+			console.log(getSessionKeyRes);
+			res = await uniID.wxBizDataCrypt({
+				...params,
+				sessionKey
+			})
+			console.log(res);
+			if(res.code){
+				return res
+			}
+			res = await uniID.bindMobile({
+				uid: params.uid,
+				mobile: res.purePhoneNumber
+			})
+			console.log(res);
+			break;
 		case 'bindMobileByUniverify':
 			let {
 				appid, apiKey, apiSecret
@@ -269,6 +305,15 @@ exports.main = async (event, context) => {
 						return wxRes
 					}
 				}
+				if(context.PLATFORM == "mp-weixin"){
+					let resUpdateUser =  await uniID.updateUser({
+						uid: loginRes.uid,
+						sessionKey:loginRes.sessionKey
+					})
+					console.log(resUpdateUser);
+				}
+				delete loginRes.openid
+				delete loginRes.sessionKey
 				delete loginRes.accessToken
 				delete loginRes.refreshToken
 			}

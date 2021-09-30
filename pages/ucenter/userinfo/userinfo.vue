@@ -12,7 +12,7 @@
 			</uni-list-item>
 			<uni-list-item class="item" @click="setNickname('')" :title="$t('userinfo.nickname')" :rightText="userInfo.nickname||$t('userinfo.notSet')" link>
 			</uni-list-item>
-			<uni-list-item class="item" @click="bindMobileBySmsCode" :title="$t('userinfo.phoneNumber')" :rightText="userInfo.mobile||$t('userinfo.notSpecified')" link>
+			<uni-list-item class="item" @click="bindMobile" :title="$t('userinfo.phoneNumber')" :rightText="userInfo.mobile||$t('userinfo.notSpecified')" link>
 			</uni-list-item>
 		</uni-list>
 		<uni-popup ref="dialog" type="dialog">
@@ -20,6 +20,7 @@
 				:placeholder="$t('userinfo.setNicknamePlaceholder')">
 			</uni-popup-dialog>
 		</uni-popup>
+		<uni-bindMobileByMpWeixin ref="uni-bindMobileByMpWeixin"></uni-bindMobileByMpWeixin>
 	</view>
 </template>
 <script>
@@ -80,9 +81,14 @@
 					}
 				})
 				// #endif
-				// #ifndef APP-PLUS
+				
+				// #ifdef MP-WEIXIN
+				this.$refs['uni-bindMobileByMpWeixin'].open()
+				// #endif
+				
+				// #ifdef H5
+					//...去用验证码绑定
 				this.bindMobileBySmsCode()
-				//...去用验证码绑定
 				// #endif
 			},
 			univerify() {
