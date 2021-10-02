@@ -15,7 +15,7 @@
 			<uni-list-item v-if="supportMode.includes('fingerPrint')" :title="$t('settings.fingerPrint')" @click.native="startSoterAuthentication('fingerPrint')" link></uni-list-item>
 			<uni-list-item v-if="supportMode.includes('facial')" :title="$t('settings.facial')" @click="startSoterAuthentication('facial')" link></uni-list-item>
 		<!-- #endif -->
-			<uni-list-item :title="$t('settings.changeLanguage')" @click="changeLanguage" :rightText="currentLanguage" link></uni-list-item>
+			<uni-list-item v-if="i18nEnable" :title="$t('settings.changeLanguage')" @click="changeLanguage" :rightText="currentLanguage" link></uni-list-item>
 		</uni-list>
 		
 		<uni-list class="mt10" :border="false">
@@ -50,7 +50,10 @@
 			...mapGetters({
 				'userInfo': 'user/info',
 				'hasLogin': 'user/hasLogin',
-			})
+			}),
+			i18nEnable(){
+				return getApp().globalData.config.i18n.enable
+			}
 		},
 		onLoad() {
 			this.uniToken = uni.getStorageSync('uni_id_token')

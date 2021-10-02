@@ -43,31 +43,6 @@
 				});
 			}*/
 			// #endif
-
-			let initLanguageAfter = () => {
-				console.log('作用于多语言国际化功能，这里获取语言包lang/en.js、lang/zh-Hans.js的tabbar中配置的值更新当前应用的底部tabbar，如果你不需要多语言国际化。直接删除App.vue页面的47-55行即可');
-				//底部tabbar更新
-				this.$t('tabbar').split(',').forEach((text, index) => {
-					uni.setTabBarItem({
-						index,
-						text,
-						complete: e => {
-							// console.log("e: " + JSON.stringify(e));
-						}
-					})
-				})
-				//更新 uni-starter.config
-				//agreements
-				let agreementsTitle = this.$t('agreementsTitle').split(',')
-				let agreements = getApp().globalData.config.about.agreements					agreements[0].title = agreementsTitle[0]					agreements[1].title = agreementsTitle[1]				getApp().globalData.config.about.agreements = agreements
-			}
-			setTimeout(()=>{
-				initLanguageAfter()
-			},1000)
-			uni.$on('changeLanguage', e => {
-				console.log('changeLanguage',e);
-				initLanguageAfter(e)
-			})
 		},
 		onShow: function() {
 			console.log('App Show')
