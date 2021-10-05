@@ -52,7 +52,7 @@ uni-starter + uniCloud admin，提供了用户端和管理端的基础模板，�
 关于国际化 [详情文档](https://uniapp.dcloud.io/collocation/i18n)
 
 ### 功能模块介绍
-#### 1. 路由控制
+#### 1.路由控制
 传统的路由管理方式是对uni-app框架路由写法的二次封装，自定义的写法不支持ide的代码提示。
 另外不同插件作者封装不同的路由管理方式，这样做出来的插件与用户的项目结合时，路由写法不统一的差异需要去磨平。
 用拦截器（下文有详细介绍）实现路由管理并不需要改变原来路由的写法。
@@ -288,7 +288,7 @@ uni-starter + uniCloud admin，提供了用户端和管理端的基础模板，�
 	})
 ```
 
-#### 12. 关于升级
+#### 12.关于升级
 - 项目升级
 
 	uni-starter遵循uni-app的插件模块化规范，即：[uni_modules](https://uniapp.dcloud.io/uni_modules) 。他是个项目类型的插件。在项目的根目录下有一个符合uni_modules规范的package.json文件，在这个文件右键-从插件市场更新即可更新该插件。
@@ -296,6 +296,9 @@ uni-starter + uniCloud admin，提供了用户端和管理端的基础模板，�
 - 插件升级
 
 	非项目类型的uni_modules插件，是项目根目录下的uni_modules目录下。以插件ID为插件文件夹命名，在该目录右键也会看到“从插件市场更新”选项，点击即可更新该插件。
+#### 13.多语言国际化
+	uni-starter支持多语言国际化。默认开启，可以在`uni-starter.config.js`->`i18n`->`enable`中配置
+	
 ### 应用启动时序介绍
 文件路径： App.vue
 ```js

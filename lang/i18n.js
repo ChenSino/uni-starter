@@ -62,10 +62,12 @@ export default i18n
 
 
 if(i18nEnable){
-	console.log(1);
+console.log(`
+	你已开启多语言国际化，将自动根据语言获取【lang/en.js】或【lang/en.js】文件中配置的tabbar的值，
+	覆盖你在pages.json中的tabbar的值
+	如果你不需要多语言国际化，请打开配置文件uni-starter.config.js找到 -> i18n -> enable把值设置为false
+`);
 	let initLanguageAfter = () => {
-		//获得定义的文字
-		console.log($i18n('tabbar').split(','));
 		function $i18n(e){
 			return i18n.messages[i18n.locale][e]
 		}
@@ -82,8 +84,7 @@ if(i18nEnable){
 				})
 			})
 		},1)
-		//更新 uni-starter.config
-		//agreements
+		//更新 uni-starter.config agreements
 		let agreementsTitle = $i18n('agreementsTitle').split(',')
 		let agreements = uniStarterConfig.about.agreements
 		agreements[0].title = agreementsTitle[0]
