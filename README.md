@@ -19,26 +19,26 @@ APP有很多通用的功能，比如登录注册、头像、设置、banner、..
 ##### 扫码体验：h5版演示效果（链接：[https://uni-starter.dcloud.net.cn](https://uni-starter.dcloud.net.cn)）
 <img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f184e7c3-1912-41b2-b81f-435d1b37c7b4/0625ae17-1262-45cb-a713-cdbf02df5c0a.png" style="width: 120px;">
 
-### uni-starter集成的功能包括：
+### uni-starter集成包括：
  1. 用户管理：
 	- 登录注册（用户名密码登录、手机号验证码登录、APP一键登录、微信登录、Apple登录、微信小程序登录）
 	- 修改密码、忘记密码、头像更换（集成图片裁剪）、昵称修改、积分查看、退出登录
  2. 系统设置：
 	- App更新（整包升级、wgt升级、强制升级，后台搭配uniCloud admin的升级中心插件管理）
-	- 推送开关（app）、指纹解锁（app）、人脸解锁（app）、清除缓存（app）
-	- 用户协议、隐私协议、问题与反馈、分享推荐、关于
+	- 推送开关（app）、清除缓存（app）
+	- 指纹解锁（app）、人脸解锁（app）
+	- 多语言切换
  3. 隐私权限：内置Android先弹出隐私协议对话框，然后再向用户申请设备权限
- 4. 权限引导： 摄像头、相册、获取GPS定位、网络2/3/4/5G和Wi-Fi
-	- 当应用缺某个权限时，实现引导用户可通过“一键跳转至手机系统设置”中开启。而不是报错让用户自己去找解决方案（更好的用户体验）
-	- 直接在应用启动时，应用拦截器中实现。免去在每个业务代码中处理这类问题，更优雅更方便。（高内聚低耦合的设计）
-	* 你可以参考这些实现，做更多该类场景的处理。uni-starter也会持续完善 
+ 4. 权限引导：当应用拒绝授权某些权限，但在后续使用中又需要这个权限；此时实现：引导用户可“一键跳转至系统设置”中开启。而不是报错让用户自己去找解决方案（更好的用户体验）。采用高内聚低耦合的设计结构，直接在应用启动时，应用拦截器中实现。免去在每个业务代码中处理这类问题，更优雅更方便。
+	- 已实现项目：摄像头、相册、获取GPS定位、网络2/3/4/5G和Wi-Fi。你可以参考这些实现，处理更多该类场景的处理。uni-starter也会持续更新完善。
  5. 实用功能
+	- 问题与反馈、关于、隐私政策、用户服务协议
 	- banner（后台搭配uniCloud admin的banner插件管理）
 	- 新闻的搜索、列表、详情、分享。通过clientDB实现，开发者直接修改定义的表名等参数，即可轻松改为自己的业务
 	- 可覆盖原生层的分享菜单
 	- h5版在页面顶部（全局悬浮）引导用户点击下载App
-	- 营销裂变：点击“分销推荐”，生成带用户inviteCode参数的应用下载页（H5），一键分享到微信或微信朋友圈等。被邀请人打开下载页面点击下载，设备剪贴板的内容会被设置为邀请者的inviteCode。被邀请人下载app之后通过任何方式登陆（含：注册并登陆），uni-starter框架会自动获取设备剪切板中的inviteCode提交到服务端绑定关联关系。
- 6. 首页采用nvue，fast编译模式，加快App端启动速度
+	- 营销裂变：点击“分销推荐”，生成带用户inviteCode参数的应用下载页（H5），一键分享到微信或微信朋友圈等。被邀请人打开下载页面点击下载，设备剪贴板的内容会被自动设置为邀请者的inviteCode。被邀请人下载app之后通过任何方式登陆（含：注册并登陆），uni-starter框架会自动获取设备剪切板中的inviteCode提交到服务端绑定关联关系。
+ 6. 更好的性能：首页采用nvue，fast编译模式，加快App端启动速度
  7. 内置拦截器：
 	- 页面路由拦截，配置需强制登录的页面；打开时检测，如果token无效就自动跳转到登录页
 	- 调用云函数（callFunction）拦截器，自动携带必要参数、自动处理响应体。详见9.自动完成1-2
@@ -47,6 +47,7 @@ APP有很多通用的功能，比如登录注册、头像、设置、banner、..
 	- 操作注册/登陆操作自动获取客户端设备：push_clientid、imei、oaid、idfa新增/更新到数据表uni-id-device
 	- 异常恢复处理：断网恢复后自动重连“因网络错误导致的”网络请求
 	- 为迎合苹果App Store的规则，登陆与分享功能项显示之前自动检测是否安装了对应客户端。比如：设备未安装微信则不显示微信快捷登陆和微信分享选项
+
 * 更多功能模块会不断更新，请持续关注本插件 
 
 ## 快速体验部署流程
@@ -59,15 +60,33 @@ APP有很多通用的功能，比如登录注册、头像、设置、banner、..
 <img class="cloud" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f184e7c3-1912-41b2-b81f-435d1b37c7b4/78b3f17c-cf70-4cdf-9ada-1796753ffeac.jpg" />
 <img class="cloud" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f184e7c3-1912-41b2-b81f-435d1b37c7b4/09916d79-4753-4baa-9b95-baa831f1a873.jpg" />
 
-关于国际化 [详情文档](https://uniapp.dcloud.io/collocation/i18n)
+### 功能模块详细介绍
+#### 1.登录模块配置
+- uni-start集成的登录方式有：验证码登录(smsCode)、读取手机SIM卡一键登录(univerify)、账号密码登录(username)、微信登录(weixin)、苹果登录(apple)
+- 使用方式：在 `uni-starter.config.js`->`router`->`login`下完全列举你需要的登录方式。这里支持用[条件编译](https://uniapp.dcloud.io/platform?id=%e6%9d%a1%e4%bb%b6%e7%bc%96%e8%af%91)因此你可以配置在不同平台下拥有的登录方式。
+- 优先级：
+	如果:配置内容为：["username","smsCode"]，用户执行如下代码：
+	```js
+	uni.navigateTo({
+		url: "/pages/ucenter/login-page/index/index"
+	})
+	```
+	访问登录页面，会被拦截器自动切换到"配置的第0项(这里是`username`)的登录方式对应的页面”，即`账户登录`方式页面，路径：`/pages/ucenter/login-page/pwd-login/pwd-login`。
+- 生效策略：登陆方式有如上5种，你希望有几种登陆方式就在配置中列举几种。有的登陆方式可能因为设备环境问题而不被支持；比如你正确地配置了微信登陆，但是用户的手机并没有安装微信，这样微信登陆功能就无法使用，并且如果出现这种情况你的app会被iOS的App Store拒绝上架。所以在这里，我们的生效策略在检测：你是否有列举到某个配置项为前提的情况下，增加了检测当前环境是否支持，如果不支持会自动隐藏。
 
-### 功能模块介绍
-#### 1.路由控制
-传统的路由管理方式是对uni-app框架路由写法的二次封装，自定义的写法不支持ide的代码提示。
-另外不同插件作者封装不同的路由管理方式，这样做出来的插件与用户的项目结合时，路由写法不统一的差异需要去磨平。
-用拦截器（下文有详细介绍）实现路由管理并不需要改变原来路由的写法。
-为此`uni-starter`基于`uni.addInterceptor`(拦截器)实现路由管理。
-
+- 其他配置：
+	+ 应用模块：`manifest.json` App模块配置 --> OAuth（登录鉴权）--> 勾选并配置你所需要的模块
+		- 一键登录：
+			+ [开通配置](https://dev.dcloud.net.cn/uniLogin)
+			+ [使用指南](https://uniapp.dcloud.io/univerify)
+		-  [苹果登陆集成指南](https://ask.dcloud.net.cn/article/36651) 
+		- 短信登陆：
+			+ 使用本功能需要在[DCloud开发者中心](https://dev.dcloud.net.cn/uniSms)开通并充值
+			+ 教程参考[短信服务开通指南](https://ask.dcloud.net.cn/article/37534)
+			+ 修改短信注册/登陆发生验证码的模板id，在文件`/uniCloud-aliyun/cloudfunctions/uni-id-cf/index.js` 搜索 `const templateId = '11753'` 替换为自己申请的模板id
+	+ 服务端：uni-starter服务端使用[uni-config-center](https://ext.dcloud.net.cn/plugin?id=4425)统一管理这些配置，文件路径`/uni_modules/uni-config-center/uniCloud/cloudfunctions/common/uni-config-center/uni-id/config.json`详情下文[目录结构](#id=catalogue) 和[uni-id配置说明](https://uniapp.dcloud.io/uniCloud/uni-id?id=configjson%e7%9a%84%e8%af%b4%e6%98%8e)
+#### 2.路由控制
+uni-starter提供了仅需简单配置即可实现的路由拦截功能。
 你只需要在项目根目录的框架配置文件：`uni-starter.config.js`的`router`->`needLogin`和`login`中配置完整的路由名称即可：
 ```js
 "router": {
@@ -103,35 +122,16 @@ APP有很多通用的功能，比如登录注册、头像、设置、banner、..
 		"login": ["username","univerify","weixin", "smsCode", "apple"]
 }
 ```
+传统的路由管理方式是对uni-app框架路由写法的二次封装，自定义的写法不支持ide的代码提示,且不优雅。
+另外不同插件作者封装不同的路由管理方式，这样做出来的插件与用户的项目结合时，路由写法不统一的差异需要去磨平。
+用拦截器（下文有详细介绍）实现路由管理并不需要改变原来路由的写法。
+为此`uni-starter`基于`uni.addInterceptor`(拦截器)实现路由管理。
 
 ##### 注意：
 - 首页需要强制登陆才能访问的场景，不由路由控制。而是uni-starter的callFunction拦截器，根据响应体决定是否跳转到登陆页。
 - uni-starter框架不能将登陆页面设置为首页，否则由拦截器实现的路由管理将生效。
 - 拦截器实现的路由控制，是在路由跳转未完成之前触发。路由切换方式（navigateTo、redirectTo、reLaunch、switchTab）URL参数必须使用绝对路径路
 
-#### 2.登录配置详解
-- 使用方式：在 `uni-starter.config.js`->`router`->`login`下完全列举你需要的登录方式。这里支持用[条件编译](https://uniapp.dcloud.io/platform?id=%e6%9d%a1%e4%bb%b6%e7%bc%96%e8%af%91)因此你可以配置在不同平台下拥有的登录方式。
-- uni-start集成的登录方式有：验证码登录(smsCode)、读取手机SIM卡一键登录(univerify)、账号密码登录(username)、微信登录(weixin)、苹果登录(apple)
-- 优先级策略：
-	如果:配置内容为：["username","smsCode"]，用户执行如下代码：
-	```js
-	uni.navigateTo({
-		url: "/pages/ucenter/login-page/index/index"
-	})
-	```
-	访问登录页面，会被拦截器自动切换到"配置的第0项(这里是`username`)的登录方式对应的页面”，即`账户登录`方式页面，路径：`/pages/ucenter/login-page/pwd-login/pwd-login`。
-- 生效策略：登陆方式有如上5种，你希望有几种登陆方式就在配置中列举几种。有的登陆方式可能因为设备环境问题而不被支持；比如你正确地配置了微信登陆，但是用户的手机并没有安装微信，这样微信登陆功能就无法使用，并且如果出现这种情况你的app会被iOS的App Store拒绝上架。所以在这里，我们的生效策略在检测：你是否有列举到某个配置项为前提的情况下，增加了检测当前环境是否支持，如果不支持会自动隐藏。
-- 其他配置：
-	+ 服务端：uni-starter服务端使用[uni-config-center](https://ext.dcloud.net.cn/plugin?id=4425)统一管理这些配置，文件路径`/uni_modules/uni-config-center/uniCloud/cloudfunctions/common/uni-config-center/uni-id/config.json`详情下文[目录结构](#id=catalogue) 和[uni-id配置说明](https://uniapp.dcloud.io/uniCloud/uni-id?id=configjson%e7%9a%84%e8%af%b4%e6%98%8e)
-	+ 应用模块：`manifest.json` App模块配置 --> OAuth（登录鉴权）--> 勾选并配置你所需要的模块
-- 短信登陆：
-	+ 使用本功能需要在[DCloud开发者中心](https://dev.dcloud.net.cn/uniSms)开通并充值
-	+ 教程参考[短信服务开通指南](https://ask.dcloud.net.cn/article/37534)
-	+ 修改短信注册/登陆发生验证码的模板id，在文件`/uniCloud-aliyun/cloudfunctions/uni-id-cf/index.js` 搜索 `const templateId = '11753'` 替换为自己申请的模板id
-- 一键登录：
-	+ [开通配置](https://dev.dcloud.net.cn/uniLogin)
-	+ [使用指南](https://uniapp.dcloud.io/univerify)
--  [苹果登陆集成指南](https://ask.dcloud.net.cn/article/36651) 
 #### 3.h5版在页面顶部引导用户`点击下载App`
 - 把h5端用户引流到APP端是一个非常常用的功能，相对于h5，APP端有更高的用户留存和更好的产品体验。
 - 这同时也是一个演示开发者如何在h5端做全局悬浮块的例子。你可以在`/common/openApp.js`中修改他的样式等代码等，注意他只支持普通js语法。
