@@ -5,7 +5,7 @@ describe('pages/ucenter/login-page/pwd-login/pwd-login.vue', () => {
 
 	let page
 	beforeAll(async () => {
-		page = await program.redirectTo('/pages/ucenter/login-page/pwd-login/pwd-login')
+		page = await program.navigateTo('/pages/ucenter/login-page/pwd-login/pwd-login')
 		await page.waitFor(500)
 	})
 
@@ -43,7 +43,29 @@ describe('pages/ucenter/login-page/pwd-login/pwd-login.vue', () => {
 		})
 		const resLogin = await page.callMethod('pwdLogin')
 		console.log("resLogin: ", resLogin.msg);
-		expect(resLogin.msg).toBe("登录成功");
+		
+		switch (resLogin.msg){
+			case 10102:
+				expect(resLogin.msg).toBe("密码错误");
+				const setForm = await page.setData({
+					"password": "222222",
+					"username": "数字天堂",
+					"agree": true,
+				})
+				const resLogin = await page.callMethod('pwdLogin')
+				break;
+			case 10103:
+				expect(resLogin.msg).toBe("密码错误次数过多");
+				break;
+			case 10002:
+				expect(resLogin.msg).toBe("验证码不可为空");
+				break;
+			case 0:
+				expect(resLogin.msg).toBe("登录成功");
+				break;
+			default:
+				break;
+		}
 	})
 
 })

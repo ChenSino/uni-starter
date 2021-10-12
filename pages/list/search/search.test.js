@@ -22,15 +22,14 @@ describe('pages/list/search/search.vue', () => {
 	})
 
 	it('搜索内容', async () => {
-		expect.assertions(1);
+		// expect.assertions(1);
 		const setSearchTest = await page.setData({
 			searchText: '小程序',
 		})
-		// console.log(await page.data('searchText'));
+		console.log(await page.data('searchText'));
 		await page.callMethod('search', '小程序')
 		await page.waitFor(300)
+		console.log(await program.currentPage(),"-----------------------");
 		expect((await program.currentPage()).path).toBe('pages/list/list')
-		// 执行 navigateBack 验证是否返回
-		// expect((await program.navigateBack()).path).toBe('pages/list/search/search')
 	})
 });

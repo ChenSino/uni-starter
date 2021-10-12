@@ -4,7 +4,7 @@
 describe('pages/ucenter/about/about.vue', () => {
 	let page
 	beforeAll(async () => {
-		page = await program.navigateTo('/pages/ucenter/about/about')
+		page = await program.redirectTo('/pages/ucenter/about/about')
 		await page.waitFor(500)
 	})
 

@@ -77,7 +77,7 @@
 			keyword(keyword, oldValue) {
 				let where = '"article_status" == 1 '
 				if (keyword) {
-					this.where = where + `/${keyword}/.test(title)`;
+					this.where = where + `&& /${keyword}/.test(title)`;
 				} else {
 					this.where = where;
 				}

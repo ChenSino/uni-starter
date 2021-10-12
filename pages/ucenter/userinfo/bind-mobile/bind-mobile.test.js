@@ -22,6 +22,7 @@ describe('pages/ucenter/userinfo/bind-mobile/bind-mobile.vue', () => {
 			await page.waitFor(300)
 		}else{
 			const codebtn =  await page.$('.short-code-btn')
+			console.log("codebtn: ",codebtn);
 			const sendMsgRes = await codebtn.callMethod('sendMsg')
 			await page.waitFor(300)
 		}
