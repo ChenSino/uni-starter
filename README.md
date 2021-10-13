@@ -85,6 +85,7 @@ APP有很多通用的功能，比如登录注册、头像、设置、banner、..
 			+ 教程参考[短信服务开通指南](https://ask.dcloud.net.cn/article/37534)
 			+ 修改短信注册/登陆发生验证码的模板id，在文件`/uniCloud-aliyun/cloudfunctions/uni-id-cf/index.js` 搜索 `const templateId = '11753'` 替换为自己申请的模板id
 	+ 服务端：uni-starter服务端使用[uni-config-center](https://ext.dcloud.net.cn/plugin?id=4425)统一管理这些配置，文件路径`/uni_modules/uni-config-center/uniCloud/cloudfunctions/common/uni-config-center/uni-id/config.json`详情下文[目录结构](#id=catalogue) 和[uni-id配置说明](https://uniapp.dcloud.io/uniCloud/uni-id?id=configjson%e7%9a%84%e8%af%b4%e6%98%8e)
+
 #### 2.路由控制
 uni-starter提供了仅需简单配置即可实现的路由拦截功能。
 你只需要在项目根目录的框架配置文件：`uni-starter.config.js`的`router`->`needLogin`和`login`中配置完整的路由名称即可：
@@ -336,7 +337,7 @@ onLaunch生命周期执行了
 
 
 ##### 配置文件
-uni-starter提供了uni-starter.config.js，可指定该应用是否强制登录才能进入首页，可配置选择登录注册方式以及不同方式的优先级等。配置项内容如下：
+uni-starter提供了uni-starter.config.js，可指定该应用是否强制登录才能进入每个页面，可配置选择登录注册方式以及不同方式的优先级等。配置项内容如下：
 ```js
 module.exports = {
 	"h5": {
