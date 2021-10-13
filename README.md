@@ -1,7 +1,9 @@
-#### 看一段视频：
+#### 视频介绍
 <a target="_blank" href="https://www.bilibili.com/video/BV17p4y1a71x?p=11">
     <img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f184e7c3-1912-41b2-b81f-435d1b37c7b4/71d310a5-ef69-4ca5-88c8-9a3abf8fb8e3.png" alt="腾讯课堂uniCloud视频教程" style="width: 70%;margin-bottom:26px;">
 </a>
+
+注：视频会有滞后问题，入门为主。最新的完整功能请看以下文档
 
 #### 简介
 `uni-starter`是一个集成了大量商用项目常见功能的，云端一体应用快速开发基本项目模版。
@@ -56,14 +58,17 @@ APP有很多通用的功能，比如登录注册、头像、设置、banner、..
 - 在uniCloud认证通过后，创建一个服务空间给本项目使用。选择阿里云或腾讯云均可，两种服务空间差异[详情](https://uniapp.dcloud.net.cn/uniCloud/price)
 
 #### 2. 运行云服务空间初始化向导
-<img class="cloud" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f184e7c3-1912-41b2-b81f-435d1b37c7b4/472d8525-4e64-4a86-a77a-8c37c4379610.jpg" />
-<img class="cloud" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f184e7c3-1912-41b2-b81f-435d1b37c7b4/78b3f17c-cf70-4cdf-9ada-1796753ffeac.jpg" />
-<img class="cloud" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f184e7c3-1912-41b2-b81f-435d1b37c7b4/09916d79-4753-4baa-9b95-baa831f1a873.jpg" />
+<img style="width:61.8%" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f184e7c3-1912-41b2-b81f-435d1b37c7b4/472d8525-4e64-4a86-a77a-8c37c4379610.jpg" />
+<img style="width:61.8%" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f184e7c3-1912-41b2-b81f-435d1b37c7b4/78b3f17c-cf70-4cdf-9ada-1796753ffeac.jpg" />
+<img style="width:61.8%" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f184e7c3-1912-41b2-b81f-435d1b37c7b4/09916d79-4753-4baa-9b95-baa831f1a873.jpg" />
 
-### 功能模块详细介绍
+### 功能模块介绍
+
+
+
 #### 1.登录模块配置
 - uni-start集成的登录方式有：验证码登录(smsCode)、读取手机SIM卡一键登录(univerify)、账号密码登录(username)、微信登录(weixin)、苹果登录(apple)
-- 使用方式：在 `uni-starter.config.js`->`router`->`login`下完全列举你需要的登录方式。这里支持用[条件编译](https://uniapp.dcloud.io/platform?id=%e6%9d%a1%e4%bb%b6%e7%bc%96%e8%af%91)因此你可以配置在不同平台下拥有的登录方式。
+- 登陆项及优先级配置：在 `uni-starter.config.js`->`router`->`login`下完全列举你需要的登录方式。这里支持用[条件编译](https://uniapp.dcloud.io/platform?id=%e6%9d%a1%e4%bb%b6%e7%bc%96%e8%af%91)因此你可以配置在不同平台下拥有的登录方式。
 - 优先级：
 	如果:配置内容为：["username","smsCode"]，用户执行如下代码：
 	```js
@@ -337,7 +342,7 @@ onLaunch生命周期执行了
 
 
 ##### 配置文件
-uni-starter提供了uni-starter.config.js，可指定该应用是否强制登录才能进入每个页面，可配置选择登录注册方式以及不同方式的优先级等。配置项内容如下：
+uni-starter提供了uni-starter.config.js，可指定该应用是否强制登录才能进入某个页面，可配置选择登录注册方式以及不同方式的优先级等。配置项内容如下：
 ```js
 module.exports = {
 	"h5": {
