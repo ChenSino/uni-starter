@@ -85,12 +85,13 @@ APP有很多通用的功能，比如登录注册、头像、设置、banner、..
 ```
 
 #### 启用登陆方式
-如上示例配置为：`["username","smsCode"]`，表示启用：验证码登录、账号密码登录。
-同理配置为：`["weixin","username","smsCode"]`则表示启用：微信登录、验证码登录、账号密码登录。
+如上示例配置为：`["username","smsCode"]` 表示启用：验证码登录、账号密码登录。
+
+同理配置为：`["weixin","username","smsCode"]` 则表示启用：微信登录、验证码登录、账号密码登录。
 
 总结：需要几项列举几项即可。
 
- 优先级
+#### 优先级
 在uni-starter框架中执行`uni.navigateTo({url: "/pages/ucenter/login-page/index/index"})`，会根据配置跳转到相应的登陆页面。如果配置内容为：`["username","smsCode"]`会自动切换到"配置的第0项，也就是`username`类型的登录方式对应的页面”，即`账户登录`方式页面，路径：`/pages/ucenter/login-page/pwd-login/pwd-login`
 
 #### 平台差异性配置
