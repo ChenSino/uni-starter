@@ -37,10 +37,18 @@
 	} from 'vuex';
 	import checkUpdate from '@/uni_modules/uni-upgrade-center-app/utils/check-update';
 	import callCheckVersion from '@/uni_modules/uni-upgrade-center-app/utils/call-check-version';
-	import uniShare from '@/uni_modules/uni-share/js_sdk/uni-share.js';
-	// import pwdLogin from '../../common/toLogin.js';
+	import UniShare from '@/uni_modules/uni-share/js_sdk/uni-share.js';
+	const uniShare = new UniShare()
 	const db = uniCloud.database();
 	export default {
+		onBackPress({from}) {
+			if(from=='backbutton'){
+				this.$nextTick(function(){
+					uniShare.hide()
+				})
+				return uniShare.isShow;
+			}
+		},
 		data() {
 			return {
 				gridList: [{
@@ -273,7 +281,7 @@
 					slogan
 				} = this.appConfig.about
 				// #ifdef APP-PLUS
-				uniShare({
+				uniShare.show({
 					content: { //公共的分享类型（type）、链接（herf）、标题（title）、summary（描述）、imageUrl（缩略图）
 						type: 0,
 						href: this.appConfig.h5.url +

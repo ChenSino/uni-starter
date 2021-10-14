@@ -1,7 +1,7 @@
 {
   "id": "uni-share",
   "displayName": "uni-share",
-  "version": "1.0.6",
+  "version": "2.0.0",
   "description": "底部弹出宫格图标式的分享菜单，可覆盖原生组件。",
   "keywords": [
     "分享菜单"

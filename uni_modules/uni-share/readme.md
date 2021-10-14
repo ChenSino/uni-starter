@@ -9,7 +9,7 @@
 	export default {
 		methods: {
 			uniShare() {
-				uniShare({
+				uniShare.show({
 					content: { //公共的分享参数配置  类型（type）、链接（herf）、标题（title）、summary（描述）、imageUrl（缩略图）
 						type: 0,
 						href: 'https://uniapp.dcloud.io/',

@@ -193,6 +193,9 @@
                     "key" : ""
                 }
             }
+        },
+        "router" : {
+            "base" : ""
         }
     },
     "_spaceID" : "76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e",

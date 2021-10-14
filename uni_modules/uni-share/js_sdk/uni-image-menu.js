@@ -1,11 +1,16 @@
-var nvMask,nvImageMenu;
-export default {
-	show({list,cancelText},callback){
-		console.log(789789879);
-		if(!list){
+var nvMask, nvImageMenu;
+class NvImageMenu {
+	constructor(arg) {
+		this.isShow = false
+	}
+	show({
+		list,
+		cancelText
+	}, callback) {
+		if (!list) {
 			list = [{
-				"img":"/static/sharemenu/wechatfriend.png",
-				"text":"图标文字"
+				"img": "/static/sharemenu/wechatfriend.png",
+				"text": "图标文字"
 			}]
 		}
 		//以下为计算菜单的nview绘制布局，为固定算法，使用者无关关心
@@ -31,9 +36,18 @@ export default {
 		var left4 = left1 + (iconWidth + iconSpace) * 3
 		var top1 = left1
 		var top2 = top1 + iconWidth + icontextSpace + textHeight + left1
-		
-		const TOP = {top1,top2}, LEFT = {left1,left2,left3,left4};
-		
+
+		const TOP = {
+				top1,
+				top2
+			},
+			LEFT = {
+				left1,
+				left2,
+				left3,
+				left4
+			};
+
 		nvMask = new plus.nativeObj.View("nvMask", { //先创建遮罩层
 			top: '0px',
 			left: '0px',
@@ -41,26 +55,29 @@ export default {
 			width: '100%',
 			backgroundColor: 'rgba(0,0,0,0.2)'
 		});
-		nvMask.addEventListener("click", function() { //处理遮罩层点击
-			nvMask.hide();
-			nvImageMenu.hide();
-		})
 		nvImageMenu = new plus.nativeObj.View("nvImageMenu", { //创建底部图标菜单
 			bottom: '0px',
 			left: '0px',
-			height: (iconWidth + textHeight + 2 * margin)*Math.ceil(list.length/4) +44+'px',//'264px',
+			height: (iconWidth + textHeight + 2 * margin) * Math.ceil(list.length / 4) + 44 +
+			'px', //'264px',
 			width: '100%',
 			backgroundColor: 'rgb(255,255,255)'
 		});
-		
+		nvMask.addEventListener("click", () => { //处理遮罩层点击
+			// console.log('处理遮罩层点击');
+			this.hide()
+			callback({
+				event: "clickMask"
+			})
+		})
 		let myList = []
-		list.forEach((item,i)=>{
+		list.forEach((item, i) => {
 			myList.push({
 				tag: 'img',
 				src: item.img,
 				position: {
-					top: TOP['top'+( parseInt(i/4) +1)],
-					left: LEFT['left'+(1+i%4)],
+					top: TOP['top' + (parseInt(i / 4) + 1)],
+					left: LEFT['left' + (1 + i % 4)],
 					width: iconWidth,
 					height: iconWidth
 				}
@@ -72,18 +89,17 @@ export default {
 					size: textHeight
 				},
 				position: {
-					top: TOP['top'+(parseInt(i/4)+1)] + iconWidth + icontextSpace,
-					left: LEFT['left'+(1+i%4)],
+					top: TOP['top' + (parseInt(i / 4) + 1)] + iconWidth + icontextSpace,
+					left: LEFT['left' + (1 + i % 4)],
 					width: iconWidth,
 					height: textHeight
 				}
 			})
 		})
-		
+
 		//绘制底部图标菜单的内容
-		nvImageMenu.draw([
-			{
-				tag: 'rect',//菜单顶部的分割灰线
+		nvImageMenu.draw([{
+				tag: 'rect', //菜单顶部的分割灰线
 				color: '#e7e7e7',
 				position: {
 					top: '0px',
@@ -92,7 +108,7 @@ export default {
 			},
 			{
 				tag: 'font',
-				text: cancelText,//底部取消按钮的文字
+				text: cancelText, //底部取消按钮的文字
 				textStyles: {
 					size: '14px'
 				},
@@ -102,7 +118,7 @@ export default {
 				}
 			},
 			{
-				tag: 'rect',//底部取消按钮的顶部边线
+				tag: 'rect', //底部取消按钮的顶部边线
 				color: '#e7e7e7',
 				position: {
 					bottom: '45px',
@@ -112,15 +128,27 @@ export default {
 			...myList
 		])
 		nvMask.show()
-		nvImageMenu.show() //5+应支持从底部向上弹出的动画
-		
-		
-		
-		nvImageMenu.addEventListener("click",e=>{ //处理底部图标菜单的点击事件，根据点击位置触发不同的逻辑
+		nvImageMenu.show()
+		// 开始动画
+		/*
+			plus.nativeObj.View.startAnimation({
+				type: 'slide-in-bottom',
+				duration: 300
+			}, nvImageMenu, {}, function() {
+				console.log('plus.nativeObj.View.startAnimation动画结束');
+				// 关闭原生动画
+				plus.nativeObj.View.clearAnimation();
+				nvImageMenu.show()
+			});
+		*/
+
+
+		this.isShow = true
+		nvImageMenu.addEventListener("click", e => { //处理底部图标菜单的点击事件，根据点击位置触发不同的逻辑
 			// console.log("click menu"+JSON.stringify(e));
 			if (e.screenY > plus.screen.resolutionHeight - 44) { //点击了底部取消按钮
-				nvMask.hide();
-				nvImageMenu.hide();
+				// callback({event:"clickCancelButton"})
+				this.hide()
 			} else if (e.clientX < 5 || e.clientX > screenWidth - 5 || e.clientY < 5) {
 				//屏幕左右边缘5像素及菜单顶部5像素不处理点击
 			} else { //点击了图标按钮
@@ -144,8 +172,10 @@ export default {
 				// console.log("点击按钮的序号: " + iClickIndex);
 				// if (iClickIndex >= 0 && iClickIndex <= 5) { //处理具体的点击逻辑，此处也可以自行定义逻辑。如果增减了按钮，此处也需要跟着修改
 				// }
-				callback(iClickIndex)
-				this.hide()
+				callback({
+					event: "clickMenu",
+					index: iClickIndex
+				})
 			}
 		})
 		/* nvImageMenu.addEventListener("touchstart", function(e) {
@@ -161,9 +191,13 @@ export default {
 			//TODO 这里可以处理释放背景恢复的效果
 		})
 		*/
-	},
-	hide(){
+	}
+
+	hide() {
 		nvMask.hide()
 		nvImageMenu.hide()
+		this.isShow = false
 	}
 }
+
+export default NvImageMenu

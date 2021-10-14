@@ -50,14 +50,22 @@
 </template>
 
 <script>
-	import uniShare from '@/uni_modules/uni-share/js_sdk/uni-share.js';
-
+	import UniShare from '@/uni_modules/uni-share/js_sdk/uni-share.js';
+	const uniShare = new UniShare()
 	const db = uniCloud.database();
 	const readNewsLog = db.collection('read-news-log')
 	import {
 		mapGetters
 	} from 'vuex';
 	export default {
+		onBackPress({from}) {
+			if(from=='backbutton'){
+				this.$nextTick(function(){
+					uniShare.hide()
+				})
+				return uniShare.isShow;
+			}
+		},
 		data() {
 			return {
 				// 当前显示 _id
@@ -197,7 +205,7 @@
 					excerpt,
 					avatar
 				}) );
-				uniShare({
+				uniShare.show({
 					content: { //公共的分享类型（type）、链接（herf）、标题（title）、summary（描述）、imageUrl（缩略图）
 						type: 0,
 						href: this.uniStarterConfig.h5.url + `/#/pages/list/detail?id=${_id}&title=${title}`,
@@ -264,7 +272,7 @@
 					],
 					cancelText: this.$t('common').cancelShare,
 				}, e => { //callback
-					// console.log(e);
+					console.log(e);
 				})
 			},
 		}

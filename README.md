@@ -142,6 +142,7 @@ uni-starter服务端使用[uni-config-center](https://ext.dcloud.net.cn/plugin?i
 列举不需要强制登陆即可访问的页面完整路径（支持正则）
 #### 配置示例
 配置文件：`项目根目录/uni-starter.config.js`
+
 ```js
 "router": {
 		"needLogin" : [
@@ -303,7 +304,7 @@ uni-starter集成了这个功能，你只需直接在`项目根目录/uni-starte
 - 而路由跳转方法不仅有`uni.navigateTo`还有`uni.redirectTo`,`uni.reLaunch`,`uni.switchTab`；
 - 另外我们还希望控制直接跳转至哪种登陆类型
 所以在uni-starter框架中我们这样定义：
-> uni-starter/common/appInit.js 的第228-280行
+uni-starter/common/appInit.js 的第228-280行
 ```js
 	const {"router": {needLogin,login} } = uniStarterConfig //需要登录的页面
 	let list = ["navigateTo", "redirectTo", "reLaunch", "switchTab"];

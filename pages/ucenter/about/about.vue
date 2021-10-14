@@ -19,8 +19,17 @@
 	</view>
 </template>
 <script>
-	import uniShare from '@/uni_modules/uni-share/js_sdk/uni-share.js';
+	import UniShare from '@/uni_modules/uni-share/js_sdk/uni-share.js';
+	const uniShare = new UniShare()
 	export default {
+		onBackPress({from}) {
+			if(from=='backbutton'){
+				this.$nextTick(function(){
+					uniShare.hide()
+				})
+				return uniShare.isShow;
+			}
+		},
 		onLoad() {
 			// #ifdef APP-PLUS
 			this.version = plus.runtime.version
@@ -53,7 +62,7 @@
 				slogan,
 				logo
 			} = this.about
-			uniShare({
+			uniShare.show({
 				content: { //公共的分享类型（type）、链接（herf）、标题（title）、summary（描述）、imageUrl（缩略图）
 					type: 0,
 					href: download,
