@@ -59,7 +59,8 @@
             "OAuth" : {},
             "FaceID" : {},
             "Geolocation" : {},
-            "Push" : {}
+            "Push" : {},
+            "Bluetooth" : {}
         },
         "distribute" : {
             "android" : {

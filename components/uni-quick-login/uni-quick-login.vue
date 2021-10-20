@@ -13,10 +13,7 @@
 	</view>
 </template>
 <script>
-	import {
-		mapGetters,
-		mapMutations
-	} from 'vuex';
+	import {mapGetters,mapMutations} from 'vuex';
 	//前一个窗口的页面地址。控制点击切换快捷登录方式是创建还是返回
 	import loginSuccess from '@/pages/ucenter/login-page/common/loginSuccess.js';
 	const db = uniCloud.database();
@@ -177,6 +174,41 @@
 				uni.showLoading({
 					mask: true
 				})
+				
+				//univerifyManager
+				if(type == 'univerify' && uni.getUniverifyManager){
+					// 调用一键登录弹框
+					const univerifyManager = uni.getUniverifyManager()
+					univerifyManager.login({
+					  "univerifyStyle": this.univerifyStyle,
+					  success (res) {
+					    console.log('login success', res)
+					  }
+					})
+					
+					const callback = (res) => {
+					  // 获取一键登录弹框协议勾选状态
+					  univerifyManager.getCheckBoxState({
+					    success(res) {
+					      console.log("getCheckBoxState res: ", res);
+					      if (res.state) {
+					        // 关闭一键登录弹框
+					        univerifyManager.close()
+					      }
+					    }
+					  })
+					}
+					// 订阅自定义按钮点击事件
+					univerifyManager.onButtonsClick(callback)
+					// 取消订阅自定义按钮点击事件
+					univerifyManager.offButtonsClick(callback)
+				}else{
+					console.log(type);
+					console.log('uni.getUniverifyManager：'+uni.getUniverifyManager);
+				}
+				
+				
+				
 				uni.login({
 					"provider": type,
 					"onlyAuthorize":true, //请勿直接使用前端获取的unionid或openid直接用于登录，前端的数据都是不可靠的
