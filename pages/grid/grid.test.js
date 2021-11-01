@@ -13,17 +13,18 @@ describe('pages/grid/grid.vue', () => {
 		const getData = await page.data('gridList')
 		console.log("getData: ",getData);
 		expect(getData.length).toBe(9)
-		
 	})
 	
 	it('点击宫格', async () => {
-		// expect.assertions(1);
-		const perPage = await page.$('.warp')
-		const uGrid = await perPage.$('.uni-grid-box')
-		console.log("uGrid-----------: ",uGrid);
-		// await uGrid.callMethod('change')
+		if (process.env.UNI_PLATFORM === "h5" || process.env.UNI_PLATFORM === "app-plus") {
+			const perPage = await page.$('.uni-grid-wrap')
+			console.log("perPage: ",perPage);
+			await perPage.callMethod('change')
+		}
+		if (process.env.UNI_PLATFORM === "mp-weixin") {
+			const uniGrid = await page.$('uni-grid')
+			console.log("uniGrid: ",uniGrid);
+			await uniGrid.callMethod('change')
+		}
 	})
-	
-	
-	
 });

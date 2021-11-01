@@ -17,10 +17,22 @@ describe('pages/ucenter/about/about.vue', () => {
 	})
 
 	it('screenshot', async () => {
-		var image = await program.screenshot({
-			path: "static/screenshot/about.png" // 默认项目根目录
-		})
-		console.log(image,"image--------------------")
+		
+		if (process.env.UNI_PLATFORM === "h5") {
+			const image = await program.screenshot({
+				path: "static/screenshot/about-h5.png" // 默认项目根目录
+			})
+			console.log(image,"image--------------------")
+		}else if(process.env.UNI_PLATFORM === "app-plus"){
+			await program.screenshot({
+				path: "static/screenshot/about-app.png" 
+			})
+		}else if(process.env.UNI_PLATFORM === "mp-weixin"){
+			await program.screenshot({
+				path: "static/screenshot/about-mp.png"
+			})
+		}
+		
 	})
 
 

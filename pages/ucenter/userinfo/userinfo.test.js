@@ -9,7 +9,7 @@ describe('pages/ucenter/userinfo/userinfo.vue', () => {
 	})
 
 	
-	it('设置昵称', async () => {
+	/* it('设置昵称', async () => {
 		const getTokenRes =  await page.waitFor(async()=>{
 			return await page.data('uniToken')
 		})
@@ -17,14 +17,15 @@ describe('pages/ucenter/userinfo/userinfo.vue', () => {
 		
 		var name = "数字天堂DCloud" +  Math.round(Math.random()*10);
 		console.log("name: ",name);
-		
+		console.log(await page.data('uniToken'),"---------------------");
 		if(getTokenRes){
 			const nicknameRes = await page.callMethod("setNickname",name)
 			await page.waitFor(300)
 			console.log("nicknameRes: ",nicknameRes);
 			expect(nicknameRes.updated).toBe(1)
 		}
-	})
+		
+	}) */
 	
 	it('绑定手机号', async () => {
 		console.log(await page.data('uniToken'),"-------------------------");
