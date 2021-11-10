@@ -5,7 +5,7 @@
 
 import CONFIG from '../uni-starter.config.js';
 
-const CONFIG_OPEN = CONFIG?.h5?.openApp?.openUrl ? CONFIG.h5.openApp : {};
+const CONFIG_OPEN = CONFIG.h5.openApp || {};
 // 仅H5端添加"打开APP"
 export default function() {
 	// #ifdef H5
