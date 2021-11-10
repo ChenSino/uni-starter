@@ -159,9 +159,6 @@
 				uni.navigateTo({
 					url: '/pages/ucenter/login-page/register/register'
 				})
-				// uni.redirectTo({
-				// 	url: '/pages/ucenter/login-page/register/register'
-				// })
 			}
 		}
 	}

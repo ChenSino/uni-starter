@@ -55,6 +55,10 @@ describe('pages/ucenter/userinfo/bind-mobile/bind-mobile.vue', () => {
 					break;
 			}
 		}
+		
+		await program.switchTab('/pages/ucenter/ucenter')
+		
+		console.log(await program.currentPage(),"last-------------------");
 	})
 	
 });

@@ -9,15 +9,14 @@ describe('pages/ucenter/userinfo/userinfo.vue', () => {
 	})
 
 	
-	/* it('设置昵称', async () => {
+	it('设置昵称', async () => {
 		const getTokenRes =  await page.waitFor(async()=>{
 			return await page.data('uniToken')
 		})
-		console.log("getTokenRes: ",getTokenRes);
+		console.log("getTokenRes:---------------------- ",getTokenRes);
 		
 		var name = "数字天堂DCloud" +  Math.round(Math.random()*10);
 		console.log("name: ",name);
-		console.log(await page.data('uniToken'),"---------------------");
 		if(getTokenRes){
 			const nicknameRes = await page.callMethod("setNickname",name)
 			await page.waitFor(300)
@@ -25,15 +24,13 @@ describe('pages/ucenter/userinfo/userinfo.vue', () => {
 			expect(nicknameRes.updated).toBe(1)
 		}
 		
-	}) */
+	})
 	
 	it('绑定手机号', async () => {
-		console.log(await page.data('uniToken'),"-------------------------");
 		await page.callMethod('bindMobileBySmsCode')
 		await page.waitFor(300)
-		console.log((await program.currentPage()).path);
-		expect((await program.currentPage()).path).toBe('pages/ucenter/userinfo/bind-mobile/bind-mobile')
-		await page.waitFor(300)
+		// expect((await program.currentPage()).path).toBe('pages/ucenter/userinfo/bind-mobile/bind-mobile')
+		// await page.waitFor(300)
 		expect((await program.navigateBack()).path).toBe('pages/ucenter/userinfo/userinfo')
 	})
 	

@@ -41,7 +41,6 @@ describe('pages/ucenter/login-page/register/register.vue', () => {
 			await page.waitFor(300)
 			return resRegister
 		})
-
 		console.log("getUid:---------- ",getUid.msg);
 		if (getUid.uid) {
 			expect(getUid.msg).toBe("注册成功");

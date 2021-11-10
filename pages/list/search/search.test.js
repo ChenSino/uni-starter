@@ -4,7 +4,7 @@
 describe('pages/list/search/search.vue', () => {
 	let page
 	beforeAll(async () => {
-		page = await program.navigateTo('/pages/list/search/search')
+		page = await program.redirectTo('/pages/list/search/search')
 		await page.waitFor(500)
 	})
 	it('搜索发现-显示-影藏', async () => {
