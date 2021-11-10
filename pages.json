@@ -2,8 +2,10 @@
 	"pages": [{
 			"path": "pages/list/list",
 			"style": {
-				"navigationStyle": "custom",
-				"enablePullDownRefresh": true
+				// #ifndef APP-PLUS
+				"enablePullDownRefresh": true,
+				// #endif
+				"navigationStyle": "custom"
 			}
 		},
 		{
@@ -187,7 +189,7 @@
 				}
 			}
 		}
-	],
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-starter",
@@ -227,7 +229,8 @@
 			"iconPath": "static/tabbar/grid.png",
 			"selectedIconPath": "static/tabbar/grid_active.png",
 			"text": "宫格"
-		}, {
+		}
+		, {
 			"pagePath": "pages/ucenter/ucenter",
 			"iconPath": "static/tabbar/me.png",
 			"selectedIconPath": "static/tabbar/me_active.png",

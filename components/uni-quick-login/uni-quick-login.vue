@@ -76,7 +76,7 @@
 				univerifyStyle: { //一键登录弹出窗的样式配置参数
 					"fullScreen": true, // 是否全屏显示，true表示全屏模式，false表示非全屏模式，默认值为false。
 					"backgroundColor": "#ffffff", // 授权页面背景颜色，默认值：#ffffff
-					"buttons": { // 自定义登陆按钮
+					"buttons": { // 自定义登录按钮
 						"iconWidth": "45px", // 图标宽度（高度等比例缩放） 默认值：45px
 						"list": []
 					},
@@ -106,12 +106,12 @@
 		},
 		async created() {
 			let servicesList = this.servicesList
-			//去掉配置中不存在的 注意，在/common/appInit.js中已清除有配置但设备环境不支持的登陆项
+			//去掉配置中不存在的 注意，在/common/appInit.js中已清除有配置但设备环境不支持的登录项
 			servicesList = servicesList.filter(item => this.loginConfig.includes(item.id))
 			//处理一键登录
 			if (this.loginConfig.includes('univerify')) {
 				this.univerifyStyle.privacyTerms.privacyItems = this.agreements
-				//设置一键登录功能底下的快捷登陆按钮
+				//设置一键登录功能底下的快捷登录按钮
 				servicesList.forEach(({
 					id,
 					logo
@@ -125,7 +125,7 @@
 				})
 			}
 			console.log(servicesList);
-			//如果当前页面为默认登陆界面。当前第一优先级的“微信和苹果登陆”要隐藏，因为他已经被渲染在默认登陆界面顶部
+			//如果当前页面为默认登录界面。当前第一优先级的“微信和苹果登录”要隐藏，因为他已经被渲染在默认登录界面顶部
 			if (
 				this.getRoute(1) == '/pages/ucenter/login-page/index/index' && ['weixin', 'apple'].includes(this
 					.loginConfig[0])
@@ -265,9 +265,9 @@
 										title: this.$t('uniQuickLogin').chooseOtherLogin,
 										icon: 'none'
 									});
-									console.log('点击了第三方登陆，provider：', err.provider);
+									console.log('点击了第三方登录，provider：', err.provider);
 									
-									//同步一键登陆弹出层隐私协议框是否打勾
+									//同步一键登录弹出层隐私协议框是否打勾
 									let agree = (await uni.getCheckBoxState())[1].state
 									console.log('agree',agree);
 									uni.$emit('setAgreementsAgree',agree)

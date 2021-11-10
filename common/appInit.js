@@ -9,7 +9,7 @@ import interceptorChooseImage from '@/uni_modules/json-interceptor-chooseImage/j
 const db = uniCloud.database()
 export default async function() {
 	let loginConfig = uniStarterConfig.router.login
-	//清除有配置但设备环境不支持的登陆项
+	//清除有配置但设备环境不支持的登录项
 	// #ifdef APP-PLUS
 	await new Promise((callBack) => {
 		plus.oauth.getServices(oauthServices => {
@@ -40,7 +40,7 @@ export default async function() {
 	})
 	// #endif
 
-	//非app移除：一键登录、苹果登陆；h5移除微信登陆，如果你做微信公众号登陆需要将此行移除
+	//非app移除：一键登录、苹果登录；h5移除微信登录，如果你做微信公众号登录需要将此行移除
 	// #ifndef APP-PLUS
 	loginConfig = loginConfig.filter(item => {
 		return ![
@@ -115,15 +115,16 @@ export default async function() {
 		})
 	})
 
-	const Debug = true;
+	const Debug = false;
 	//拦截器封装callFunction
 	let callFunctionOption;
 	uniCloud.addInterceptor('callFunction', {
 		async invoke(option) {
 			// #ifdef APP-PLUS
-			// 判断如果是执行登陆（无论是哪种登陆方式），就记录用户的相关设备id
-			if (option.name == 'uni-id-cf' && (option.data.action == 'register' || option.data.action
-					.slice(0, 5) == 'login')) {
+			// 判断如果是执行登录（无论是哪种登录方式），就记录用户的相关设备id
+			if (option.name == 'uni-id-cf' &&
+				(option.data.action == 'register' || option.data.action.slice(0, 5) == 'login')
+			) {
 				let oaid = await new Promise((callBack, fail) => {
 					if (uni.getSystemInfoSync().platform == "android") {
 						plus.device.getOAID({
@@ -178,11 +179,11 @@ export default async function() {
 					oaid,
 					idfa
 				}
-				console.log("重新登陆/注册，获取设备id", deviceInfo);
+				console.log("重新登录/注册，获取设备id", deviceInfo);
 				option.data.deviceInfo = deviceInfo
 
 				// #ifndef H5
-				//注册可能不仅仅走register接口，还有登陆并注册的接口
+				//注册可能不仅仅走register接口，还有登录并注册的接口
 				option.data.inviteCode = await new Promise((callBack) => {
 					uni.getClipboardData({
 						success: function(res) {
@@ -260,7 +261,7 @@ export default async function() {
 			});
 		},
 		success: (e) => {
-			console.log(e);
+			// console.log(e);
 			const {
 				token,
 				tokenExpired
@@ -293,11 +294,11 @@ export default async function() {
 					console.log('code的值是：' + e.result.code, '可以在上面添加case，自动处理响应体');
 					break;
 			}
-			
-			switch (e.result.errCode){
+
+			switch (e.result.errCode) {
 				case 'uni-id-token-not-exist':
 					uni.showToast({
-						title: '登陆信息失效',
+						title: '登录信息失效',
 						icon: 'none'
 					});
 					uni.navigateTo({
@@ -340,7 +341,7 @@ export default async function() {
 				let inLoginPage = fromUrl.split('/')[2] == 'login-page'
 
 				//控制登录优先级
-				if ( //判断当前窗口是否为登陆页面，如果是则不重定向路由
+				if ( //判断当前窗口是否为登录页面，如果是则不重定向路由
 					url == '/pages/ucenter/login-page/index/index' &&
 					!inLoginPage
 				) {

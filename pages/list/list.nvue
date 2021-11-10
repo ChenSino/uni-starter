@@ -3,17 +3,27 @@
 		<!-- #ifndef H5 -->
 		<statusBar></statusBar>
 		<!-- #endif -->
+
 		<!-- 搜索功能 -->
-		<uni-search-bar @click="searchClick" class="uni-search-box" v-model="keyword" ref="searchBar" radius="100"
-			cancelButton="none" disabled :placeholder="inputPlaceholder" />
-		<view class="cover-search-bar" @click="searchClick"></view>
+		<view class="uni-search-box">
+			<uni-search-bar v-model="keyword" ref="searchBar" radius="100" cancelButton="none" disabled
+				:placeholder="inputPlaceholder" />
+			<view class="cover-search-bar" @click="searchClick"></view>
+		</view>
+
 		<unicloud-db ref='udb' v-slot:default="{data,pagination,hasMore, loading, error, options}" @error="onqueryerror"
 			:where="where" collection="opendb-news-articles,uni-id-users" :page-size="10"
 			field="avatar,title,last_modify_date,user_id.username" @load="loadData"
 			>
 			<!-- 基于 uni-list 的页面布局 -->
-			<uni-list class="uni-list" :border="false" :bounce="true" :alwaysScrollableVertical="true"
-				:style="{height:listHight}">
+			<uni-list class="uni-list" :border="false" :style="{height:listHight}">
+				
+				<!-- 作用于app端nvue页面的下拉加载 -->
+				<!-- #ifdef APP-NVUE -->
+				<refreshBox @refresh="refresh" :loading="loading"></refreshBox>
+				<!-- #endif -->
+
+				<!-- 列表渲染 -->
 				<uni-list-item :to="'/pages/list/detail?id='+item._id+'&title='+item.title" v-for="(item,index) in data"
 					:key="index">
 					<!-- 通过header插槽定义列表左侧图片 -->
@@ -32,9 +42,12 @@
 						</view>
 					</template>
 				</uni-list-item>
+				
+				<!-- 加载状态：上拉加载更多，加载中，没有更多数据了，加载错误 -->
 				<uni-list-item>
 					<template v-slot:body>
-						<uni-load-state @networkResume="refresh" :state="{data,pagination,hasMore, loading, error}">
+						<uni-load-state @networkResume="refresh" :state="{data,pagination,hasMore, loading, error}"
+							@loadMore="loadMore">
 						</uni-load-state>
 					</template>
 				</uni-list-item>
@@ -70,13 +83,14 @@
 				refreshState: 0,
 				listHight: 0,
 				dataList:[]
+				showRefresh: false,
 			}
 		},
 		watch: {
 			keyword(keyword, oldValue) {
 				let where = '"article_status" == 1 '
 				if (keyword) {
-					this.where = where + `& /${keyword}/.test(title)`;
+					this.where = where + `&& /${keyword}/.test(title)`;
 				} else {
 					this.where = where;
 				}
@@ -84,13 +98,14 @@
 		},
 		async onReady() {
 			// #ifdef APP-NVUE
-			this.listHight = uni.getSystemInfoSync().windowHeight - 96 + 'px'
+			/* 可用窗口高度 - 搜索框高 - 状态栏高 */
+			this.listHight = uni.getSystemInfoSync().windowHeight - uni.getSystemInfoSync().statusBarHeight - 50 +
+			'px';
 			// #endif
 			// #ifndef APP-NVUE
 			this.listHight = 'auto'
 			// #endif
 			cdbRef = this.$refs.udb
-			
 		},
 		async onShow() {
 			this.keyword = getApp().globalData.searchText
@@ -128,27 +143,39 @@
 				this.refresh()
 			},
 			refresh() {
-				console.log('----platform----');
-				console.log(JSON.stringify(process.env.VUE_APP_PLATFORM));
 				cdbRef.loadData({
 					clear: true
 				}, () => {
 					uni.stopPullDownRefresh()
+					// #ifdef APP-NVUE
+					this.showRefresh = false
+					// #endif
+					console.log('end');
 				})
 				console.log('refresh');
 			},
+			loadMore() {
+				cdbRef.loadMore()
+			},
 			onqueryerror(e) {
 				console.error(e);
+			},
+			onpullingdown(e) {
+				console.log(e);
+				this.showRefresh = true
+				if(e.pullingDistance>100){
+					this.refresh()
+				}
 			}
 		},
+		// #ifndef APP-NVUE
 		onPullDownRefresh() {
 			this.refresh()
 		},
 		onReachBottom() {
-			cdbRef.loadMore({
-				clear: true
-			})
+			this.loadMore()
 		}
+		// #endif
 	}
 </script>
 
@@ -159,7 +186,6 @@
 		box-sizing: border-box;
 		flex-direction: column;
 	}
-
 	/* #endif */
 	.pages {
 		background-color: #FFFFFF;
@@ -191,21 +217,10 @@
 		color: #999999;
 	}
 
-	.refresh-tip {
-		color: #67c23a;
-		font-size: 14px;
-		line-height: 40px;
-		text-align: center;
-		background-color: #f0f9eb;
-		height: 0;
-		opacity: 0;
-		transform: translateY(-100%);
-		transition: height 0.3s;
-	}
-
 	.uni-search-box {
 		background-color: #FFFFFF;
 		position: sticky;
+		height: 50px;
 		top: 0;
 		left: 0;
 		/* #ifndef APP-PLUS */
@@ -215,37 +230,6 @@
 		width: 580rpx;
 		/* #endif */
 	}
-
-	.show-refresh-tip {
-		transform: translateY(0);
-		height: 40px;
-		opacity: 1;
-	}
-
-	.get-data-state {
-		width: 750rpx;
-		align-items: center;
-	}
-
-	.get-data-state-img {
-		width: 500rpx;
-	}
-
-	.get-data-state-text {
-		width: 32rpx;
-		color: #999999;
-		line-height: 50rpx;
-		height: 50rpx;
-		width: 750rpx;
-		text-align: center;
-	}
-
-	.uni-list {}
-
-	.f1 {
-		flex: 1;
-	}
-
 	.cover-search-bar {
 		height: 50px;
 		position: relative;

@@ -145,7 +145,7 @@
 	}
 
 	.box {
-		margin-top: 100px;
+		margin-top: 60px;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;

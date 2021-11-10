@@ -1,5 +1,5 @@
 export default {
-	tabbar:'列表,宫格,我的',
+	tabbar:'列表,宫格,通讯录,我的',
 	agreementsTitle:'用户服务协议,隐私政策',
 	common:{
 		wechatFriends: "微信好友",
@@ -101,7 +101,7 @@ export default {
 	guestbook:{
 		navigationBarTitle:"留言板",
 		msgContent: "发表留言内容",
-		notAvailable: "未登陆游客不可用",
+		notAvailable: "未登录游客不可用",
 		send: "发送",
 		addSucceeded: "新增成功",
 		noPermission: "你没有该操作权限",
@@ -168,7 +168,7 @@ export default {
 		xiaomiLogin: "小米登录",
 		getProviderFail: "获取服务供应商失败",
 		loginErr: "登录服务初始化错误",
-		chooseOtherLogin: "点击了第三方登陆",
+		chooseOtherLogin: "点击了第三方登录",
 	},
 	pwdLogin:{
 		pwdLogin: "用户名密码登录",

@@ -1,10 +1,6 @@
 <template>
-	<view style="width: 750rpx;">
-		<template v-if="!state.error">
-			<uni-load-more v-if="state.loading||state.pagination.current!=1||state.data.length!=0" :status="state.loading?'loading':(state.hasMore?'hasMore':'noMore')"></uni-load-more>
-			<text class="noData" v-else>{{noData}}</text>
-		</template>
-		<view v-else>
+	<view @appear="appear">
+		<view v-if="state.error">
 			<view class="box" v-if="networkType == 'none'">
 				<image class="icon-image" src="@/static/uni-load-state/disconnection.png" mode="widthFix"></image>
 				<text class="tip-text">{{noNetwork}}</text>
@@ -12,31 +8,42 @@
 					<text class="btn-text">{{toSet}}</text>
 				</view>
 			</view>
-			<text class="err" v-else>{{error}}：{{JSON.stringify(state.error)}}</text>
+			<text class="error" v-else>{{error}}：{{JSON.stringify(state.error)}}</text>
 		</view>
+		<template v-else>
+			<!-- #ifdef APP-NVUE -->
+			<text class="state-text">{{state.loading?'加载中...':(state.hasMore?'上拉加载更多':'没有更多数据了')}}</text>
+			<!-- #endif -->
+			<!-- #ifndef APP-NVUE -->
+			<uni-load-more class="uni-load-more" :status="state.loading?'loading':(state.hasMore?'hasMore':'noMore')"></uni-load-more>
+			<!-- #endif -->
+		</template>
+		
 	</view>
 </template>
 
 <script>
 	import {
-	initVueI18n
+		initVueI18n
 	} from '@dcloudio/uni-i18n'
 	import messages from './i18n/index.js'
-	const {	t	} = initVueI18n(messages)
-	
+	const {
+		t
+	} = initVueI18n(messages)
+
 	export default {
 		name: "uni-load-state",
-		computed:{
-			noData(){
+		computed: {
+			noData() {
 				return t('noData')
 			},
-			noNetwork(){
+			noNetwork() {
 				return t('noNetwork')
 			},
-			toSet(){
+			toSet() {
 				return t('toSet')
 			},
-			error(){
+			error() {
 				return t('error')
 			}
 		},
@@ -46,15 +53,17 @@
 			};
 		},
 		props: {
-			state:{
+			state: {
 				type: Object,
-				default(){
+				default () {
 					return {
-						"loading":true,
-						"hasMore":false,
-						"pagination":{"pages":0},
-						"data":[],
-						"error":{}
+						"loading": true,
+						"hasMore": false,
+						"pagination": {
+							"pages": 0
+						},
+						"data": [],
+						"error": {}
 					}
 				}
 			}
@@ -63,7 +72,7 @@
 			uni.onNetworkStatusChange(({
 				networkType
 			}) => {
-				if(this.networkType == 'none' && networkType != 'none'){ //之前没网现在有了
+				if (this.networkType == 'none' && networkType != 'none') { //之前没网现在有了
 					this.$emit('networkResume')
 				}
 				this.networkType = networkType;
@@ -76,8 +85,13 @@
 				}
 			});
 		},
-		methods:{
-			openSettings(){
+		methods: {
+			appear() {
+				if (!this.state.loading && this.state.hasMore) {
+					this.$emit('loadMore')
+				}
+			},
+			openSettings() {
 				if (uni.getSystemInfoSync().platform == "ios") {
 					var UIApplication = plus.ios.import("UIApplication");
 					var application2 = UIApplication.sharedApplication();
@@ -100,23 +114,35 @@
 </script>
 
 <style scoped>
-	.box{
+	.box {
 		flex: 1;
-		margin:100rpx 0;
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
 	}
-	
-	.icon-image{
+	.uni-load-more{
+		align-items: center;
+		justify-content: center;
+		width: 690rpx;
+	}
+	.state-text {
+		text-align: center;
+		font-size: 26rpx;
+		width: 690rpx;
+		padding: 10rpx;
+		color: #999999;
+	}
+
+	.icon-image {
 		width: 300rpx;
 	}
-	.tip-text{
+
+	.tip-text {
 		color: #999999;
 		font-size: 32rpx;
 		margin-bottom: 30rpx;
 	}
-	
+
 	.btn {
 		padding: 5px 10px;
 		width: 128px;
@@ -137,17 +163,9 @@
 		border-width: 1px;
 		border-radius: 3px;
 	}
-	
-	.noData{
-		text-align: center;
-		padding: 30rpx;
-		width: 750rpx;
-		/* #ifndef APP-PLUS-NVUE */
-		display: block;
-		/* #endif */
-	}
-	.err{
-		width: 750rpx;
+
+	.error {
+		width: 690rpx;
 		color: #DD524D;
 	}
 </style>

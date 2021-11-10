@@ -12,7 +12,7 @@ if(i18nEnable){
 }else{
 	currentLang = "zh-Hans"
 }
-console.log(uni.getStorageSync('CURRENT_LANG'),currentLang);
+// console.log(uni.getStorageSync('CURRENT_LANG'),currentLang);
 if (!currentLang) {
 	if (uni.getLocale) {
 		console.log('获取应用语言:', uni.getLocale());
@@ -69,17 +69,20 @@ console.log(`
 `);
 	let initLanguageAfter = () => {
 		function $i18n(e){
+			// #ifdef VUE3
+			return i18n.global.messages[i18n.global.locale][e]
+			// #endif
 			return i18n.messages[i18n.locale][e]
 		}
 		setTimeout(function(){
 			//底部tabbar更新
 			$i18n('tabbar').split(',').forEach((text, index) => {
-				console.log(text);
+				// console.log(text);
 				uni.setTabBarItem({
 					index,
 					text,
 					complete: e => {
-						console.log("e: " + JSON.stringify(e));
+						// console.log("e: " + JSON.stringify(e));
 					}
 				})
 			})
