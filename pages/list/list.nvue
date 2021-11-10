@@ -82,7 +82,7 @@
 				keyword: "",
 				refreshState: 0,
 				listHight: 0,
-				dataList:[]
+				dataList:[],
 				showRefresh: false,
 			}
 		},
