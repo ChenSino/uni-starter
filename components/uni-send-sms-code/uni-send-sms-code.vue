@@ -53,6 +53,7 @@
 			};
 		},
 		computed: {
+
 			innerText() {
 				if (this.reverseNumber == 0) return this.$t('common.getVerifyCode');
 				return this.$t('smsCode.resendVerifyCode')+ '('+this.reverseNumber+'s)';
@@ -84,77 +85,48 @@
 							"type": this.codeType
 						},
 					},
-				}).then(({result})=>{
-					console.log(result);
-					if (result.code === 0) {
-						uni.showToast({
-							title: this.$t('smsCode.sendSuccessTip'),
-							icon: 'none'
-						});
-						this.reverseNumber = Number(this.count);
-						this.getCode();
-						this.$emit('getCode');
-					} else {
-						uni.showModal({
-							content: result.msg,
-							showCancel: false
-						});
+					success: ({result}) => {
+						console.log(result);
+						if(result.code===0){
+							uni.showToast({
+								title: this.$t('smsCode.sendSuccessTip'),
+								icon: 'none'
+							});
+							this.reverseNumber = Number(this.count);
+							this.getCode();
+							this.$emit('getCode');
+						}else{
+							uni.showModal({
+								content: result.msg,
+								showCancel: false
+							});
+						}
 					}
-					return result
 				})
-
-			// uniCloud.callFunction({
-			// 	name:'uni-id-cf',
-			// 	data:{
-			// 		action:'sendSmsCode',
-			// 		params:{
-			// 			"mobile": this.phone,
-			// 			"type": this.codeType
-			// 		},
-			// 	},
-			// 	success: ({result}) => {
-			// 		console.log(result);
-			// 		if(result.code===0){
-			// 			uni.showToast({
-			// 				title: this.$t('smsCode.sendSuccessTip'),
-			// 				icon: 'none'
-			// 			});
-			// 			this.reverseNumber = Number(this.count);
-			// 			this.getCode();
-			// 			this.$emit('getCode');
-			// 		}else{
-			// 			uni.showModal({
-			// 				content: result.msg,
-			// 				showCancel: false
-			// 			});
-			// 		}
-			// 	}
-			// })
-		},
-		getCode() {
-			if (this.reverseNumber == 0) {
-				clearTimeout(this.reverseTimer);
-				this.reverseTimer = null;
-				return;
+			},
+			getCode() {
+				if (this.reverseNumber == 0) {
+					clearTimeout(this.reverseTimer);
+					this.reverseTimer = null;
+					return;
+				}
+				this.reverseNumber--;
+				this.reverseTimer = setTimeout(() => {
+					this.getCode();
+				}, 1000)
 			}
-			this.reverseNumber--;
-			this.reverseTimer = setTimeout(() => {
-				this.getCode();
-			}, 1000)
 		}
-	}
 	}
 </script>
 
 <style lang="scss" scoped>
-	/* #ifndef APP-NVUE */
-	view {
-		display: flex;
-		box-sizing: border-box;
-		flex-direction: column;
-	}
-
-	/* #endif */
+/* #ifndef APP-NVUE */
+view{
+	display: flex;
+	box-sizing: border-box;
+	flex-direction: column;
+}
+/* #endif */
 	.short-code-btn {
 		width: 200rpx;
 		height: 85rpx;
@@ -164,12 +136,10 @@
 		justify-content: center;
 		align-items: center;
 	}
-
 	.inner-text {
 		font-size: 28rpx;
 		color: #AAAAAA;
 	}
-
 	.inner-text-active {
 		color: #007aff;
 	}

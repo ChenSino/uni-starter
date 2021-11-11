@@ -22,7 +22,6 @@
 				<!-- #ifdef APP-NVUE -->
 				<refreshBox @refresh="refresh" :loading="loading"></refreshBox>
 				<!-- #endif -->
-
 				<!-- 列表渲染 -->
 				<uni-list-item :to="'/pages/list/detail?id='+item._id+'&title='+item.title" v-for="(item,index) in data"
 					:key="index">
@@ -40,9 +39,8 @@
 									format="yyyy-MM-dd" :threshold="[60000, 2592000000]" />
 							</view>
 						</view>
-					</template>
+					</template>		
 				</uni-list-item>
-				
 				<!-- 加载状态：上拉加载更多，加载中，没有更多数据了，加载错误 -->
 				<uni-list-item>
 					<template v-slot:body>
@@ -116,8 +114,12 @@
 			// 	title:"获取定位中"
 			// });
 			//默认h5端不获取定位
-			// let location = await gps.getLocation({geocode:true})
-			// console.log(location);
+			// #ifndef H5
+			let location = await gps.getLocation({
+				geocode: true
+			})
+			console.log(location);
+			// #endif
 			// if(location){
 			// 	uni.showToast({
 			// 		title: JSON.stringify(location),
@@ -150,6 +152,7 @@
 					// #ifdef APP-NVUE
 					this.showRefresh = false
 					// #endif
+
 					console.log('end');
 				})
 				console.log('refresh');
@@ -240,3 +243,4 @@
 		/* #endif */
 	}
 </style>
+

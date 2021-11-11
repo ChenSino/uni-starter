@@ -23,26 +23,26 @@
 			return {
 				currenPhoneArea: '',
 				formData: {
-					phone: "",
-					code: ""
+					phone:"",
+					code:""
 				}
 			}
 		},
 		computed: {
 			tipText() {
-				return this.$t('common.verifyCodeSend') + `${this.currenPhoneArea} ${this.formData.phone}。` + this.$t(
-					'common.passwordDigits')
+				return this.$t('common.verifyCodeSend')+ `${this.currenPhoneArea} ${this.formData.phone}。` + this.$t('common.passwordDigits')
 			},
 			canSubmit() {
-				return true //this.isPhone() && this.isCode();
+				return true//this.isPhone() && this.isCode();
 			}
 		},
 		onLoad(event) {
 			uni.setNavigationBarTitle({
-				title: this.$t('bindMobile.navigationBarTitle')
+				title:this.$t('bindMobile.navigationBarTitle')
 			})
 		},
-		onReady() {},
+		onReady() {
+		},
 		methods: {
 			...mapMutations({
 				setUserInfo: 'user/login'
@@ -116,13 +116,11 @@
 		padding: 50rpx;
 		padding-top: 10px;
 	}
-
-	/* #ifndef APP-NVUE  || VUE3 */
+/* #ifndef APP-NVUE  || VUE3 */
 	.box /deep/ .uni-easyinput__content {
 		height: 50px;
 	}
-
-	/* #endif */
+/* #endif */
 	.input-box {
 		width: 100%;
 		margin-top: 16px;

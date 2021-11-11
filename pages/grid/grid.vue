@@ -78,7 +78,6 @@
 		},
 		methods: {
 			change(e) {
-				// console.log("e: ",e);
 				uni.showToast({
 					title:this.$t('grid.clickTip') + " " + `${e.detail.index}` + " " + this.$t('grid.clickTipGrid'),
 					icon: 'none'
