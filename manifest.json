@@ -1,5 +1,5 @@
 {
-  "name": "统一应用基本项目",
+  "name": "uuuu",
   "appid": "请点击重新获取",
   "description": "云端一体应用快速开发模版",
   "versionName": "1.0.0",
@@ -8,28 +8,23 @@
   "app-plus": {
     "locales": {
       "en": {
-                // 英文  
-        "name": "uni-starter", // 应用名称  
+        "name": "uni-starter",
         "android": {
           "strings": {
-                        //Android平台自定义字符串  
             "CustomKey": "CustomValue"
           }
         },
         "ios": {
           "privacyDescription": {
-                        //iOS平台隐私访问描述信息  
             "NSPhotoLibraryUsageDescription": "access to the user’s photo library(read)"
           },
           "infoPlist": {
-                        //iOS平台自定义InfoPlist.strings  
             "CustomKey": "CustomValue"
           }
         }
       },
       "zh": {
-                // 中文（简体）
-        "name": "统一应用基本项目" // 应用名称  
+        "name": "统一应用基本项目"
       }
     },
     "privacy": {
@@ -224,6 +219,3 @@
   "_spaceID": "",
   "vueVersion": "2"
 }
-//...  
-// 中文（简体）
-// 应用名称  
