@@ -55,6 +55,12 @@
 				})
 			}
 			//#endif
+			uni.$on('setLoginType',type=>{
+				this.type = type
+			})
+		},
+		onUnload() {
+			uni.$off('setLoginType')
 		},
 		onReady() {
 			//#ifdef APP-PLUS

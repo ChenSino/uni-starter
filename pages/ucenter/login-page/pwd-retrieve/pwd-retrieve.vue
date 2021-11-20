@@ -39,6 +39,7 @@
 				lock:false,
 				formData: {
 					"phone": "",
+					"code":"",
 					'pwd': '',
 					'pwd2': ''
 				},
@@ -138,6 +139,8 @@
 			 * 完成并提交
 			 */
 			submit() {
+				console.log("formData",this.formData);
+				console.log('rules',this.rules);
 				this.$refs.form.validate()
 					.then(res => {
 						uniCloud.callFunction({
@@ -153,7 +156,7 @@
 							success: ({result}) => {
 								console.log(result);
 								uni.showToast({
-									title: result.msg,
+									title: result.msg||'更新成功',
 									icon: 'none'
 								});
 								if (result.code === 0) {
@@ -169,7 +172,6 @@
 
 <style>
 	@import url("../common/login-page.css");
-
 	.content{
 		padding-top: 36rpx;
 	}

@@ -80,7 +80,7 @@
 						} else {
 							if (result.needCaptcha) {
 								uni.showToast({
-									title: result.msg,
+									title: result.msg||'完成',
 									icon: 'none'
 								});
 								this.createCaptcha()

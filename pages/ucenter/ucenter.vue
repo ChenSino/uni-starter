@@ -69,7 +69,15 @@
 					}
 				],
 				ucenterList: [
-					[{
+					[
+						// #ifdef APP-PLUS
+						{
+							"title": this.$t('mine.signInByAd'),
+							"event": 'signInByAd',
+							"icon": "compose"
+						},
+						// #endif
+						{
 							"title": this.$t('mine.signIn'),
 							"event": 'signIn',
 							"icon": "compose"
@@ -168,8 +176,11 @@
 					url: "/pages/ucenter/settings/settings"
 				})
 			},
-			signIn() { //签到
+			signIn() { //普通签到
 				this.$refs.signIn.open()
+			},
+			signInByAd(){ //看激励视频广告签到
+				this.$refs.signIn.showRewardedVideoAd()
 			},
 			/**
 			 * 个人中心项目列表点击事件

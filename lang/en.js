@@ -53,6 +53,7 @@ export default {
 	mine: {
 		showText: "Text",
 		signIn: "Check In Reward",
+		signInByAd:"Check In Reward By AD",
 		toEvaluate: "To Evaluate",
 		readArticles: "Read Articles",
 		myScore: "My Score",

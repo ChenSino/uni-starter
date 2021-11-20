@@ -82,7 +82,7 @@
 					},
 					success: (e) => {
 						uni.showToast({
-							title: e.result.msg,
+							title: e.result.msg||'绑定成功',
 							icon: 'none'
 						});
 						if(e.result.code === 0){

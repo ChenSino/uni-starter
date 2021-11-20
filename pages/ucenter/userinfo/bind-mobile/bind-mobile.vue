@@ -64,7 +64,7 @@
 						console.log(result);
 						this.setUserInfo({"mobile":result.mobile})
 						uni.showToast({
-							title: result.msg,
+							title: result.msg||'完成',
 							icon: 'none'
 						});
 						if (result.code === 0) {

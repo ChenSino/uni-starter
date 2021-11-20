@@ -1,5 +1,5 @@
 {
-  "name": "uuuu",
+  "name": "uni-starter",
   "appid": "请点击重新获取",
   "description": "云端一体应用快速开发模版",
   "versionName": "1.0.0",
@@ -112,6 +112,10 @@
           }
         },
         "ad": {
+          "gdt": {
+          },
+          "csj": {
+          }
         },
         "share": {
           "weixin": {
@@ -170,7 +174,8 @@
       },
       "splashscreen": {
         "iosStyle": "common",
-        "androidStyle": "common"
+        "androidStyle": "common",
+        "useOriginalMsgbox": true
       }
     },
     "nvueLaunchMode": ""
