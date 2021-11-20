@@ -1,7 +1,7 @@
 <template>
 	<view class="root">
 		<checkbox-group @change="setAgree" class="checkbox-group">
-			<checkbox  style="transform: scale(0.7);" />
+			<checkbox :checked="isAgree" style="transform: scale(0.7);" />
 			<text>{{$t('common.agree')}}</text>
 		</checkbox-group>
 		<view class="item" v-for="(agreement,index) in agreements" :key="index">
@@ -38,6 +38,8 @@
 		},
 		created() {
 			uni.$on('setAgreementsAgree',state=>{
+				console.log('setAgreementsAgree',state);
+				this.isAgree = state
 				this.$emit('setAgree',state)
 			})
 		},

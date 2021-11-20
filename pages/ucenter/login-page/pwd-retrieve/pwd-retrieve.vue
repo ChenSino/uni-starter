@@ -39,6 +39,7 @@
 				lock:false,
 				formData: {
 					"phone": "",
+					"code":"",
 					'pwd': '',
 					'pwd2': ''
 				},
@@ -152,10 +153,10 @@
 							}
 						}).then(({result})=>{
 							console.log(result);
-							// uni.showToast({
-							// 	title: result.msg,
-							// 	icon: 'none'
-							// });
+							uni.showToast({
+								title: result.msg||'更新成功',
+								icon: 'none'
+							});
 							if (result.code === 0) {
 								uni.navigateBack()
 							}
@@ -191,7 +192,6 @@
 
 <style>
 	@import url("../common/login-page.css");
-
 	.content{
 		padding-top: 36rpx;
 	}

@@ -39,7 +39,7 @@
 				handler(src) {
 					// console.log(src);
 					// console.log(src.substring(0, 8));
-					if (src.substring(0, 8) == "cloud://") {
+					if (src&&src.substring(0, 8) == "cloud://") {
 						uniCloud.getTempFileURL({
 							fileList: [src]
 						}).then(res=>{

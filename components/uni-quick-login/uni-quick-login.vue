@@ -13,11 +13,22 @@
 	</view>
 </template>
 <script>
-	import {mapGetters,mapMutations} from 'vuex';
+	import {
+		initVueI18n
+	} from '@dcloudio/uni-i18n'
+	import messages from './i18n/index.js'
+	const {
+		t
+	} = initVueI18n(messages)
+	import {
+		mapGetters,
+		mapMutations
+	} from 'vuex';
 	//前一个窗口的页面地址。控制点击切换快捷登录方式是创建还是返回
 	import loginSuccess from '@/pages/ucenter/login-page/common/loginSuccess.js';
 	const db = uniCloud.database();
 	const usersTable = db.collection('uni-id-users')
+	let allServicesList = []
 	export default {
 		computed: {
 			loginConfig() {
@@ -31,44 +42,44 @@
 			return {
 				servicesList: [{
 						"id": "username",
-						"text": this.$t('uniQuickLogin').accountLogin,
+						"text": t('accountLogin'),
 						"logo": "/static/uni-quick-login/user.png",
 						"path": "/pages/ucenter/login-page/pwd-login/pwd-login"
 					},
 					{
 						"id": "smsCode",
-						"text": this.$t('uniQuickLogin').SMSLogin,
+						"text": t('SMSLogin'),
 						"logo": "/static/uni-quick-login/sms.png",
 						"path": "/pages/ucenter/login-page/index/index?type=smsCode"
 					},
 					{
 						"id": "weixin",
-						"text": this.$t('uniQuickLogin').wechatLogin,
+						"text": t('wechatLogin'),
 						"logo": "/static/uni-quick-login/wechat.png",
 					},
 					{
 						"id": "apple",
-						"text": this.$t('uniQuickLogin').appleLogin,
+						"text": t('appleLogin'),
 						"logo": "/static/uni-quick-login/apple.png",
 					},
 					{
 						"id": "univerify",
-						"text":this.$t('uniQuickLogin').oneClickLogin,
+						"text": t('oneClickLogin'),
 						"logo": "/static/uni-quick-login/univerify.png",
 					},
 					{
 						"id": "qq",
-						"text": this.$t('uniQuickLogin').QQLogin, //暂未提供该登录方式的接口示例
+						"text": t('QQLogin'), //暂未提供该登录方式的接口示例
 						"logo": "/static/uni-quick-login/univerify.png",
 					},
 					{
 						"id": "xiaomi",
-						"text": this.$t('uniQuickLogin').xiaomiLogin, //暂未提供该登录方式的接口示例
+						"text": t('xiaomiLogin'), //暂未提供该登录方式的接口示例
 						"logo": "/static/uni-quick-login/univerify.png",
 					},
 					{
 						"id": "sinaweibo",
-						"text": this.$t('common').weibo, //暂未提供该登录方式的接口示例
+						"text": t('weibo'), //暂未提供该登录方式的接口示例
 						"logo": "/static/uni-quick-login/univerify.png",
 					}
 				],
@@ -114,12 +125,14 @@
 				//设置一键登录功能底下的快捷登录按钮
 				servicesList.forEach(({
 					id,
-					logo
+					logo,
+					path
 				}) => {
 					if (id != 'univerify') {
 						this.univerifyStyle.buttons.list.push({
 							"iconPath": logo,
-							"provider": id
+							"provider": id,
+							// path
 						})
 					}
 				})
@@ -139,8 +152,7 @@
 			})
 			console.log('servicesList', servicesList, this.servicesList);
 		},
-		mounted() {
-		},
+		mounted() {},
 		methods: {
 			...mapMutations({
 				setUserInfo: 'user/login'
@@ -154,68 +166,98 @@
 				return '/' + pages[pages.length - n].route
 			},
 			to(path) {
-				// console.log('比较', this.getRoute(2), path)
-				if (this.getRoute(2) == path) { // 控制路由是重新打开还是返回，避免重复打开页面
+				console.log('比较', this.getRoute(1),this.getRoute(2), path)
+				if(this.getRoute(1) == path.split('?')[0] && this.getRoute(1) == '/pages/ucenter/login-page/index/index'){
+					//如果要被打开的页面已经打开，且这个页面是 /pages/ucenter/login-page/index/index 则把类型参数传给他
+					let type = path.split('?')[1].split('=')[1]
+					uni.$emit('setLoginType',type)
+				}else if(this.getRoute(2) == path) { // 如果上一个页面就是，马上要打开的页面，直接返回。防止重复开启
 					uni.navigateBack();
-				} else {
+				}else if(this.getRoute(1) != path) {
 					uni.navigateTo({
 						url: path,
 						animationType: 'slide-in-left'
 					})
+				}else{
+					console.log('出乎意料的情况,path：'+path);
 				}
 			},
 			login_before(type, navigateBack = true) {
+				console.log(type);
 				if (!this.agree && type != 'univerify') {
 					return uni.showToast({
-						title: this.$t('common').noAgree,
+						title: t('noAgree'),
 						icon: 'none'
 					});
 				}
-				uni.showLoading({
-					mask: true
-				})
-				
-				//univerifyManager
-				if(type == 'univerify' && uni.getUniverifyManager){
-					// 调用一键登录弹框
-					const univerifyManager = uni.getUniverifyManager()
-					univerifyManager.login({
-					  "univerifyStyle": this.univerifyStyle,
-					  success (res) {
-					    console.log('login success', res)
-					  }
-					})
-					
-					const callback = (res) => {
-					  // 获取一键登录弹框协议勾选状态
-					  univerifyManager.getCheckBoxState({
-					    success(res) {
-					      console.log("getCheckBoxState res: ", res);
-					      if (res.state) {
-					        // 关闭一键登录弹框
-					        univerifyManager.close()
-					      }
-					    }
-					  })
+				uni.showLoading({mask: true})
+				if (type == 'univerify' && uni.getUniverifyManager) {
+					let univerifyManager = uni.getUniverifyManager()
+					console.log('是新版');
+					let onButtonsClickFn =	async res =>{
+						console.log('点击了第三方登录，provider：',res, res.provider,this.univerifyStyle.buttons.list);
+						//同步一键登录弹出层隐私协议框是否打勾
+						let agree = (await uni.getCheckBoxState())[1].state
+						console.log('agree',agree);
+						uni.$emit('setAgreementsAgree', agree)
+						let {
+							path
+						} = this.univerifyStyle.buttons.list[res.index]
+						console.log('path', path,this.getRoute(1));
+						if (path) {
+							this.to(path)
+							closeUniverify()
+						} else {
+							if(agree){
+								closeUniverify()
+								setTimeout(() => {
+									console.log('login_before');
+									this.login_before(res.provider)
+								}, 500)
+							}else{
+								console.log(t('noAgree'));
+								uni.showToast({
+									title: t('noAgree'),
+									icon: 'none'
+								});
+							}
+						}
+					}
+					function closeUniverify(){
+						uni.hideLoading()
+						univerifyManager.close()
+						// 取消订阅自定义按钮点击事件
+						univerifyManager.offButtonsClick(onButtonsClickFn)
 					}
 					// 订阅自定义按钮点击事件
-					univerifyManager.onButtonsClick(callback)
-					// 取消订阅自定义按钮点击事件
-					univerifyManager.offButtonsClick(callback)
-				}else{
-					console.log(type);
-					console.log('uni.getUniverifyManager：'+uni.getUniverifyManager);
+					univerifyManager.onButtonsClick(onButtonsClickFn)
+					// 调用一键登录弹框
+					return univerifyManager.login({
+						"univerifyStyle": this.univerifyStyle,
+						success:res=> {
+							console.log('login success', res)
+							this.login(res.authResult, 'univerify')
+						},
+						fail(err) {
+							uni.showToast({
+								title: JSON.stringify(err),
+								icon: 'none'
+							});
+						},
+						complete(e){
+							uni.hideLoading()
+							// 取消订阅自定义按钮点击事件
+							univerifyManager.offButtonsClick(onButtonsClickFn)
+						}
+					})
 				}
-				
-				
-				
 				uni.login({
 					"provider": type,
-					"onlyAuthorize":true, //请勿直接使用前端获取的unionid或openid直接用于登录，前端的数据都是不可靠的
+					"onlyAuthorize": true, //请勿直接使用前端获取的unionid或openid直接用于登录，前端的数据都是不可靠的
 					"univerifyStyle": this.univerifyStyle,
 					complete: (e) => {
-						uni.hideLoading()
 						console.log(e);
+						uni.hideLoading()
 					},
 					success: async e => {
 						console.log(e);
@@ -225,20 +267,21 @@
 							})
 							Object.assign(e.authResult, res.userInfo)
 						}
-						this.login( type == 'weixin'?e.code:e.authResult , type)
+						this.login(type == 'weixin' ? e.code : e.authResult, type)
 					},
-					fail:async (err) => {
+					fail: async (err) => {
 						console.log(err);
-						if (type == 'univerify') {
+						// 以下代码为兼容旧版（HBuilderX3.2.13之前）HBuilderX3.2.13以上版本可直接删除
+						if (type == 'univerify'&& !uni.getUniverifyManager) {
 							if (err.metadata && err.metadata.error_data) {
 								uni.showToast({
-									title: this.$t('uniQuickLogin').oneClickLogin + ":" + err.metadata.error_data,
+									title: t('oneClickLogin') + ":" + err.metadata.error_data,
 									icon: 'none'
 								});
 							}
 							if (err.errMsg) {
 								uni.showToast({
-									title:this.$t('uniQuickLogin').oneClickLogin + ":" + err.errMsg,
+									title: t('oneClickLogin') + ":" + err.errMsg,
 									icon: 'none'
 								});
 							}
@@ -254,34 +297,29 @@
 									break;
 								case 30006:
 									uni.showModal({
-										title: this.$t('uniQuickLogin').loginErr,
+										title: t('loginErr'),
 										content: err.metadata.error_data,
 										showCancel: false,
-										confirmText: this.$t('common').gotIt,
+										confirmText: t('gotIt'),
 									});
 									break;
 								case "30008":
-									uni.showToast({
-										title: this.$t('uniQuickLogin').chooseOtherLogin,
-										icon: 'none'
-									});
 									console.log('点击了第三方登录，provider：', err.provider);
-									
 									//同步一键登录弹出层隐私协议框是否打勾
 									let agree = (await uni.getCheckBoxState())[1].state
-									console.log('agree',agree);
-									uni.$emit('setAgreementsAgree',agree)
+									console.log('agree', agree);
+									uni.$emit('setAgreementsAgree', agree)
 									let {
 										path
-									} = this.servicesList.find(item => item.id == err.provider) || {}
+									} = this.univerifyStyle.buttons.list[res.index]
 									console.log('path', path);
-									if (path && path != this.getRoute(1)) { //存在路径，且并不是当前已经打开的路径
+									if (path) {
 										this.to(path)
 									} else {
-										setTimeout(()=>{
-											console.log('agree',this.agree);
+										setTimeout(() => {
+											console.log('agree', this.agree);
 											this.login_before(err.provider)
-										},500)
+										}, 500)
 									}
 									break;
 								default:
@@ -289,6 +327,7 @@
 									break;
 							}
 						}
+						// 以上代码为兼容旧版（HBuilderX3.2.13之前）HBuilderX3.2.13以上版本可直接删除
 					}
 				})
 			},
@@ -309,18 +348,13 @@
 					}) => {
 						console.log("login-result", result);
 						if (result.code === 0) {
-							if (type == 'univerify') {
-								uni.closeAuthView()
-							}
-							uni.hideLoading()
 							delete result.userInfo.token
-							
 							// #ifdef MP-WEIXIN
 							if (type == 'weixin' && !result.userInfo.nickname) {
 								return this.$refs.userProfile.open(result.uid)
 							}
 							// #endif
-							
+
 							this.setUserInfo(result.userInfo)
 							loginSuccess(result)
 						} else {
@@ -330,12 +364,16 @@
 							});
 						}
 					},
-					complete: () => {
+					complete: (e) => {
+						console.log(e);
+						if (type == 'univerify') {
+							uni.closeAuthView()
+						}
 						uni.hideLoading()
 					}
 				})
 			},
-			doUserProfileNext(){
+			doUserProfileNext() {
 				loginSuccess()
 			},
 			async getUserInfo(e) {

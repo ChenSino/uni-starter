@@ -44,6 +44,8 @@
 <script>
 	const db = uniCloud.database();
 	const signInTable = db.action('signIn').collection('opendb-sign-in')
+	const date = new Date(new Date().toLocaleDateString()).getTime()
+	import AD from "../../utils/ad.js"
 	export default {
 		name: "uni-signIn",
 		data() {
@@ -59,32 +61,103 @@
 		},
 		mounted() {},
 		methods: {
-			closeMe(e) {
-				this.$refs.popup.close()
+			async getSignedInInfo(ToastText = '今日已签过') {
+				const date = new Date(new Date().toLocaleDateString()).getTime()
+				let res = await signInTable
+					.where(`'user_id' == $env.uid && 'date' == ${date} && 'isDelete' == false`)
+					.get()
+				if (res.result.data.length) {
+					this.signInRes = res.result
+					this.$refs.popup.open()
+					uni.showToast({
+						title: ToastText,
+						duration: 3000,
+						icon: 'none'
+					});
+				}
+				return res.result.data
 			},
+			//看激励视频广告签到
+			async showRewardedVideoAd() {
+				let res = await this.getSignedInInfo();
+				console.log(res);
+				if (res && res.length == 0) {
+					let {
+						_id: userId
+					} = uni.getStorageSync('userInfo')
+					console.log(userId, uni.getStorageSync('userInfo'));
+					if (!userId) {
+						return uni.navigateTo({
+							url: "/pages/ucenter/login-page/index/index"
+						})
+					}
+					// 调用后会显示 loading 界面
+					AD.show({
+						adpid: 1733738477, // HBuilder 基座测试广告位
+						adType: "RewardedVideo",
+						urlCallback: {
+							userId,
+							extra: 'uniSignIn'
+						}
+					}, res => {
+						// 用户点击了【关闭广告】按钮
+						if (res && res.isEnded) {
+							// 正常播放结束
+							console.log("onClose " + res.isEnded);
+							//3次轮训查结果
+							// uni.showLoading({mask: true});
+							let i = 0;
+							uni.showLoading({
+								mask: true
+							})
+							let myIntive = setInterval(async e => {
+								i++;
+								res = await this.getSignedInInfo('签到成功');
+								if (i > 2 || res.length) {
+									if (!res.length) {
+										uni.showToast({
+											title: '签到失败！',
+											icon: 'error',
+											duration: 6000
+										});
+									}
+									clearInterval(myIntive)
+									uni.hideLoading()
+								}
+							}, 2000);
+						} else {
+							// 播放中途退出
+							console.log("onClose " + res.isEnded);
+							uni.showToast({
+								title: '播放中途退出,签到失败！',
+								icon: 'error',
+								duration: 5000
+							});
+						}
+						// 在此处理服务器回调逻辑
+					}, (err) => {
+						// 广告加载错误
+						console.log(err)
+						uni.showToast({
+							title: err.errMsg,
+							icon: 'none'
+						});
+					})
+				}
+			},
+			//普通点击签到
 			async open() {
 				uni.showLoading({
 					mask: true
 				});
-				try{
-					const date = new Date(new Date().toLocaleDateString()).getTime()
-					let res = await signInTable
-						.where(`'user_id' == $env.uid && 'date' == ${date} && 'isDelete' == false`)
-						.get()
-					this.signInRes = res.result
-					console.log(res);
-					if (res.result.data.length) {
-						uni.hideLoading()
-						uni.showToast({
-							title: '今日已签过',
-							duration: 3000,
-							icon: 'none'
-						});
-					} else {
+				try {
+					let res = await this.getSignedInInfo();
+					if (res && res.length == 0) {
 						let res = await signInTable.add({});
 						console.log(res);
 						uni.hideLoading()
 						this.signInRes = res.result
+						this.$refs.popup.open()
 						if (this.signInRes.days.length == 7) {
 							uni.showToast({
 								title: "你已完成7日连续签到，获得60积分！",
@@ -99,12 +172,13 @@
 							})
 						}
 					}
-					this.$refs.popup.open()
-				}catch(e){
-					console.error(e)
+				} catch (e) {
 					uni.hideLoading()
+					console.error(e)
 				}
-				
+			},
+			closeMe(e) {
+				this.$refs.popup.close()
 			}
 		}
 	}
@@ -115,6 +189,10 @@
 		display: flex;
 		box-sizing: border-box;
 		flex-direction: column;
+	}
+
+	scroll-view {
+		-webkit-overflow-scrolling: touch;
 	}
 
 	.background-img {

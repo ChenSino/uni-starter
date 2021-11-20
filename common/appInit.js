@@ -179,7 +179,7 @@ export default async function() {
 					oaid,
 					idfa
 				}
-				console.log("重新登录/注册，获取设备id", deviceInfo);
+				//console.log("重新登录/注册，获取设备id", deviceInfo);
 				option.data.deviceInfo = deviceInfo
 
 				// #ifndef H5

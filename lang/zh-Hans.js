@@ -53,7 +53,8 @@ export default {
 	},
 	mine:{
 		showText: "文字",
-		signIn: "签到有奖",
+		signIn: "普通签到",
+		signInByAd:"看广告签到",
 		toEvaluate: "去评分",
 		readArticles: "阅读过的文章",
 		myScore: "我的积分",

@@ -50,22 +50,29 @@
 </template>
 
 <script>
+	// #ifdef APP
 	import UniShare from '@/uni_modules/uni-share/js_sdk/uni-share.js';
 	const uniShare = new UniShare()
+	// #endif
 	const db = uniCloud.database();
 	const readNewsLog = db.collection('read-news-log')
 	import {
 		mapGetters
 	} from 'vuex';
 	export default {
+		// #ifdef APP
 		onBackPress({from}) {
-			if(from=='backbutton'){
-				this.$nextTick(function(){
-					uniShare.hide()
-				})
+			if(from == 'backbutton'){
+				if(uniShare.isShow){
+					this.$nextTick(function(){
+						console.log(uniShare);
+						uniShare.hide()
+					})
+				}
 				return uniShare.isShow;
 			}
 		},
+		// #endif
 		data() {
 			return {
 				// 当前显示 _id
@@ -76,23 +83,21 @@
 				field: 'user_id.username,user_id._id,avatar,excerpt,last_modify_date,comment_count,like_count,title,content',
 				formData: {
 					noData: '<p style="text-align:center;color:#666">详情加载中...</p>'
-				},
+				}
 			}
 		},
 		computed: {
-			//拼接where条件
-			//查询条件 ,更多详见 ：https://uniapp.dcloud.net.cn/uniCloud/unicloud-db?id=jsquery
-			where() {
-				return `_id =="${this.id}"`
-			},
 			...mapGetters({
 				'userInfo': 'user/info',
 				'hasLogin': 'user/hasLogin'
 			}),
 			uniStarterConfig() {
 				return getApp().globalData.config
+			},
+			where(){
+				//拼接where条件 查询条件 ,更多详见 ：https://uniapp.dcloud.net.cn/uniCloud/unicloud-db?id=jsquery
+				return `_id =="${this.id}"`
 			}
-			
 		},
 		onLoad(event) {
 			console.log(event);
@@ -109,11 +114,6 @@
 				})
 			}
 		},
-		onNavigationBarButtonTap(event) {
-			if (event.type == 'share') {
-				this.shareClick();
-			}
-		},
 		onReady() {
 			// 开始加载数据，修改 where 条件后才开始去加载 clinetDB 的数据 ，需要等组件渲染完毕后才开始执行 loadData，所以不能再 onLoad 中执行
 			if (this.id) { // ID 不为空，则发起查询
@@ -125,7 +125,15 @@
 				})
 			}
 		},
+		onNavigationBarButtonTap(event) {
+			if (event.type == 'share') {
+				this.shareClick();
+			}
+		},
 		methods: {
+			$log(...args){
+				console.log('args',...args,this.id)
+			},
 			setReadNewsLog(){
 				let item = {
 					"article_id":this.id,
@@ -192,6 +200,7 @@
 			/**
 			 * 分享该文章
 			 */
+			// #ifdef APP
 			shareClick() {
 				let {
 					_id,
@@ -274,7 +283,8 @@
 				}, e => { //callback
 					console.log(e);
 				})
-			},
+			}
+			// #endif
 		}
 	}
 </script>
