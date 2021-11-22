@@ -1,12 +1,14 @@
 {
   "id": "uni-sign-in",
-  "displayName": "签到插件",
+  "displayName": "签到插件——提升用户粘性，广告变现",
   "version": "1.0.3",
   "description": "uni-sign-in",
   "keywords": [
     "uni-sign-in",
     "签到",
-    "营销"
+    "营销",
+    "看广告签到",
+    "uni-ad"
 ],
   "repository": "",
   "engines": {
