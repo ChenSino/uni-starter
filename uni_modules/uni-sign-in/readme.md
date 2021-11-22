@@ -5,7 +5,7 @@
 
 ### 使用看广告签到功能必读
 1.`普通签到`是通过clientDb实现，如果你要使用`看广告签到`的方式，
-	需要修改`opendb-sign-in.schema`中`permission` -> `create` 的值设置为`false`
+	为了防止刷量需要修改`opendb-sign-in.schema`中`permission` -> `create` 的值设置为`false`
 
 > 文件路径 :`uni_modules/uni-sign-in/uniCloud/database/opendb-sign-in.schema.json`
 
