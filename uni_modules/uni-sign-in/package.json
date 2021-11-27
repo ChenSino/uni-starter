@@ -1,8 +1,8 @@
 {
   "id": "uni-sign-in",
-  "displayName": "签到插件——提升用户粘性，广告变现",
+  "displayName": "签到插件 - 提升用户粘性，流量变现",
   "version": "1.0.3",
-  "description": "uni-sign-in",
+  "description": "培养用户习惯，提升用户粘性，支持广告流量变现的签到得积分功能",
   "keywords": [
     "uni-sign-in",
     "签到",
