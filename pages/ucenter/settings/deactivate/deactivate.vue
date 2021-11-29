@@ -22,6 +22,9 @@
 </template>
 
 <script>
+	import {
+		mapMutations
+	} from 'vuex';
 	export default {
 		data() {
 			return {
@@ -32,12 +35,11 @@
 			uni.setNavigationBarTitle({
 				title: this.$t('deactivate.navigationBarTitle')
 			})
-			uni.showModal({
-				content: '该功能暂未完全开发完成，敬请期待！',
-				showCancel: false
-			});
 		},
 		methods: {
+			...mapMutations({
+				logout: 'user/logout'
+			}),
 			cancel(){
 				uni.navigateBack()
 			},
@@ -46,10 +48,29 @@
 					content: '已经仔细阅读注销提示，知晓可能带来的后果，并确认要注销',
 					complete: (e) => {
 						if(e.confirm){
-							uni.showToast({
-								title: '该功能暂未开发完成',
-								icon: 'none'
-							});
+							uniCloud.callFunction({
+								name:'uni-id-cf',
+								data:{
+									"action":"closeAccount"
+								},
+								complete: (e) => {
+									console.log(e);
+									if(e.result.code === 0){
+										uni.showToast({
+											title: '注销成功'
+										});
+										this.logout();
+										uni.navigateTo({
+											url:"/pages/ucenter/login-page/index/index"
+										})
+									}else{
+										uni.showToast({
+											icon:'error',
+											title: e.result.errMsg
+										});
+									}
+								}
+							})
 						}else{
 							uni.navigateBack()
 						}
