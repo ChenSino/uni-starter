@@ -119,9 +119,12 @@ APP有很多通用的功能，比如登录注册、头像、设置、banner、..
 	[使用指南](https://uniapp.dcloud.io/univerify)
 + [苹果登录集成指南](https://ask.dcloud.net.cn/article/36651) 
 + 短信登录：
+>`uni-id-cf`文件路径：`/uniCloud-aliyun/cloudfunctions/uni-id-cf/index.js`
+
+	测试期间，为节约资源。统一虚拟短信验证码为：123456。正式使用注视掉`uni-id-cf`第339-344行即可
 	使用本功能需要在[DCloud开发者中心](https://dev.dcloud.net.cn/uniSms)开通并充值
 	教程参考[短信服务开通指南](https://ask.dcloud.net.cn/article/37534)
-	修改短信注册/登录发生验证码的模板id，在文件`/uniCloud-aliyun/cloudfunctions/uni-id-cf/index.js` 搜索 `const templateId = '11753'` 替换为自己申请的模板id
+	修改短信注册/登录发生验证码的模板id，在`uni-id-cf`搜索 `const templateId = '11753'` 替换为自己申请的模板id
 
 #### 服务端配置
 uni-starter服务端使用[uni-config-center](https://ext.dcloud.net.cn/plugin?id=4425)统一管理这些配置，

@@ -235,7 +235,7 @@
 							"text": this.$t('common').wechatBbs,
 							"share": {
 								"provider": "weixin",
-								"scene": "WXSenceTimeline"
+								"scene": "WXSceneTimeline"
 							}
 						},
 						{
