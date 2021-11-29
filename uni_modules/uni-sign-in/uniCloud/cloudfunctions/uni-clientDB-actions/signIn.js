@@ -62,7 +62,7 @@ module.exports = {
 				console.log({setIsDeleteRes});
 			}
 			//给加积分
-			let score = n==7?60:10 //如果是第七天就多加50分，也就是60分
+			let score = n+days.length==14?60:10 //如果连续签到7天就多加50分，也就是60分
 			balance += score
 			let addScores = await scoresTable.add({
 				user_id:state.auth.uid,

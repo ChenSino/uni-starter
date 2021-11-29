@@ -444,6 +444,10 @@ exports.main = async (event, context) => {
 				})
 			}
 			break;
+		case 'closeAccount':
+			console.log(params.uid,'-----------------------');
+			res = await uniID.closeAccount({uid:params.uid});
+			break;
 
 			// =========================== admin api start =========================
 		case 'registerAdmin': {
