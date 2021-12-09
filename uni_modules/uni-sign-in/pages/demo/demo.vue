@@ -1,6 +1,9 @@
 <template>
+<view>
 	<uni-sign-in ref="signIn"></uni-sign-in>
-<template>
+	<button type="default" @click="signIn">签到</button>
+</view>
+</template>
 <script>
 	export default {
 		methods: {
@@ -9,4 +12,4 @@
 			}
 		}
 	}
-<script>
+</script>

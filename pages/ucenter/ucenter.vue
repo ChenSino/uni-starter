@@ -37,8 +37,10 @@
 	} from 'vuex';
 	import checkUpdate from '@/uni_modules/uni-upgrade-center-app/utils/check-update';
 	import callCheckVersion from '@/uni_modules/uni-upgrade-center-app/utils/call-check-version';
+	// #ifdef APP
 	import UniShare from '@/uni_modules/uni-share/js_sdk/uni-share.js';
 	const uniShare = new UniShare()
+	// #endif
 	const db = uniCloud.database();
 	export default {
 		// #ifdef APP-PLUS

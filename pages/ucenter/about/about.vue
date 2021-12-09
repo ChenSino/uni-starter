@@ -19,6 +19,7 @@
 	</view>
 </template>
 <script>
+// #ifdef APP
 	import UniShare from '@/uni_modules/uni-share/js_sdk/uni-share.js';
 	const uniShare = new UniShare()
 	export default {
