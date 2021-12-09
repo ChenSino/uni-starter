@@ -99,8 +99,7 @@
 		async onReady() {
 			// #ifdef APP-NVUE
 			/* 可用窗口高度 - 搜索框高 - 状态栏高 */
-			this.listHight = uni.getSystemInfoSync().windowHeight - uni.getSystemInfoSync().statusBarHeight - 50 +
-			'px';
+			this.listHight = uni.getSystemInfoSync().windowHeight - uni.getSystemInfoSync().statusBarHeight - 50 + 'px';
 			// #endif
 			// #ifndef APP-NVUE
 			this.listHight = 'auto'

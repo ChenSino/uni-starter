@@ -1,14 +1,14 @@
 {
   "id": "uni-sign-in",
-  "displayName": "签到插件 - 提升用户粘性，流量变现",
-  "version": "1.0.4",
+  "displayName": "uni-starter签到插件 提升留存，激励视频变现",
+  "version": "1.0.5",
   "description": "培养用户习惯，提升用户粘性，支持广告流量变现的签到得积分功能",
   "keywords": [
     "uni-sign-in",
     "签到",
     "营销",
-    "看广告签到",
-    "uni-ad"
+    "变现",
+    "积分"
 ],
   "repository": "",
   "engines": {
@@ -38,7 +38,7 @@
     "npmurl": ""
   },
   "uni_modules": {
-    "dependencies": [],
+    "dependencies": ["uni-popup","uni-icons"],
     "encrypt": [],
     "platforms": {
       "cloud": {

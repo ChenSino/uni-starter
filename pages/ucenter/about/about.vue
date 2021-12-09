@@ -19,9 +19,12 @@
 	</view>
 </template>
 <script>
+// #ifdef APP
 	import UniShare from '@/uni_modules/uni-share/js_sdk/uni-share.js';
 	const uniShare = new UniShare()
+// #endif
 	export default {
+		// #ifdef APP
 		onBackPress({from}) {
 			if(from=='backbutton'){
 				this.$nextTick(function(){
@@ -30,6 +33,7 @@
 				return uniShare.isShow;
 			}
 		},
+		// #endif
 		onLoad() {
 			// #ifdef APP-PLUS
 			this.version = plus.runtime.version

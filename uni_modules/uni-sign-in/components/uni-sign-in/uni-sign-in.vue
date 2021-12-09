@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<uni-popup ref="popup" type="center">
-			<image class="background-img" src="@/static/uni-sign-in/background.png" mode="width">
+			<image class="background-img" src="@/uni_modules/uni-sign-in/static/background.png" mode="width">
 			</image>
 			<view class="content">
 				<view class="main">
