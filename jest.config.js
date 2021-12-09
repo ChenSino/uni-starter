@@ -1,6 +1,6 @@
 const path = require('path');
 module.exports = {
-    testTimeout: 10000,
+    testTimeout: 20000,
     reporters: [
         'default'
     ],
