@@ -1,9 +1,9 @@
-// uniapp自动化测试教程: https://uniapp-test.dcloud.net.cn/docs/testcase/start
+// uniapp自动化测试教程: https://uniapp-test.dcloud.net.cn/docs/testcase/start redirectTo
 
 describe('pages/ucenter/userinfo/bind-mobile/bind-mobile.vue', () => {
 	let page
 	beforeAll( async ()=>{
-		page = await program.redirectTo('/pages/ucenter/userinfo/bind-mobile/bind-mobile')
+		page = await program.navigateTo('/pages/ucenter/userinfo/bind-mobile/bind-mobile')
 		await page.waitFor(500)
 	})
 	
@@ -24,6 +24,7 @@ describe('pages/ucenter/userinfo/bind-mobile/bind-mobile.vue', () => {
 			const codebtn =  await page.$('.short-code-btn')
 			console.log("codebtn: ",codebtn);
 			const sendMsgRes = await codebtn.callMethod('sendMsg')
+			console.log("sendMsgRes: ",sendMsgRes);
 			await page.waitFor(300)
 		}
 		

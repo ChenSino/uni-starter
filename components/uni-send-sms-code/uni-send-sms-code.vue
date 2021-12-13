@@ -85,6 +85,36 @@
 							"type": this.codeType
 						},
 					},
+				}).then(({result})=>{
+					console.log(result);
+					if(result.code===0){
+						uni.showToast({
+							title: this.$t('smsCode.sendSuccessTip'),
+							icon: 'none'
+						});
+						this.reverseNumber = Number(this.count);
+						this.getCode();
+						this.$emit('getCode');
+					}else{
+						uni.showModal({
+							content: result.msg,
+							showCancel: false
+						});
+					}
+					return result
+				}).catch((reason)=>{
+						console.log(reason,'reason----');
+						return reason
+					})
+				/* return await uniCloud.callFunction({
+					name: 'uni-id-cf',
+					data: {
+						action: 'sendSmsCode',
+						params: {
+							"mobile": this.phone,
+							"type": this.codeType
+						},
+					},
 					success: ({result}) => {
 						console.log(result);
 						if(result.code===0){
@@ -102,7 +132,7 @@
 							});
 						}
 					}
-				})
+				}) */
 			},
 			getCode() {
 				if (this.reverseNumber == 0) {

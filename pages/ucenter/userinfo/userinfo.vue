@@ -134,7 +134,10 @@
 			},
 			bindMobileBySmsCode() {
 				uni.navigateTo({
-					url: '/pages/ucenter/userinfo/bind-mobile/bind-mobile'
+					url: '/pages/ucenter/userinfo/bind-mobile/bind-mobile',
+					complete: (res) => {
+						console.log("res: ",res);
+					}
 				})
 			},
 			async setNickname(nickname) {
@@ -145,20 +148,24 @@
 					}).then(e => {
 						console.log(e.result,"e.result---------");
 						if (e.result.updated) {
-							uni.showToast({
-								title:this.$t('common.updateSucceeded'),
-								icon: 'none'
-							});
+							// uni.showToast({
+							// 	title:this.$t('common.updateSucceeded'),
+							// 	icon: 'none'
+							// });
 							this.setUserInfo({
 								nickname
 							});
 						} else {
-							uni.showToast({
-								title: this.$t('userinfo.noChange'),
-								icon: 'none'
-							});
+							// uni.showToast({
+							// 	title: this.$t('userinfo.noChange'),
+							// 	icon: 'none'
+							// });
 						}
 						return e.result
+					})
+					.catch((reason)=>{
+						console.log(reason,'reason----');
+						return reason
 					})
 					this.$refs.dialog.close()
 				} else {

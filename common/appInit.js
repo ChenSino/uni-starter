@@ -95,6 +95,7 @@ export default async function() {
 				url: '/pages/ucenter/login-page/index/index'
 			})
 		}
+		return code
 	}
 	// 绑定clientDB错误事件
 	db.on('error', onDBError)

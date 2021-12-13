@@ -18,7 +18,7 @@ module.exports = {
 	},
 	"app-plus": {
 		"android": {
-			"id": "d3a144fa",
+			"id": "a6160e9d",
 			"executablePath": "D:\\HX\\alpha-3.1.3\\HBuilderX\\plugins\\launcher\\base\\android_base.apk"
 		},
 		"version": "D:\\HX\\alpha-3.1.3\\HBuilderX\\plugins\\launcher\\base\\version.txt",

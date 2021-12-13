@@ -41,6 +41,7 @@
 	const uniShare = new UniShare()
 	const db = uniCloud.database();
 	export default {
+		// #ifdef APP-PLUS
 		onBackPress({from}) {
 			if(from=='backbutton'){
 				this.$nextTick(function(){
@@ -49,6 +50,7 @@
 				return uniShare.isShow;
 			}
 		},
+		// #endif
 		data() {
 			return {
 				gridList: [{
@@ -249,9 +251,9 @@
 					title: this.$t('mine.checkScore'),
 					icon: 'none'
 				});
-				uni.showLoading({
-					mask: true
-				})
+				// uni.showLoading({
+				// 	mask: true
+				// })
 				return await db.collection("uni-id-scores")
 					.where('"user_id" == $env.uid')
 					.field('score,balance')
@@ -259,7 +261,7 @@
 					.limit(1)
 					.get()
 					.then((res) => {
-						console.log(res);
+						console.log(res,"res------");
 						const data = res.result.data[0];
 						let msg = '';
 						msg = data ? (this.$t('mine.currentScore')+ data.balance) : this.$t('mine.noScore');
@@ -268,10 +270,15 @@
 							icon: 'none'
 						});
 						return data
+					}).catch((reason)=>{
+						console.log(reason,'这是失败的操作');
+						return reason
 					}).finally((e)=>{
-						uni.hideLoading()
+						console.log("e:----- ",e);
+						// uni.hideLoading()
 						return e
 					})
+
 			},
 			async share() {
 				let {

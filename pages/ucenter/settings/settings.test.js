@@ -1,7 +1,5 @@
 // uniapp自动化测试教程: https://uniapp-test.dcloud.net.cn/docs/testcase/start
 
-// import {mapGetters} from 'vuex';
-
 describe('pages/ucenter/settings/settings', () => {
 	let page
 	beforeAll(async () => {

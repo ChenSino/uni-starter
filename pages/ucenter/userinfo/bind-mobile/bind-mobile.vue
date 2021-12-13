@@ -72,6 +72,9 @@
 						uni.navigateBack()
 					}
 					return result
+				}).catch((reason)=>{
+					console.log(reason,'reason----');
+					return reason
 				})
 				// uniCloud.callFunction({
 				// 	name:'uni-id-cf',

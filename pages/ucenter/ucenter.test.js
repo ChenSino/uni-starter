@@ -20,9 +20,10 @@ describe('pages/ucenter/ucenter.vue', () => {
 
 	it('我的积分', async () => {
 		// expect.assertions(1);
+		await page.waitFor(300)
 		const getScoreRes = await page.callMethod('getScore')
 		console.log("getScoreRes: ", getScoreRes);
-		await page.waitFor(500)
+		// await page.waitFor(500)
 		// expect(getScoreRes.score).not.toBeUndefined();
 	})
 
