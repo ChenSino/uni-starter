@@ -97,6 +97,9 @@
 						}
 					}
 					return result
+				}).catch((res)=>{
+					console.log("res:-- ",res);
+					return res
 				})
 				// 下边是可以登录
 				// uniCloud.callFunction({

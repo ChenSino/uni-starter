@@ -8,7 +8,7 @@ describe('pages/ucenter/settings/settings', () => {
 	})
 
 
-	it('切换语言', async () => {
+	it('清理缓存', async () => {
 		
 		if (process.env.UNI_PLATFORM === "app-plus") {
 			//清理缓存
@@ -34,7 +34,7 @@ describe('pages/ucenter/settings/settings', () => {
 		if(getTokenRes){
 			await page.callMethod('clickLogout')
 		}
-	})
- */
+	}) */
+
 
 });

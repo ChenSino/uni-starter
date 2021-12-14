@@ -90,6 +90,10 @@ import mixin from '../common/login-page.mixin.js';
 					console.log(result);
 					return result
 				})
+				.catch((errors) => {
+					console.log(errors);
+					return errors
+				})
 				// uniCloud.callFunction({
 				// 	name:'uni-id-cf',
 				// 	data:{

@@ -52,7 +52,7 @@
 				'hasLogin': 'user/hasLogin',
 			}),
 			i18nEnable(){
-				return getApp().globalData.config.i18n.enable
+				return getApp({allowDefault: true}).globalData.config.i18n.enable
 			}
 		},
 		onLoad() {
@@ -260,14 +260,14 @@
 						if(
 							!res.tapIndex && language=='zh-Hans' || res.tapIndex && language=='en'
 						){
-							const globalData = getApp().globalData
+							const globalData = getApp({allowDefault: true}).globalData
 							if (language === 'en') {
 								language = globalData.locale = 'zh-Hans'
 							} else {
 								language = globalData.locale = 'en'
 							}
 							uni.setStorageSync('CURRENT_LANG', language)
-							getApp().globalData.$i18n.locale = language
+							getApp({allowDefault: true}).globalData.$i18n.locale = language
 							this.currentLanguage = res.tapIndex?'简体中文':'English'
 							if(uni.setLocale){
 								uni.setLocale(language)
