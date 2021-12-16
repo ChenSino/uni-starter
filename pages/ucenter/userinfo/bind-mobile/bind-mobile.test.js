@@ -50,7 +50,7 @@ describe('pages/ucenter/userinfo/bind-mobile/bind-mobile.vue', () => {
 					await program.redirectTo('/pages/ucenter/login-page/pwd-login/pwd-login')
 					break;
 				case  60101:
-					expect(submitRes.msg).toBe("此手机号已绑定")
+					expect(submitRes.msg).toBe("此手机号已绑定" || "手机号 is already bound")
 					break;
 				default:
 					break;
