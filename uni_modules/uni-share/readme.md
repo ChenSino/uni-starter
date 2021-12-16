@@ -7,6 +7,15 @@
 <script>
 	import uniShare from '@/uni_modules/uni-share/js_sdk/uni-share.js';
 	export default {
+		onBackPress({from}) {
+			console.log(from);
+			if(from=='backbutton'){
+				this.$nextTick(function(){
+					uniShare.hide()
+				})
+				return uniShare.isShow;
+			}
+		},
 		methods: {
 			uniShare() {
 				uniShare.show({
@@ -30,7 +39,7 @@
 							"text": "微信朋友圈",
 							"share": {
 								"provider": "weixin",
-								"scene": "WXSenceTimeline"
+								"scene": "WXSceneTimeline"
 							}
 						},
 						{
@@ -75,6 +84,7 @@
 					],
 					cancelText: "取消分享",
 				}, e => { //callback
+					console.log(uniShare.isShow);
 					console.log(e);
 				})
 			}

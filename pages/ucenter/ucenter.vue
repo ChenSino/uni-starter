@@ -37,7 +37,7 @@
 	} from 'vuex';
 	import checkUpdate from '@/uni_modules/uni-upgrade-center-app/utils/check-update';
 	import callCheckVersion from '@/uni_modules/uni-upgrade-center-app/utils/call-check-version';
-	// #ifdef APP
+	// #ifdef APP-PLUS
 	import UniShare from '@/uni_modules/uni-share/js_sdk/uni-share.js';
 	const uniShare = new UniShare()
 	// #endif
@@ -149,7 +149,9 @@
 			// console.log(loginRes,'-------------');
 			// this.uniToken = loginRes.token
 			// console.log(313,this.userInfo,this.hasLogin);
+			
 			//#ifdef APP-PLUS
+			console.log(this.appVersion,"this.appVersion--------");
 			this.ucenterList[this.ucenterList.length - 2].unshift({
 				title:this.$t('mine.checkUpdate'),// this.this.$t('mine.checkUpdate')"检查更新"
 				rightText: this.appVersion.version + '-' + this.appVersion.versionCode,
@@ -324,7 +326,7 @@
 							"text": this.$t('common').wechatBbs,
 							"share": {
 								"provider": "weixin",
-								"scene": "WXSenceTimeline"
+								"scene": "WXSceneTimeline"
 							}
 						},
 						{

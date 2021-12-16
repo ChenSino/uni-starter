@@ -1,3 +1,7 @@
+## 2.0.2（2021-12-16）
+修复在某些情况下报：`Cannot read property 'hide' of undefined`的问题
+## 2.0.1（2021-11-29）
+修改错误的scene值WXSenceTimeline(分享到朋友圈)更正为WXSceneTimeline
 ## 2.0.0（2021-10-14）
 支持监听返回操作(如：物理返回，全面屏手机侧滑)关闭分享弹窗
 ## 1.0.6（2021-08-25）

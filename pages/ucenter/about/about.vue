@@ -19,12 +19,12 @@
 	</view>
 </template>
 <script>
-	// #ifdef APP-PLUS
+// #ifdef APP
 	import UniShare from '@/uni_modules/uni-share/js_sdk/uni-share.js';
 	const uniShare = new UniShare()
-	// #endif
+// #endif
 	export default {
-		// #ifdef APP-PLUS
+		// #ifdef APP
 		onBackPress({from}) {
 			if(from=='backbutton'){
 				this.$nextTick(function(){
@@ -41,7 +41,8 @@
 		},
 		computed: {
 			uniStarterConfig() {
-				return getApp({allowDefault: true}).globalData.config
+				console.log(getApp());
+				return getApp().globalData.config
 			}
 		},
 		data() {
