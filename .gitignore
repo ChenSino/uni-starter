@@ -4,3 +4,8 @@ node_modules
 .DS_Store
 uni_modules_tools/copy
 package-lock.json
+/uni_modules\uni-config-center\uniCloud\cloudfunctions\common\uni-config-center\uni-id\config.json
+/manifest.json
+/env.js
+/jest.config.js
+/vue.config.js
