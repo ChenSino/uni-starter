@@ -19,9 +19,10 @@
 	</view>
 </template>
 <script>
-// #ifdef APP
+	// #ifdef APP-PLUS
 	import UniShare from '@/uni_modules/uni-share/js_sdk/uni-share.js';
 	const uniShare = new UniShare()
+	// #endif
 	export default {
 		// #ifdef APP-PLUS
 		onBackPress({from}) {
@@ -40,8 +41,7 @@
 		},
 		computed: {
 			uniStarterConfig() {
-				console.log(getApp());
-				return getApp().globalData.config
+				return getApp({allowDefault: true}).globalData.config
 			}
 		},
 		data() {
@@ -86,7 +86,7 @@
 						"text":  this.$t('common').wechatBbs,
 						"share": {
 							"provider": "weixin",
-							"scene": "WXSenceTimeline"
+							"scene": "WXSceneTimeline"
 						}
 					},
 					{
