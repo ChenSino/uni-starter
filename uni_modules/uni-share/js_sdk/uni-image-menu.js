@@ -59,7 +59,7 @@ class NvImageMenu {
 			bottom: '0px',
 			left: '0px',
 			height: (iconWidth + textHeight + 2 * margin) * Math.ceil(list.length / 4) + 44 +
-			'px', //'264px',
+				'px', //'264px',
 			width: '100%',
 			backgroundColor: 'rgb(255,255,255)'
 		});
@@ -194,10 +194,11 @@ class NvImageMenu {
 	}
 
 	hide() {
-		nvMask.hide()
-		nvImageMenu.hide()
-		this.isShow = false
+		if (this.isShow) {
+			nvMask.hide()
+			nvImageMenu.hide()
+			this.isShow = false
+		}
 	}
 }
-
 export default NvImageMenu
