@@ -39,7 +39,9 @@
 			this.phone = phoneNumber;
 		},
 		onReady() {
-			// this.$refs.sendSmsCode.start();
+			if(this.phone.length==11){
+				this.$refs.sendSmsCode.start();
+			}
 		},
 		methods: {
 			async submit(){ //完成并提交

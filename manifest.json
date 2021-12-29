@@ -191,6 +191,13 @@
             "base" : ""
         }
     },
-    "_spaceID" : "",
-    "vueVersion" : "2"
+    "router": {
+      "base": ""
+    },
+    "uniStatistics": {
+      "enable": true
+    }
+  },
+  "_spaceID": "",
+  "vueVersion": "2"
 }

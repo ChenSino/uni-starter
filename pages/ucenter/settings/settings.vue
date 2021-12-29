@@ -185,22 +185,31 @@
 			clickLogout() {
 				console.log("this.hasLogin:---------------- ",this.hasLogin);
 				if (this.hasLogin) {
-					this.logout();
-					uni.navigateBack();
-					// uni.showModal({
-					// 	title: this.$t('settings.tips'),
-					// 	content: this.$t('settings.exitLogin'),
-					// 	cancelText: this.$t('settings.cancelText'),
-					// 	confirmText: this.$t('settings.confirmText'),
-					// 	success: res => {
-					// 		if (res.confirm) {
-					// 			this.logout();
-					// 			uni.navigateBack();
-					// 		}
-					// 	},
-					// 	fail: () => {},
-					// 	complete: () => {}
-					// });
+					uni.showModal({
+						title: this.$t('settings.tips'),
+						content: this.$t('settings.exitLogin'),
+						cancelText: this.$t('settings.cancelText'),
+						confirmText: this.$t('settings.confirmText'),
+						success: res => {
+							if (res.confirm) {
+								uni.showLoading({
+									mask: true
+								});
+								uniCloud.callFunction({
+									name:'uni-id-cf',
+									data:{action:'logout'},
+									complete: (e) => {
+										console.log(e);
+										this.logout();
+										uni.hideLoading()
+										uni.navigateBack();
+									}
+								})
+							}
+						},
+						fail: () => {},
+						complete: () => {}
+					});
 				} else {
 					uni.navigateTo({
 						url: '/pages/ucenter/login-page/index/index'

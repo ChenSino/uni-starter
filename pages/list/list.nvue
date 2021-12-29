@@ -12,10 +12,9 @@
 		</view>
 
 		<unicloud-db ref='udb' v-slot:default="{data,pagination,hasMore, loading, error, options}" @error="onqueryerror"
-			:where="where" collection="opendb-news-articles,uni-id-users" :page-size="10"
-			field="avatar,title,last_modify_date,user_id.username" @load="loadData"
+			:collection="colList" :page-size="10"
 			>
-			<!-- 基于 uni-list 的页面布局 -->
+			<!-- 基于 uni-list 的页面布局 field="user_id.username"-->
 			<uni-list class="uni-list" :border="false" :style="{height:listHight}">
 				
 				<!-- 作用于app端nvue页面的下拉加载 -->
@@ -63,7 +62,7 @@
 	import statusBar from "@/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar";
 
 	import Gps from '@/uni_modules/json-gps/js_sdk/gps.js';
-	const gps = new Gps()
+	const gps = new Gps(),db = uniCloud.database();
 
 	export default {
 		components: {
@@ -76,11 +75,17 @@
 				} else {
 					return '请输入搜索内容'
 				}
+			},
+			colList(){
+				return [
+					db.collection('opendb-news-articles').where(this.where).field('avatar,title,last_modify_date,user_id').getTemp(),
+					db.collection('uni-id-users').field('_id,username').getTemp()
+				]
 			}
 		},
 		data() {
 			return {
-				where: "",
+				where: '"article_status" == 1',
 				keyword: "",
 				refreshState: 0,
 				listHight: 0,
