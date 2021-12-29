@@ -188,8 +188,19 @@
 						confirmText: this.$t('settings.confirmText'),
 						success: res => {
 							if (res.confirm) {
-								this.logout();
-								uni.navigateBack();
+								uni.showLoading({
+									mask: true
+								});
+								uniCloud.callFunction({
+									name:'uni-id-cf',
+									data:{action:'logout'},
+									complete: (e) => {
+										console.log(e);
+										this.logout();
+										uni.hideLoading()
+										uni.navigateBack();
+									}
+								})
 							}
 						},
 						fail: () => {},

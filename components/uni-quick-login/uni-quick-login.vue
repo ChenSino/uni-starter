@@ -354,7 +354,9 @@
 								return this.$refs.userProfile.open(result.uid)
 							}
 							// #endif
-
+							if (result.type == "register") {  
+								result.userInfo._id = result.uid  
+							}
 							this.setUserInfo(result.userInfo)
 							loginSuccess(result)
 						} else {

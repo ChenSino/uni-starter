@@ -8,6 +8,9 @@ let mixin = {
 		loginSuccess(result){
 			loginSuccess(result)
 			delete result.userInfo.token
+			if (result.type == "register") {
+				result.userInfo._id = result.uid  
+			}
 			this.setUserInfo(result.userInfo)
 		}
 	}

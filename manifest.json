@@ -219,6 +219,9 @@
     },
     "router": {
       "base": ""
+    },
+    "uniStatistics": {
+      "enable": true
     }
   },
   "_spaceID": "",

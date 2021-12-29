@@ -1,3 +1,8 @@
+## 1.1.26（2021-12-29）
+- 性能优化，list页面使用`getTemp`，[详情](https://uniapp.dcloud.io/uniCloud/unicloud-db?id=collection)
+- 拉齐uni-starter和uni-admin的schema新增：uni-id-tag.schema.json，更新：opendb-verify-codes.schema.json
+- 修复首次登陆,用户id没存储到storage的问题
+- 新增：执行退出登陆后，通过云函数调用`uniID.logout`
 ## 1.1.25（2021-12-09）
 修复H5端在about页面，返回触发`uniShare.hide()`引发报错
 ## 1.1.24（2021-11-29）
