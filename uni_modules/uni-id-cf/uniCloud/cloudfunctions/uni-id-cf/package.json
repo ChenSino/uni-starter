@@ -1,7 +1,7 @@
 {
 	"name": "uni-id-cf",
 	"version": "1.0.0",
-	"description": "uni-id-cf是uni-id-uniCloudFunction的缩写",
+	"description": "",
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
