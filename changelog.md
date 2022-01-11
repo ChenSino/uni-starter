@@ -1,3 +1,5 @@
+## 1.1.27（2022-01-11）
+更新uni-id-cf为:1.0.10版，修复 限制只有 admin 用户可管理用户标签（不支持非 admin 用户操作managerMultiTag 接口）
 ## 1.1.26（2021-12-29）
 - 性能优化，list页面使用`getTemp`，[详情](https://uniapp.dcloud.io/uniCloud/unicloud-db?id=collection)
 - 拉齐uni-starter和uni-admin的schema新增：uni-id-tag.schema.json，更新：opendb-verify-codes.schema.json
