@@ -34,7 +34,7 @@
 						<view class="main">
 							<text class="title">{{item.title}}</text>
 							<view class="info">
-								<text class="author">{{JSON.stringify(item.user_id[0]?.username)}}</text>
+								<text class="author">{{item.user_id[0]?item.user_id[0].username:''}}</text>
 								<uni-dateformat class="last_modify_date" :date="item.last_modify_date"
 									format="yyyy-MM-dd" :threshold="[60000, 2592000000]" />
 							</view>
