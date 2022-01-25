@@ -163,7 +163,6 @@ uni-starter服务端使用[uni-config-center](https://ext.dcloud.net.cn/plugin?i
 			"/pages/common/webview/webview",
 			"/pages/grid/grid",
 			"/pages/ucenter/ucenter",
-			"/pages/ucenter/guestbook/guestbook",
 			"/pages/ucenter/about/about",
 			"/pages/ucenter/settings/settings"
 		]

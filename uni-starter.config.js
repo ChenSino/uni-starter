@@ -28,10 +28,20 @@ export default {
 				2.visitor：白名单模式。枚举游客可访问的页面。
 			* 注意：黑名单与白名单模式二选一
 		*/
-		"needLogin" : [
-		 	// {pattern:/^\/pages\/list.*/},	//支持正则表达式
-				"/uni_modules/uni-news-favorite/pages/uni-news-favorite/list",
-				"/uni_modules/uni-feedback/pages/uni-feedback/add"
+		// "needLogin" : [
+		//  	{pattern:/^\/pages\/list.*/},	//支持正则表达式
+		// 		"/uni_modules/uni-news-favorite/pages/uni-news-favorite/list",
+		// 		"/uni_modules/uni-feedback/pages/uni-feedback/add"
+		// ],
+		"visitor" : [
+			"/",//注意入口页必须直接写 "/"
+			{"pattern":/^\/pages\/list.*/},	//支持正则表达式
+			{"pattern":/^\/pages\/ucenter\/login-page.*/},
+			"/pages/common/webview/webview",
+			"/pages/grid/grid",
+			"/pages/ucenter/ucenter",
+			"/pages/ucenter/about/about",
+			"/pages/ucenter/settings/settings"
 		],
 		// "visitor" : [
 		// 	"/",//注意入口页必须直接写 "/"

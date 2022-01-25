@@ -113,10 +113,6 @@
 						// #endif
 					],
 					[{
-						"title": this.$t('mine.guestBook'),
-						"to": '/pages/ucenter/guestbook/guestbook',
-						"icon": "chat"
-					},{
 						"title": this.$t('mine.feedback'),
 						"to": '/uni_modules/uni-feedback/pages/opendb-feedback/opendb-feedback',
 						"icon": "help"

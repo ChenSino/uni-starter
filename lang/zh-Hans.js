@@ -59,7 +59,6 @@ export default {
 		readArticles: "阅读过的文章",
 		myScore: "我的积分",
 		invite: "分销推荐",
-		guestBook: "留言板示例",
 		feedback: "问题与反馈",
 		settings: "设置",
 		checkUpdate: "检查更新",
@@ -98,14 +97,6 @@ export default {
 		noNetwork: "网络异常",
 		toSet: "前往设置",
 		error: "错误",
-	},
-	guestbook:{
-		navigationBarTitle:"留言板",
-		msgContent: "发表留言内容",
-		notAvailable: "未登录游客不可用",
-		send: "发送",
-		addSucceeded: "新增成功",
-		noPermission: "你没有该操作权限",
 	},
 	uniFeedback:{
 		navigationBarTitle:"问题与反馈",

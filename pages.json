@@ -169,25 +169,6 @@
 				"navigationBarTitleText": "意见反馈",
 				"enablePullDownRefresh": false
 			}
-		}, {
-			"path": "pages/ucenter/guestbook/guestbook",
-			"style": {
-				"navigationBarTitleText": "留言板",
-				"enablePullDownRefresh": false,
-				"app-plus": {
-					"titleNView": {
-						"buttons": [{
-								"text": "切换",
-								"fontSize": "12px"
-							},
-							{
-								"text": "注销",
-								"fontSize": "12px"
-							}
-						]
-					}
-				}
-			}
 		}
     ],
 	"globalStyle": {

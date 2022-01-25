@@ -88,8 +88,7 @@ export default async function() {
 				'TOKEN_INVALID',
 				'TOKEN_INVALID_TOKEN_EXPIRED',
 				'TOKEN_INVALID_WRONG_TOKEN',
-				'TOKEN_INVALID_ANONYMOUS_USER',
-
+				'TOKEN_INVALID_ANONYMOUS_USER'
 			].includes(code)) {
 			uni.navigateTo({
 				url: '/pages/ucenter/login-page/index/index'
@@ -115,76 +114,44 @@ export default async function() {
 			tokenExpired
 		})
 	})
+	
+	uni.addInterceptor('setStorage', {
+		invoke(args) {
+			if (args.data && args.key == 'uni_id_token') {
+				let oldToken = uni.getStorageSync('uni_id_token')
+				if(oldToken.length){
+					console.log('监听到token更新，就刷新push_clientid的有效期');
+					uniCloud.callFunction({
+						name:'uni-id-cf',
+						data:{
+							"action": "renewDeviceTokenExpiredxpired",
+							"params": {push_clientid}
+						},
+						complete: (e) => {
+							console.log(e);
+						}
+					})
+				}
+			}
+			// console.log('interceptor-complete', args)
+		},
+		complete(e) {
+			// console.log(e);
+		}
+	})
 
 	const Debug = false;
 	//拦截器封装callFunction
 	let callFunctionOption;
 	uniCloud.addInterceptor('callFunction', {
 		async invoke(option) {
-			// #ifdef APP-PLUS
 			// 判断如果是执行登录（无论是哪种登录方式），就记录用户的相关设备id
+			// 注意：注册可能不仅仅走register接口，还有登录并注册的接口
 			if (option.name == 'uni-id-cf' &&
 				(option.data.action == 'register' || option.data.action.slice(0, 5) == 'login')
 			) {
-				let oaid = await new Promise((callBack, fail) => {
-					if (uni.getSystemInfoSync().platform == "android") {
-						plus.device.getOAID({
-							success: function(e) {
-								callBack(e.oaid)
-								// console.log('getOAID success: '+JSON.stringify(e));
-							},
-							fail: function(e) {
-								callBack()
-								console.log('getOAID failed: ' + JSON.stringify(e));
-							}
-						});
-					} else {
-						callBack()
-					}
-				})
-
-				let imei = await new Promise((callBack, fail) => {
-					if (uni.getSystemInfoSync().platform == "android") {
-						plus.device.getInfo({
-							success: function(e) {
-								callBack(e.imei)
-								// console.log('getOAID success: '+JSON.stringify(e));
-							},
-							fail: function(e) {
-								callBack()
-								console.log('getOAID failed: ' + JSON.stringify(e));
-							}
-						});
-					} else {
-						callBack()
-					}
-				})
-
-				let push_clientid = '',
-					idfa = plus.storage.getItem('idfa') || ''; //idfa有需要的用户在应用首次启动时自己获取存储到storage中
-
-				try {
-					push_clientid = plus.push.getClientInfo().clientid
-				} catch (e) {
-					uni.showModal({
-						content: '获取推送标识失败。如果你的应用不需要推送功能，请注释掉本代码块',
-						showCancel: false,
-						confirmText: "好的"
-					});
-					console.log(e)
-				}
-
-				let deviceInfo = {
-					push_clientid, // 获取匿名设备标识符
-					imei,
-					oaid,
-					idfa
-				}
-				//console.log("重新登录/注册，获取设备id", deviceInfo);
-				option.data.deviceInfo = deviceInfo
-
-				// #ifndef H5
-				//注册可能不仅仅走register接口，还有登录并注册的接口
+				option.data.deviceInfo = await getDeviceInfo()
+				console.log("重新登录/注册，获取设备id", option.data.deviceInfo);
 				option.data.inviteCode = await new Promise((callBack) => {
 					uni.getClipboardData({
 						success: function(res) {
@@ -207,9 +174,7 @@ export default async function() {
 						}
 					});
 				})
-				// #endif
 			}
-			// #endif
 			// console.log(JSON.stringify(option));
 			callFunctionOption = option
 		},
@@ -262,7 +227,6 @@ export default async function() {
 			});
 		},
 		success: (e) => {
-			// console.log(e);
 			const {
 				token,
 				tokenExpired
@@ -455,4 +419,82 @@ function initAppVersion() {
 	});
 	// 检查更新
 	// #endif
+}
+
+async function getDeviceInfo() {
+	let deviceInfo = {
+		"uuid": '',
+		"vendor": '',
+		"push_clientid": '',
+		"imei": '',
+		"oaid": '',
+		"idfa": '',
+		"model": '',
+		"platform": '',
+	}
+	const {
+		model,
+		platform,
+	} = uni.getSystemInfoSync();
+	Object.assign(deviceInfo, {
+		model,
+		platform
+	});
+
+	// #ifdef APP-PLUS
+	const oaid = await new Promise((callBack, fail) => {
+			if (deviceInfo.platform == "android") {
+				plus.device.getOAID({
+					success: function(e) {
+						callBack(e.oaid)
+						// console.log('getOAID success: '+JSON.stringify(e));
+					},
+					fail: function(e) {
+						callBack()
+						console.log('getOAID failed: ' + JSON.stringify(e));
+					}
+				});
+			} else {
+				callBack()
+			}
+		}),
+		{
+			imei,
+			uuid
+		} = await new Promise((callBack, fail) => {
+			plus.device.getInfo({
+				success: function(e) {
+					callBack(e)
+					// console.log('getOAID success: '+JSON.stringify(e));
+				},
+				fail: function(e) {
+					callBack()
+					console.log('getOAID failed: ' + JSON.stringify(e));
+				}
+			});
+		}),
+		idfa = plus.storage.getItem('idfa') || '', //idfa有需要的用户在应用首次启动时自己获取存储到storage中
+		vendor = plus.device.vendor;
+	try {
+		deviceInfo.push_clientid = uni.getStorageSync('cid') //先都走在线
+		// deviceInfo.push_clientid = plus.push.getClientInfo().clientid
+	} catch (e) {
+		uni.showModal({
+			content: '获取推送标识失败。如果你的应用不需要推送功能，请注释掉本代码块',
+			showCancel: false,
+			confirmText: "好的"
+		});
+		console.log(e)
+	}
+	Object.assign(deviceInfo, {
+		imei,
+		uuid,
+		idfa,
+		vendor
+	});
+	// #endif
+	// #ifndef APP-PLUS
+	deviceInfo.push_clientid = uni.getStorageSync('cid')
+	// #endif
+	return deviceInfo
 }

@@ -58,7 +58,6 @@ export default {
 		readArticles: "Read Articles",
 		myScore: "My Score",
 		invite: "Invite Friends",
-		guestBook: "Guest Book Example",
 		feedback: "Problems And Feedback",
 		settings: "Settings",
 		about: "About",
@@ -97,14 +96,6 @@ export default {
 		noNetwork: "Network error",
 		toSet: "Go to settings",
 		error: "error",
-	},
-	guestbook: {
-		navigationBarTitle:"Message board",
-		msgContent: "post message content",
-		notAvailable: "not available for visitors who are not logged in",
-		send: "send",
-		addSucceeded: "Successfully added",
-		noPermission: "You don't have permission for this operation",
 	},
 	uniFeedback: {
 		navigationBarTitle: "Problems and feedback",
