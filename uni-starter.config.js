@@ -40,7 +40,6 @@ export default {
 			"/pages/common/webview/webview",
 			"/pages/grid/grid",
 			"/pages/ucenter/ucenter",
-			"/pages/ucenter/guestbook/guestbook",
 			"/pages/ucenter/about/about",
 			"/pages/ucenter/settings/settings"
 		],

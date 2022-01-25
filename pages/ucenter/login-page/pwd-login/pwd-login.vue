@@ -155,7 +155,7 @@
 		justify-content: flex-end;
 	}
 	.captcha-img{
-		margin:15px 15px 0 0;
+		margin: 0 15px 10px 0;
 		width: 250rpx;
 	}
 	.captcha{

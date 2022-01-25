@@ -24,15 +24,22 @@ let state = {
 			console.log('state.info',state.info);
 			//存储最新的用户数据到本地持久化存储
 			uni.setStorageSync('userInfo', state.info);
-			uni.setStorageSync('uni_id_token', state.info.token)
-			uni.setStorageSync('uni_id_token_expired', state.info.tokenExpired)
-			
+			if(info.token){
+				uni.setStorage({
+					key: 'uni_id_token',
+					data: state.info.token,
+					complete(e){
+						// console.log('setStorage-------',e);
+					}
+				});
+				uni.setStorageSync('uni_id_token_expired', state.info.tokenExpired)
+			}
 		},
 		logout(state) {
 			state.info = {};
 			state.hasLogin = false;
 			uni.setStorageSync('userInfo', {});
-			uni.setStorageSync('uni_id_token', '');
+			uni.removeStorageSync('uni_id_token');
 			uni.setStorageSync('uni_id_token_expired', 0)
 		}
 	},
