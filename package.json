@@ -10,7 +10,7 @@
         "uni-id实例",
         "留言板"
     ],
-	"repository": "https://codechina.csdn.net/dcloud/uni-starter.git",
+	"repository": "https://gitcode.net/dcloud/uni-starter",
 	"engines": {
 		"HBuilderX": "^3.2.6"
 	},
