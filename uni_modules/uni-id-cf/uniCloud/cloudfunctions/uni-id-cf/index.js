@@ -114,16 +114,16 @@ exports.main = async (event, context) => {
 					console.log(context.DEVICEID);
 					//避免重复新增设备信息，先判断是否已存在
 					let getDeviceRes = await deviceDB.where({
-						device_id: context.DEVICEID
+						"device_id": context.DEVICEID
 					}).get()
 					if (getDeviceRes.data.length == 0) {
 						await addDeviceInfo(res)
 					} else {
 						await deviceDB.where({
-							device_id: context.DEVICEID,
+							"device_id": context.DEVICEID,
 						}).update({
 							...deviceInfo,
-							tokenExpired: res.tokenExpired,
+							"tokenExpired": res.tokenExpired,
 							"user_id": res.uid,
 							"device_id": context.DEVICEID,
 							"ua": context.CLIENTUA,
@@ -179,16 +179,14 @@ exports.main = async (event, context) => {
 	let res = {}
 	switch (action) { //根据action的值执行对应的操作
 		case 'renewDeviceTokenExpired':
-			let aa = await deviceDB.where({
-				user_id: params.uid,
+			return await deviceDB.where({
+				"user_id": params.uid,
 				"device_id": context.DEVICEID
 			}).update({
-				user_id: params.uid,
-				push_clientid: params.push_clientid,
+				"user_id": params.uid,
+				"push_clientid": params.push_clientid,
 				tokenExpired
 			})
-			console.log(aa);
-			return aa
 			break;
 		case 'refreshSessionKey':
 			let getSessionKey = await uniID.code2SessionWeixin({
@@ -398,6 +396,11 @@ exports.main = async (event, context) => {
 			break;
 		case 'logout':
 			res = await uniID.logout(uniIdToken)
+			await deviceDB.where({
+				"device_id": context.DEVICEID,
+			}).update({
+				"tokenExpired": Date.now()
+			})
 			break;
 		case 'sendSmsCode':
 			/* -开始- 测试期间，为节约资源。统一虚拟短信验证码为： 123456；开启以下代码块即可  */

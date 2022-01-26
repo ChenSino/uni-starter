@@ -23,7 +23,7 @@
 
 <script>
 	import {
-		mapMutations
+		mapActions
 	} from 'vuex';
 	export default {
 		data() {
@@ -37,7 +37,7 @@
 			})
 		},
 		methods: {
-			...mapMutations({
+			...mapActions({
 				logout: 'user/logout'
 			}),
 			cancel(){

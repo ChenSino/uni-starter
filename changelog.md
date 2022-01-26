@@ -1,3 +1,7 @@
+## 1.1.30（2022-01-26）
+- 新增逻辑:调用uni-id-cf的logout接口后刷新设备信息中token的有效期
+- 修复某些情况下前端执行logout没调用uniID.logout的问题
+- 修复某些情况下报push_clientid未定义的问题
 ## 1.1.29（2022-01-25）
 - 保存`uni_id_token`到`storage`改用异步方法，方便通过拦截器执行`token`更新后的操作
 - 新增通过拦截器监听`uni_id_token`更新，调用云函数刷新刷新设备信息token有效期的API `renewDeviceTokenExpired`
