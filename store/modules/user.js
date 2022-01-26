@@ -44,7 +44,18 @@ let state = {
 		}
 	},
 	actions = {
-
+		logout(context){
+			uni.showLoading({mask:true})
+			uniCloud.callFunction({
+				name:'uni-id-cf',
+				data:{action:'logout'},
+				complete: (e) => {
+					console.log(e);
+					context.commit('logout')
+					uni.hideLoading()
+				}
+			})
+		}
 	}
 export default {
 	namespaced: true,

@@ -121,6 +121,18 @@ export default async function() {
 				let oldToken = uni.getStorageSync('uni_id_token')
 				if(oldToken.length){
 					console.log('监听到token更新，就刷新push_clientid的有效期');
+					// #ifdef APP-PLUS
+					let push_clientid;
+					try {
+						push_clientid = plus.push.getClientInfo().clientid
+					} catch (e) {
+						uni.showModal({
+							content: '获取推送标识失败。如果你的应用不需要推送功能，请注释掉本代码块',
+							showCancel: false,
+							confirmText: "好的"
+						});
+						console.log(e)
+					}
 					uniCloud.callFunction({
 						name:'uni-id-cf',
 						data:{
@@ -131,6 +143,7 @@ export default async function() {
 							console.log(e);
 						}
 					})
+					// #endif
 				}
 			}
 			// console.log('interceptor-complete', args)
@@ -476,8 +489,7 @@ async function getDeviceInfo() {
 		idfa = plus.storage.getItem('idfa') || '', //idfa有需要的用户在应用首次启动时自己获取存储到storage中
 		vendor = plus.device.vendor;
 	try {
-		deviceInfo.push_clientid = uni.getStorageSync('cid') //先都走在线
-		// deviceInfo.push_clientid = plus.push.getClientInfo().clientid
+		deviceInfo.push_clientid = plus.push.getClientInfo().clientid
 	} catch (e) {
 		uni.showModal({
 			content: '获取推送标识失败。如果你的应用不需要推送功能，请注释掉本代码块',
@@ -492,9 +504,6 @@ async function getDeviceInfo() {
 		idfa,
 		vendor
 	});
-	// #endif
-	// #ifndef APP-PLUS
-	deviceInfo.push_clientid = uni.getStorageSync('cid')
 	// #endif
 	return deviceInfo
 }

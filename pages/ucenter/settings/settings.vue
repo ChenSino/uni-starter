@@ -34,7 +34,8 @@
 	import pushServer from './dc-push/push.js';
 	import {
 		mapMutations,
-		mapGetters
+		mapGetters,
+		mapActions
 	} from 'vuex';
 	export default {
 		data() {
@@ -84,7 +85,7 @@
 			//#endif
 		},
 		methods: {
-			...mapMutations({
+			...mapActions({
 				logout: 'user/logout'
 			}),
 			toEdit() {
@@ -192,19 +193,8 @@
 						confirmText: this.$t('settings.confirmText'),
 						success: res => {
 							if (res.confirm) {
-								uni.showLoading({
-									mask: true
-								});
-								uniCloud.callFunction({
-									name:'uni-id-cf',
-									data:{action:'logout'},
-									complete: (e) => {
-										console.log(e);
-										this.logout();
-										uni.hideLoading()
-										uni.navigateBack();
-									}
-								})
+								this.logout()
+								uni.navigateBack();
 							}
 						},
 						fail: () => {},
