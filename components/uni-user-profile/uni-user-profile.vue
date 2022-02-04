@@ -56,38 +56,46 @@
 				let {avatarUrl,nickName} = res.userInfo,				
 					cloudPath = userId+'/'+Date.now()+'avatarUrl.jpg';
 				
-				let tempFilePath = await new Promise((callBack)=>{
-					uni.downloadFile({
-					    url: avatarUrl,
-					    success: (res) => {
-					        if (res.statusCode === 200) {
-					            // console.log('下载成功');
-								callBack(res.tempFilePath)
-					        }
-							callBack()
-					    },
-						fail: (err) => {
-							console.error(err)
-						},
-						complete: (e) => {
-							// console.log("downloadFile",e);
-						}
-					});
-				})
-				// console.log(tempFilePath);
-				const result = await uniCloud.uploadFile({
-					filePath: tempFilePath,
-					cloudPath,
-					fileType:'image'
-				});
-				// console.log("上传成功",{result});
 				let userInfo = {
-					"nickname":nickName,
-					"avatar_file":{
-						name:cloudPath,
-						extname:"jpg",
-						url:result.fileID
-					}
+					"nickname":nickName
+				}
+				
+				if(avatarUrl && avatarUrl.length){
+					let tempFilePath = await new Promise((callBack)=>{
+						uni.downloadFile({
+							url: avatarUrl,
+							timeout:1000,
+							success: (res) => {
+								if (res.statusCode === 200) {
+									// console.log('下载成功');
+									callBack(res.tempFilePath)
+								}
+								callBack()
+							},
+							fail: (err) => {
+								console.error(err)
+							},
+							complete: (e) => {
+								console.log("downloadFile",e);
+							}
+						});
+					})
+					// console.log(tempFilePath);
+					const result = await uniCloud.uploadFile({
+						filePath: tempFilePath,
+						timeout:1000,
+						cloudPath,
+						fileType:'image'
+					});
+					// console.log("上传成功",{result});
+					userInfo = {
+						...userInfo,
+						"avatar_file":{
+							name:cloudPath,
+							extname:"jpg",
+							url:result.fileID
+						}
+					}	
 				}
 				this.doUpdate(userInfo,()=>{
 					this.$refs.popup.close()
