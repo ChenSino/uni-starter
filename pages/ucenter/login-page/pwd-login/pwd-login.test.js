@@ -16,12 +16,13 @@ describe('pages/ucenter/login-page/pwd-login/pwd-login.vue', () => {
 		// expect((await program.currentPage()).path).toBe(
 		// 	'pages/ucenter/login-page/register/register')
 		console.log(await program.currentPage(),"111111111");
+		await program.navigateBack()
 		// await page.waitFor(500)
 		// 执行 navigateBack 验证是否返回navigateTo
 		// expect((await program.navigateBack()).path).toBe(
 		// 	'pages/ucenter/login-page/pwd-login/pwd-login')
 			
-			console.log(await program.currentPage(),"22222222222");
+		console.log(await program.currentPage(),"22222222222");
 	})
 
 	it('用户名密码登录', async () => {

@@ -158,7 +158,6 @@
 			},
 			/* 前往注册 */
 			toRegister(e) {
-				console.log(e);
 				uni.navigateTo({
 					url: '/pages/ucenter/login-page/register/register'
 				})

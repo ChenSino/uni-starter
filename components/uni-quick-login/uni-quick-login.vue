@@ -32,10 +32,10 @@
 	export default {
 		computed: {
 			loginConfig() {
-				return getApp().globalData.config.router.login
+				return getApp({allowDefault: true}).globalData.config.router.login
 			},
 			agreements() {
-				return getApp().globalData.config.about.agreements || []
+				return getApp({allowDefault: true}).globalData.config.about.agreements || []
 			}
 		},
 		data() {

@@ -167,12 +167,12 @@
 			// #ifdef APP-PLUS
 			,
 			appVersion() {
-				return getApp().appVersion
+				return getApp({allowDefault: true}).appVersion
 			}
 			// #endif
 			,
 			appConfig() {
-				return getApp().globalData.config
+				return getApp({allowDefault: true}).globalData.config
 			}
 		},
 		methods: {
@@ -263,12 +263,14 @@
 					.then((res) => {
 						console.log(res,"res------");
 						const data = res.result.data[0];
+						console.log("data: ",data);
 						let msg = '';
 						msg = data ? (this.$t('mine.currentScore')+ data.balance) : this.$t('mine.noScore');
 						uni.showToast({
 							title: msg,
 							icon: 'none'
 						});
+						console.log("msg:---- ",msg);
 						return data
 					}).catch((reason)=>{
 						console.log(reason,'这是失败的操作');
@@ -278,7 +280,6 @@
 						// uni.hideLoading()
 						return e
 					})
-
 			},
 			async share() {
 				let {

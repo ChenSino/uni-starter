@@ -41,8 +41,8 @@
 		},
 		computed: {
 			uniStarterConfig() {
-				console.log(getApp());
-				return getApp().globalData.config
+				console.log(getApp({allowDefault: true}),"getApp----------------");
+				return getApp({allowDefault: true}).globalData.config
 			}
 		},
 		data() {
@@ -54,6 +54,7 @@
 		},
 		created() {
 			this.about = this.uniStarterConfig.about
+			console.log("this.about:------ ",this.about);
 			uni.setNavigationBarTitle({
 				title: this.$t('about.about')+ " " + this.about.appName
 			})
