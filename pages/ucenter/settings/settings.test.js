@@ -13,12 +13,10 @@ describe('pages/ucenter/settings/settings', () => {
 		if (process.env.UNI_PLATFORM === "app-plus") {
 			//清理缓存
 			await page.callMethod('clearTmp')
-			console.log("clearTmp: -------------");
 			console.log(await page.data('pushIsOn'), "pushIsOn-------------");
 			const pushRes = await page.data('pushIsOn')
 			if (pushRes == "wait") {
 				await page.callMethod('pushServer.off')
-				console.log("pushServer---------");
 			}
 		}
 	})

@@ -11,18 +11,15 @@ describe('pages/ucenter/about/about.vue', () => {
 	it('about', async () => {
 		expect.assertions(2);
 		const getData = await page.data('about')
-		console.log("getData-----------: ", getData);
 		expect(getData.appName).toBe('uni-starter')
 		expect(getData.slogan).toBe('云端一体应用快速开发模版')
 	})
 
 	it('screenshot', async () => {
-		console.log(process.env.UNI_PLATFORM, "PLATFORM----------");
 		if (process.env.UNI_PLATFORM === "h5") {
 			const image = await program.screenshot({
 				path: "static/screenshot/about-h5.png" // 默认项目根目录
 			})
-			console.log(image, "image--------------------")
 		} else if (process.env.UNI_PLATFORM === "app-plus") {
 			await program.screenshot({
 				path: "static/screenshot/about-app.png"

@@ -25,26 +25,22 @@ describe('pages/ucenter/ucenter.vue', () => {
 		if (process.env.UNI_PLATFORM === "h5" || process.env.UNI_PLATFORM === "mp-weixin") {
 			await page.callMethod('signIn')
 			await page.waitFor(300)
-			const image = await program.screenshot({
+			await program.screenshot({
 				path: "static/screenshot/sign-h5.png" // 默认项目根目录 process.env.UNI_PLATFORM === "h5" || 
 			})
-			console.log(image, "image--------------------")
 		}
 		
 		
 		if (process.env.UNI_PLATFORM === "app-plus") {
 			const signInByAdRes = await page.callMethod('signInByAd')
-			console.log("signInByAdRes: ",signInByAdRes);
 			
 			await page.waitFor(300)
 			const shareRes = await page.callMethod('share')
-			console.log("shareRes: ",shareRes);
 			await page.waitFor(300)
 			
-			const imageApp = await program.screenshot({
+			await program.screenshot({
 				path: "static/screenshot/sign-app.png" // 默认项目根目录 process.env.UNI_PLATFORM === "h5" || 
 			})
-			console.log(imageApp, "imageApp--------------------")
 			
 		}
 	})
@@ -62,8 +58,6 @@ describe('pages/ucenter/ucenter.vue', () => {
 		} else {
 			console.log("签到失败");
 		}
-
-		// await page.waitFor(500)
 	})
 
 

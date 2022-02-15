@@ -11,7 +11,6 @@ describe('pages/ucenter/userinfo/userinfo.vue', () => {
 	
 	it('设置昵称', async () => {
 		const name = "数字天堂DCloud" +  Math.round(Math.random()*10);
-		console.log("name: ",name);
 		await page.waitFor(300)
 		const nicknameRes = await page.callMethod("setNickname",name)
 		console.log("nicknameRes: ",nicknameRes);
@@ -23,7 +22,6 @@ describe('pages/ucenter/userinfo/userinfo.vue', () => {
 		console.log("navRes: ",navRes);
 		await page.waitFor(300)
 		// expect((await program.currentPage()).path).toBe('pages/ucenter/userinfo/bind-mobile/bind-mobile')
-		// await page.waitFor(300)
 		console.log("currentPage---------------- ",await program.currentPage());
 		// expect((await program.navigateBack()).path).toBe('pages/ucenter/userinfo/userinfo')
 	})
