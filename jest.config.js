@@ -8,7 +8,7 @@ module.exports = {
     moduleFileExtensions: ['js', 'json'],
     rootDir: __dirname,
 	 testMatch: ["<rootDir>/pages/**/*test.[jt]s?(x)"],
-	 // testMatch: ["<rootDir>/pages/ucenter/settings/settings.test.js"],
+	 // testMatch: ["<rootDir>/pages/ucenter/about/about.test.js"],
     testPathIgnorePatterns: ['/node_modules/'],
 	 testSequencer:path.join(__dirname, "testSequencer.js")
 }

@@ -6,8 +6,10 @@ describe('pages/ucenter/login-page/register/register.vue', () => {
 
 	let page
 	beforeAll(async () => {
-		page = await program.redirectTo('/pages/ucenter/login-page/register/register')
+		page = await program.navigateTo('/pages/ucenter/login-page/register/register')
 		await page.waitFor(500)
+		//navigateTo
+		//redirectTo
 	})
 
 	 it('注册账号', async () => {
@@ -25,7 +27,7 @@ describe('pages/ucenter/login-page/register/register.vue', () => {
 				'pwd2': pwd2
 			},
 		})
-		// console.log(await page.data('formData'),"0000000000000");
+		console.log(await page.data('formData'),"0000000000000");
 
 		expect(username).toMatch(/^.{3,20}$/);
 		expect(password).toMatch(/^.{6,20}$/);
