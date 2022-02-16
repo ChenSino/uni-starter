@@ -2,7 +2,7 @@
 	<view class="content">
 		<!-- 顶部文字 -->
 		<!-- 登录框 (选择手机号所属国家和地区需要另行实现) -->
-		<uni-forms ref="form" :value="formData" :rules="rules">
+		<uni-forms ref="form" :value="formData" >
 			<uni-forms-item name="phone">
 				<!-- focus规则如果上一页携带来“手机号码”数据就focus验证码输入框，否则focus手机号码输入框 -->
 				<uni-easyinput :disabled="lock" :focus="formData.phone.length!=11" type="number" class="easyinput" :inputBorder="false"
@@ -133,6 +133,7 @@
 			if (this.formData.phone) {
 				this.$refs.shortCode.start();
 			}
+			this.$refs.form.setRules(this.rules)
 		},
 		methods: {
 			/**
