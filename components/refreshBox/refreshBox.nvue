@@ -23,7 +23,7 @@
 				}
 			},
 			refresh(){
-				console.log('refresh');
+				// console.log('refresh');
 				this.showRefresh = true
 				this.state = 2
 				this.$emit('refresh')

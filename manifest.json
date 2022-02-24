@@ -59,9 +59,9 @@
       },
       "Geolocation": {
       },
-      "Push": {
-      },
       "Bluetooth": {
+      },
+      "Push": {
       }
     },
     "distribute": {
@@ -112,10 +112,6 @@
           }
         },
         "ad": {
-          "gdt": {
-          },
-          "csj": {
-          }
         },
         "share": {
           "weixin": {

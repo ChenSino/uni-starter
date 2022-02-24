@@ -183,6 +183,11 @@ export default async function() {
 						},
 						fail() {
 							callBack(false)
+						},
+						complete(){
+							// #ifdef MP-WEIXIN
+							uni.hideToast()
+							// #endif
 						}
 					});
 				})
