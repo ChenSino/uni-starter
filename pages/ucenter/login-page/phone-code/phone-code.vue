@@ -14,7 +14,7 @@
 			<button class="send-btn" :disabled="!canSubmit" :type="canSubmit?'primary':'default'"
 				@click="submit">{{$t('common.login')}}</button>
 		</uni-forms>
-		<uni-quick-login></uni-quick-login>
+		<uni-quick-login agree></uni-quick-login>
 	</view>
 </template>
 <script>
