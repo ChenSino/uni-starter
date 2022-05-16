@@ -30,10 +30,10 @@ import mixin from '../common/login-page.mixin.js';
 		data() {
 			return {
 				formData: {
-					"username": "111111",
-					"nickname": "111111",
-					"password":"111111",
-					"pwd2":"111111",
+					"username": "",
+					"nickname": "",
+					"password":"",
+					"pwd2":"",
 					"captcha":false
 				},
 				rules,
