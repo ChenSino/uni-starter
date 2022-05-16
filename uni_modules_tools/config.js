@@ -37,7 +37,7 @@
 	},
 	"/uni_modules/uni-config-center/uniCloud/cloudfunctions/common/uni-config-center/uni-id/config.json": {
 		"tokenExpiresIn": 7200,
-		"app-plus": {
+		"app": {
 			"oauth": {
 				"weixin": {
 					"appid": "填写来源微信开放平台https://open.weixin.qq.com/创建的应用的appid",

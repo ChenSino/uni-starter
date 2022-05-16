@@ -22,8 +22,7 @@
 				<!-- #endif -->
 				
 				<!-- 列表渲染 -->
-				<uni-list-item :to="'/pages/list/detail?id='+item._id+'&title='+item.title" v-for="(item,index) in data"
-					:key="index">
+				<uni-list-item :to="'/pages/list/detail?id='+item._id+'&title='+item.title" v-for="(item,index) in data" :key="index">
 					<!-- 通过header插槽定义列表左侧图片 -->
 					<template v-slot:header>
 						<image class="avatar" :src="item.avatar" mode="aspectFill"></image>

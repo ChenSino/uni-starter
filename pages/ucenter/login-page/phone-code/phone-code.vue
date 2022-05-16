@@ -15,8 +15,7 @@
 				@click="submit">{{$t('common.login')}}</button>
 		</uni-forms>
 		<uni-quick-login agree></uni-quick-login>
-		<uni-popup-captcha @confirm="submit" ref="popup-captcha" v-model="captcha" scene="loginBySms">
-		</uni-popup-captcha>
+		<uni-popup-captcha @confirm="submit" ref="popup-captcha" v-model="captcha" scene="loginBySms"></uni-popup-captcha>
 	</view>
 </template>
 <script>
@@ -25,9 +24,9 @@
 		mixins: [mixin],
 		data() {
 			return {
-				code: '',
-				phone: '',
-				captcha: false
+				code:'',
+				phone:'',
+				captcha:false
 			}
 		},
 		computed: {
@@ -50,63 +49,33 @@
 			}
 		},
 		methods: {
-			async submit() { //完成并提交
-				return await uniCloud.callFunction({
-					name: 'uni-id-cf',
-					data: {
-						action: 'loginBySms',
-						params: {
-							"mobile": this.phone,
-							"code": this.code,
-							"captcha": this.captcha
-						},
-					}
-				}).then(({result}) => {
-					uni.showToast({
-						title: result.msg || result.errMsg,
-						icon: 'none'
-					});
-					if (result.errCode == "CAPTCHA_REQUIRED") {
-						return this.$refs['popup-captcha'].open()
-					}
-					if (result.code === 0) {
-						this.loginSuccess(result)
-					}
-					return result
-				}).finally((e)=>{
-					console.log("e: ",e);
-					this.captcha = false
-				})
-
-
-				/* uniCloud.callFunction({
-					name: 'uni-id-cf',
-					data: {
-						action: 'loginBySms',
-						params: {
-							"mobile": this.phone,
-							"code": this.code,
-							"captcha": this.captcha
+			submit(){ //完成并提交
+				uniCloud.callFunction({
+					name:'uni-id-cf',
+					data:{
+						action:'loginBySms',
+						params:{
+							"mobile":this.phone,
+							"code":this.code,
+							"captcha":this.captcha
 						},
 					},
-					success: ({
-						result
-					}) => {
+					success: ({result}) => {
 						uni.showToast({
 							title: result.msg || result.errMsg,
 							icon: 'none'
 						});
-						if (result.errCode == "CAPTCHA_REQUIRED") {
+						if(result.errCode == "CAPTCHA_REQUIRED"){
 							return this.$refs['popup-captcha'].open()
 						}
-						if (result.code === 0) {
+						if(result.code === 0){
 							this.loginSuccess(result)
 						}
 					},
 					complete: () => {
 						this.captcha = false
 					}
-				}) */
+				})
 			}
 		}
 	}

@@ -6,8 +6,7 @@
 					v-model="formData.username" trim="both" />
 			</uni-forms-item>
 			<uni-forms-item name="nickname">
-				<uni-easyinput :inputBorder="false" class="easyinput" :placeholder="$t('register.nicknamePlaceholder')"
-					v-model="formData.nickname" trim="both" />
+				<uni-easyinput :inputBorder="false" class="easyinput" :placeholder="$t('register.nicknamePlaceholder')" v-model="formData.nickname" trim="both"  />
 			</uni-forms-item>
 			<uni-forms-item name="password" v-model="formData.password" required>
 				<uni-easyinput :inputBorder="false" class="easyinput"
@@ -15,8 +14,7 @@
 					trim="both" />
 			</uni-forms-item>
 			<uni-forms-item name="pwd2" v-model="formData.pwd2" required>
-				<uni-easyinput :inputBorder="false" class="easyinput" :placeholder="$t('register.passwordAgain')"
-					type="password" v-model="formData.pwd2" trim="both" />
+				<uni-easyinput :inputBorder="false" class="easyinput" :placeholder="$t('register.passwordAgain')" type="password" v-model="formData.pwd2" trim="both" />
 			</uni-forms-item>
 			<uni-forms-item name="captcha" required>
 				<uni-captcha scene="register" v-model="formData.captcha"></uni-captcha>
@@ -36,11 +34,11 @@
 		data() {
 			return {
 				formData: {
-					"username": "",
-					"nickname": "",
-					"password": "",
-					"pwd2": "",
-					"captcha": ""
+					"username": "111111",
+					"nickname": "111111",
+					"password":"111111",
+					"pwd2":"111111",
+					"captcha":false
 				},
 				rules,
 				agree: false,
@@ -144,9 +142,11 @@
 	.uni-container {
 		padding: 15px;
 	}
-
-	.send-btn {
+	.send-btn{
 		margin-top: 15px;
+	}
+	.uni-container ::v-deep .uni-forms-item__label{
+		width: 15px !important;
 	}
 
 	.uni-container ::v-deep .uni-forms-item__label {

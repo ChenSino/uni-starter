@@ -31,7 +31,7 @@ exports.main = async (event, context) => {
 	} = event;
 	const deviceInfo = event.deviceInfo || {};
 	let params = event.params || {},
-		tokenExpired;
+		tokenExpired,needCaptcha;
 	/*
 	2.在某些操作之前我们要对用户对身份进行校验（也就是要检查用户的token）再将得到的uid写入params.uid
 		校验用到的方法是uniID.checkToken 详情：https://uniapp.dcloud.io/uniCloud/uni-id?id=checktoken
@@ -90,7 +90,7 @@ exports.main = async (event, context) => {
 		await addDeviceInfo(res)
 	}
 	//4.记录成功登录的日志方法
-	const loginLog = async (res = {}) => {
+	const uniIdLog = async (res = {}) => {
 		const now = Date.now()
 		const uniIdLogCollection = db.collection('uni-id-log')
 		let logData = {
@@ -98,7 +98,8 @@ exports.main = async (event, context) => {
 			ip: context.CLIENTIP,
 			type: res.type,
 			ua: context.CLIENTUA,
-			create_date: now
+			create_date: now,
+			action
 		};
 
 		if (res.code === 0) {
@@ -109,7 +110,8 @@ exports.main = async (event, context) => {
 			}
 			if (res.type == 'register') {
 				await registerSuccess(res)
-			} else {
+			}
+			if (res.type == 'login') {
 				if (Object.keys(deviceInfo).length) {
 					console.log(context.DEVICEID);
 					//避免重复新增设备信息，先判断是否已存在
@@ -158,17 +160,17 @@ exports.main = async (event, context) => {
 		})
 	}
 
-	//5.防止恶意破解登录，连续登录失败一定次数后，需要用户提供验证码
+	//5.防止恶意破解操作，连续操作失败一定次数后，需要用户提供验证码
 	const isNeedCaptcha = async () => {
-		//当用户最近“2小时内(recordDate)”登录失败达到2次(recordSize)时。要求用户提交验证码
+		//当用户最近“2小时内(recordDate)”操作失败达到2次(recordSize)时。要求用户提交验证码
 		const now = Date.now(),
 			recordDate = 120 * 60 * 1000,
 			recordSize = 2;
 		const uniIdLogCollection = db.collection('uni-id-log')
 		let recentRecord = await uniIdLogCollection.where({
-				deviceId: params.deviceId || context.DEVICEID,
+				ip: context.CLIENTIP,
 				create_date: dbCmd.gt(now - recordDate),
-				type: 'login'
+				action
 			})
 			.orderBy('create_date', 'desc')
 			.limit(recordSize)
@@ -247,21 +249,50 @@ exports.main = async (event, context) => {
 			}
 			break;
 		case 'bindMobileBySms':
-			// console.log({
-			// 	uid: params.uid,
-			// 	mobile: params.mobile,
-			// 	code: params.code
-			// });
+			if(!(/^1\d{10}$/.test(params.mobile))){
+				return {
+					code: 401,
+					msg: '手机号格式错误'
+				}
+			}
+			if(!params.code){
+				return {
+					code: 401,
+					msg: '短信验证码不能为空'
+				}
+			}
+			needCaptcha = await isNeedCaptcha()
+			console.log(needCaptcha)
+			if(needCaptcha){
+				let {captcha} = params
+				if(!captcha){
+					return {
+						errCode: 'CAPTCHA_REQUIRED',
+						errMsg: '操作失败达到2次，请提交验证码'
+					}
+				}
+				res = await uniCaptcha.verify({
+					captcha,
+					scene: action
+				})
+				console.log(8956,res);
+				if(res.code != 0){
+					console.log(res,action);
+					return res
+				}
+			}
+			
 			res = await uniID.bindMobile({
 				uid: params.uid,
 				mobile: params.mobile,
 				code: params.code
 			})
-			// console.log(res);
+			uniIdLog(res)
+			console.log(res);
 			break;
 		case 'register':
 			var {
-				username, password, nickname
+				username, password, nickname,captcha
 			} = params
 			if (/^1\d{10}$/.test(username)) {
 				return {
@@ -275,6 +306,19 @@ exports.main = async (event, context) => {
 					msg: '用户名不能是邮箱'
 				}
 			}
+			if(!captcha){
+				return {
+					code: 401,
+					msg: '图形验证码不能为空'
+				}
+			}
+			res = await uniCaptcha.verify({
+				captcha,
+				scene: action
+			})
+			if(res.code != 0){
+				return res
+			}
 			res = await uniID.register({
 				username,
 				password,
@@ -285,16 +329,14 @@ exports.main = async (event, context) => {
 				await registerSuccess(res)
 			}
 			break;
-
 		case 'getNeedCaptcha': {
 			const needCaptcha = await isNeedCaptcha()
 			res.needCaptcha = needCaptcha
 			break;
 		}
-
 		case 'login':
 			let passed = false;
-			let needCaptcha = await isNeedCaptcha();
+			needCaptcha = await isNeedCaptcha();
 			console.log('needCaptcha', needCaptcha);
 			if (needCaptcha) {
 				res = await uniCaptcha.verify({
@@ -310,7 +352,7 @@ exports.main = async (event, context) => {
 					queryField: ['username', 'email', 'mobile']
 				});
 				res.type = 'login'
-				await loginLog(res);
+				await uniIdLog(res);
 				needCaptcha = await isNeedCaptcha();
 			}
 
@@ -380,16 +422,16 @@ exports.main = async (event, context) => {
 				delete loginRes.accessToken
 				delete loginRes.refreshToken
 			}
-			await loginLog(loginRes)
+			await uniIdLog(loginRes)
 			return loginRes
 			break;
 		case 'loginByUniverify':
 			res = await uniID.loginByUniverify(params)
-			await loginLog(res)
+			await uniIdLog(res)
 			break;
 		case 'loginByApple':
 			res = await uniID.loginByApple(params)
-			await loginLog(res)
+			await uniIdLog(res)
 			break;
 		case 'checkToken':
 			res = await uniID.checkToken(uniIdToken);
@@ -404,11 +446,17 @@ exports.main = async (event, context) => {
 			break;
 		case 'sendSmsCode':
 			/* -开始- 测试期间，为节约资源。统一虚拟短信验证码为： 123456；开启以下代码块即可  */
-			return uniID.setVerifyCode({
+			res = uniID.setVerifyCode({
 				mobile: params.mobile,
 				code: '123456',
 				type: params.type
 			})
+			return {
+				...res,
+				code: 40000,
+					msg:
+					"已启动测试模式，直接使用：123456作为短信验证码即可。正式项目，请配置/common/uni-config-center/uni-id/config.json（service->sm中的密钥信息）并在uni-id-cf完成配置 "
+			}
 			/* -结束- */
 
 			// 简单限制一下客户端调用频率
@@ -439,6 +487,24 @@ exports.main = async (event, context) => {
 			})
 			break;
 		case 'loginBySms':
+			needCaptcha = await  isNeedCaptcha()
+			if(needCaptcha){
+				let {captcha} = params
+				if(!captcha){
+					return {
+						errCode: 'CAPTCHA_REQUIRED',
+						errMsg: '操作失败达到2次，请提交验证码'
+					}
+				}
+				res = await uniCaptcha.verify({
+					captcha,
+					scene: action
+				})
+				if(res.code != 0){
+					console.log(res,action);
+					return res
+				}
+			}
 			if (!params.code) {
 				return {
 					code: 500,
@@ -452,7 +518,7 @@ exports.main = async (event, context) => {
 				}
 			}
 			res = await uniID.loginBySms(params)
-			await loginLog(res)
+			await uniIdLog(res)
 			break;
 		case 'resetPwdBySmsCode':
 			if (!params.code) {

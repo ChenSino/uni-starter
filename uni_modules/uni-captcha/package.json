@@ -1,8 +1,8 @@
 {
   "id": "uni-captcha",
   "displayName": "uni-captcha",
-  "version": "0.6.0",
-  "description": "云端一体图形验证码组件",
+  "version": "0.4.1",
+  "description": "简洁、高效、灵活可配置的云端验证码模块",
   "keywords": [
     "uniCloud",
     "captcha",

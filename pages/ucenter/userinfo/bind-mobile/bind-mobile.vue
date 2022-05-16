@@ -11,8 +11,7 @@
 		</uni-easyinput>
 		<button class="uni-btn send-btn-box" :disabled="!canSubmit" :type="canSubmit?'primary':'default'"
 			@click="submit">提交</button>
-		<uni-popup-captcha ref="popup-captcha" @confirm="submit" v-model="formData.captcha" scene="bindMobileBySms">
-		</uni-popup-captcha>
+		<uni-popup-captcha ref="popup-captcha" @confirm="submit" v-model="formData.captcha" scene="bindMobileBySms"></uni-popup-captcha>
 	</view>
 </template>
 <script>
@@ -50,79 +49,49 @@
 			 */
 			async submit() {
 				console.log(this.formData);
-				return await uniCloud.callFunction({
+				uniCloud.callFunction({
 					name: 'uni-id-cf',
 					data: {
 						action: 'bindMobileBySms',
 						params: this.formData
 					},
-				}).then(({
-					result
-				}) => {
-					console.log(result);
-					uni.showToast({
-						title: result.msg || result.errMsg,
-						icon: 'none'
-					});
-					if (result.errCode == "CAPTCHA_REQUIRED") {
-						return this.$refs['popup-captcha'].open()
-					}
-					if (result.code === 0) {
-						this.setUserInfo({
-							"mobile": result.mobile
-						})
-						uni.navigateBack()
-					}
-					return result
-				}).catch((reason) => {
-					console.log(reason, 'reason----');
-					return reason
-				})
-
-				/* uniCloud.callFunction({
-					name: 'uni-id-cf',
-					data: {
-						action: 'bindMobileBySms',
-						params: this.formData
-					},
-					success: ({result}) => {
+					success: ({
+						result
+					}) => {
 						console.log(result);
 						uni.showToast({
 							title: result.msg || result.errMsg,
 							icon: 'none'
 						});
-						if (result.errCode == "CAPTCHA_REQUIRED") {
+						if(result.errCode == "CAPTCHA_REQUIRED"){
 							return this.$refs['popup-captcha'].open()
 						}
 						if (result.code === 0) {
-							this.setUserInfo({
-								"mobile": result.mobile
-							})
+							this.setUserInfo({"mobile":result.mobile})
 							uni.navigateBack()
 						}
 					},
 					complete: () => {
 						this.formData.captcha = false
 					}
-				}) */
-
+				})
 				/*
-					const uniIdCo = uniCloud.importObject("uni-id-co")
-					uniIdCo.bindMobileBySms(this.formData).then(e => {
-						console.log(e);
-						uni.showToast({
-							title: e.errMsg,
-							icon: 'none'
-						});
-						uni.navigateBack()
-					}).catch(e => {
-						if( e.errCode == 'CAPTCHA_REQUIRED'){
-							this.$refs.popup.open()
-							}
-						}).finally(e=>{
-							this.formData.captcha = false
-					})
-				*/
+        const uniIdCo = uniCloud.importObject("uni-id-co")
+        uniIdCo.bindMobileBySms(this.formData).then(e => {
+          console.log(e);
+          uni.showToast({
+            title: e.errMsg,
+            icon: 'none'
+          });
+          uni.navigateBack()
+        }).catch(e => {
+          if( e.errCode == 'CAPTCHA_REQUIRED'){
+            this.$refs.popup.open()
+          }
+				}).finally(e=>{
+          this.formData.captcha = false
+        })
+		*/
 			},
 			isPhone() {
 				let reg_phone = /^1\d{10}$/;

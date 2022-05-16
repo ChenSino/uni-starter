@@ -6,15 +6,26 @@
 				mode="widthFix"></image>
 		</view>
 		<input @blur="focusCaptchaInput = false" :focus="focusCaptchaInput" type="text" class="captcha"
-			:inputBorder="false" maxlength="4" v-model="val" placeholder="请输入验证码">
+			:inputBorder="false" maxlength="4" v-model="modelValue" placeholder="请输入验证码">
 	</view>
 </template>
 
 <script>
 	export default {
+		data() {
+			return {
+				focusCaptchaInput: false,
+				modelValue: "",
+				captchaBase64: "",
+				loging: false
+			};
+		},
+		model: {
+			prop: 'modelValue',
+			event: 'update:modelValue'
+		},
 		props: {
-			modelValue: String,
-			value: String,
+			event: 'update:modelValue',
 			scene: {
 				type: String,
 				default () {
@@ -28,37 +39,17 @@
 				}
 			}
 		},
-		computed: {
-			val: {
-				get() {
-					return this.value || this.modelValue
-				},
-				set(value) {
-					console.log("value: ", value);
-					// TODO 兼容 vue2
-					// #ifdef VUE2
-					this.$emit('input', value);
-					// #endif
-
-					// TODO　兼容　vue3
-					// #ifdef VUE3
-					this.$emit('update:modelValue', value)
-					// #endif
-				}
-			}
-		},
-		data() {
-			return {
-				focusCaptchaInput: false,
-				captchaBase64: "",
-				loging: false
-			};
-		},
 		watch: {
+			modelValue(value) {
+				// TODO 兼容 vue2
+				this.$emit('input', value);
+				// TODO　兼容　vue3
+				this.$emit('update:modelValue', value)
+			},
 			scene: {
 				handler(scene) {
 					if (scene) {
-						this.getImageCaptcha(this.focus)
+						this.getImageCaptcha(false)
 					} else {
 						uni.showToast({
 							title: 'scene不能为空',
@@ -66,14 +57,14 @@
 						});
 					}
 				},
-				immediate: true
+				immediate:true
 			}
 		},
 		methods: {
 			getImageCaptcha(focus = true) {
 				this.loging = true
+				this.modelValue = ''
 				if (focus) {
-					this.val = ''
 					this.focusCaptchaInput = true
 				}
 				const uniIdCo = uniCloud.importObject("uni-captcha-co", {
@@ -82,7 +73,7 @@
 				uniIdCo.getImageCaptcha({
 						scene: this.scene
 					}).then(result => {
-						// console.log(result);
+						console.log(result);
 						this.captchaBase64 = result.captchaBase64
 					})
 					.catch(e => {
@@ -116,6 +107,7 @@
 	}
 
 	.captcha-img-box {
+		cursor: pointer;
 		position: relative;
 		background-color: #FEFAE7;
 	}
@@ -134,12 +126,7 @@
 	.captcha-img-box,
 	.captcha-img,
 	.loding {
-		height: 44px !important;
 		width: 100px;
-	}
-
-	.captcha-img {
-		cursor: pointer;
 	}
 
 	.loding {

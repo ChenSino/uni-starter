@@ -3,7 +3,7 @@
 		<view class="popup-captcha">
 			<view class="content">
 				<text class="title">{{title}}</text>
-				<uni-captcha :focus="focus" :scene="scene" v-model="val"></uni-captcha>
+				<uni-captcha :scene="scene" v-model="modelValue"></uni-captcha>
 			</view>
 			<view class="button-box">
 				<view @click="close" class="btn">取消</view>
@@ -17,12 +17,15 @@
 	export default {
 		data() {
 			return {
-				focus: false
-			}
+				modelValue: "",
+			};
+		},
+		model: {
+			prop: 'modelValue',
+			event: 'update:modelValue'
 		},
 		props: {
-			modelValue:String,
-			value:String,
+			event: 'update:modelValue',
 			scene: {
 				type: String,
 				default () {
@@ -36,37 +39,23 @@
 				}
 			},
 		},
-		computed:{
-			val:{
-				get(){
-					return this.value||this.modelValue
-				},
-				set(value){
-					// console.log(value);
-					// TODO 兼容 vue2
-					// #ifdef VUE2
-					this.$emit('input', value);
-					// #endif
-					
-					// TODO　兼容　vue3
-					// #ifdef VUE3
-					this.$emit('update:modelValue', value)
-					// #endif
-				}
+		watch: {
+			modelValue(value) {
+				// TODO 兼容 vue2
+				this.$emit('input', value);
+				// TODO　兼容　vue3
+				this.$emit('update:modelValue', value)
 			}
 		},
 		methods: {
 			open() {
-				this.focus = true
-				this.val = ""
 				this.$refs.popup.open()
 			},
 			close() {
-				this.focus = false
 				this.$refs.popup.close()
 			},
 			confirm() {
-				if(!this.val||this.val.length < 4){
+				if(this.modelValue.length < 4){
 					return uni.showToast({
 						title: '请填写验证码',
 						icon: 'none'

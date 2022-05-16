@@ -4,8 +4,12 @@
 		<text class="title">{{$t('pwdLogin.pwdLogin')}}</text>
 		<input class="input-box" :inputBorder="false" v-model="username" :placeholder="$t('pwdLogin.placeholder')"/>
 		<input type="password" class="input-box" :inputBorder="false" v-model="password" :placeholder="$t('pwdLogin.passwordPlaceholder')"/>
-		<uni-captcha v-if="needCaptcha" scene="login" v-model="captcha"></uni-captcha>
-		<uni-agreements class="agreement" @setAgree="agree = $event"></uni-agreements>
+		<!-- <view class="captcha-box" v-if="captchaBase64">
+			<image class="captcha-img" @click="createCaptcha" :src="captchaBase64" mode="widthFix"></image>
+			<input type="text" class="input-box captcha" :inputBorder="false" v-model="captcha" :placeholder="$t('pwdLogin.verifyCodePlaceholder')"/>
+		</view> -->
+		<uni-captcha scene="login" v-model="captcha"></uni-captcha>
+		<uni-agreements @setAgree="agree = $event"></uni-agreements>
 		<button class="send-btn" :disabled="!canLogin" :type="canLogin?'primary':'default'"
 			@click="pwdLogin">{{$t('pwdLogin.login')}}</button>
 		<!-- 忘记密码 -->
@@ -26,8 +30,7 @@
 				"password": "",
 				"username": "",
 				"agree": false,
-				"captcha":'',
-				"needCaptcha":false
+				"captcha":false
 			}
 		},
 		computed: {
@@ -131,7 +134,7 @@
 							}
 						}
 					}
-				}) */
+				})
 			},
 			/* 前往注册 */
 			toRegister() {
