@@ -364,7 +364,6 @@
 	}
 
 	.userInfo {
-		width: 750rpx;
 		padding: 20rpx;
 		padding-top: 50px;
 		background-image: url(../../static/uni-center/headers.png);
@@ -409,7 +408,7 @@
 	}
 
 	.uni-grid .text {
-		font-size: 30rpx;
+		font-size: 16px;
 		height: 25px;
 		line-height: 25px;
 		color: #817f82;

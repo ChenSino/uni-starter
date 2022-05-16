@@ -9,7 +9,7 @@ view {
 
 .content {
 	padding: 0 50rpx;
-	width: 750rpx;
+	/* width: 750rpx; */
 	flex: 1;
 }
 

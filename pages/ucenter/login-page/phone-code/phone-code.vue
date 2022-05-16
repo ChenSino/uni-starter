@@ -15,6 +15,7 @@
 				@click="submit">{{$t('common.login')}}</button>
 		</uni-forms>
 		<uni-quick-login agree></uni-quick-login>
+		<uni-popup-captcha @confirm="submit" ref="popup-captcha" v-model="captcha" scene="loginBySms"></uni-popup-captcha>
 	</view>
 </template>
 <script>
@@ -24,7 +25,8 @@
 		data() {
 			return {
 				code:'',
-				phone:''
+				phone:'',
+				captcha:false
 			}
 		},
 		computed: {
@@ -51,18 +53,24 @@
 						action:'loginBySms',
 						params:{
 							"mobile":this.phone,
-							"code":this.code
+							"code":this.code,
+							"captcha":this.captcha
 						},
 					},
 					success: ({result}) => {
+						uni.showToast({
+							title: result.msg || result.errMsg,
+							icon: 'none'
+						});
+						if(result.errCode == "CAPTCHA_REQUIRED"){
+							return this.$refs['popup-captcha'].open()
+						}
 						if(result.code === 0){
 							this.loginSuccess(result)
-						}else{
-							uni.showModal({
-								content: result.msg,
-								showCancel: false
-							});
 						}
+					},
+					complete: () => {
+						this.captcha = false
 					}
 				})
 			}

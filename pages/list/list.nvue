@@ -23,8 +23,7 @@
 				<!-- #endif -->
 
 				<!-- 列表渲染 -->
-				<uni-list-item :to="'/pages/list/detail?id='+item._id+'&title='+item.title" v-for="(item,index) in data"
-					:key="index">
+				<uni-list-item :to="'/pages/list/detail?id='+item._id+'&title='+item.title" v-for="(item,index) in data" :key="index">
 					<!-- 通过header插槽定义列表左侧图片 -->
 					<template v-slot:header>
 						<image class="avatar" :src="item.avatar" mode="aspectFill"></image>
@@ -203,11 +202,11 @@
 
 	.main {
 		justify-content: space-between;
+		flex: 1;
 	}
 
 	.title {
-		width: 480rpx;
-		font-size: 32rpx;
+		font-size: 16px;
 	}
 
 	.info {
@@ -217,7 +216,7 @@
 
 	.author,
 	.last_modify_date {
-		font-size: 28rpx;
+		font-size: 14px;
 		color: #999999;
 	}
 

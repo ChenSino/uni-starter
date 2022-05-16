@@ -116,6 +116,7 @@
 <style scoped>
 	.box {
 		flex: 1;
+		width: 700rpx;
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
@@ -123,7 +124,6 @@
 	.uni-load-more{
 		align-items: center;
 		justify-content: center;
-		width: 690rpx;
 	}
 	.state-text {
 		text-align: center;

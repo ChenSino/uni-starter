@@ -1,15 +1,17 @@
 <template>
-	<view class="box">
+	<view class="uni-content">
 		<!-- 登录框 (选择手机号所属国家和地区需要另行实现) -->
-		<uni-easyinput clearable focus type="number" class="input-box" :inputBorder="false" v-model="formData.phone"
-			maxlength="11" :placeholder="$t('common.phonePlaceholder')"></uni-easyinput>
-		<uni-easyinput clearable type="number" class="input-box" :inputBorder="false" v-model="formData.code" maxlength="6"
-			:placeholder="$t('common.verifyCodePlaceholder')">
+		<uni-easyinput clearable focus type="number" class="input-box" :inputBorder="false" v-model="formData.mobile"
+			maxlength="11" placeholder="请输入手机号"></uni-easyinput>
+		<uni-easyinput clearable type="number" class="input-box" :inputBorder="false" v-model="formData.code"
+			maxlength="6" :placeholder="$t('common.verifyCodePlaceholder')">
 			<template v-slot:right>
-				<uni-send-sms-code ref="shortCode" code-type="bind" :phone="formData.phone"></uni-send-sms-code>
+				<uni-send-sms-code ref="shortCode" code-type="bind" :phone="formData.mobile"></uni-send-sms-code>
 			</template>
 		</uni-easyinput>
-		<button class="send-btn-box" :disabled="!canSubmit" :type="canSubmit?'primary':'default'" @click="submit">{{$t('common.submit')}}</button>
+		<button class="uni-btn send-btn-box" :disabled="!canSubmit" :type="canSubmit?'primary':'default'"
+			@click="submit">提交</button>
+		<uni-popup-captcha ref="popup-captcha" @confirm="submit" v-model="formData.captcha" scene="bindMobileBySms"></uni-popup-captcha>
 	</view>
 </template>
 <script>
@@ -22,26 +24,22 @@
 			return {
 				currenPhoneArea: '',
 				formData: {
-					phone:"",
-					code:""
+					phone: "",
+					code: "",
+					captcha: false
 				}
 			}
 		},
 		computed: {
 			tipText() {
-				return this.$t('common.verifyCodeSend')+ `${this.currenPhoneArea} ${this.formData.phone}。` + this.$t('common.passwordDigits')
+				return "验证码已通过短信发送至" + `${this.currenPhoneArea} ${this.formData.mobile}。` + "密码为6 - 20位"
 			},
 			canSubmit() {
-				return true//this.isPhone() && this.isCode();
+				return this.isPhone() && this.isCode();
 			}
 		},
-		onLoad(event) {
-			uni.setNavigationBarTitle({
-				title:this.$t('bindMobile.navigationBarTitle')
-			})
-		},
-		onReady() {
-		},
+		onLoad(event) {},
+		onReady() {},
 		methods: {
 			...mapMutations({
 				setUserInfo: 'user/login'
@@ -52,30 +50,52 @@
 			submit() {
 				console.log(this.formData);
 				uniCloud.callFunction({
-					name:'uni-id-cf',
-					data:{
-						action:'bindMobileBySms',
-						params:{
-							"mobile": this.formData.phone,
-							"code": this.formData.code
-						},
+					name: 'uni-id-cf',
+					data: {
+						action: 'bindMobileBySms',
+						params: this.formData
 					},
-					success: ({result}) => {
+					success: ({
+						result
+					}) => {
 						console.log(result);
-						this.setUserInfo({"mobile":result.mobile})
 						uni.showToast({
-							title: result.msg||'完成',
+							title: result.msg || result.errMsg,
 							icon: 'none'
 						});
+						if(result.errCode == "CAPTCHA_REQUIRED"){
+							return this.$refs['popup-captcha'].open()
+						}
 						if (result.code === 0) {
+							this.setUserInfo({"mobile":result.mobile})
 							uni.navigateBack()
 						}
+					},
+					complete: () => {
+						this.formData.captcha = false
 					}
 				})
+				/*
+        const uniIdCo = uniCloud.importObject("uni-id-co")
+        uniIdCo.bindMobileBySms(this.formData).then(e => {
+          console.log(e);
+          uni.showToast({
+            title: e.errMsg,
+            icon: 'none'
+          });
+          uni.navigateBack()
+        }).catch(e => {
+          if( e.errCode == 'CAPTCHA_REQUIRED'){
+            this.$refs.popup.open()
+          }
+				}).finally(e=>{
+          this.formData.captcha = false
+        })
+		*/
 			},
 			isPhone() {
 				let reg_phone = /^1\d{10}$/;
-				let isPhone = reg_phone.test(this.formData.phone);
+				let isPhone = reg_phone.test(this.formData.mobile);
 				return isPhone;
 			},
 			isCode() {
@@ -88,17 +108,18 @@
 </script>
 
 <style>
-	.box {
+	.uni-content {
+		padding: 0;
 		align-items: center;
 		justify-content: center;
 		padding: 50rpx;
 		padding-top: 10px;
 	}
-/* #ifndef APP-NVUE  || VUE3 */
-	.box /deep/ .uni-easyinput__content {
-		height: 50px;
-	}
-/* #endif */
+
+	/* #ifndef APP-NVUE  || VUE3 */
+	.uni-content /deep/ .uni-easyinput__content {}
+
+	/* #endif */
 	.input-box {
 		width: 100%;
 		margin-top: 16px;
@@ -106,10 +127,10 @@
 		border-radius: 6rpx;
 		flex-direction: row;
 		flex-wrap: nowrap;
+		margin-bottom: 10px;
 	}
 
 	.send-btn-box {
-		width: 650rpx;
 		margin-top: 15px;
 	}
 </style>

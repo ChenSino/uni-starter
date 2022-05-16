@@ -5,13 +5,16 @@
 				<uni-easyinput :inputBorder="false" class="easyinput" :placeholder="$t('register.usernamePlaceholder')" v-model="formData.username" trim="both" />
 			</uni-forms-item>
 			<uni-forms-item name="nickname">
-				<uni-easyinput :inputBorder="false" class="easyinput" :placeholder="$t('register.nicknamePlaceholder')" v-model="formData.nickname" trim="both" style="width: 660rpx;" />
+				<uni-easyinput :inputBorder="false" class="easyinput" :placeholder="$t('register.nicknamePlaceholder')" v-model="formData.nickname" trim="both"  />
 			</uni-forms-item>
 			<uni-forms-item name="password" v-model="formData.password" required>
 				<uni-easyinput :inputBorder="false" class="easyinput" :placeholder="$t('register.passwordDigitsPlaceholder')" type="password" v-model="formData.password" trim="both" />
 			</uni-forms-item>
 			<uni-forms-item name="pwd2" v-model="formData.pwd2" required>
 				<uni-easyinput :inputBorder="false" class="easyinput" :placeholder="$t('register.passwordAgain')" type="password" v-model="formData.pwd2" trim="both" />
+			</uni-forms-item>
+			<uni-forms-item name="captcha" required>
+				<uni-captcha scene="register" v-model="formData.captcha"></uni-captcha>
 			</uni-forms-item>
 			<uni-agreements @setAgree="agree = $event"></uni-agreements>
 			<button class="send-btn" type="primary" @click="submit">{{$t('register.registerAndLogin')}}</button>
@@ -27,10 +30,11 @@ import mixin from '../common/login-page.mixin.js';
 		data() {
 			return {
 				formData: {
-					"username": "",
-					"nickname": "",
-					'password':'',
-					'pwd2':''
+					"username": "111111",
+					"nickname": "111111",
+					"password":"111111",
+					"pwd2":"111111",
+					"captcha":false
 				},
 				rules,
 				agree:false
@@ -91,13 +95,13 @@ import mixin from '../common/login-page.mixin.js';
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
 	@import url("../common/login-page.css");
 	.uni-container {
 		padding: 15px;
 	}
 	.send-btn{
-		margin-top: 5px;
+		margin-top: 15px;
 	}
 	.uni-container ::v-deep .uni-forms-item__label{
 		width: 15px !important;

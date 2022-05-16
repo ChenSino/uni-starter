@@ -1,3 +1,7 @@
+## 1.0.15（2022-05-11）
+- loginBySms、bindMobileBySms新增防刷机制（当短信验证码输入错误2次以上，弹出图形验证码进行人机校验）
+- 更改loginLog为uniIdLog 记录各类uni-id操作，并新增action字段记录操作的行为名称
+- register新增校验图形验证码逻辑
 ## 1.0.14（2022-01-26）
 - 修复 uni-admin 的 'registerUser' 接口，注册用户含有多余字段 uid 
 ## 1.0.13（2022-01-26）

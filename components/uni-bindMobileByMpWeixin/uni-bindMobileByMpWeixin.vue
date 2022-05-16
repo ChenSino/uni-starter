@@ -71,28 +71,32 @@
 			},
 			bindMobileByMpWeixin(e) {
 				console.log(e.detail);
-				uniCloud.callFunction({
-					name: "uni-id-cf",
-					data: {
-						"action": "bindMobileByMpWeixin",
-						"params": e.detail
-					},
-					complete: (e) => {
-						console.log(e);
-					},
-					success: (e) => {
-						uni.showToast({
-							title: e.result.msg||'绑定成功',
-							icon: 'none'
-						});
-						if(e.result.code === 0){
-							this.setUserInfo({
-								"mobile": e.result.mobile
-							})
+				if(e.errMsg == "getPhoneNumber:ok"){
+					uniCloud.callFunction({
+						name: "uni-id-cf",
+						data: {
+							"action": "bindMobileByMpWeixin",
+							"params": e.detail
+						},
+						complete: (e) => {
+							console.log(e);
+						},
+						success: (e) => {
+							uni.showToast({
+								title: e.result.msg||'绑定成功',
+								icon: 'none'
+							});
+							if(e.result.code === 0){
+								this.setUserInfo({
+									"mobile": e.result.mobile
+								})
+							}
+							this.closeMe()
 						}
-						this.closeMe()
-					}
-				})
+					})
+				}else{
+					this.closeMe()
+				}
 			},
 			async open(uid) {
 				userId = uid

@@ -4,10 +4,11 @@
 		<text class="title">{{$t('pwdLogin.pwdLogin')}}</text>
 		<input class="input-box" :inputBorder="false" v-model="username" :placeholder="$t('pwdLogin.placeholder')"/>
 		<input type="password" class="input-box" :inputBorder="false" v-model="password" :placeholder="$t('pwdLogin.passwordPlaceholder')"/>
-		<view class="captcha-box" v-if="captchaBase64">
+		<!-- <view class="captcha-box" v-if="captchaBase64">
 			<image class="captcha-img" @click="createCaptcha" :src="captchaBase64" mode="widthFix"></image>
 			<input type="text" class="input-box captcha" :inputBorder="false" v-model="captcha" :placeholder="$t('pwdLogin.verifyCodePlaceholder')"/>
-		</view>
+		</view> -->
+		<uni-captcha scene="login" v-model="captcha"></uni-captcha>
 		<uni-agreements @setAgree="agree = $event"></uni-agreements>
 		<button class="send-btn" :disabled="!canLogin" :type="canLogin?'primary':'default'"
 			@click="pwdLogin">{{$t('pwdLogin.login')}}</button>
@@ -29,8 +30,7 @@
 				"password": "",
 				"username": "",
 				"agree": false,
-				"captchaBase64":"",
-				"captcha":""
+				"captcha":false
 			}
 		},
 		computed: {
@@ -92,27 +92,6 @@
 									confirmText: this.$t('common').gotIt
 								});
 							}
-						}
-					}
-				})
-			},
-			createCaptcha(){
-				uniCloud.callFunction({
-					name:'uni-id-cf',
-					data:{
-						action:'createCaptcha',
-						params:{
-							scene: "login"
-						},
-					},
-					success: ({result}) => {
-						if (result.code === 0) {
-							this.captchaBase64 = result.captchaBase64
-						}else{
-							uni.showModal({
-								content: result.msg,
-								showCancel: false
-							});
 						}
 					}
 				})

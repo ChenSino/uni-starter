@@ -62,6 +62,8 @@
       "Bluetooth": {
       },
       "Push": {
+      },
+      "Maps": {
       }
     },
     "distribute": {
@@ -131,9 +133,23 @@
         },
         "push": {
           "unipush": {
+            "version": "2",
+            "offline": true,
+            "meizu": {
+            },
+            "mi": {
+            },
+            "vivo": {
+            },
+            "oppo": {
+            },
+            "hms": {
+            }
           }
         },
         "payment": {
+        },
+        "maps": {
         }
       },
       "icons": {

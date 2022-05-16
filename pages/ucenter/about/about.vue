@@ -144,8 +144,9 @@
 	}
 	/* #endif */
 	.about {
-		width: 750rpx;
 		flex-direction: column;
+		justify-content: center;
+		align-items: center;
 	}
 
 	.box {
@@ -180,13 +181,12 @@
 	}
 
 	.copyright {
-		width: 750rpx;
 		font-size: 32rpx;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 		bottom: 20px;
-		left: 0;
+		// left: 0;
 		position: fixed;
 	}
 

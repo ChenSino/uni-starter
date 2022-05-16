@@ -8,7 +8,8 @@
   "passwordErrorRetryTime": 3600,
   "autoSetInviteCode": false,
   "forceInviteCode": false,
-  "app-plus": {
+  "preferedAppPlatform": "app",
+  "app": {
     "tokenExpiresIn": 2592000,
     "oauth": {
       "weixin": {
