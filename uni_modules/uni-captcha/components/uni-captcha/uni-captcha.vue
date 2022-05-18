@@ -73,7 +73,7 @@
 				uniIdCo.getImageCaptcha({
 						scene: this.scene
 					}).then(result => {
-						console.log(result);
+						// console.log(result);
 						this.captchaBase64 = result.captchaBase64
 					})
 					.catch(e => {
@@ -107,7 +107,6 @@
 	}
 
 	.captcha-img-box {
-		cursor: pointer;
 		position: relative;
 		background-color: #FEFAE7;
 	}
@@ -126,7 +125,12 @@
 	.captcha-img-box,
 	.captcha-img,
 	.loding {
+		height: 44px !important;
 		width: 100px;
+	}
+	
+	.captcha-img{
+		cursor: pointer;
 	}
 
 	.loding {
