@@ -4,7 +4,7 @@
 		<text class="title">{{$t('pwdLogin.pwdLogin')}}</text>
 		<input class="input-box" :inputBorder="false" v-model="username" :placeholder="$t('pwdLogin.placeholder')"/>
 		<input type="password" class="input-box" :inputBorder="false" v-model="password" :placeholder="$t('pwdLogin.passwordPlaceholder')"/>
-		<uni-captcha v-if="needCaptcha" scene="login" v-model="captcha"></uni-captcha>
+		<uni-captcha scene="login" v-model="captcha"></uni-captcha>
 		<uni-agreements class="agreement" @setAgree="agree = $event"></uni-agreements>
 		<button class="send-btn" :disabled="!canLogin" :type="canLogin?'primary':'default'"
 			@click="pwdLogin">{{$t('pwdLogin.login')}}</button>
