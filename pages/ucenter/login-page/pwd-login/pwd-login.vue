@@ -4,12 +4,8 @@
 		<text class="title">{{$t('pwdLogin.pwdLogin')}}</text>
 		<input class="input-box" :inputBorder="false" v-model="username" :placeholder="$t('pwdLogin.placeholder')"/>
 		<input type="password" class="input-box" :inputBorder="false" v-model="password" :placeholder="$t('pwdLogin.passwordPlaceholder')"/>
-		<!-- <view class="captcha-box" v-if="captchaBase64">
-			<image class="captcha-img" @click="createCaptcha" :src="captchaBase64" mode="widthFix"></image>
-			<input type="text" class="input-box captcha" :inputBorder="false" v-model="captcha" :placeholder="$t('pwdLogin.verifyCodePlaceholder')"/>
-		</view> -->
 		<uni-captcha scene="login" v-model="captcha"></uni-captcha>
-		<uni-agreements @setAgree="agree = $event"></uni-agreements>
+		<uni-agreements class="agreement" @setAgree="agree = $event"></uni-agreements>
 		<button class="send-btn" :disabled="!canLogin" :type="canLogin?'primary':'default'"
 			@click="pwdLogin">{{$t('pwdLogin.login')}}</button>
 		<!-- 忘记密码 -->
@@ -107,7 +103,7 @@
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
 	@import url("../common/login-page.css");
 
 	.auth-box {
@@ -128,16 +124,7 @@
 		margin-top: 80px;
 		width: 600rpx;
 	}
-	.captcha-box{
-		flex-direction: row;
-		align-items: center;
-		justify-content: flex-end;
-	}
-	.captcha-img{
-		margin: 0 15px 10px 0;
-		width: 250rpx;
-	}
-	.captcha{
-		width: 350rpx;
+	.agreement{
+		margin-top: 10px;
 	}
 </style>
