@@ -4,7 +4,7 @@
 		<text class="title">{{$t('pwdLogin.pwdLogin')}}</text>
 		<input class="input-box" :inputBorder="false" v-model="username" :placeholder="$t('pwdLogin.placeholder')"/>
 		<input type="password" class="input-box" :inputBorder="false" v-model="password" :placeholder="$t('pwdLogin.passwordPlaceholder')"/>
-		<uni-captcha scene="login" v-model="captcha"></uni-captcha>
+		<uni-captcha v-if="needCaptcha" scene="login" v-model="captcha"></uni-captcha>
 		<uni-agreements class="agreement" @setAgree="agree = $event"></uni-agreements>
 		<button class="send-btn" :disabled="!canLogin" :type="canLogin?'primary':'default'"
 			@click="pwdLogin">{{$t('pwdLogin.login')}}</button>
@@ -26,12 +26,13 @@
 				"password": "",
 				"username": "",
 				"agree": false,
-				"captcha":false
+				"captcha":'',
+				"needCaptcha":false
 			}
 		},
 		computed: {
 			canLogin() {
-				return this.username.length && this.isPwd;
+				return this.username.length && this.isPwd && this.agree;
 			},
 			isPwd() {
 				return /^.{6,20}$/.test(this.password);
@@ -79,7 +80,8 @@
 									title: result.msg||'完成',
 									icon: 'none'
 								});
-								this.createCaptcha()
+								this.needCaptcha = true
+								// this.createCaptcha()
 							}else{
 								uni.showModal({
 									title: this.$t('common').error,

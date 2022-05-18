@@ -3,7 +3,7 @@
 		<view class="popup-captcha">
 			<view class="content">
 				<text class="title">{{title}}</text>
-				<uni-captcha :scene="scene" v-model="modelValue"></uni-captcha>
+				<uni-captcha :scene="scene" v-model="val"></uni-captcha>
 			</view>
 			<view class="button-box">
 				<view @click="close" class="btn">取消</view>
@@ -15,17 +15,9 @@
 
 <script>
 	export default {
-		data() {
-			return {
-				modelValue: "",
-			};
-		},
-		model: {
-			prop: 'modelValue',
-			event: 'update:modelValue'
-		},
 		props: {
-			event: 'update:modelValue',
+			modelValue:String,
+			value:String,
 			scene: {
 				type: String,
 				default () {
@@ -39,12 +31,23 @@
 				}
 			},
 		},
-		watch: {
-			modelValue(value) {
-				// TODO 兼容 vue2
-				this.$emit('input', value);
-				// TODO　兼容　vue3
-				this.$emit('update:modelValue', value)
+		computed:{
+			val:{
+				get(){
+					return this.value||this.modelValue
+				},
+				set(value){
+					// console.log(value);
+					// TODO 兼容 vue2
+					// #ifdef VUE2
+					this.$emit('input', value);
+					// #endif
+					
+					// TODO　兼容　vue3
+					// #ifdef VUE3
+					this.$emit('update:modelValue', value)
+					// #endif
+				}
 			}
 		},
 		methods: {
@@ -55,7 +58,7 @@
 				this.$refs.popup.close()
 			},
 			confirm() {
-				if(this.modelValue.length < 4){
+				if(this.val.length < 4){
 					return uni.showToast({
 						title: '请填写验证码',
 						icon: 'none'
