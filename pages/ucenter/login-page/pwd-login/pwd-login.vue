@@ -4,7 +4,7 @@
 		<text class="title">{{$t('pwdLogin.pwdLogin')}}</text>
 		<input class="input-box" :inputBorder="false" v-model="username" :placeholder="$t('pwdLogin.placeholder')"/>
 		<input type="password" class="input-box" :inputBorder="false" v-model="password" :placeholder="$t('pwdLogin.passwordPlaceholder')"/>
-		<uni-captcha scene="login" v-model="captcha"></uni-captcha>
+		<uni-captcha v-if="needCaptcha" scene="login" v-model="captcha"></uni-captcha>
 		<uni-agreements class="agreement" @setAgree="agree = $event"></uni-agreements>
 		<button class="send-btn" :disabled="!canLogin" :type="canLogin?'primary':'default'"
 			@click="pwdLogin">{{$t('pwdLogin.login')}}</button>
@@ -26,7 +26,8 @@
 				"password": "",
 				"username": "",
 				"agree": false,
-				"captcha":false
+				"captcha":'',
+				"needCaptcha":false
 			}
 		},
 		computed: {
@@ -61,44 +62,8 @@
 						icon: 'none'
 					});
 				}
-				return await uniCloud.callFunction({
-					name:'uni-id-cf',
-					data:{
-						action:'login',
-						params:{
-							"username": this.username,
-							"password": this.password,
-							"captcha":this.captcha
-						},
-					},
-				}).then(({result})=>{
-					console.log("result:--------- ",result);
-					if (result.code === 0) {
-						this.loginSuccess(result)
-					} else {
-						if (result.needCaptcha) {
-							uni.showToast({
-								title: result.msg||'完成',
-								icon: 'none'
-							});
-							this.needCaptcha = true
-							// this.createCaptcha()
-						}else{
-							uni.showModal({
-								title: this.$t('common.error'),
-								content: result.msg,
-								showCancel: false,
-								confirmText: this.$t('common.gotIt')
-							});
-						}
-					}
-					return result
-				}).catch((res)=>{
-					console.log("res:-- ",res);
-					return res
-				})
 				// 下边是可以登录
-				/* uniCloud.callFunction({
+				uniCloud.callFunction({
 					name:'uni-id-cf',
 					data:{
 						action:'login',
@@ -122,10 +87,10 @@
 								// this.createCaptcha()
 							}else{
 								uni.showModal({
-									title: this.$t('common.error'),
+									title: this.$t('common').error,
 									content: result.msg,
 									showCancel: false,
-									confirmText: this.$t('common.gotIt')
+									confirmText: this.$t('common').gotIt
 								});
 							}
 						}

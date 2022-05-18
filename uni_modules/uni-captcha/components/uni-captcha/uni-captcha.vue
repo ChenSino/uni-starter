@@ -6,26 +6,15 @@
 				mode="widthFix"></image>
 		</view>
 		<input @blur="focusCaptchaInput = false" :focus="focusCaptchaInput" type="text" class="captcha"
-			:inputBorder="false" maxlength="4" v-model="modelValue" placeholder="请输入验证码">
+			:inputBorder="false" maxlength="4" v-model="val" placeholder="请输入验证码">
 	</view>
 </template>
 
 <script>
 	export default {
-		data() {
-			return {
-				focusCaptchaInput: false,
-				modelValue: "",
-				captchaBase64: "",
-				loging: false
-			};
-		},
-		model: {
-			prop: 'modelValue',
-			event: 'update:modelValue'
-		},
 		props: {
-			event: 'update:modelValue',
+			modelValue:String,
+			value:String,
 			scene: {
 				type: String,
 				default () {
@@ -39,13 +28,33 @@
 				}
 			}
 		},
+		computed:{
+			val:{
+				get(){
+					return this.value||this.modelValue
+				},
+				set(value){
+					// console.log(value);
+					// TODO 兼容 vue2
+					// #ifdef VUE2
+					this.$emit('input', value);
+					// #endif
+					
+					// TODO　兼容　vue3
+					// #ifdef VUE3
+					this.$emit('update:modelValue', value)
+					// #endif
+				}
+			}
+		},
+		data() {
+			return {
+				focusCaptchaInput: false,
+				captchaBase64: "",
+				loging: false
+			};
+		},
 		watch: {
-			modelValue(value) {
-				// TODO 兼容 vue2
-				this.$emit('input', value);
-				// TODO　兼容　vue3
-				this.$emit('update:modelValue', value)
-			},
 			scene: {
 				handler(scene) {
 					if (scene) {
@@ -63,8 +72,8 @@
 		methods: {
 			getImageCaptcha(focus = true) {
 				this.loging = true
-				this.modelValue = ''
 				if (focus) {
+					this.val = ''
 					this.focusCaptchaInput = true
 				}
 				const uniIdCo = uniCloud.importObject("uni-captcha-co", {
@@ -101,6 +110,16 @@
 	}
 
 	.captcha-img-box,
+	.captcha {
+		height: 44px;
+		line-height: 44px;
+	}
+
+	.captcha-img-box {
+		position: relative;
+		background-color: #FEFAE7;
+	}
+
 	.captcha {
 		height: 44px;
 		line-height: 44px;
