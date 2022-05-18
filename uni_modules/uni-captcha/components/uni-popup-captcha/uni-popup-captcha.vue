@@ -3,7 +3,7 @@
 		<view class="popup-captcha">
 			<view class="content">
 				<text class="title">{{title}}</text>
-				<uni-captcha :focus="focus" :scene="scene" v-model="val"></uni-captcha>
+				<uni-captcha :scene="scene" v-model="val"></uni-captcha>
 			</view>
 			<view class="button-box">
 				<view @click="close" class="btn">取消</view>
@@ -15,11 +15,6 @@
 
 <script>
 	export default {
-		data() {
-			return {
-				focus: false
-			}
-		},
 		props: {
 			modelValue:String,
 			value:String,
@@ -66,7 +61,7 @@
 				this.$refs.popup.close()
 			},
 			confirm() {
-				if(!this.val||this.val.length < 4){
+				if(this.val.length < 4){
 					return uni.showToast({
 						title: '请填写验证码',
 						icon: 'none'
