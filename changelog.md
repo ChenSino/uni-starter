@@ -1,3 +1,10 @@
+## 1.2.5（2022-05-29）
+升级预置的`uni_modules`->`uni-captcha`版本为：0.6.0。[详情](https://ext.dcloud.net.cn/plugin?name=uni-captcha)
+## 1.2.4（2022-05-20）
+- 修改`uni-starter.config.js`->`debug`的默认值为`false`
+## 1.2.3（2022-05-20）
+- 默认关闭`manifest.json`中的扩展配置
+- `uni-starter.config.js` 新增debug,用于配置是否开启调试模式
 ## 1.2.2（2022-05-19）
 - 优化登陆体验，账号密码登陆错误超过2次，再显示图形验证码进行人机校验。
 ## 1.2.1（2022-05-18）

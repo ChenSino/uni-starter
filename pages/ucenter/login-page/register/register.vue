@@ -34,7 +34,7 @@ import mixin from '../common/login-page.mixin.js';
 					"nickname": "",
 					"password":"",
 					"pwd2":"",
-					"captcha":false
+					"captcha":""
 				},
 				rules,
 				agree:false,
