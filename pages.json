@@ -1,5 +1,6 @@
 {
-	"pages": [{
+	"pages": [
+		{
 			"path": "pages/list/list",
 			"style": {
 				// #ifndef APP-PLUS

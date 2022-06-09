@@ -17,7 +17,7 @@
 				<uni-captcha scene="register" v-model="formData.captcha"></uni-captcha>
 			</uni-forms-item>
 			<uni-agreements @setAgree="agree = $event"></uni-agreements>
-			<button class="send-btn" type="primary" @click="submit">{{$t('register.registerAndLogin')}}</button>
+			<button class="send-btn" :disabled="!canSubmit" :type="canSubmit?'primary':'default'" @click="submit">{{$t('register.registerAndLogin')}}</button>
 		</uni-forms>
 	</view>
 </template>
@@ -34,10 +34,15 @@ import mixin from '../common/login-page.mixin.js';
 					"nickname": "",
 					"password":"",
 					"pwd2":"",
-					"captcha":false
+					"captcha":""
 				},
 				rules,
-				agree:false
+				agree:false,
+			}
+		},
+		computed:{
+			canSubmit(){
+				return this.formData.username.length && this.formData.password.length && this.formData.captcha.length == 4 && this.agree
 			}
 		},
 		onReady() {
@@ -55,7 +60,7 @@ import mixin from '../common/login-page.mixin.js';
 			submit() {
 				if(!this.agree){
 					return uni.showToast({
-						title: this.$t('common').noAgree,
+						title: this.$t('common.noAgree'),
 						icon: 'none'
 					});
 				}

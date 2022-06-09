@@ -121,7 +121,7 @@
 			} else {
 				uni.showToast({
 					icon: 'none',
-					title: this.$t('listDetail').newsErr
+					title: this.$t('listDetail.newsErr')
 				})
 			}
 		},
@@ -193,7 +193,7 @@
 			 */
 			followClick() {
 				uni.showToast({
-					title:this.$t('listDetail').follow,
+					title:this.$t('listDetail.follow'),
 					icon: 'none'
 				});
 			},
@@ -224,7 +224,7 @@
 					},
 					menus: [{
 							"img": "/static/app-plus/sharemenu/wechatfriend.png",
-							"text": this.$t('common').wechatFriends,
+							"text": this.$t('common.wechatFriends'),
 							"share": {
 								"provider": "weixin",
 								"scene": "WXSceneSession"
@@ -232,7 +232,7 @@
 						},
 						{
 							"img": "/static/app-plus/sharemenu/wechatmoments.png",
-							"text": this.$t('common').wechatBbs,
+							"text": this.$t('common.wechatBbs'),
 							"share": {
 								"provider": "weixin",
 								"scene": "WXSceneTimeline"
@@ -240,7 +240,7 @@
 						},
 						{
 							"img": "/static/app-plus/sharemenu/mp_weixin.png",
-							"text": this.$t('common').wechatApplet,
+							"text": this.$t('common.wechatApplet'),
 							"share": {
 								provider: "weixin",
 								scene: "WXSceneSession",
@@ -256,7 +256,7 @@
 						},
 						{
 							"img": "/static/app-plus/sharemenu/weibo.png",
-							"text": this.$t('common').weibo,
+							"text": this.$t('common.weibo'),
 							"share": {
 								"provider": "sinaweibo"
 							}
@@ -270,16 +270,16 @@
 						},
 						{
 							"img": "/static/app-plus/sharemenu/copyurl.png",
-							"text": this.$t('common').copy,
+							"text": this.$t('common.copy'),
 							"share": "copyurl"
 						},
 						{
 							"img": "/static/app-plus/sharemenu/more.png",
-							"text": this.$t('common').more,
+							"text": this.$t('common.more'),
 							"share": "shareSystem"
 						}
 					],
-					cancelText: this.$t('common').cancelShare,
+					cancelText: this.$t('common.cancelShare'),
 				}, e => { //callback
 					console.log(e);
 				})

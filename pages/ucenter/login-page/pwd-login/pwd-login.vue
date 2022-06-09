@@ -55,7 +55,7 @@
 			pwdLogin() {
 				if (!this.agree) {
 					return uni.showToast({
-						title: this.$t('common').noAgree,
+						title: this.$t('common.noAgree'),
 						icon: 'none'
 					});
 				}
@@ -84,10 +84,10 @@
 								// this.createCaptcha()
 							}else{
 								uni.showModal({
-									title: this.$t('common').error,
+									title: this.$t('common.error'),
 									content: result.msg,
 									showCancel: false,
-									confirmText: this.$t('common').gotIt
+									confirmText: this.$t('common.gotIt')
 								});
 							}
 						}

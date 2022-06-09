@@ -91,7 +91,7 @@
 			sendShortMsg() {
 				if (!this.agree) {
 					return uni.showToast({
-						title: this.$t('common').noAgree,
+						title: this.$t('common.noAgree'),
 						icon: 'none'
 					});
 				}

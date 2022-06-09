@@ -58,7 +58,7 @@
 </template>
 
 <script>
-	var cdbRef, currentWebview;
+	let cdbRef;
 	import statusBar from "@/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar";
 
 	import Gps from '@/uni_modules/json-gps/js_sdk/gps.js';

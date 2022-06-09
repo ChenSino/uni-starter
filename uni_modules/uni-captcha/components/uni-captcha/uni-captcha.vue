@@ -58,7 +58,7 @@
 			scene: {
 				handler(scene) {
 					if (scene) {
-						this.getImageCaptcha(false)
+						this.getImageCaptcha(this.focus)
 					} else {
 						uni.showToast({
 							title: 'scene不能为空',
