@@ -200,7 +200,7 @@ export default async function() {
 		},
 		fail(e) { // 失败回调拦截
 			console.error('网络请求错误码：',JSON.stringify(e));
-			if (Debug) {
+			if (debug) {
 				uni.showModal({
 					content: JSON.stringify(e),
 					showCancel: false

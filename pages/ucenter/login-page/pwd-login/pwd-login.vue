@@ -87,10 +87,10 @@
 								// this.createCaptcha()
 							}else{
 								uni.showModal({
-									title: this.$t('common').error,
+									title: this.$t('common.error'),
 									content: result.msg,
 									showCancel: false,
-									confirmText: this.$t('common').gotIt
+									confirmText: this.$t('common.gotIt')
 								});
 							}
 						}

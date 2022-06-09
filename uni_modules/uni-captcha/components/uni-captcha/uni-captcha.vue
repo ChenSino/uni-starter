@@ -47,18 +47,11 @@
 				}
 			}
 		},
-		data() {
-			return {
-				focusCaptchaInput: false,
-				captchaBase64: "",
-				loging: false
-			};
-		},
 		watch: {
 			scene: {
 				handler(scene) {
 					if (scene) {
-						this.getImageCaptcha(false)
+						this.getImageCaptcha(this.focus)
 					} else {
 						uni.showToast({
 							title: 'scene不能为空',
