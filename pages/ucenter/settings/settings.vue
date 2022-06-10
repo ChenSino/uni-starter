@@ -43,8 +43,7 @@
 				pushServer:pushServer,
 				supportMode:[],
 				pushIsOn:"wait",
-				currentLanguage:"",
-				uniToken:""
+				currentLanguage:""
 			}
 		},
 		computed: {
@@ -53,12 +52,10 @@
 				'hasLogin': 'user/hasLogin',
 			}),
 			i18nEnable(){
-				return getApp({allowDefault: true}).globalData.config.i18n.enable
+				return getApp().globalData.config.i18n.enable
 			}
 		},
 		onLoad() {
-			this.uniToken = uni.getStorageSync('uni_id_token')
-			console.log("uniToken: ",this.uniToken);
 			this.currentLanguage = uni.getStorageSync('CURRENT_LANG') == "en"?'English':'简体中文'
 			
 			uni.setNavigationBarTitle({
@@ -184,28 +181,21 @@
 				})
 			},
 			clickLogout() {
-				console.log("this.hasLogin:---------------- ",this.hasLogin);
 				if (this.hasLogin) {
-					this.logout()
-					uni.navigateBack();
-					// uni.showModal({
-					// 	title: this.$t('settings.tips'),
-					// 	content: this.$t('settings.exitLogin'),
-					// 	cancelText: this.$t('settings.cancelText'),
-					// 	confirmText: this.$t('settings.confirmText'),
-					// 	success: res => {
-					// 		if (res.confirm) {
-					// 			this.logout()
-					// 			uni.navigateBack();
-					// 		}
-					// 	},
-					// 	fail: (err) => {
-					// 		console.log("err: ",err);
-					// 	},
-					// 	complete: (com) => {
-					// 		console.log("com: ",com);
-					// 	}
-					// });
+					uni.showModal({
+						title: this.$t('settings.tips'),
+						content: this.$t('settings.exitLogin'),
+						cancelText: this.$t('settings.cancelText'),
+						confirmText: this.$t('settings.confirmText'),
+						success: res => {
+							if (res.confirm) {
+								this.logout()
+								uni.navigateBack();
+							}
+						},
+						fail: () => {},
+						complete: () => {}
+					});
 				} else {
 					uni.navigateTo({
 						url: '/pages/ucenter/login-page/index/index'
@@ -213,10 +203,10 @@
 				}
 			},
 			clearTmp() {
-				// uni.showLoading({
-				// 	title: this.$t('settings.clearing'),
-				// 	mask: true
-				// });
+				uni.showLoading({
+					title: this.$t('settings.clearing'),
+					mask: true
+				});
 				/*
 				任何临时存储或删除不直接影响程序运行逻辑（清除缓存必定造成业务逻辑的变化，如：打开页面的图片不从缓存中读取而从网络请求）的内容都可以视为缓存。主要有storage、和file写入。
 				缓存分为三部分		
@@ -265,14 +255,14 @@
 						if(
 							!res.tapIndex && language=='zh-Hans' || res.tapIndex && language=='en'
 						){
-							const globalData = getApp({allowDefault: true}).globalData
+							const globalData = getApp().globalData
 							if (language === 'en') {
 								language = globalData.locale = 'zh-Hans'
 							} else {
 								language = globalData.locale = 'en'
 							}
 							uni.setStorageSync('CURRENT_LANG', language)
-							getApp({allowDefault: true}).globalData.$i18n.locale = language
+							getApp().globalData.$i18n.locale = language
 							this.currentLanguage = res.tapIndex?'简体中文':'English'
 							if(uni.setLocale){
 								uni.setLocale(language)

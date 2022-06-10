@@ -3,7 +3,7 @@
 		<view class="content botton-radius">
 			<view class="content-top">
 				<text class="content-top-text">{{title}}</text>
-				<image class="content-top" style="top: 0;" width="100%" height="100%" src="../static/bg_top.png">
+				<image class="content-top" style="top: 0;" width="100%" height="100%" src="../images/bg_top.png">
 				</image>
 			</view>
 			<view class="content-header"></view>
@@ -20,7 +20,7 @@
 					</scroll-view>
 				</view>
 				<view class="footer flex-center">
-					<template v-if="isiOS">
+					<template v-if="isAppStore">
 						<button class="content-button" style="border: none;color: #fff;" plain @click="jumpToAppStore">
 							{{downLoadBtnTextiOS}}
 						</button>
@@ -55,7 +55,7 @@
 				</view>
 			</view>
 
-			<image v-if="!is_mandatory" class="close-img" src="../static/app_update_close.png"
+			<image v-if="!is_mandatory" class="close-img" src="../images/app_update_close.png"
 				@click.stop="closeUpdate"></image>
 		</view>
 	</view>
@@ -88,7 +88,7 @@
 			if (curV1 > curV2) {
 				result = 1
 				break;
-			} else if(curV1 < curV2) {
+			} else if (curV1 < curV2) {
 				result = -1
 				break;
 			}
@@ -183,6 +183,9 @@
 			},
 			isiOS() {
 				return !this.isWGT ? this.platform.includes(platform_iOS) : false;
+			},
+			isAppStore() {
+				return this.isiOS || (!this.isiOS && !this.isWGT && this.url.indexOf('.apk') === -1)
 			}
 		},
 		methods: {
@@ -195,7 +198,7 @@
 						savedFilePath,
 						installed
 					} = localFilePathRecord
-					
+
 					// 比对版本
 					if (!installed && compare(version, this.version) === 0) {
 						this.downloadSuccess = true;
@@ -299,12 +302,6 @@
 								uni.hideLoading()
 								this.restart();
 							}, 1000)
-						} else {
-							uni.showLoading({
-								icon: 'none',
-								title: '安装成功，重启应用体验新版',
-								duration: 1000
-							})
 						}
 					} else {
 						const localFilePathRecord = uni.getStorageSync(localFilePathKey)

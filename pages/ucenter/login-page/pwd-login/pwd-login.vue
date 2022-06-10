@@ -4,11 +4,8 @@
 		<text class="title">{{$t('pwdLogin.pwdLogin')}}</text>
 		<input class="input-box" :inputBorder="false" v-model="username" :placeholder="$t('pwdLogin.placeholder')"/>
 		<input type="password" class="input-box" :inputBorder="false" v-model="password" :placeholder="$t('pwdLogin.passwordPlaceholder')"/>
-		<view class="captcha-box" v-if="captchaBase64">
-			<image class="captcha-img" @click="createCaptcha" :src="captchaBase64" mode="widthFix"></image>
-			<input type="text" class="input-box captcha" :inputBorder="false" v-model="captcha" :placeholder="$t('pwdLogin.verifyCodePlaceholder')"/>
-		</view>
-		<uni-agreements @setAgree="agree = $event"></uni-agreements>
+		<uni-captcha v-if="needCaptcha" scene="login" v-model="captcha"></uni-captcha>
+		<uni-agreements class="agreement" @setAgree="agree = $event"></uni-agreements>
 		<button class="send-btn" :disabled="!canLogin" :type="canLogin?'primary':'default'"
 			@click="pwdLogin">{{$t('pwdLogin.login')}}</button>
 		<!-- 忘记密码 -->
@@ -29,13 +26,13 @@
 				"password": "",
 				"username": "",
 				"agree": false,
-				"captchaBase64":"",
-				"captcha":""
+				"captcha":'',
+				"needCaptcha":false
 			}
 		},
 		computed: {
 			canLogin() {
-				return this.username.length && this.isPwd;
+				return this.username.length && this.isPwd && this.agree;
 			},
 			isPwd() {
 				return /^.{6,20}$/.test(this.password);
@@ -51,10 +48,6 @@
 					url: '../pwd-retrieve/pwd-retrieve?phoneNumber=' + (this.isPhone ? this.username : '') +
 						'&phoneArea=' + this.currenPhoneArea
 				})
-				// uni.redirectTo({
-				// 	url: '../pwd-retrieve/pwd-retrieve?phoneNumber=' + (this.isPhone ? this.username : '') +
-				// 		'&phoneArea=' + this.currenPhoneArea
-				// })
 			},
 			/**
 			 * 密码登录
@@ -62,12 +55,11 @@
 			async pwdLogin() {
 				if (!this.agree) {
 					return uni.showToast({
-						title: this.$t('common').noAgree,
+						title: this.$t('common.noAgree'),
 						icon: 'none'
 					});
 				}
 				return await uniCloud.callFunction({
-					name:'uni-id-cf',
 					data:{
 						action:'login',
 						params:{
@@ -76,23 +68,24 @@
 							"captcha":this.captcha
 						},
 					},
-				}).then(({result}) => {
+				}).then(({result})=>{
 					console.log(result);
 					if (result.code === 0) {
 						this.loginSuccess(result)
 					} else {
 						if (result.needCaptcha) {
 							uni.showToast({
-								title: result.msg,
+								title: result.msg||'完成',
 								icon: 'none'
 							});
-							this.createCaptcha()
+							this.needCaptcha = true
+							// this.createCaptcha()
 						}else{
 							uni.showModal({
-								title: this.$t('common').error,
+								title: this.$t('common.error'),
 								content: result.msg,
 								showCancel: false,
-								confirmText: this.$t('common').gotIt
+								confirmText: this.$t('common.gotIt')
 							});
 						}
 					}
@@ -102,62 +95,42 @@
 					return res
 				})
 				// 下边是可以登录
-				// uniCloud.callFunction({
-				// 	name:'uni-id-cf',
-				// 	data:{
-				// 		action:'login',
-				// 		params:{
-				// 			"username": this.username,
-				// 			"password": this.password,
-				// 			"captcha":this.captcha
-				// 		},
-				// 	},
-				// 	success: ({result}) => {
-				// 		console.log(result);
-				// 		if (result.code === 0) {
-				// 			this.loginSuccess(result)
-				// 		} else {
-				// 			if (result.needCaptcha) {
-				// 				uni.showToast({
-				// 					title: result.msg,
-				// 					icon: 'none'
-				// 				});
-				// 				this.createCaptcha()
-				// 			}else{
-				// 				uni.showModal({
-				// 					title: this.$t('common').error,
-				// 					content: result.msg,
-				// 					showCancel: false,
-				// 					confirmText: this.$t('common').gotIt
-				// 				});
-				// 			}
-				// 		}
-				// 	}
-				// })
-			},
-			createCaptcha(){
-				uniCloud.callFunction({
+				/* uniCloud.callFunction({
 					name:'uni-id-cf',
 					data:{
-						action:'createCaptcha',
+						action:'login',
 						params:{
-							scene: "login"
+							"username": this.username,
+							"password": this.password,
+							"captcha":this.captcha
 						},
 					},
 					success: ({result}) => {
+						console.log(result);
 						if (result.code === 0) {
-							this.captchaBase64 = result.captchaBase64
-						}else{
-							uni.showModal({
-								content: result.msg,
-								showCancel: false
-							});
+							this.loginSuccess(result)
+						} else {
+							if (result.needCaptcha) {
+								uni.showToast({
+									title: result.msg||'完成',
+									icon: 'none'
+								});
+								this.needCaptcha = true
+								// this.createCaptcha()
+							}else{
+								uni.showModal({
+									title: this.$t('common.error'),
+									content: result.msg,
+									showCancel: false,
+									confirmText: this.$t('common.gotIt')
+								});
+							}
 						}
 					}
-				})
+				}) */
 			},
 			/* 前往注册 */
-			toRegister(e) {
+			toRegister() {
 				uni.navigateTo({
 					url: '/pages/ucenter/login-page/register/register'
 				})
@@ -166,7 +139,7 @@
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
 	@import url("../common/login-page.css");
 
 	.auth-box {
@@ -187,16 +160,7 @@
 		margin-top: 80px;
 		width: 600rpx;
 	}
-	.captcha-box{
-		flex-direction: row;
-		align-items: center;
-		justify-content: flex-end;
-	}
-	.captcha-img{
-		margin: 0 15px 10px 0;
-		width: 250rpx;
-	}
-	.captcha{
-		width: 350rpx;
+	.agreement{
+		margin-top: 10px;
 	}
 </style>

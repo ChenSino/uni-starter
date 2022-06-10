@@ -16,7 +16,7 @@
 		name:"uni-agreements",
 		computed:{
 			agreements(){
-				return getApp({allowDefault: true}).globalData.config.about.agreements||[]
+				return getApp().globalData.config.about.agreements||[]
 			}
 		},
 		methods:{

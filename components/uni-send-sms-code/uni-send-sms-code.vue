@@ -53,15 +53,13 @@
 			};
 		},
 		computed: {
-
 			innerText() {
 				if (this.reverseNumber == 0) return this.$t('common.getVerifyCode');
-				return this.$t('smsCode.resendVerifyCode')+ '('+this.reverseNumber+'s)';
+				return this.$t('smsCode.resendVerifyCode') + '(' + this.reverseNumber + 's)';
 			}
 		},
 		created() {
 			this.initClick();
-			// console.log(this.$t('smsCode.resendVerifyCode'));
 		},
 		methods: {
 			initClick() {
@@ -85,9 +83,11 @@
 							"type": this.codeType
 						},
 					},
-				}).then(({result})=>{
+				}).then(({
+					result
+				}) => {
 					console.log(result);
-					if(result.code===0){
+					if (result.code === 0) {
 						uni.showToast({
 							title: this.$t('smsCode.sendSuccessTip'),
 							icon: 'none'
@@ -95,18 +95,19 @@
 						this.reverseNumber = Number(this.count);
 						this.getCode();
 						this.$emit('getCode');
-					}else{
+					} else {
 						uni.showModal({
 							content: result.msg,
 							showCancel: false
 						});
 					}
 					return result
-				}).catch((reason)=>{
-						console.log(reason,'reason----');
+				}).catch((reason) => {
+					console.log(reason, 'reason----');
 						return reason
-					})
-				/* return await uniCloud.callFunction({
+				})
+				
+				/* uniCloud.callFunction({
 					name: 'uni-id-cf',
 					data: {
 						action: 'sendSmsCode',
@@ -115,9 +116,11 @@
 							"type": this.codeType
 						},
 					},
-					success: ({result}) => {
+					success: ({
+						result
+					}) => {
 						console.log(result);
-						if(result.code===0){
+						if (result.code === 0) {
 							uni.showToast({
 								title: this.$t('smsCode.sendSuccessTip'),
 								icon: 'none'
@@ -125,7 +128,7 @@
 							this.reverseNumber = Number(this.count);
 							this.getCode();
 							this.$emit('getCode');
-						}else{
+						} else {
 							uni.showModal({
 								content: result.msg,
 								showCancel: false
@@ -150,13 +153,14 @@
 </script>
 
 <style lang="scss" scoped>
-/* #ifndef APP-NVUE */
-view{
-	display: flex;
-	box-sizing: border-box;
-	flex-direction: column;
-}
-/* #endif */
+	/* #ifndef APP-NVUE */
+	view {
+		display: flex;
+		box-sizing: border-box;
+		flex-direction: column;
+	}
+
+	/* #endif */
 	.short-code-btn {
 		width: 200rpx;
 		height: 85rpx;
@@ -166,10 +170,12 @@ view{
 		justify-content: center;
 		align-items: center;
 	}
+
 	.inner-text {
 		font-size: 28rpx;
 		color: #AAAAAA;
 	}
+
 	.inner-text-active {
 		color: #007aff;
 	}

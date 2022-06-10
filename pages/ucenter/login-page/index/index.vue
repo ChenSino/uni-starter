@@ -11,7 +11,7 @@
 			<input type="number" class="input-box" :inputBorder="false" v-model="phone" maxlength="11"
 				:placeholder="$t('common.phonePlaceholder')" />
 			<uni-agreements @setAgree="agree = $event"></uni-agreements>
-			<button class="get-code" :disabled="!isPhone" :type="isPhone?'primary':'default'"
+			<button class="get-code" :disabled="!isPhone || !agree" :type="isPhone&&agree?'primary':'default'"
 				@click="sendShortMsg">{{$t('login.getVerifyCode')}}</button>
 			<text class="tip">{{$t('login.phoneLoginTip')}}</text>
 		</template>
@@ -91,7 +91,7 @@
 			sendShortMsg() {
 				if (!this.agree) {
 					return uni.showToast({
-						title: this.$t('common').noAgree,
+						title: this.$t('common.noAgree'),
 						icon: 'none'
 					});
 				}

@@ -41,8 +41,8 @@
 		},
 		computed: {
 			uniStarterConfig() {
-				console.log(getApp({allowDefault: true}),"getApp----------------");
-				return getApp({allowDefault: true}).globalData.config
+				console.log(getApp());
+				return getApp().globalData.config
 			}
 		},
 		data() {
@@ -54,7 +54,6 @@
 		},
 		created() {
 			this.about = this.uniStarterConfig.about
-			console.log("this.about:------ ",this.about);
 			uni.setNavigationBarTitle({
 				title: this.$t('about.about')+ " " + this.about.appName
 			})
@@ -77,7 +76,7 @@
 				},
 				menus: [{
 						"img": "/static/app-plus/sharemenu/wechatfriend.png",
-						"text": this.$t('common').wechatFriends,
+						"text": this.$t('common.wechatFriends'),
 						"share": {
 							"provider": "weixin",
 							"scene": "WXSceneSession"
@@ -85,7 +84,7 @@
 					},
 					{
 						"img": "/static/app-plus/sharemenu/wechatmoments.png",
-						"text":  this.$t('common').wechatBbs,
+						"text":  this.$t('common.wechatBbs'),
 						"share": {
 							"provider": "weixin",
 							"scene": "WXSceneTimeline"
@@ -93,7 +92,7 @@
 					},
 					{
 						"img": "/static/app-plus/sharemenu/weibo.png",
-						"text":  this.$t('common').weibo,
+						"text":  this.$t('common.weibo'),
 						"share": {
 							"provider": "sinaweibo"
 						}
@@ -107,16 +106,16 @@
 					},
 					{
 						"img": "/static/app-plus/sharemenu/copyurl.png",
-						"text": this.$t('common').copy,
+						"text": this.$t('common.copy'),
 						"share": "copyurl"
 					},
 					{
 						"img": "/static/app-plus/sharemenu/more.png",
-						"text": this.$t('common').more,
+						"text": this.$t('common.more'),
 						"share": "shareSystem"
 					}
 				],
-				cancelText: this.$t('common').cancelShare,
+				cancelText: this.$t('common.cancelShare'),
 			}, e => { //callback
 				console.log(e);
 			})
@@ -145,8 +144,9 @@
 	}
 	/* #endif */
 	.about {
-		width: 750rpx;
 		flex-direction: column;
+		justify-content: center;
+		align-items: center;
 	}
 
 	.box {
@@ -181,13 +181,12 @@
 	}
 
 	.copyright {
-		width: 750rpx;
 		font-size: 32rpx;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 		bottom: 20px;
-		left: 0;
+		// left: 0;
 		position: fixed;
 	}
 

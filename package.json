@@ -1,15 +1,15 @@
 {
 	"id": "uni-starter",
 	"displayName": "uni-starter",
-	"version": "1.1.32",
+	"version": "1.2.5",
 	"description": "云端一体应用快速开发基本项目模版",
 	"keywords": [
-        "login",
-        "登录",
-        "搜索",
-        "uni-id实例",
-        "留言板"
-    ],
+		"login",
+		"登录",
+		"搜索",
+		"uni-id实例",
+		"留言板"
+	],
 	"repository": "https://gitcode.net/dcloud/uni-starter",
 	"engines": {
 		"HBuilderX": "^3.2.6"
@@ -38,7 +38,10 @@
 		"npmurl": ""
 	},
 	"uni_modules": {
-		"dependencies": [],
+		"dependencies": [
+			"uni-id-cf",
+			"uni-captcha"
+		],
 		"encrypt": [],
 		"platforms": {
 			"cloud": {
@@ -82,6 +85,6 @@
 		}
 	},
 	"dependencies": {
-		"@jest/test-sequencer": "^27.0.6"
+		"@jest/test-sequencer": "^27.5.1"
 	}
 }

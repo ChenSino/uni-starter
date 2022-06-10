@@ -2,7 +2,8 @@
 	<view class="center">
 		<uni-sign-in ref="signIn"></uni-sign-in>
 		<view class="userInfo" @click.capture="toUserInfo">
-			<cloud-image width="150rpx" height="150rpx" v-if="userInfo.avatar_file&&userInfo.avatar_file.url" :src="userInfo.avatar_file.url"></cloud-image>
+			<cloud-image width="150rpx" height="150rpx" v-if="userInfo.avatar_file&&userInfo.avatar_file.url"
+				:src="userInfo.avatar_file.url"></cloud-image>
 			<image v-else class="logo-img" src="@/static/uni-center/defaultAvatarUrl.png"></image>
 			<view class="logo-title">
 				<text class="uer-name" v-if="hasLogin">{{userInfo.nickname||userInfo.username||userInfo.mobile}}</text>
@@ -37,16 +38,18 @@
 	} from 'vuex';
 	import checkUpdate from '@/uni_modules/uni-upgrade-center-app/utils/check-update';
 	import callCheckVersion from '@/uni_modules/uni-upgrade-center-app/utils/call-check-version';
-	// #ifdef APP-PLUS
+	// #ifdef APP
 	import UniShare from '@/uni_modules/uni-share/js_sdk/uni-share.js';
 	const uniShare = new UniShare()
 	// #endif
 	const db = uniCloud.database();
 	export default {
-		// #ifdef APP-PLUS
-		onBackPress({from}) {
-			if(from=='backbutton'){
-				this.$nextTick(function(){
+		// #ifdef APP
+		onBackPress({
+			from
+		}) {
+			if (from == 'backbutton') {
+				this.$nextTick(function() {
 					uniShare.hide()
 				})
 				return uniShare.isShow;
@@ -94,7 +97,7 @@
 						},
 						//#endif
 						{
-							"title":this.$t('mine.readArticles'),
+							"title": this.$t('mine.readArticles'),
 							"to": '/pages/ucenter/read-news-log/read-news-log',
 							"icon": "flag"
 						},
@@ -136,28 +139,22 @@
 						"style": "solid", // 边框样式
 						"radius": "100%" // 边框圆角，支持百分比
 					}
-				},
-				uniToken:""
+				}
 			}
 		},
-		async onLoad() {
-			// const loginRes = await pwdLogin()
-			// console.log(loginRes,'-------------');
-			// this.uniToken = loginRes.token
+		onLoad() {
+			this.uniToken = uni.getStorageSync('uni_id_token')
+			console.log("uniToken: ", this.uniToken);
 			// console.log(313,this.userInfo,this.hasLogin);
-			
 			//#ifdef APP-PLUS
-			console.log(this.appVersion,"this.appVersion--------");
 			this.ucenterList[this.ucenterList.length - 2].unshift({
-				title:this.$t('mine.checkUpdate'),// this.this.$t('mine.checkUpdate')"检查更新"
+				title: this.$t('mine.checkUpdate'), // this.this.$t('mine.checkUpdate')"检查更新"
 				rightText: this.appVersion.version + '-' + this.appVersion.versionCode,
 				event: 'checkVersion',
 				icon: 'loop',
 				showBadge: this.appVersion.hasNew
 			})
 			//#endif
-			this.uniToken = uni.getStorageSync('uni_id_token')
-			console.log("uniToken: ",this.uniToken);
 		},
 		computed: {
 			...mapGetters({
@@ -167,7 +164,7 @@
 			// #ifdef APP-PLUS
 			,
 			appVersion() {
-				return getApp({allowDefault: true}).appVersion
+				return getApp().appVersion
 			}
 			// #endif
 			,
@@ -187,7 +184,7 @@
 			signIn() { //普通签到
 				this.$refs.signIn.open()
 			},
-			signInByAd(){ //看激励视频广告签到
+			signInByAd() { //看激励视频广告签到
 				this.$refs.signIn.showRewardedVideoAd()
 			},
 			/**
@@ -218,7 +215,7 @@
 			tapGrid(index) {
 				uni.showToast({
 					// title: '你点击了，第' + (index + 1) + '个',
-					title: this.$t('mine.clicked') + " " + (index + 1) ,
+					title: this.$t('mine.clicked') + " " + (index + 1),
 					icon: 'none'
 				});
 			},
@@ -246,14 +243,13 @@
 			 * 获取积分信息
 			 */
 			async getScore() {
-				console.log("this.userInfo:------------- ",this.userInfo);
 				if (!this.userInfo) return uni.showToast({
 					title: this.$t('mine.checkScore'),
 					icon: 'none'
 				});
-				// uni.showLoading({
-				// 	mask: true
-				// })
+				uni.showLoading({
+					mask: true
+				})
 				return await db.collection("uni-id-scores")
 					.where('"user_id" == $env.uid')
 					.field('score,balance')
@@ -261,23 +257,21 @@
 					.limit(1)
 					.get()
 					.then((res) => {
-						console.log(res,"res------");
+						console.log(res);
 						const data = res.result.data[0];
-						console.log("data: ",data);
 						let msg = '';
-						msg = data ? (this.$t('mine.currentScore')+ data.balance) : this.$t('mine.noScore');
+						msg = data ? (this.$t('mine.currentScore') + data.balance) : this.$t('mine.noScore');
 						uni.showToast({
 							title: msg,
 							icon: 'none'
 						});
-						console.log("msg:---- ",msg);
 						return data
-					}).catch((reason)=>{
-						console.log(reason,'这是失败的操作');
+					}).catch((reason) => {
+						console.log(reason, '这是失败的操作');
 						return reason
-					}).finally((e)=>{
-						console.log("e:----- ",e);
-						// uni.hideLoading()
+					}).finally((e) => {
+						uni.hideLoading()
+						console.log("e: ", e);
 						return e
 					})
 			},
@@ -312,7 +306,7 @@
 					},
 					menus: [{
 							"img": "/static/app-plus/sharemenu/wechatfriend.png",
-							"text": this.$t('common').wechatFriends,
+							"text": this.$t('common.wechatFriends'),
 							"share": {
 								"provider": "weixin",
 								"scene": "WXSceneSession"
@@ -320,7 +314,7 @@
 						},
 						{
 							"img": "/static/app-plus/sharemenu/wechatmoments.png",
-							"text": this.$t('common').wechatBbs,
+							"text": this.$t('common.wechatBbs'),
 							"share": {
 								"provider": "weixin",
 								"scene": "WXSceneTimeline"
@@ -328,7 +322,7 @@
 						},
 						{
 							"img": "/static/app-plus/sharemenu/weibo.png",
-							"text": this.$t('common').weibo,
+							"text": this.$t('common.weibo'),
 							"share": {
 								"provider": "sinaweibo"
 							}
@@ -342,16 +336,16 @@
 						},
 						{
 							"img": "/static/app-plus/sharemenu/copyurl.png",
-							"text": this.$t('common').copy,
+							"text": this.$t('common.copy'),
 							"share": "copyurl"
 						},
 						{
 							"img": "/static/app-plus/sharemenu/more.png",
-							"text": this.$t('common').more,
+							"text": this.$t('common.more'),
 							"share": "shareSystem"
 						}
 					],
-					cancelText: this.$t('common').cancelShare,
+					cancelText: this.$t('common.cancelShare'),
 				}, e => { //callback
 					console.log(e);
 				})
@@ -372,6 +366,7 @@
 	page {
 		background-color: #f8f8f8;
 	}
+
 	/* #endif*/
 
 	.center {
@@ -381,7 +376,6 @@
 	}
 
 	.userInfo {
-		width: 750rpx;
 		padding: 20rpx;
 		padding-top: 50px;
 		background-image: url(../../static/uni-center/headers.png);
@@ -426,7 +420,7 @@
 	}
 
 	.uni-grid .text {
-		font-size: 30rpx;
+		font-size: 16px;
 		height: 25px;
 		line-height: 25px;
 		color: #817f82;

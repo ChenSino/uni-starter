@@ -2,11 +2,12 @@
 	<view class="content">
 		<!-- 顶部文字 -->
 		<!-- 登录框 (选择手机号所属国家和地区需要另行实现) -->
-		<uni-forms ref="form" :value="formData" :rules="rules">
+		<uni-forms ref="form" :value="formData">
 			<uni-forms-item name="phone">
 				<!-- focus规则如果上一页携带来“手机号码”数据就focus验证码输入框，否则focus手机号码输入框 -->
-				<uni-easyinput :disabled="lock" :focus="formData.phone.length!=11" type="number" class="easyinput" :inputBorder="false"
-					v-model="formData.phone" maxlength="11" :placeholder="$t('common.phonePlaceholder')"></uni-easyinput>
+				<uni-easyinput :disabled="lock" :focus="formData.phone.length!=11" type="number" class="easyinput"
+					:inputBorder="false" v-model="formData.phone" maxlength="11"
+					:placeholder="$t('common.phonePlaceholder')"></uni-easyinput>
 			</uni-forms-item>
 			<uni-forms-item name="code">
 				<uni-easyinput :focus="formData.phone.length==11" type="number" class="easyinput" :inputBorder="false"
@@ -36,10 +37,10 @@
 		mixins: [mixin],
 		data() {
 			return {
-				lock:false,
+				lock: false,
 				formData: {
 					"phone": "",
-					"code":"",
+					"code": "",
 					'pwd': '',
 					'pwd2': ''
 				},
@@ -69,7 +70,7 @@
 					pwd: {
 						rules: [{
 								required: true,
-								errorMessage:this.$t('common.newPasswordPlaceholder'),
+								errorMessage: this.$t('common.newPasswordPlaceholder'),
 							},
 							{
 								pattern: /^.{6,20}$/,
@@ -80,7 +81,7 @@
 					pwd2: {
 						rules: [{
 								required: true,
-								errorMessage:this.$t('common.confirmPassword'),
+								errorMessage: this.$t('common.confirmPassword'),
 							},
 							{
 								pattern: /^.{6,20}$/,
@@ -133,34 +134,42 @@
 			if (this.formData.phone) {
 				this.$refs.shortCode.start();
 			}
+			this.$refs.form.setRules(this.rules)
 		},
 		methods: {
 			/**
 			 * 完成并提交
 			 */
-			 submit() {
+			submit() {
+				console.log("formData", this.formData);
+				console.log('rules', this.rules);
 				this.$refs.form.validate()
-					.then( async res => {
+					.then(async res => {
 						return await uniCloud.callFunction({
-							name:'uni-id-cf',
-							data:{
-								action:'resetPwdBySmsCode',
-								params:{
+							name: 'uni-id-cf',
+							data: {
+								action: 'resetPwdBySmsCode',
+								params: {
 									"mobile": this.formData.phone,
 									"code": this.formData.code,
 									"password": this.formData.pwd
 								},
 							}
-						}).then(({result})=>{
+						}).then(({
+							result
+						}) => {
 							console.log(result);
 							uni.showToast({
-								title: result.msg||'更新成功',
+								title: result.msg || '更新成功',
 								icon: 'none'
 							});
 							if (result.code === 0) {
 								uni.navigateBack()
 							}
 							return result
+						}).catch((reason) => {
+							console.log(reason, 'reason----');
+							return reason
 						})
 						
 						// uniCloud.callFunction({
@@ -176,7 +185,7 @@
 						// 	success: ({result}) => {
 						// 		console.log(result);
 						// 		uni.showToast({
-						// 			title: result.msg,
+						// 			title: result.msg||'更新成功',
 						// 			icon: 'none'
 						// 		});
 						// 		if (result.code === 0) {
@@ -192,7 +201,8 @@
 
 <style>
 	@import url("../common/login-page.css");
-	.content{
+
+	.content {
 		padding-top: 36rpx;
 	}
 </style>

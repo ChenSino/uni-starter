@@ -25,7 +25,7 @@
 	<!-- 宫格 -->
 		<uni-section :title="$t('grid.grid')" style="margin: 0;" type="line"></uni-section>
 		<view class="example-body">
-			<uni-grid class="uni-grid-box" :column="3" :highlight="true" @change="change">
+			<uni-grid :column="3" :highlight="true" @change="change">
 				<template v-for="(item,i) in gridList">
 					<uni-grid-item :index="i" :key="i"
 						v-if="i<3 || i>2&&i<6&&hasLogin || i>5&&uniIDHasRole('admin')"
@@ -63,7 +63,6 @@
 			})
 		},
 		onLoad() {
-			console.log(uni.getStorageSync('uni_id_token'),"00000000000000000000");
 			let gridList = []
 			for (var i = 0; i < 3; i++) {
 				gridList.push( this.$t('grid.visibleToAll') )

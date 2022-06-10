@@ -4,9 +4,9 @@
 		<text class="tit">{{$t('common.verifyCodePlaceholder')}}</text>
 		<text class="tip">{{tipText}}</text>
 		<uni-forms>
-		<!-- 登录框 (选择手机号所属国家和地区需要另行实现) -->
-			<uni-easyinput type="number" class="easyinput" :inputBorder="false"
-				v-model="code" maxlength="6" :placeholder="$t('common.verifyCodePlaceholder')">
+			<!-- 登录框 (选择手机号所属国家和地区需要另行实现) -->
+			<uni-easyinput type="number" class="easyinput" :inputBorder="false" v-model="code" maxlength="6"
+				:placeholder="$t('common.verifyCodePlaceholder')">
 				<template v-slot:right>
 					<uni-send-sms-code :phone="phone" ref="sendSmsCode"></uni-send-sms-code>
 				</template>
@@ -15,77 +15,98 @@
 				@click="submit">{{$t('common.login')}}</button>
 		</uni-forms>
 		<uni-quick-login agree></uni-quick-login>
+		<uni-popup-captcha @confirm="submit" ref="popup-captcha" v-model="captcha" scene="loginBySms">
+		</uni-popup-captcha>
 	</view>
 </template>
 <script>
 	import mixin from '../common/login-page.mixin.js';
 	export default {
-		mixins:[mixin],
+		mixins: [mixin],
 		data() {
 			return {
-				code:'',
-				phone:''
+				code: '',
+				phone: '',
+				captcha: false
 			}
 		},
 		computed: {
 			tipText() {
-				return this.$t('common.verifyCodeSend')+ `${this.phone}。`;
+				return this.$t('common.verifyCodeSend') + `${this.phone}。`;
 			},
-			canSubmit(){
-				return this.code.length==6;
+			canSubmit() {
+				return this.code.length == 6;
 			}
 		},
-		onLoad({phoneNumber,phoneArea}) {
+		onLoad({
+			phoneNumber,
+			phoneArea
+		}) {
 			this.phone = phoneNumber;
 		},
 		onReady() {
-			if(this.phone.length==11){
+			if (this.phone.length == 11) {
 				this.$refs.sendSmsCode.start();
 			}
 		},
 		methods: {
-			async submit(){ //完成并提交
+			async submit() { //完成并提交
 				return await uniCloud.callFunction({
-					name:'uni-id-cf',
-					data:{
-						action:'loginBySms',
-						params:{
-							"mobile":this.phone,
-							"code":this.code
+					name: 'uni-id-cf',
+					data: {
+						action: 'loginBySms',
+						params: {
+							"mobile": this.phone,
+							"code": this.code,
+							"captcha": this.captcha
 						},
 					}
-				}).then(({result})=>{
-					if(result.code === 0){
+				}).then(({result}) => {
+					uni.showToast({
+						title: result.msg || result.errMsg,
+						icon: 'none'
+					});
+					if (result.errCode == "CAPTCHA_REQUIRED") {
+						return this.$refs['popup-captcha'].open()
+					}
+					if (result.code === 0) {
 						this.loginSuccess(result)
-					}else{
-						uni.showModal({
-							content: result.msg,
-							showCancel: false
-						});
 					}
 					return result
+				}).finally((e)=>{
+					console.log("e: ",e);
+					this.captcha = false
 				})
-			
-				// uniCloud.callFunction({
-				// 	name:'uni-id-cf',
-				// 	data:{
-				// 		action:'loginBySms',
-				// 		params:{
-				// 			"mobile":this.phone,
-				// 			"code":this.code
-				// 		},
-				// 	},
-				// 	success: ({result}) => {
-				// 		if(result.code === 0){
-				// 			this.loginSuccess(result)
-				// 		}else{
-				// 			uni.showModal({
-				// 				content: result.msg,
-				// 				showCancel: false
-				// 			});
-				// 		}
-				// 	}
-				// })
+
+
+				/* uniCloud.callFunction({
+					name: 'uni-id-cf',
+					data: {
+						action: 'loginBySms',
+						params: {
+							"mobile": this.phone,
+							"code": this.code,
+							"captcha": this.captcha
+						},
+					},
+					success: ({
+						result
+					}) => {
+						uni.showToast({
+							title: result.msg || result.errMsg,
+							icon: 'none'
+						});
+						if (result.errCode == "CAPTCHA_REQUIRED") {
+							return this.$refs['popup-captcha'].open()
+						}
+						if (result.code === 0) {
+							this.loginSuccess(result)
+						}
+					},
+					complete: () => {
+						this.captcha = false
+					}
+				}) */
 			}
 		}
 	}

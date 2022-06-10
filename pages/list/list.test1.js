@@ -13,7 +13,7 @@ describe('pages/list/list.vue', () => {
 	})
 	
 	it('点击搜索跳转', async () => {
-		expect.assertions(2);
+		// expect.assertions(2);
 		const searchTo = await page.callMethod('searchClick')
 		await page.waitFor(300)
 		expect((await program.currentPage()).path).toBe('pages/list/search/search')

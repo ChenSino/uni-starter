@@ -1,8 +1,8 @@
 {
   "id": "uni-captcha",
   "displayName": "uni-captcha",
-  "version": "0.1.1",
-  "description": "简洁、高效、灵活可配置的云端验证码模块",
+  "version": "0.6.0",
+  "description": "云端一体图形验证码组件",
   "keywords": [
     "uniCloud",
     "captcha",
@@ -73,6 +73,10 @@
         "快应用": {
           "华为": "u",
           "联盟": "u"
+        },
+        "Vue": {
+            "vue2": "y",
+            "vue3": "u"
         }
       }
     }

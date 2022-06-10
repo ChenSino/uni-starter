@@ -1,13 +1,21 @@
+let mpMixins = {}
+let is_pc = null
+// #ifdef H5
+import {
+	isPC
+} from "./isPC"
+is_pc = isPC()
+// #endif
 // #ifdef APP-VUE|| MP-WEIXIN || H5
-import { isPC } from "./isPC"
-export default {
+
+mpMixins = {
 	data() {
 		return {
-			is_show:'none'
+			is_show: 'none'
 		}
 	},
 	watch: {
-		show(newVal){
+		show(newVal) {
 			this.is_show = this.show
 		}
 	},
@@ -17,7 +25,7 @@ export default {
 			this.swipeaction.children.push(this)
 		}
 	},
-	mounted(){
+	mounted() {
 		this.is_show = this.show
 	},
 	methods: {
@@ -35,9 +43,7 @@ export default {
 		},
 
 		appTouchStart(e) {
-			// #ifdef H5
-			if(isPC()) return
-			// #endif
+			if (is_pc) return
 			const {
 				clientX
 			} = e.changedTouches[0]
@@ -45,9 +51,7 @@ export default {
 			this.timestamp = new Date().getTime()
 		},
 		appTouchEnd(e, index, item, position) {
-			// #ifdef H5
-			if(isPC()) return
-			// #endif
+			if (is_pc) return
 			const {
 				clientX
 			} = e.changedTouches[0]
@@ -63,8 +67,8 @@ export default {
 			}
 		},
 		onClickForPC(index, item, position) {
+			if (!is_pc) return
 			// #ifdef H5
-			if(!isPC()) return
 			this.$emit('click', {
 				content: item,
 				index,
@@ -76,6 +80,4 @@ export default {
 }
 
 // #endif
-// #ifndef APP-VUE|| MP-WEIXIN || H5
-export default {}
-// #endif
+export default mpMixins

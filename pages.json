@@ -1,5 +1,6 @@
 {
-	"pages": [{
+	"pages": [
+		{
 			"path": "pages/list/list",
 			"style": {
 				// #ifndef APP-PLUS
@@ -176,7 +177,11 @@
 		"navigationBarTitleText": "uni-starter",
 		"navigationBarBackgroundColor": "#FFFFFF",
 		"backgroundColor": "#F8F8F8",
-		"enablePullDownRefresh": false
+		"enablePullDownRefresh": false,
+		// "maxWidth":375,
+		"rpxCalcMaxDeviceWidth":375,
+		"rpxCalcBaseDeviceWidth":375
+		// "rpxCalcIncludeWidth":0
 	},
 	"condition": {
 		"list": [{

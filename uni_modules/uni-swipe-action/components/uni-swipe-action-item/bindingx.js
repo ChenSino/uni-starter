@@ -1,9 +1,11 @@
+let bindIngXMixins = {}
+
 // #ifdef APP-NVUE
 const BindingX = uni.requireNativePlugin('bindingx');
 const dom = uni.requireNativePlugin('dom');
 const animation = uni.requireNativePlugin('animation');
 
-export default {
+bindIngXMixins = {
 	data() {
 		return {}
 	},
@@ -67,13 +69,15 @@ export default {
 			})
 		},
 		touchstart(e) {
+			// fix by mehaotian 禁止滑动
+			if (this.disabled) return
 			// 每次只触发一次，避免多次监听造成闪烁
 			if (this.stop) return
 			this.stop = true
 			if (this.autoClose) {
 				this.swipeaction.closeOther(this)
 			}
-				
+
 			const leftWidth = this.button.left.width
 			const rightWidth = this.button.right.width
 			let expression = this.range(this.x, -rightWidth, leftWidth)
@@ -295,6 +299,4 @@ export default {
 
 // #endif
 
-// #ifndef APP-NVUE
-export default {}
-// #endif
+export default bindIngXMixins

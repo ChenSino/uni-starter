@@ -8,7 +8,8 @@ import interceptorChooseImage from '@/uni_modules/json-interceptor-chooseImage/j
 // #endif
 const db = uniCloud.database()
 export default async function() {
-	let loginConfig = uniStarterConfig.router.login
+	let loginConfig = uniStarterConfig.router.login;
+	const debug = uniStarterConfig.debug;
 	//清除有配置但设备环境不支持的登录项
 	// #ifdef APP-PLUS
 	await new Promise((callBack) => {
@@ -94,7 +95,6 @@ export default async function() {
 				url: '/pages/ucenter/login-page/index/index'
 			})
 		}
-		return code
 	}
 	// 绑定clientDB错误事件
 	db.on('error', onDBError)
@@ -153,7 +153,6 @@ export default async function() {
 		}
 	})
 
-	const Debug = false;
 	//拦截器封装callFunction
 	let callFunctionOption;
 	uniCloud.addInterceptor('callFunction', {
@@ -200,7 +199,8 @@ export default async function() {
 			// console.log(JSON.stringify(e));
 		},
 		fail(e) { // 失败回调拦截
-			if (Debug) {
+			console.error('网络请求错误码：',JSON.stringify(e));
+			if (debug) {
 				uni.showModal({
 					content: JSON.stringify(e),
 					showCancel: false
@@ -375,7 +375,7 @@ export default async function() {
 			},
 			fail(err) { // 失败回调拦截 
 				console.log(err);
-				if (Debug) {
+				if (debug) {
 					console.log(err);
 					uni.showModal({
 						content: JSON.stringify(err),

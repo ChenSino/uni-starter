@@ -1,10 +1,10 @@
 {
   "id": "uni-feedback",
-  "displayName": "问题反馈用户端页面模板",
-  "version": "1.0.3",
-  "description": "问题反馈用户端页面模板，方便开发者快速搭建问题反馈界面",
+  "displayName": "问题反馈页面模板",
+  "version": "1.0.4",
+  "description": "问题反馈页面模板，方便开发者快速搭建问题反馈界面",
   "keywords": [
-    "问题反馈用户端页面模板"
+    "问题反馈页面模板"
 ],
   "repository": "",
   "engines": {
