@@ -17,14 +17,9 @@ describe('pages/ucenter/login-page/pwd-retrieve/pwd-retrieve.vue', () => {
 				'code':'123456'
 			}
 		})
-		
-		// if (process.env.UNI_PLATFORM === "h5") {
-			
-		// }
-		
 		console.log(await program.currentPage());
+		await page.waitFor(200)
 		// expect((await program.currentPage()).path).toBe('/pages/ucenter/settings/settings')
-		
 		
 		const submitRes = await page.callMethod('submit')
 		console.log("submitRes: ",submitRes);

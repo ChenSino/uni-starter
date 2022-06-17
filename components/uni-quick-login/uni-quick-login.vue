@@ -415,6 +415,7 @@
 		position: fixed;
 		bottom: 10rpx;
 		left: 0;
+		
 	}
 
 	.item {

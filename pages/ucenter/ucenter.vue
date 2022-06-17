@@ -139,7 +139,8 @@
 						"style": "solid", // 边框样式
 						"radius": "100%" // 边框圆角，支持百分比
 					}
-				}
+				},
+				uniToken:''
 			}
 		},
 		onLoad() {
@@ -276,9 +277,7 @@
 					})
 			},
 			async share() {
-				let {
-					result
-				} = await uniCloud.callFunction({
+				let {result} = await uniCloud.callFunction({
 					name: 'uni-id-cf',
 					data: {
 						action: 'getUserInviteCode'

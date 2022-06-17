@@ -24,6 +24,24 @@ describe('pages/ucenter/login-page/pwd-login/pwd-login.vue', () => {
 			
 		console.log(await program.currentPage(),"22222222222");
 	})
+	
+	it('screenshot', async () => {
+		if (process.env.UNI_PLATFORM === "h5") {
+			const image = await program.screenshot({
+				path: "static/screenshot/pwdlogin-h5.png" // 默认项目根目录
+			})
+		} else if (process.env.UNI_PLATFORM === "app-plus") {
+			await program.screenshot({
+				path: "static/screenshot/pwdlogin-app.png"
+			})
+		} else if (process.env.UNI_PLATFORM === "mp-weixin") {
+			await program.screenshot({
+				path: "static/screenshot/pwdlogin-mp.png"
+			})
+		}
+	
+	})
+	
 
 	it('用户名密码登录', async () => {
 		// expect.assertions(1);

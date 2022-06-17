@@ -5,6 +5,7 @@ describe('pages/ucenter/userinfo/userinfo.vue', () => {
 	let page
 	beforeAll(async () => {
 		page = await program.navigateTo('/pages/ucenter/userinfo/userinfo')
+		console.log("page: ",page);
 		await page.waitFor(500)
 	})
 

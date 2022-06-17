@@ -11,19 +11,19 @@
 			<view class="cover-search-bar" @click="searchClick"></view>
 		</view>
 
-		<unicloud-db ref='udb' v-slot:default="{data,pagination,hasMore, loading, error, options}" @error="onqueryerror"
-			:collection="colList" :page-size="10"
-			>
+		<unicloud-db ref='udb' @load="loadData" v-slot:default="{data,pagination,hasMore, loading, error, options}" @error="onqueryerror"
+			:collection="colList" :page-size="10">
 			<!-- 基于 uni-list 的页面布局 field="user_id.username"-->
 			<uni-list class="uni-list" :border="false" :style="{height:listHight}">
-				
+
 				<!-- 作用于app端nvue页面的下拉加载 -->
 				<!-- #ifdef APP-NVUE -->
 				<refreshBox @refresh="refresh" :loading="loading"></refreshBox>
 				<!-- #endif -->
 
 				<!-- 列表渲染 -->
-				<uni-list-item :to="'/pages/list/detail?id='+item._id+'&title='+item.title" v-for="(item,index) in data" :key="index">
+				<uni-list-item :to="'/pages/list/detail?id='+item._id+'&title='+item.title" v-for="(item,index) in data"
+					:key="index">
 					<!-- 通过header插槽定义列表左侧图片 -->
 					<template v-slot:header>
 						<image class="avatar" :src="item.avatar" mode="aspectFill"></image>
@@ -44,11 +44,11 @@
 				<!-- #ifdef APP-PLUS -->
 				<uni-list-item>
 					<template v-slot:body>
-				<!-- #endif -->
+						<!-- #endif -->
 						<uni-load-state @networkResume="refresh" :state="{data,pagination,hasMore, loading, error}"
 							@loadMore="loadMore">
 						</uni-load-state>
-				<!-- #ifdef APP-PLUS -->
+						<!-- #ifdef APP-PLUS -->
 					</template>
 				</uni-list-item>
 				<!-- #endif -->
@@ -62,7 +62,8 @@
 	import statusBar from "@/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar";
 
 	import Gps from '@/uni_modules/json-gps/js_sdk/gps.js';
-	const gps = new Gps(),db = uniCloud.database();
+	const gps = new Gps(),
+		db = uniCloud.database();
 
 	export default {
 		components: {
@@ -76,9 +77,10 @@
 					return '请输入搜索内容'
 				}
 			},
-			colList(){
+			colList() {
 				return [
-					db.collection('opendb-news-articles').where(this.where).field('avatar,title,last_modify_date,user_id').getTemp(),
+					db.collection('opendb-news-articles').where(this.where).field(
+						'avatar,title,last_modify_date,user_id').getTemp(),
 					db.collection('uni-id-users').field('_id,username').getTemp()
 				]
 			}
@@ -88,7 +90,8 @@
 				where: '"article_status" == 1',
 				keyword: "",
 				showRefresh: false,
-				listHight: 0
+				listHight: 0,
+				dataList:[]
 			}
 		},
 		watch: {
@@ -104,7 +107,8 @@
 		async onReady() {
 			// #ifdef APP-NVUE
 			/* 可用窗口高度 - 搜索框高 - 状态栏高 */
-			this.listHight = uni.getSystemInfoSync().windowHeight - uni.getSystemInfoSync().statusBarHeight - 50 + 'px';
+			this.listHight = uni.getSystemInfoSync().windowHeight - uni.getSystemInfoSync().statusBarHeight - 50 +
+			'px';
 			// #endif
 			// #ifndef APP-NVUE
 			this.listHight = 'auto'
@@ -135,6 +139,11 @@
 			// uni.hideLoading()
 		},
 		methods: {
+			loadData(e) {
+				console.log("e: ----", e);
+				this.dataList = e[0]
+				console.log("this.dataList: ", this.dataList);
+			},
 			searchClick(e) { //点击搜索框
 				uni.hideKeyboard();
 				uni.navigateTo({
@@ -166,7 +175,7 @@
 			onpullingdown(e) {
 				console.log(e);
 				this.showRefresh = true
-				if(e.pullingDistance>100){
+				if (e.pullingDistance > 100) {
 					this.refresh()
 				}
 			}
@@ -189,6 +198,7 @@
 		box-sizing: border-box;
 		flex-direction: column;
 	}
+
 	/* #endif */
 	.pages {
 		background-color: #FFFFFF;
@@ -233,6 +243,7 @@
 		width: 580rpx;
 		/* #endif */
 	}
+
 	.cover-search-bar {
 		height: 50px;
 		position: relative;

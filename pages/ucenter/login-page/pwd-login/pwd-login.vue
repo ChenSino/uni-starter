@@ -60,6 +60,7 @@
 					});
 				}
 				return await uniCloud.callFunction({
+					name:'uni-id-cf',
 					data:{
 						action:'login',
 						params:{

@@ -43,6 +43,7 @@
 			}
 		},
 		onLoad(e) {
+			console.log("e:------------ ",e);
 			this.type = e.type
 
 			//是否优先启动一键登录。即：页面一加载就启动一键登录
@@ -56,6 +57,7 @@
 			}
 			//#endif
 			uni.$on('setLoginType',type=>{
+				console.log("type:----- ",type);
 				this.type = type
 			})
 		},
@@ -89,6 +91,7 @@
 				this.$refs.uniQuickLogin.login_before(this.type)
 			},
 			sendShortMsg() {
+				console.log("this.phone: ",this.phone);
 				if (!this.agree) {
 					return uni.showToast({
 						title: this.$t('common.noAgree'),
@@ -99,7 +102,8 @@
 				uni.showLoading();
 				uni.navigateTo({
 					url: '/pages/ucenter/login-page/phone-code/phone-code?phoneNumber=' + this.phone,
-					complete: () => {
+					complete: (res) => {
+						console.log("res: ",res);
 						uni.hideLoading();
 					}
 				});

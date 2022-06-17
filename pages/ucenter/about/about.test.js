@@ -4,29 +4,31 @@
 describe('pages/ucenter/about/about.vue', () => {
 	let page
 	beforeAll(async () => {
-		page = await program.redirectTo('/pages/ucenter/about/about')
+		page = await program.navigateTo('/pages/ucenter/about/about')
 		await page.waitFor(500)
 	})
 
 	it('about', async () => {
-		expect.assertions(2);
+		expect.assertions(1);
 		const getData = await page.data('about')
 		expect(getData.appName).toBe('uni-starter')
-		expect(getData.slogan).toBe('云端一体应用快速开发模版')
 	})
 
 	it('screenshot', async () => {
-		if (process.env.UNI_PLATFORM === "h5") {
+		if (process.env.UNI_PLATFORM == "h5") {
 			const image = await program.screenshot({
 				path: "static/screenshot/about-h5.png" // 默认项目根目录
 			})
-		} else if (process.env.UNI_PLATFORM === "app-plus") {
+			console.log("image: ",image);
+		} else if (process.env.UNI_PLATFORM == "app-plus") {
+			console.log('app-plus');
 			await program.screenshot({
 				path: "static/screenshot/about-app.png"
 			})
-		} else if (process.env.UNI_PLATFORM === "mp-weixin") {
+		} else if (process.env.UNI_PLATFORM == "mp-weixin") {
+			console.log('mp-weixin');
 			await program.screenshot({
-				path: "static/screenshot/about-mp.jpg"
+				path: "static/screenshot/about-mp.png"
 			})
 		}
 

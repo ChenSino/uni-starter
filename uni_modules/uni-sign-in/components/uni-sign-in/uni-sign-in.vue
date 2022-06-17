@@ -80,7 +80,7 @@
 			//看激励视频广告签到
 			async showRewardedVideoAd() {
 				let res = await this.getSignedInInfo();
-				console.log(res);
+				console.log("showRewardedVideoAd: ",res);
 				if (res && res.length == 0) {
 					let {
 						_id: userId

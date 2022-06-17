@@ -5,6 +5,7 @@
 			<image class="captcha-img" :class="{opacity:loging}" @click="getImageCaptcha" :src="captchaBase64"
 				mode="widthFix"></image>
 		</view>
+		{{val}}
 		<input @blur="focusCaptchaInput = false" :focus="focusCaptchaInput" type="text" class="captcha"
 			:inputBorder="false" maxlength="4" v-model="val" placeholder="请输入验证码">
 	</view>
@@ -13,8 +14,8 @@
 <script>
 	export default {
 		props: {
-			modelValue:String,
-			value:String,
+			modelValue: String,
+			value: String,
 			scene: {
 				type: String,
 				default () {
@@ -28,18 +29,18 @@
 				}
 			}
 		},
-		computed:{
-			val:{
-				get(){
-					return this.value||this.modelValue
+		computed: {
+			val: {
+				get() {
+					return this.value || this.modelValue
 				},
-				set(value){
-					// console.log(value);
+				set(value) {
+					console.log("value: ", value);
 					// TODO 兼容 vue2
 					// #ifdef VUE2
 					this.$emit('input', value);
 					// #endif
-					
+
 					// TODO　兼容　vue3
 					// #ifdef VUE3
 					this.$emit('update:modelValue', value)
@@ -66,7 +67,7 @@
 						});
 					}
 				},
-				immediate:true
+				immediate: true
 			}
 		},
 		methods: {
@@ -137,8 +138,8 @@
 		height: 44px !important;
 		width: 100px;
 	}
-	
-	.captcha-img{
+
+	.captcha-img {
 		cursor: pointer;
 	}
 

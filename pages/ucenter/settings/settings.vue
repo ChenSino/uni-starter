@@ -43,7 +43,8 @@
 				pushServer:pushServer,
 				supportMode:[],
 				pushIsOn:"wait",
-				currentLanguage:""
+				currentLanguage:"",
+				uniToken:""
 			}
 		},
 		computed: {
@@ -56,6 +57,8 @@
 			}
 		},
 		onLoad() {
+			this.uniToken = uni.getStorageSync('uni_id_token')
+			console.log("uniToken: ",this.uniToken);
 			this.currentLanguage = uni.getStorageSync('CURRENT_LANG') == "en"?'English':'简体中文'
 			
 			uni.setNavigationBarTitle({
@@ -181,21 +184,29 @@
 				})
 			},
 			clickLogout() {
+				console.log("this.hasLogin: ",this.hasLogin);
 				if (this.hasLogin) {
-					uni.showModal({
+					this.logout()
+					uni.navigateBack();
+					/* uni.showModal({
 						title: this.$t('settings.tips'),
 						content: this.$t('settings.exitLogin'),
 						cancelText: this.$t('settings.cancelText'),
 						confirmText: this.$t('settings.confirmText'),
 						success: res => {
+							console.log("res: ",res);
 							if (res.confirm) {
 								this.logout()
 								uni.navigateBack();
 							}
 						},
-						fail: () => {},
-						complete: () => {}
-					});
+						fail: (err) => {
+							console.log("err: ",err);
+						},
+						complete: (com) => {
+							console.log("com: ",com);
+						}
+					}); */
 				} else {
 					uni.navigateTo({
 						url: '/pages/ucenter/login-page/index/index'
