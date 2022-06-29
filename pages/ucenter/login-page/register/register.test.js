@@ -51,6 +51,7 @@ describe('pages/ucenter/login-page/register/register.vue', () => {
 		} else {
 			console.log("getUid.msg: ",getUid.msg);
 			// expect(getUid.msg).toBe("此用户名已注册");
+			// expect(getUid.msg).toBe("Account exists");
 			await program.navigateTo('/pages/ucenter/login-page/pwd-login/pwd-login')
 		}
 	}) 

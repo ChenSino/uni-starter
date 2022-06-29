@@ -41,6 +41,9 @@
 				return /^1\d{10}$/.test(this.phone);
 			},
 		},
+		onLoad() {
+			console.log("uni.getLocale(): ",uni.getLocale());
+		},
 		methods: {
 			// 页面跳转，找回密码
 			toRetrievePwd() {
@@ -70,7 +73,7 @@
 						},
 					},
 				}).then(({result})=>{
-					console.log(result);
+					console.log("result:--------- ",result);
 					if (result.code === 0) {
 						this.loginSuccess(result)
 					} else {

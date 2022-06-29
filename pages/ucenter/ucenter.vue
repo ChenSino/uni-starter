@@ -147,6 +147,7 @@
 			this.uniToken = uni.getStorageSync('uni_id_token')
 			console.log("uniToken: ", this.uniToken);
 			// console.log(313,this.userInfo,this.hasLogin);
+			console.log("this.appVersion: ",this.appVersion);
 			//#ifdef APP-PLUS
 			this.ucenterList[this.ucenterList.length - 2].unshift({
 				title: this.$t('mine.checkUpdate'), // this.this.$t('mine.checkUpdate')"检查更新"
@@ -165,7 +166,7 @@
 			// #ifdef APP-PLUS
 			,
 			appVersion() {
-				return getApp().appVersion
+				return getApp({allowDefault: true}).appVersion
 			}
 			// #endif
 			,
@@ -183,9 +184,11 @@
 				})
 			},
 			signIn() { //普通签到
+				console.log('app---普通签到');
 				this.$refs.signIn.open()
 			},
 			signInByAd() { //看激励视频广告签到
+				console.log('app---看激励视频广告签到');
 				this.$refs.signIn.showRewardedVideoAd()
 			},
 			/**

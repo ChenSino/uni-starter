@@ -5,7 +5,9 @@ describe('pages/ucenter/login-page/pwd-login/pwd-login.vue', () => {
 
 	let page
 	beforeAll(async () => {
-		page = await program.redirectTo('/pages/ucenter/login-page/pwd-login/pwd-login')
+		page = await program.navigateTo('/pages/ucenter/login-page/pwd-login/pwd-login')
+		// navigateTo
+		// redirectTo
 		await page.waitFor(500)
 	})
 
@@ -46,19 +48,37 @@ describe('pages/ucenter/login-page/pwd-login/pwd-login.vue', () => {
 	it('用户名密码登录', async () => {
 		// expect.assertions(1);
 		const setForm = await page.setData({
-			"password": "111111",
 			"username": "数字天堂",
-			"agree": true,
+			"password": "111111",
+			// "captcha":"test",
+			"agree": true
 		})
-		const resLogin = await page.callMethod('pwdLogin')
-		console.log("resLogin: ", resLogin.msg);
 		
-		switch (resLogin.msg){
+		const needCaptcha = await page.data('needCaptcha')
+		console.log("needCaptcha---1: : ",needCaptcha);
+		
+		if(needCaptcha){
+			await page.setData({
+				"captcha":"test"
+			})
+			console.log("needCaptcha---2: ",await page.data('needCaptcha'));
+		}
+		
+		
+		const resLogin = await page.callMethod('pwdLogin')
+		console.log("resLogin: ", resLogin);
+		
+		
+		switch (resLogin.code){
+			case 0:
+				// console.log('resLogin.uid',resLogin.uid.length)
+				expect(resLogin.uid).toHaveLength(24);
+				break;
 			case 10102:
 				expect(resLogin.msg).toBe("密码错误");
 				await page.setData({
-					"password": "222222",
 					"username": "数字天堂",
+					"password": "222222",
 					"agree": true,
 				})
 				await page.callMethod('pwdLogin')
@@ -69,10 +89,9 @@ describe('pages/ucenter/login-page/pwd-login/pwd-login.vue', () => {
 			case 10002:
 				expect(resLogin.msg).toBe("验证码不可为空");
 				break;
-			case 0:
-				expect(resLogin.msg).toBe("登录成功");
-				break;
+			
 			default:
+				console.log(await program.currentPage(),"22222222222");
 				break;
 		}
 	})

@@ -20,7 +20,7 @@
 				<!-- #ifdef APP-NVUE -->
 				<refreshBox @refresh="refresh" :loading="loading"></refreshBox>
 				<!-- #endif -->
-
+				
 				<!-- 列表渲染 -->
 				<uni-list-item :to="'/pages/list/detail?id='+item._id+'&title='+item.title" v-for="(item,index) in data"
 					:key="index">
@@ -125,10 +125,10 @@
 			// });
 			//默认h5端不获取定位
 			// #ifndef H5
-			let location = await gps.getLocation({
-				geocode: true
-			})
-			console.log(location);
+			// let location = await gps.getLocation({
+			// 	geocode: true
+			// })
+			// console.log(location);
 			// #endif
 			// if(location){
 			// 	uni.showToast({
@@ -170,7 +170,7 @@
 				cdbRef.loadMore()
 			},
 			onqueryerror(e) {
-				console.error(e);
+				console.error("失败--",e);
 			},
 			onpullingdown(e) {
 				console.log(e);

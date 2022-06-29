@@ -19,8 +19,8 @@ describe('pages/ucenter/userinfo/userinfo.vue', () => {
 	})
 	
 	it('绑定手机号', async () => {
-		const navRes = await page.callMethod('bindMobileBySmsCode')
-		console.log("navRes: ",navRes);
+		await page.callMethod('bindMobileBySmsCode')
+		
 		await page.waitFor(300)
 		// expect((await program.currentPage()).path).toBe('pages/ucenter/userinfo/bind-mobile/bind-mobile')
 		console.log("currentPage---------------- ",await program.currentPage());

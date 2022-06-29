@@ -55,6 +55,7 @@ describe('pages/ucenter/userinfo/bind-mobile/bind-mobile.vue', () => {
 					expect(submitRes.errCode).toBe("uni-id-account-bound")
 					break;
 				default:
+				
 					break;
 			}
 		}

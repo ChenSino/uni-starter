@@ -3,13 +3,15 @@
 describe('pages/ucenter/settings/settings', () => {
 	let page
 	beforeAll(async () => {
-		// page = await program.navigateTo('/pages/ucenter/settings/settings')
-		page = await program.redirectTo('/pages/ucenter/settings/settings')
-		
-		await page.waitFor(500)
-		console.log("await program.pageStack(): ",await program.pageStack());
-		
-		console.log(await page.data('uniToken'), 'uniToken----------');
+		try {
+			page = await program.navigateTo('/pages/ucenter/settings/settings')
+			console.log("page: ",page);
+			await page.waitFor(500)
+		} catch (e) {
+			console.log("e: ",e);
+		}
+		console.log("pageStack: ",await program.pageStack());
+		console.log('uniToken:',await page.data('uniToken'));
 		
 	})
 
@@ -23,7 +25,7 @@ describe('pages/ucenter/settings/settings', () => {
 		}
 		if (process.env.UNI_PLATFORM == "app-plus") {
 			await page.callMethod('clearTmp')
-			console.log(await page.data('pushIsOn'), "pushIsOn-------------");
+			// console.log(await page.data('pushIsOn'), "pushIsOn-------------");
 			const pushRes = await page.data('pushIsOn')
 			if (pushRes == "wait") {
 				await page.callMethod('pushServer.off')
@@ -32,7 +34,7 @@ describe('pages/ucenter/settings/settings', () => {
 		
 		await page.callMethod('deactivate')
 		await page.waitFor(300)
-		console.log(await program.currentPage(),"111111111");
+		// console.log(await program.currentPage(),"111111111");
 		await program.navigateBack()
 		
 	})
@@ -48,6 +50,7 @@ describe('pages/ucenter/settings/settings', () => {
 			await page.callMethod('clickLogout')
 		}
 	})
-
+	
+	
 
 });

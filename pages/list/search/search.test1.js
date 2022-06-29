@@ -7,7 +7,7 @@ describe('pages/list/search/search.vue', () => {
 		page = await program.navigateTo('/pages/list/search/search')
 		await page.waitFor(500)
 	})
-	it('搜索发现-显示-影藏', async () => {
+	it('搜索发现-显示-隐藏', async () => {
 		// expect.assertions(2);
 		await page.callMethod('searchHotRefresh')
 		await page.waitFor(300)

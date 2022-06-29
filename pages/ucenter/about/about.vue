@@ -41,8 +41,7 @@
 		},
 		computed: {
 			uniStarterConfig() {
-				console.log(getApp());
-				return getApp().globalData.config
+				return getApp({allowDefault: true}).globalData.config
 			}
 		},
 		data() {

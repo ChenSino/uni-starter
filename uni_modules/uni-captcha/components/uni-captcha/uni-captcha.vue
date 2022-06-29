@@ -5,7 +5,6 @@
 			<image class="captcha-img" :class="{opacity:loging}" @click="getImageCaptcha" :src="captchaBase64"
 				mode="widthFix"></image>
 		</view>
-		{{val}}
 		<input @blur="focusCaptchaInput = false" :focus="focusCaptchaInput" type="text" class="captcha"
 			:inputBorder="false" maxlength="4" v-model="val" placeholder="请输入验证码">
 	</view>

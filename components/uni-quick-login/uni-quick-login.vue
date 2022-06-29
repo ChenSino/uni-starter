@@ -32,10 +32,10 @@
 	export default {
 		computed: {
 			loginConfig() {
-				return getApp().globalData.config.router.login
+				return getApp({allowDefault: true}).globalData.config.router.login
 			},
 			agreements() {
-				return getApp().globalData.config.about.agreements || []
+				return getApp({allowDefault: true}).globalData.config.about.agreements || []
 			}
 		},
 		data() {
@@ -120,6 +120,7 @@
 			//去掉配置中不存在的 注意，在/common/appInit.js中已清除有配置但设备环境不支持的登录项
 			servicesList = servicesList.filter(item => this.loginConfig.includes(item.id))
 			//处理一键登录
+			console.log("this.agreements: ",this.agreements);
 			if (this.loginConfig.includes('univerify')) {
 				this.univerifyStyle.privacyTerms.privacyItems = this.agreements
 				//设置一键登录功能底下的快捷登录按钮
