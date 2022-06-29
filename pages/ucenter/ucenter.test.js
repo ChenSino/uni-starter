@@ -58,7 +58,7 @@ describe('pages/ucenter/ucenter.vue', () => {
 			console.log("getScoreRes: ", getScoreRes);
 			if (getScoreRes.score) {
 				console.log("已登录--今日已签到");
-				expect.assertions(1);
+				expect.assertions(2);
 				expect(getScoreRes.score).not.toBeUndefined();
 				expect(getScoreRes.balance).toBeGreaterThanOrEqual(getScoreRes.score);
 			} else {
