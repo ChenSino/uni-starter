@@ -1,7 +1,7 @@
 {
 	"id": "uni-starter",
 	"displayName": "uni-starter",
-	"version": "1.2.5",
+	"version": "1.2.6",
 	"description": "云端一体应用快速开发基本项目模版",
 	"keywords": [
 		"login",
@@ -71,7 +71,8 @@
 					"阿里": "u",
 					"百度": "u",
 					"字节跳动": "u",
-					"QQ": "u"
+                    "QQ": "u",
+                    "京东": "u"
 				},
 				"快应用": {
 					"华为": "u",
