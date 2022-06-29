@@ -1,3 +1,5 @@
+## 1.2.6（2022-06-29）
+- 支持 ios 安全区
 ## 1.2.5（2022-05-29）
 升级预置的`uni_modules`->`uni-captcha`版本为：0.6.0。[详情](https://ext.dcloud.net.cn/plugin?name=uni-captcha)
 ## 1.2.4（2022-05-20）
@@ -175,9 +177,9 @@
 更正调试遗留的uni-config-center/uni-id/config.json的tokenExpiresIn=1配置问题，改为默认值7200
 ## 1.0.22（2021-06-22）
 1. 新增一键登录授权界面的其他快捷登录按钮
-2. 优化uni-quick-login组件代码 
+2. 优化uni-quick-login组件代码
 3. 调整隐私政策协议框勾选逻辑：在登录页面已勾选，同步勾选。如果没勾选需要手动勾选（为符合应用市场上架要求）
-4. 调整登录页隐私政策协议框位置。 
+4. 调整登录页隐私政策协议框位置。
 5. 增强路由拦截，新增判断token是否过期。
 ## 1.0.21（2021-06-21）
 优化：uni_modules模式使用uni-id-cf，方便uni-starter与uniCloud-admin的uni-id-cf同步更新。
