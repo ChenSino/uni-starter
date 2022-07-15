@@ -7,7 +7,7 @@ module.exports = {
 	watchPathIgnorePatterns: ['/node_modules/', '/dist/', '/.git/'],
 	moduleFileExtensions: ['js', 'json'],
 	rootDir: __dirname,
-	testEnvironmentOptions: {
+	/* testEnvironmentOptions: {
 		compile: true,
 		"app-plus": { // 需要安装 HBuilderX
 			android: {
@@ -22,7 +22,7 @@ module.exports = {
 				executablePath: "HBuilderX/plugins/launcher/base/Pandora_simulator.app" // ipa 目录
 			}
 		}
-	},
+	}, */
 	testMatch: ["<rootDir>/pages/**/*test.[jt]s?(x)"],
 	testPathIgnorePatterns: ['/node_modules/'],
 	testSequencer: path.join(__dirname, "testSequencer.js")

@@ -4,9 +4,13 @@
 describe('pages/grid/grid.vue', () => {
 	let page
 	beforeAll(async () => {
-		page = await program.switchTab('/pages/grid/grid')
-		await page.waitFor(500)
-		console.log("page: ",page);
+		try{
+			page = await program.switchTab('/pages/grid/grid')
+			await page.waitFor(500)
+			console.log("page: ",page);
+		}catch(e){
+			console.log("e: ",e);
+		}
 	})
 	
 	it('检测宫格', async () => {
@@ -19,12 +23,10 @@ describe('pages/grid/grid.vue', () => {
 	it('点击宫格', async () => {
 		if (process.env.UNI_PLATFORM === "h5" || process.env.UNI_PLATFORM === "app-plus") {
 			const perPage = await page.$('.uni-grid-wrap')
-			console.log("perPage: ",perPage);
 			await perPage.callMethod('change')
 		}
 		if (process.env.UNI_PLATFORM === "mp-weixin") {
 			const uniGrid = await page.$('uni-grid')
-			console.log("uniGrid: ",uniGrid);
 			await uniGrid.callMethod('change')
 		}
 	})

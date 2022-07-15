@@ -144,8 +144,6 @@
 			}
 		},
 		onLoad() {
-			this.uniToken = uni.getStorageSync('uni_id_token')
-			console.log("uniToken: ", this.uniToken);
 			// console.log(313,this.userInfo,this.hasLogin);
 			console.log("this.appVersion: ",this.appVersion);
 			//#ifdef APP-PLUS
@@ -157,6 +155,10 @@
 				showBadge: this.appVersion.hasNew
 			})
 			//#endif
+		},
+		onReady() {
+			this.uniToken = uni.getStorageSync('uni_id_token')
+			console.log("uniToken: ", this.uniToken);
 		},
 		computed: {
 			...mapGetters({

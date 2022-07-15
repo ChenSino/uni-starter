@@ -40,7 +40,8 @@
 					otherLoginButton: {
 						"title": "其他号码绑定",
 					}
-				}
+				},
+				uniToken:''
 			}
 		},
 		onLoad() {

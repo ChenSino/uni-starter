@@ -143,7 +143,7 @@
 			submit() {
 				console.log("formData", this.formData);
 				console.log('rules', this.rules);
-				this.$refs.form.validate()
+				return this.$refs.form.validate()
 					.then(async res => {
 						return await uniCloud.callFunction({
 							name: 'uni-id-cf',
@@ -158,15 +158,18 @@
 						}).then(({
 							result
 						}) => {
-							console.log(result);
+							console.log("resetPwdBySmsCode------------",result);
 							uni.showToast({
 								title: result.msg || '更新成功',
 								icon: 'none'
 							});
+							return result
 							if (result.code === 0) {
+								
 								uni.navigateBack()
 							}
-							return result
+							
+							
 						}).catch((reason) => {
 							console.log(reason, 'reason----');
 							return reason

@@ -6,9 +6,8 @@ describe('pages/ucenter/login-page/pwd-login/pwd-login.vue', () => {
 	let page
 	beforeAll(async () => {
 		page = await program.navigateTo('/pages/ucenter/login-page/pwd-login/pwd-login')
-		// navigateTo
-		// redirectTo
 		await page.waitFor(500)
+		console.log("program.pageStack: ",await program.pageStack());
 	})
 
 	it('前往注册页', async () => {
@@ -17,31 +16,13 @@ describe('pages/ucenter/login-page/pwd-login/pwd-login.vue', () => {
 		await page.waitFor(300)
 		// expect((await program.currentPage()).path).toBe(
 		// 	'pages/ucenter/login-page/register/register')
-		console.log(await program.currentPage(),"111111111");
 		await program.navigateBack()
 		// await page.waitFor(500)
 		// 执行 navigateBack 验证是否返回navigateTo
 		// expect((await program.navigateBack()).path).toBe(
 		// 	'pages/ucenter/login-page/pwd-login/pwd-login')
 			
-		console.log(await program.currentPage(),"22222222222");
-	})
-	
-	it('screenshot', async () => {
-		if (process.env.UNI_PLATFORM === "h5") {
-			const image = await program.screenshot({
-				path: "static/screenshot/pwdlogin-h5.png" // 默认项目根目录
-			})
-		} else if (process.env.UNI_PLATFORM === "app-plus") {
-			await program.screenshot({
-				path: "static/screenshot/pwdlogin-app.png"
-			})
-		} else if (process.env.UNI_PLATFORM === "mp-weixin") {
-			await program.screenshot({
-				path: "static/screenshot/pwdlogin-mp.png"
-			})
-		}
-	
+		// console.log(await program.currentPage(),"22222222222");
 	})
 	
 
@@ -66,13 +47,14 @@ describe('pages/ucenter/login-page/pwd-login/pwd-login.vue', () => {
 		
 		
 		const resLogin = await page.callMethod('pwdLogin')
-		console.log("resLogin: ", resLogin);
+		console.log("resLogin: ", resLogin.code);
 		
 		
 		switch (resLogin.code){
 			case 0:
-				// console.log('resLogin.uid',resLogin.uid.length)
+				console.log('登录成功')
 				expect(resLogin.uid).toHaveLength(24);
+				console.log(await program.currentPage(),"currentPage---------");
 				break;
 			case 10102:
 				expect(resLogin.msg).toBe("密码错误");
@@ -89,9 +71,11 @@ describe('pages/ucenter/login-page/pwd-login/pwd-login.vue', () => {
 			case 10002:
 				expect(resLogin.msg).toBe("验证码不可为空");
 				break;
-			
+			case "SYS_ERR":
+				console.log("未知错误---SYS_ERR",resLogin)
+				break;
 			default:
-				console.log(await program.currentPage(),"22222222222");
+				// console.log(await program.currentPage(),"22222222222");
 				break;
 		}
 	})
