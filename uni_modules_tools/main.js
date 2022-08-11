@@ -1,12 +1,12 @@
 //脚本文件目录 __dirname
 //运行脚本的目录，即：项目的目录 process.cwd()
-
 //配置文件
 const fs = require('fs'),
 	Hjson = require('hjson'),
 	config = Hjson.rt.parse(fs.readFileSync(__dirname+'/config.js', 'utf-8'))
+	
+	
 const change_after = require('./change_after')
-
 if(process.argv[2] == 'change'){
 	change(config,()=>{
 		console.log('脚本change已经执行成功');
@@ -26,7 +26,7 @@ function change(config,callback){
 		//保持原文件名先备份一份到/uni_modules_tools/copy目录下，然后再覆盖
 		writeFileRecursive(copyPath, fileText, function(err) { //创建目录并写入文件
 			if (err) {
-				return console.log(err);
+				return console.log({err});
 			}
 			//改写
 			let HfileObj = Hjson.rt.parse(fileText)
@@ -56,11 +56,9 @@ function change(config,callback){
 
 function recovery(){
 	let paths = Object.keys(config)
-	console.log(paths);
 	paths.forEach(path=>{
 		console.log(__dirname + '/copy' + path);
 		let oldFile = fs.readFileSync(__dirname + '/copy' + path)
-		console.log(process.cwd() + path);
 		fs.writeFile(process.cwd() + path, oldFile, function(err) {
 			if (err) {
 				console.log(err);
@@ -94,9 +92,15 @@ function writeFileRecursive(path, buffer, callback) {
 function mergeJSON(minor, main) {
 	for (var key in main) {
 		if (typeof(main[key]) != 'object' ) {
+			console.log({key,main});
 			minor[key] = main[key];
 		}else{
-			mergeJSON(minor[key], main[key]);
+			console.log(9999,{minor,key,main});
+			if(minor){
+				mergeJSON(minor[key], main[key]);
+			}else{
+				console.log(minor,'不存在：'+key);
+			}
 		}
 	}
 }

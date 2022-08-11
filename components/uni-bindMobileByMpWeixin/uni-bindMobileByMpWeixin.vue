@@ -71,7 +71,7 @@
 			},
 			bindMobileByMpWeixin(e) {
 				console.log(e.detail);
-				if(e.errMsg == "getPhoneNumber:ok"){
+				if(e.detail.errMsg == "getPhoneNumber:ok"){
 					uniCloud.callFunction({
 						name: "uni-id-cf",
 						data: {

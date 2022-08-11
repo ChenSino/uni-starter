@@ -30,27 +30,27 @@ export default {
 				2.visitor：白名单模式。枚举游客可访问的页面。
 			* 注意：黑名单与白名单模式二选一
 		*/
-		"needLogin" : [
-		 	// {pattern:/^\/pages\/list.*/},	//支持正则表达式
-				// "/uni_modules/uni-news-favorite/pages/uni-news-favorite/list",
-				// "/uni_modules/uni-feedback/pages/uni-feedback/add"
-		],
-		// "visitor" : [
-		// 	"/",//注意入口页必须直接写 "/"
-		// 	{"pattern":/^\/pages\/list.*/},	//支持正则表达式
-		// 	{"pattern":/^\/pages\/ucenter\/login-page.*/},
-		// 	"/pages/common/webview/webview",
-		// 	"/pages/grid/grid",
-		// 	"/pages/ucenter/ucenter",
-		// 	"/pages/ucenter/about/about",
-		// 	"/pages/ucenter/settings/settings"
+		// "needLogin" : [
+		//  	{pattern:/^\/pages\/list.*/},	//支持正则表达式
+		// 		"/uni_modules/uni-news-favorite/pages/uni-news-favorite/list",
+		// 		"/uni_modules/uni-feedback/pages/uni-feedback/add"
 		// ],
+		"visitor" : [
+			"/",//注意入口页必须直接写 "/"
+			{"pattern":/^\/pages\/list.*/},	//支持正则表达式
+			{"pattern":/^\/pages\/ucenter\/login-page.*/},
+			"/pages/common/webview/webview",
+			"/pages/grid/grid",
+			"/pages/ucenter/ucenter",
+			"/pages/ucenter/about/about",
+			"/pages/ucenter/settings/settings"
+		],
 		/*
 		login:配置登录类型与优先级
 			未列举到的，或设备环境不支持的选项，将被隐藏。如果你需要在不同平台有不同的配置，直接用条件编译即可
 			根据数组的第0项，决定登录方式的第一优先级。
 		*/
-		"login": ["username", "univerify", "weixin", "smsCode", "apple"],
+		"login": ["weixin","univerify","username", "smsCode", "apple"]
 	},
 	//关于应用
 	"about": {
@@ -65,11 +65,11 @@ export default {
 		//政策协议
 		"agreements": [{
 				"title": "用户服务协议", //如果开启了多语言国际化，本配置将失效。请在 lang/en.js 和 lang/zh-Hans.js中配置
-				"url": "https://ask.dcloud.net.cn/protocol.html" //对应的网络链接
+				"url": "请填写用户服务协议链接" //对应的网络链接
 			},
 			{
 				"title": "隐私政策", //如果开启了多语言国际化，本配置将失效。请在 lang/en.js 和 lang/zh-Hans.js中配置
-				"url": "https://ask.dcloud.net.cn/protocol.html" //对应的网络链接
+				"url": "请填写隐私政策链接" //对应的网络链接
 			}
 		],
 		//应用的链接，用于分享到第三方平台和生成关于我们页的二维码

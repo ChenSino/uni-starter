@@ -4,7 +4,7 @@
 			<checkbox :checked="isAgree" style="transform: scale(0.7);" />
 			<text>{{$t('common.agree')}}</text>
 		</checkbox-group>
-		<view v-if="agreements" class="item" v-for="(agreement,index) in agreements" :key="index">
+		<view class="item" v-for="(agreement,index) in agreements" :key="index">
 			<text class="agreement" @click="navigateTo(agreement)">{{agreement.title}}</text>
 			<text class="hint" v-if="hasAnd(agreements,index)">&</text>
 		</view>
@@ -16,7 +16,7 @@
 		name:"uni-agreements",
 		computed:{
 			agreements(){
-				return getApp({allowDefault: true}).globalData.config.about.agreements||[]
+				return getApp().globalData.config.about.agreements||[]
 			}
 		},
 		methods:{

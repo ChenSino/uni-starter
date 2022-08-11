@@ -1,7 +1,7 @@
 // "文件路径" : {"键名":"改成什么"}
 {
 	"/manifest.json": {
-		"appid": "请点击重新获取" ,//清空appid
+		"appid": "请点击重新获取",
 		"mp-weixin" : {
 		    "appid" : ""
 		},
