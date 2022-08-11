@@ -1,7 +1,7 @@
 {
 	"id": "uni-starter",
 	"displayName": "uni-starter",
-	"version": "1.2.6",
+	"version": "1.2.7",
 	"description": "云端一体应用快速开发基本项目模版",
 	"keywords": [
         "login",
@@ -14,12 +14,8 @@
 	"engines": {
 		"HBuilderX": "^3.2.6"
 	},
-	"dcloudext": {
-		"category": [
-			"uniCloud",
-			"云端一体项目模板"
-		],
-		"sale": {
+    "dcloudext": {
+        "sale": {
 			"regular": {
 				"price": "0.00"
 			},
@@ -35,7 +31,8 @@
 			"data": "无",
 			"permissions": "无"
 		},
-		"npmurl": ""
+        "npmurl": "",
+        "type": "unicloud-template-project"
 	},
 	"uni_modules": {
 		"dependencies": [
