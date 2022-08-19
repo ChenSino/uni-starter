@@ -35,6 +35,26 @@ let state = {
 				uni.setStorageSync('uni_id_token_expired', state.info.tokenExpired)
 			}
 		},
+		resetUserInfo(state, info) { //登录成功后的操作，实际是记录全新的userInfo到本地存储
+            console.log('resetUserInfo info:',info);
+            if (info._id) {
+                state.info = info;
+                //设置为已经登录
+                state.hasLogin = true;
+                //存储最新的用户数据到本地持久化存储
+                uni.setStorageSync('userInfo', state.info);
+            }
+			if(info.token){
+				uni.setStorage({
+					key: 'uni_id_token',
+					data: state.info.token,
+					complete(e){
+						// console.log('setStorage-------',e);
+					}
+				});
+				uni.setStorageSync('uni_id_token_expired', state.info.tokenExpired)
+			}
+		},
 		logout(state) {
 			state.info = {};
 			state.hasLogin = false;

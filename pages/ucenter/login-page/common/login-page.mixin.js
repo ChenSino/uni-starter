@@ -3,7 +3,7 @@ import loginSuccess from './loginSuccess.js';
 let mixin = {
 	methods:{
 		...mapMutations({
-			setUserInfo: 'user/login'
+			resetUserInfo: 'user/resetUserInfo'
 		}),
 		loginSuccess(result){
 			loginSuccess(result)
@@ -11,7 +11,7 @@ let mixin = {
 			if (result.type == "register") {
 				result.userInfo._id = result.uid  
 			}
-			this.setUserInfo(result.userInfo)
+			this.resetUserInfo(result.userInfo)
 		}
 	}
 }

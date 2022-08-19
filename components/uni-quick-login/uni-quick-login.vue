@@ -155,7 +155,7 @@
 		mounted() {},
 		methods: {
 			...mapMutations({
-				setUserInfo: 'user/login'
+				resetUserInfo: 'user/resetUserInfo'
 			}),
 			getRoute(n = 0) {
 				let pages = getCurrentPages();
@@ -357,7 +357,7 @@
 							if (result.type == "register") {  
 								result.userInfo._id = result.uid  
 							}
-							this.setUserInfo(result.userInfo)
+							this.resetUserInfo(result.userInfo)
 							loginSuccess(result)
 						} else {
 							uni.showModal({
