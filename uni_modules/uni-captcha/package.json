@@ -1,14 +1,14 @@
 {
   "id": "uni-captcha",
   "displayName": "uni-captcha",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "云端一体图形验证码组件",
   "keywords": [
-    "uniCloud",
     "captcha",
-    "验证码",
     "图形验证码",
-    "人机验证"
+    "人机验证",
+    "防刷",
+    "防脚本"
 ],
   "repository": "https://gitee.com/dcloud/uni-captcha",
   "engines": {

@@ -45,7 +45,7 @@ function judgeIosPermissionLocation() {
 	var cllocationManger = plus.ios.import("CLLocationManager");
 	var status = cllocationManger.authorizationStatus();
 	result = (status != 2)
-	console.log("定位权限开启：" + result);
+	// console.log("定位权限开启：" + result);
 	// 以下代码判断了手机设备的定位是否关闭，推荐另行使用方法 checkSystemEnableLocation
 	/* var enable = cllocationManger.locationServicesEnabled();
 	var status = cllocationManger.authorizationStatus();
@@ -250,7 +250,7 @@ function checkSystemEnableLocation() {
 		var result = false;
 		var cllocationManger = plus.ios.import("CLLocationManager");
 		var result = cllocationManger.locationServicesEnabled();
-		console.log("系统定位开启:" + result);
+		// console.log("系统定位开启:" + result);
 		plus.ios.deleteObject(cllocationManger);
 		return result;
 	} else {

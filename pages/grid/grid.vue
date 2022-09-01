@@ -31,7 +31,8 @@
 						v-if="i<3 || i>2&&i<6&&hasLogin || i>5&&uniIDHasRole('admin')"
 					>
 						<view class="grid-item-box" style="background-color: #fff;">
-							<image :src="'/static/grid/c'+(i+1)+'.png'" class="image" mode="aspectFill" />
+							<!-- <image :src="'/static/grid/c'+(i+1)+'.png'" class="image" mode="aspectFill" /> -->
+							<text class="big-number">{{i+1}}</text>
 							<text class="text">{{item}}</text>
 						</view>
 					</uni-grid-item>
@@ -42,9 +43,6 @@
 </template>
 
 <script>
-	import {
-		mapGetters,
-	} from 'vuex';
 	import statusBar from "@/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar";
 	export default {
 		components: {
@@ -58,9 +56,9 @@
 			}
 		},
 		computed: {
-			...mapGetters({
-				hasLogin: 'user/hasLogin'
-			})
+			hasLogin(){
+				return uniCloud.getCurrentUserInfo().tokenExpired > Date.now()
+			}
 		},
 		onLoad() {
 			let gridList = []
@@ -78,7 +76,7 @@
 		methods: {
 			change(e) {
 				uni.showToast({
-					title:this.$t('grid.clickTip') + " " + `${e.detail.index}` + " " + this.$t('grid.clickTipGrid'),
+					title:this.$t('grid.clickTip') + " " + `${e.detail.index + 1}` + " " + this.$t('grid.clickTipGrid'),
 					icon: 'none'
 				})
 			},
@@ -155,7 +153,14 @@
 		width: 50rpx;
 		height: 50rpx;
 	}
-
+	
+	.big-number{
+		font-size: 50rpx;
+		font-weight: 700;
+		font-stretch: condensed;
+		font-style:oblique;
+	}
+	
 	.text {
 		text-align: center;
 		font-size: 26rpx;

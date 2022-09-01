@@ -1,6 +1,9 @@
 <script>
 	import initApp from '@/common/appInit.js';
 	import openApp from '@/common/openApp.js';
+	// #ifdef H5
+		openApp() //创建在h5端全局悬浮引导用户下载app的功能
+	// #endif
 	import checkIsAgree from '@/pages/uni-agree/utils/uni-agree.js';
 	export default {
 		globalData: {
@@ -17,9 +20,7 @@
 
 			initApp();
 			
-			// #ifdef H5
-				openApp() //创建在h5端全局悬浮引导用户下载app的功能
-			// #endif
+			
 			// #ifdef APP-PLUS
 			//checkIsAgree(); APP端暂时先用原生默认生成的。目前，自定义方式启动vue界面时，原生层已经请求了部分权限这并不符合国家的法规
 			// #endif
@@ -30,6 +31,16 @@
 
 			// #ifdef APP-PLUS
 			//idfa有需要的用户在应用首次启动时自己获取存储到storage中
+			var idfa = '';
+			var manager = plus.ios.invoke('ASIdentifierManager', 'sharedManager');
+			if(plus.ios.invoke(manager, 'isAdvertisingTrackingEnabled')){
+				var identifier = plus.ios.invoke(manager, 'advertisingIdentifier');
+				idfa = plus.ios.invoke(identifier, 'UUIDString');
+				plus.ios.deleteObject(identifier);
+			}
+			plus.ios.deleteObject(manager);
+			console.log('idfa = '+idfa);
+			
 			//https://ask.dcloud.net.cn/article/36107
 			/*if(~plus.storage.getItem('idfa')){
 				plus.device.getInfo({//需要勾选IDFA

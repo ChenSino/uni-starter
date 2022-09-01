@@ -1,3 +1,9 @@
+## 2.0.0（2022-08-10）
+应用`uni-id-pages`、`uniIdRouter`
+## 1.2.7（2022-08-10）
+- 修复微信小程序绑定手机号失败的问题
+## 1.2.6（2022-06-29）
+- 支持 ios 安全区
 ## 1.2.5（2022-05-29）
 升级预置的`uni_modules`->`uni-captcha`版本为：0.6.0。[详情](https://ext.dcloud.net.cn/plugin?name=uni-captcha)
 ## 1.2.4（2022-05-20）
