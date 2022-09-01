@@ -2,7 +2,7 @@
 	<view class="content">
 		<!-- 功能列表 -->
 		<uni-list class="mt10" :border="false">
-			<uni-list-item :title="$t('settings.userInfo')" to="/pages/ucenter/userinfo/userinfo" link="navigateTo"></uni-list-item>
+			<uni-list-item :title="$t('settings.userInfo')" to="/uni_modules/uni-id-pages/pages/userinfo/userinfo" link="navigateTo"></uni-list-item>
 			<uni-list-item v-if="userInfo.mobile" :title="$t('settings.changePassword')" :to="'/pages/ucenter/login-page/pwd-retrieve/pwd-retrieve?phoneNumber='+ userInfo.mobile" link="navigateTo"></uni-list-item>
 		</uni-list>
 		<uni-list class="mt10" :border="false">
@@ -32,11 +32,6 @@
 
 <script>
 	import pushServer from './dc-push/push.js';
-	import {
-		mapMutations,
-		mapGetters,
-		mapActions
-	} from 'vuex';
 	export default {
 		data() {
 			return {
@@ -44,14 +39,13 @@
 				supportMode:[],
 				pushIsOn:"wait",
 				currentLanguage:"",
-				uniToken:""
+				userInfo:{}
 			}
 		},
 		computed: {
-			...mapGetters({
-				'userInfo': 'user/info',
-				'hasLogin': 'user/hasLogin',
-			}),
+			hasLogin(){
+				return uniCloud.getCurrentUserInfo().tokenExpired > Date.now()
+			},
 			i18nEnable(){
 				return getApp().globalData.config.i18n.enable
 			}
@@ -85,9 +79,6 @@
 			//#endif
 		},
 		methods: {
-			...mapActions({
-				logout: 'user/logout'
-			}),
 			toEdit() {
 				uni.navigateTo({
 					url: '/pages/ucenter/userinfo/userinfo'
@@ -95,17 +86,8 @@
 			},
 			deactivate(){
 				uni.navigateTo({
-					url:"/pages/ucenter/settings/deactivate/deactivate"
+					url:"/uni_modules/uni-id-pages/pages/userinfo/deactivate/deactivate"
 				})
-			},
-			changePwd() {
-				uni.navigateTo({
-					url: '/pages/ucenter/login-page/pwd-retrieve/pwd-retrieve?phoneNumber='
-						+ (this.userInfo && this.userInfo.mobile ? this.userInfo.mobile : ''),
-					fail: err => {
-						console.log(err);
-					}
-				});
 			},
 			/**
 			 * 开始生物认证
@@ -196,20 +178,20 @@
 						success: res => {
 							console.log("res: ",res);
 							if (res.confirm) {
-								this.logout()
-								uni.navigateBack();
+								uni.removeStorageSync('uni_id_token');
+								uni.setStorageSync('uni_id_token_expired', 0)
+								uni.redirectTo({
+									url: '/uni_modules/uni-id-pages/pages/login/login-withoutpwd',
+								});
 							}
-						},
-						fail: (err) => {
-							console.log("err: ",err);
-						},
-						complete: (com) => {
-							console.log("com: ",com);
 						}
-					}); */
+					});
 				} else {
 					uni.navigateTo({
-						url: '/pages/ucenter/login-page/index/index'
+						url: '/uni_modules/uni-id-pages/pages/login/login-withoutpwd',
+						complete: (e) => {
+							console.log(6369696,e);
+						}
 					});
 				}
 			},

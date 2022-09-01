@@ -9,9 +9,9 @@
 			<text class="tip">{{$t('about.sacnQR')}} {{about.appName}} {{$t('about.client')}}</text>
 		</view>
 		<view class="copyright">
-			<view class="agreement-box" v-for="(agreement,index) in about.agreements" :key="index">
+			<view class="agreement-box" v-for="(agreement,index) in agreements" :key="index">
 				<text class="agreement" @click="navigateTo(agreement)">《{{agreement.title}}》</text>
-				<text class="hint" v-if="about.agreements.length-1>index">{{$t('about.and')}}</text>
+				<text class="hint" v-if="agreements.length-1>index">{{$t('about.and')}}</text>
 			</view>
 			<text class="hint">Copyright © {{year}}</text>
 			<text class="hint">{{about.company}}</text>
@@ -23,6 +23,7 @@
 	import UniShare from '@/uni_modules/uni-share/js_sdk/uni-share.js';
 	const uniShare = new UniShare()
 // #endif
+	import uniIdPagesConfig from '@/uni_modules/uni-id-pages/config.js';
 	export default {
 		// #ifdef APP
 		onBackPress({from}) {
@@ -41,7 +42,24 @@
 		},
 		computed: {
 			uniStarterConfig() {
-				return getApp({allowDefault: true}).globalData.config
+				console.log(getApp());
+				return getApp().globalData.config
+			},
+			agreements() {
+				if(!uniIdPagesConfig.agreements){
+					return []
+				}
+				let {serviceUrl,privacyUrl} = uniIdPagesConfig.agreements
+				return [
+					{
+						url:serviceUrl,
+						title:"用户服务协议"
+					},
+					{
+						url:privacyUrl,
+						title:"隐私政策条款"
+					}
+				]
 			}
 		},
 		data() {

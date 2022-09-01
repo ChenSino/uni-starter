@@ -56,9 +56,6 @@
 	// #endif
 	const db = uniCloud.database();
 	const readNewsLog = db.collection('read-news-log')
-	import {
-		mapGetters
-	} from 'vuex';
 	export default {
 		// #ifdef APP
 		onBackPress({from}) {
@@ -87,10 +84,6 @@
 			}
 		},
 		computed: {
-			...mapGetters({
-				'userInfo': 'user/info',
-				'hasLogin': 'user/hasLogin'
-			}),
 			uniStarterConfig() {
 				return getApp().globalData.config
 			},
@@ -155,7 +148,7 @@
 				console.log(readNewsLog);
 			},
 			setFavorite() {
-				if (!this.hasLogin){
+				if ( uniCloud.getCurrentUserInfo().tokenExpired < Date.now() ){
 					return console.log('未登录用户');
 				}
 				let article_id = this.id,

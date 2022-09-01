@@ -82,10 +82,7 @@
 				let res = await this.getSignedInInfo();
 				console.log("showRewardedVideoAd: ",res);
 				if (res && res.length == 0) {
-					let {
-						_id: userId
-					} = uni.getStorageSync('userInfo')
-					console.log(userId, uni.getStorageSync('userInfo'));
+					let userId= uniCloud.getCurrentUserInfo().uid
 					if (!userId) {
 						return uni.navigateTo({
 							url: "/pages/ucenter/login-page/index/index"
