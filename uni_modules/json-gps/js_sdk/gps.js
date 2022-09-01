@@ -34,7 +34,6 @@ class Gps {
 					await this.checkGpsIsOpen()
 					// #endif
 					
-					
 					// #ifdef MP-WEIXIN
 					if (err.errMsg == 'getLocation:fail auth deny') {
 						uni.showModal({
@@ -67,7 +66,7 @@ class Gps {
 	// #ifdef APP-PLUS
 	async checkGpsIsOpen() {
 		this.lock = true //加锁防止重复的请求
-		console.log('检查定位设置开启问题', permision.checkSystemEnableLocation());
+		// console.log('检查定位设置开启问题', permision.checkSystemEnableLocation());
 		if (!permision.checkSystemEnableLocation()) {
 			plus.nativeUI.confirm("手机定位权限没有开启，是否去开启？", (e) => {
 				this.lock = false
@@ -96,7 +95,7 @@ class Gps {
 			return false
 		}
 		let checkAppGpsRes = await this.checkAppGps()
-		console.log(checkAppGpsRes, 'checkAppGpsRes');
+		// console.log(checkAppGpsRes, 'checkAppGpsRes');
 		if (!checkAppGpsRes) {
 			plus.nativeUI.confirm("应用定位权限没有开启，是否去开启？", (e) => {
 				this.lock = false

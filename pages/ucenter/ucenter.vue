@@ -31,10 +31,6 @@
 </template>
 
 <script>
-	import {
-		mapGetters,
-		mapMutations
-	} from 'vuex';
 	import checkUpdate from '@/uni_modules/uni-upgrade-center-app/utils/check-update';
 	import callCheckVersion from '@/uni_modules/uni-upgrade-center-app/utils/call-check-version';
 	// #ifdef APP
@@ -136,11 +132,11 @@
 						"style": "solid", // 边框样式
 						"radius": "100%" // 边框圆角，支持百分比
 					}
-				}
+				},
+				userInfo:{}
 			}
 		},
 		onLoad() {
-			// console.log(313,this.userInfo,this.hasLogin);
 			//#ifdef APP-PLUS
 			this.ucenterList[this.ucenterList.length - 2].unshift({
 				title:this.$t('mine.checkUpdate'),// this.this.$t('mine.checkUpdate')"检查更新"
@@ -151,26 +147,46 @@
 			})
 			//#endif
 		},
+		onShow() {
+			console.log('this.hasLogin',this.hasLogin);
+			if(this.hasLogin){
+				this.getUserInfo()
+			}
+		},
 		computed: {
-			...mapGetters({
-				userInfo: 'user/info',
-				hasLogin: 'user/hasLogin'
-			})
 			// #ifdef APP-PLUS
-			,
 			appVersion() {
 				return getApp().appVersion
-			}
+			},
 			// #endif
-			,
 			appConfig() {
 				return getApp().globalData.config
+			},
+			hasLogin(){
+				return uniCloud.getCurrentUserInfo().tokenExpired > Date.now()
 			}
 		},
 		methods: {
-			...mapMutations({
-				setUserInfo: 'user/login'
-			}),
+			setUserInfo(data){
+				
+			},
+			getUserInfo(e) {
+				uni.showLoading({
+					mask: true
+				});
+				const db = uniCloud.database();
+				db.collection('uni-id-users').where("'_id' == $cloudEnv_uid").field('mobile,nickname,avatar_file').get().then(res => {
+					console.log({res});
+					this.userInfo = res.result.data[0]
+					console.log('this.userInfo', this.userInfo);
+				}).catch(e => {
+					this.userInfo = {}
+					console.log(e.message, e.errCode);
+				}).finally(e => {
+					// console.log(e);
+					uni.hideLoading()
+				})
+			},
 			toSettings() {
 				uni.navigateTo({
 					url: "/pages/ucenter/settings/settings"
@@ -204,7 +220,7 @@
 			},
 			toUserInfo() {
 				uni.navigateTo({
-					url: '/pages/ucenter/userinfo/userinfo'
+					url: '/uni_modules/uni-id-pages/pages/userinfo/userinfo'
 				})
 			},
 			tapGrid(index) {
@@ -222,7 +238,10 @@
 				if (uni.getSystemInfoSync().platform == "ios") {
 					// 这里填写appstore应用id
 					let appstoreid = this.appConfig.marketId.ios; // 'id1417078253';
-					plus.runtime.openURL("itms-apps://" + 'itunes.apple.com/cn/app/wechat/' + appstoreid + '?mt=8');
+					console.log({appstoreid});
+					plus.runtime.openURL("itms-apps://" + 'itunes.apple.com/cn/app/wechat/' + appstoreid + '?mt=8',err=>{
+						console.log('plus.runtime.openURL err:' + JSON.stringify(err));
+					});
 				}
 				if (uni.getSystemInfoSync().platform == "android") {
 					var Uri = plus.android.importClass("android.net.Uri");
@@ -265,17 +284,15 @@
 					})
 			},
 			async share() {
-				let {
-					result
-				} = await uniCloud.callFunction({
-					name: 'uni-id-cf',
-					data: {
-						action: 'getUserInviteCode'
-					}
-				})
-				console.log(result);
-				let myInviteCode = result.myInviteCode || result.userInfo.my_invite_code
-				console.log(myInviteCode);
+				let {result} = await db.collection('uni-id-users').where("'_id' == $cloudEnv_uid").field('my_invite_code').get()
+				let myInviteCode = result.data[0].my_invite_code
+				if(!myInviteCode){
+					return uni.showToast({
+						title: '请检查uni-config-center中uni-id配置，是否已启用 autoSetInviteCode',
+						icon: 'none'
+					});
+				}
+				console.log({myInviteCode});
 				let {
 					appName,
 					logo,
