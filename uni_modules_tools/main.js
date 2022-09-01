@@ -96,6 +96,7 @@ function mergeJSON(minor, main) {
 		if (typeof(main[key]) != 'object' ) {
 			minor[key] = main[key];
 		}else{
+      console.log('[',minor[key], main[key],']');
 			mergeJSON(minor[key], main[key]);
 		}
 	}
