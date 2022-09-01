@@ -426,7 +426,9 @@ exports.main = async (event, context) => {
 			return loginRes
 			break;
 		case 'loginByUniverify':
+			console.error(params)
 			res = await uniID.loginByUniverify(params)
+			console.log(999999999,res)
 			await uniIdLog(res)
 			break;
 		case 'loginByApple':

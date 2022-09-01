@@ -1,39 +1,25 @@
 // "文件路径" : {"键名":"改成什么"}
 {
 	"/manifest.json": {
-		"appid": "请点击重新获取",
-		"mp-weixin" : {
-		    "appid" : ""
+		"appid": "",
+		"name": "",
+		"versionName": "",
+		"mp-weixin": {
+			"appid": ""
 		},
-		"app-plus" : {
-			"distribute" :{
-				"sdkConfigs" : {
-				    "oauth" : {
-				        "weixin" : {
-				            "appid" : "",
-				            "appsecret" : "",
-				            "UniversalLinks" : ""
-				        },
-				        "univerify" : {}
-				    },
-				    "share" : {
-				        "weixin" : {
-				            "appid" : "",
-				            "UniversalLinks" : ""
-				        }
-				    },
-				    "geolocation" : {
-				        "baidu" : {
-				            "__platform__" : [ "ios", "android" ],
-				            "appkey_ios" : "请填写地图的key",
-				            "appkey_android" : "请填写地图的key"
-				        }
-				    }
+		"vueVersion": "2",
+		"app-plus": {
+			"modules": {
+				"OAuth": {}
+			},
+			"distribute": {
+				"sdkConfigs": {
+					"oauth": {
+						"univerify": {}
+					}
 				}
 			}
-		},
-		"_spaceID" : "",
-		"vueVersion" : "2"
+		}
 	},
 	"/uni_modules/uni-config-center/uniCloud/cloudfunctions/common/uni-config-center/uni-id/config.json": {
 		"tokenExpiresIn": 7200,

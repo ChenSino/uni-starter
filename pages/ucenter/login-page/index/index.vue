@@ -130,7 +130,6 @@
 	@import url("../common/login-page.css");
 
 	.quickLogin {
-		width: 650rpx;
 		height: 350px;
 		align-items: center;
 		justify-content: center;
