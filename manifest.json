@@ -1,8 +1,8 @@
 {
-  "name": "uni-starter",
-  "appid": "请点击重新获取",
+  "name": "",
+  "appid": "",
   "description": "",
-  "versionName": "1.0.0",
+  "versionName": "",
   "versionCode": "100",
   "transformPx": false,
   "app-plus": {
@@ -16,6 +16,8 @@
       "delay": 0
     },
     "modules": {
+      "OAuth": {
+      }
     },
     "distribute": {
       "android": {
@@ -40,6 +42,10 @@
       "ios": {
       },
       "sdkConfigs": {
+        "oauth": {
+          "univerify": {
+          }
+        }
       }
     }
   },
@@ -69,6 +75,5 @@
   "uniStatistics": {
     "enable": false
   },
-  "vueVersion": "2",
-  "_spaceID": ""
+  "vueVersion": "2"
 }

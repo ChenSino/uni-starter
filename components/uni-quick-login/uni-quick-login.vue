@@ -190,10 +190,8 @@
 						icon: 'none'
 					});
 				}
-				uni.showLoading({mask: true})
-				if (type == 'univerify' && uni.getUniverifyManager) {
+				if (type == 'univerify') {
 					let univerifyManager = uni.getUniverifyManager()
-					console.log('是新版');
 					let onButtonsClickFn =	async res =>{
 						console.log('点击了第三方登录，provider：',res, res.provider,this.univerifyStyle.buttons.list);
 						//同步一键登录弹出层隐私协议框是否打勾
@@ -232,6 +230,7 @@
 					// 订阅自定义按钮点击事件
 					univerifyManager.onButtonsClick(onButtonsClickFn)
 					// 调用一键登录弹框
+					console.log(this.univerifyStyle,univerifyManager.login);
 					return univerifyManager.login({
 						"univerifyStyle": this.univerifyStyle,
 						success:res=> {
@@ -245,16 +244,17 @@
 							});
 						},
 						complete(e){
+							console.log(e);
 							uni.hideLoading()
 							// 取消订阅自定义按钮点击事件
 							univerifyManager.offButtonsClick(onButtonsClickFn)
 						}
 					})
 				}
+				uni.showLoading({mask: true})
 				uni.login({
 					"provider": type,
 					"onlyAuthorize": true, //请勿直接使用前端获取的unionid或openid直接用于登录，前端的数据都是不可靠的
-					"univerifyStyle": this.univerifyStyle,
 					complete: (e) => {
 						console.log(e);
 						uni.hideLoading()
@@ -271,63 +271,6 @@
 					},
 					fail: async (err) => {
 						console.log(err);
-						// 以下代码为兼容旧版（HBuilderX3.2.13之前）HBuilderX3.2.13以上版本可直接删除
-						if (type == 'univerify'&& !uni.getUniverifyManager) {
-							if (err.metadata && err.metadata.error_data) {
-								uni.showToast({
-									title: t('oneClickLogin') + ":" + err.metadata.error_data,
-									icon: 'none'
-								});
-							}
-							if (err.errMsg) {
-								uni.showToast({
-									title: t('oneClickLogin') + ":" + err.errMsg,
-									icon: 'none'
-								});
-							}
-							switch (err.errCode) {
-								case 30002:
-									console.log('在一键登录界面，点击其他登录方式');
-									break;
-								case 30003:
-									console.log('关闭了登录');
-									if (navigateBack) {
-										uni.navigateBack()
-									}
-									break;
-								case 30006:
-									uni.showModal({
-										title: t('loginErr'),
-										content: err.metadata.error_data,
-										showCancel: false,
-										confirmText: t('gotIt'),
-									});
-									break;
-								case "30008":
-									console.log('点击了第三方登录，provider：', err.provider);
-									//同步一键登录弹出层隐私协议框是否打勾
-									let agree = (await uni.getCheckBoxState())[1].state
-									console.log('agree', agree);
-									uni.$emit('setAgreementsAgree', agree)
-									let {
-										path
-									} = this.univerifyStyle.buttons.list[res.index]
-									console.log('path', path);
-									if (path) {
-										this.to(path)
-									} else {
-										setTimeout(() => {
-											console.log('agree', this.agree);
-											this.login_before(err.provider)
-										}, 500)
-									}
-									break;
-								default:
-									console.log(err);
-									break;
-							}
-						}
-						// 以上代码为兼容旧版（HBuilderX3.2.13之前）HBuilderX3.2.13以上版本可直接删除
 					}
 				})
 			},
