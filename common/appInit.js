@@ -60,8 +60,7 @@ export default async function() {
 							console.log('剪切板内容：'+res.data);
 							if (res.data.slice(0, 18) == 'uniInvitationCode:') {
 								let uniInvitationCode = res.data.slice(18, 38)
-								console.log('当前用户是其他用户推荐下载的,推荐者的code是：' +
-									uniInvitationCode);
+								console.log('当前用户是其他用户推荐下载的,推荐者的code是：' + uniInvitationCode);
 								// uni.showModal({
 								// 	content: '当前用户是其他用户推荐下载的,推荐者的code是：'+uniInvitationCode,
 								// 	showCancel: false
@@ -69,12 +68,12 @@ export default async function() {
 								callBack(uniInvitationCode)
 								//当前用户是其他用户推荐下载的。这里登记他的推荐者id 为当前用户的myInviteCode。判断如果是注册
 							} else {
-								callBack(false)
+								callBack()
 							}
 						},
 						fail() {
 							console.log('error--');
-							callBack(false)
+							callBack()
 						},
 						complete() {
 							// #ifdef MP-WEIXIN
