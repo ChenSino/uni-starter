@@ -1,3 +1,19 @@
+## 1.0.12（2022-09-07）
+- 修复 getSupportedLoginType判断是否支持微信公众号、PC网页微信扫码登录方式报错的Bug
+- 优化 适配pc端样式
+- 新增 邮箱验证码注册
+- 新增 邮箱验证码找回密码
+- 新增 退出登录(全局)回调事件：`uni-id-pages-logout`，支持通过[uni.$on](https://uniapp.dcloud.net.cn/api/window/communication.html#on)监听;
+- 调整 抽离退出登录方法至`/uni_modules/uni-id-pages/common/common.js`中，方便在项目其他页面中调用
+- 调整 用户中心（路径：`/uni_modules/uni-id-pages/pages/userinfo/userinfo`）默认不再显示退出登录按钮。支持页面传参数`showLoginManage=true`恢复显示
+## 1.0.11（2022-09-01）
+- 修复 iOS端，一键登录功能卡在showLoading的问题
+- 更新 合并密码强度与长度配置 [详情](https://uniapp.dcloud.net.cn/uniCloud/uni-id-pages.html#config)
+- uni-id-co 修复 调用 removeAuthorizedApp 接口报错的Bug
+- uni-id-co 新增 管理端接口 updateUser [详情](https://uniapp.dcloud.net.cn/uniCloud/uni-id-pages.html#update-user)
+- uni-id-co 调整 为兼容旧版本，未配置密码强度时提供最简单的密码规则校验（长度大于6即可）
+- uni-id-co 调整 注册、登录时如果携带了token则尝试对此token进行登出操作
+- uni-id-co 调整 管理端接口 addUser 增加 mobile、email等参数 [详情](https://uniapp.dcloud.net.cn/uniCloud/uni-id-pages.html#add-user)
 ## 1.0.10（2022-08-25）
 - 修复 导入uni-id-pages插件时未自动导入uni-open-bridge-common的Bug
 ## 1.0.9（2022-08-23）

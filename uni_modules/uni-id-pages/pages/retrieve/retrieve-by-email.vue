@@ -2,21 +2,21 @@
 <template>
 	<view class="uni-content">
 		<match-media :min-width="690">
-		<view class="login-logo">
-			<image :src="logo"></image>
-		</view>
-		<!-- 顶部文字 -->
-		<text class="title title-box">通过手机验证码找回密码</text>
+			<view class="login-logo">
+				<image :src="logo"></image>
+			</view>
+			<!-- 顶部文字 -->
+			<text class="title title-box">通过邮箱验证码找回密码</text>
 		</match-media>
 		<uni-forms ref="form" :value="formData" err-show-type="toast">
-			<uni-forms-item name="phone">
-				<uni-easyinput :focus="focusPhone" @blur="focusPhone = false" class="input-box" :disabled="lock" type="number" :inputBorder="false"
-					v-model="formData.phone" maxlength="11" placeholder="请输入手机号">
+			<uni-forms-item name="email">
+				<uni-easyinput :focus="focusEmail" @blur="focusEmail = false" class="input-box" :disabled="lock" :inputBorder="false"
+					v-model="formData.email" placeholder="请输入邮箱">
 				</uni-easyinput>
 			</uni-forms-item>
 			<uni-forms-item name="code">
-				<uni-id-pages-sms-form ref="shortCode" :phone="formData.phone" type="reset-pwd-by-sms" v-model="formData.code">
-				</uni-id-pages-sms-form>
+				<uni-id-pages-email-form ref="shortCode" :email="formData.email" type="reset-pwd-by-email" v-model="formData.code">
+				</uni-id-pages-email-form>
 			</uni-forms-item>
 			<uni-forms-item name="password">
 				<uni-easyinput :focus="focusPassword" @blur="focusPassword = false" class="input-box" type="password" :inputBorder="false" v-model="formData.password"
@@ -29,7 +29,7 @@
 			<button class="uni-btn send-btn-box" type="primary" @click="submit">提交</button>
 			<match-media :min-width="690">
 				<view class="link-box">
-					<text class="link" @click="retrieveByEmail">通过邮箱验证码找回密码</text>
+					<text class="link" @click="retrieveByPhone">通过手机验证码找回密码</text>
 					<view></view>
 				</view>
 			</match-media>
@@ -40,6 +40,7 @@
 
 <script>
 	import mixin from '@/uni_modules/uni-id-pages/common/login-page.mixin.js';
+	import passwordMod from '@/uni_modules/uni-id-pages/common/password.js'
 	const uniIdCo = uniCloud.importObject("uni-id-co",{
 		errorOptions:{
 			type:'toast'
@@ -50,32 +51,32 @@
 		data() {
 			return {
 				lock: false,
-				focusPhone:true,
+				focusEmail:true,
 				focusPassword:false,
 				focusPassword2:false,
 				formData: {
-					"phone": "",
+					"email": "",
 					"code": "",
 					'password': '',
 					'password2': '',
 					"captcha": ""
 				},
 				rules: {
-					phone: {
+					email: {
 						rules: [{
 								required: true,
-								errorMessage: '请输入手机号',
+								errorMessage: '请输入邮箱',
 							},
 							{
-								pattern: /^1\d{10}$/,
-								errorMessage: '手机号码格式不正确',
+								format:'email',
+								errorMessage: '邮箱格式不正确',
 							}
 						]
 					},
 					code: {
 						rules: [{
 								required: true,
-								errorMessage: '请输入短信验证码',
+								errorMessage: '请输入邮箱验证码',
 							},
 							{
 								pattern: /^.{6}$/,
@@ -83,46 +84,16 @@
 							}
 						]
 					},
-					password: {
-						rules: [{
-								required: true,
-								errorMessage: '请输入新密码',
-							},
-							{
-								pattern: /^.{6,20}$/,
-								errorMessage: '密码为6 - 20位',
-							}
-						]
-					},
-					password2: {
-						rules: [{
-								required: true,
-								errorMessage: '请确认密码',
-							},
-							{
-								pattern: /^.{6,20}$/,
-								errorMessage: '密码为6 - 20位',
-							},
-							{
-								validateFunction: function(rule, value, data, callback) {
-									// console.log(value);
-									if (value != data.password) {
-										callback('两次输入密码不一致')
-									};
-									return true
-								}
-							}
-						]
-					}
+					...passwordMod.getPwdRules()
 				},
 				logo: "/static/logo.png"
 			}
 		},
 		computed: {
-			isPhone() {
-				let reg_phone = /^1\d{10}$/;
-				let isPhone = reg_phone.test(this.formData.phone);
-				return isPhone;
+			isEmail() {
+				let reg_email = /@/;
+				let isEmail = reg_email.test(this.formData.email);
+				return isEmail;
 			},
 			isPwd() {
 				let reg_pwd = /^.{6,20}$/;
@@ -136,16 +107,16 @@
 			}
 		},
 		onLoad(event) {
-			if (event && event.phoneNumber) {
-				this.formData.phone = event.phoneNumber;
+			if (event && event.emailNumber) {
+				this.formData.email = event.emailNumber;
 				if(event.lock){
-					this.lock = event.lock //如果是已经登录的账号，点击找回密码就锁定指定的账号绑定的手机号码
-					this.focusPhone = true
+					this.lock = event.lock //如果是已经登录的账号，点击找回密码就锁定指定的账号绑定的邮箱码
+					this.focusEmail = true
 				}
 			}
 		},
 		onReady() {
-			if (this.formData.phone) {
+			if (this.formData.email) {
 				this.$refs.shortCode.start();
 			}
 			this.$refs.form.setRules(this.rules)
@@ -170,19 +141,24 @@
 				this.$refs.form.validate()
 					.then(res => {
 						let {
-							"phone": mobile,
-							"password": password,
+							email,
+							password: password,
 							captcha,
 							code
 						} = this.formData
-						uniIdCo.resetPwdBySms({
-								mobile,
+						uniIdCo.resetPwdByEmail({
+								email,
 								code,
 								password,
 								captcha
 							}).then(e => {
 								console.log(e);
-								uni.navigateBack()
+								uni.navigateTo({
+									url: '/uni_modules/uni-id-pages/pages/login/login-withpwd',
+									complete: (e) => {
+										console.log(e);
+									}
+								})
 							})
 							.catch(e => {
 								if (e.errCode == 'uni-id-captcha-required') {
@@ -202,9 +178,9 @@
 						this['focus'+key] = true
 					})
 			},
-			retrieveByEmail() {
+			retrieveByPhone() {
 				uni.navigateTo({
-					url: '/uni_modules/uni-id-pages/pages/retrieve/retrieve-by-email'
+					url: '/uni_modules/uni-id-pages/pages/retrieve/retrieve'
 				})
 			}
 		}
@@ -223,6 +199,7 @@
 		.uni-content{
 			padding: 30px 40px 40px;
 		}
+		
 		.link-box {
 			/* #ifndef APP-NVUE */
 			display: flex;

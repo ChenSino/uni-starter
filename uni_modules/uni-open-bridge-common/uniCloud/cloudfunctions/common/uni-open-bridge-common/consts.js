@@ -1,5 +1,7 @@
 'use strict';
 
+const TAG = "UNI_OPEN_BRIDGE"
+
 const HTTP_STATUS = {
   SUCCESS: 200
 }
@@ -13,7 +15,12 @@ const PlatformType = {
   QQ_APP: 'qq-app'
 }
 
+const ErrorCodeType = {
+  SYSTEM_ERROR: TAG + "_SYSTEM_ERROR"
+}
+
 module.exports = {
   HTTP_STATUS,
-  PlatformType
+  PlatformType,
+  ErrorCodeType
 }

@@ -4,8 +4,8 @@ const {
 const createConfig = require('uni-config-center')
 
 const requiredConfig = {
-  'web.h5-weixin': ['appid', 'appsecret'],
-  'web.web-weixin': ['appid', 'appsecret'],
+  'web.weixin-h5': ['appid', 'appsecret'],
+  'web.weixin-web': ['appid', 'appsecret'],
   'app.weixin': ['appid', 'appsecret'],
   'mp-weixin.weixin': ['appid', 'appsecret'],
   'app.qq': ['appid', 'appsecret'],

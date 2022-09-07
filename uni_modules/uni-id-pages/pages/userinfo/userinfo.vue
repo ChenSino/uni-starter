@@ -21,14 +21,17 @@
 			</uni-popup-dialog>
 		</uni-popup>
 		<uni-id-pages-bind-mobile ref="bind-mobile-by-sms" @success="getUserInfo"></uni-id-pages-bind-mobile>
-		<button v-if="hasLogin" @click="logout">退出登录</button>
-		<button v-else @click="login">去登录</button>
+		<template v-if="showLoginManage">
+			<button v-if="hasLogin" @click="logout">退出登录</button>
+			<button v-else @click="login">去登录</button>
+		</template>
 	</view>
 </template>
 <script>
 	const db = uniCloud.database();
 	const usersTable = db.collection('uni-id-users')
 	const uniIdCo = uniCloud.importObject("uni-id-co")
+	import common from '@/uni_modules/uni-id-pages/common/common.js';
 	export default {
 		data() {
 			return {
@@ -45,14 +48,18 @@
 					nickname:''
 				},
 				hasLogin: false,
-				hasPwd:false
+				hasPwd:false,
+				showLoginManage:false//通过页面传参隐藏登录&退出登录按钮
 			}
 		},
 		async onShow() {
 			this.univerifyStyle.authButton.title = "本机号码一键绑定"
 			this.univerifyStyle.otherLoginButton.title = "其他号码绑定"
 		},
-		async onLoad() {
+		async onLoad(e) {
+			if(e.showLoginManage){
+				this.showLoginManage = true//通过页面传参隐藏登录&退出登录按钮
+			}
 			this.getUserInfo()
 			//判断当前用户是否有密码，否则就不显示密码修改功能
 			let res = await uniIdCo.getAccountInfo()
@@ -67,14 +74,7 @@
 					}
 				})
 			},
-			async logout() {
-				await uniIdCo.logout()
-				uni.removeStorageSync('uni_id_token');
-				uni.setStorageSync('uni_id_token_expired', 0)
-				uni.redirectTo({
-					url: '/uni_modules/uni-id-pages/pages/login/login-withoutpwd',
-				});
-			},
+			logout:common.logout,
 			changePassword(){
 				uni.navigateTo({
 					url: '/uni_modules/uni-id-pages/pages/userinfo/change_pwd/change_pwd',
@@ -206,7 +206,17 @@
 		box-sizing: border-box;
 		flex-direction: column;
 	}
-
+	@media screen and (min-width: 690px) {
+		.uni-content {
+			padding: 0;
+			max-width: 690px;
+			margin-left: calc(50% - 345px);
+			border: none;
+			max-height: none;
+			border-radius: 0;
+			box-shadow: none;
+		}
+	}
 	/* #endif */
 	.avatar {
 		align-items: center;

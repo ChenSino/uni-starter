@@ -1,6 +1,9 @@
 <!-- 免密登录页 -->
 <template>
 	<view class="uni-content">
+		<view class="login-logo">
+			<image :src="logo"></image>
+		</view>
 		<!-- 顶部文字 -->
 		<text class="title">请选择登录方式</text>
 		<!-- 快捷登录框 当url带参数时有效 -->
@@ -36,7 +39,8 @@
 			return {
 				type: "", //快捷登录方式
 				phone: "", //手机号码
-				focusPhone:false
+				focusPhone:false,
+				logo: "/static/logo.png"
 			}
 		},
 		computed: {
@@ -177,7 +181,7 @@
 	}
 
 	.quickLogin {
-		width: 650rpx;
+		// width: 650rpx;
 		height: 350px;
 		align-items: center;
 		justify-content: center;
@@ -186,11 +190,20 @@
 	.quickLoginBtn {
 		margin: 20px 0;
 		width: 450rpx;
+		/* #ifndef APP-NVUE */
+		max-width: 230px;
+		/* #endif */
 		height: 82rpx;
 	}
 
 	.tip {
 		margin-top: -15px;
 		margin-bottom: 20px;
+	}
+	
+	@media screen and (min-width: 690px) {
+		.quickLogin{
+			height: auto;
+		}
 	}
 </style>

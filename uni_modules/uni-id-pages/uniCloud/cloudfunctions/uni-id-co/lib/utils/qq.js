@@ -5,7 +5,7 @@ const {
   ERROR
 } = require('../../common/error')
 
-function getQQPlatform () {
+function getQQPlatform() {
   const platform = this.clientPlatform
   switch (platform) {
     case 'app':
@@ -18,7 +18,7 @@ function getQQPlatform () {
   }
 }
 
-async function saveQQUserKey ({
+async function saveQQUserKey({
   openid,
   sessionKey, // QQ小程序用户sessionKey
   accessToken, // App端QQ用户accessToken
@@ -45,14 +45,17 @@ async function saveQQUserKey ({
       await this.uniOpenBridge.setUserAccessToken(keyObj, {
         access_token: accessToken,
         access_token_expired: accessTokenExpired
-      }, Math.floor((accessTokenExpired - Date.now()) / 1000))
+      }, accessTokenExpired ?
+        Math.floor((accessTokenExpired - Date.now()) / 1000) :
+        30 * 24 * 60 * 60
+      )
       break
     default:
       break
   }
 }
 
-function generateQQCache ({
+function generateQQCache({
   sessionKey, // QQ小程序用户sessionKey
   accessToken, // App端QQ用户accessToken
   accessTokenExpired // App端QQ用户accessToken过期时间
@@ -81,7 +84,7 @@ function generateQQCache ({
   }
 }
 
-function getQQOpenid ({
+function getQQOpenid({
   userRecord
 } = {}) {
   const qqPlatform = getQQPlatform.call(this)
@@ -93,7 +96,7 @@ function getQQOpenid ({
   return qqOpenidObj[`${qqPlatform}_${appId}`] || qqOpenidObj[qqPlatform]
 }
 
-async function getQQCacheFallback ({
+async function getQQCacheFallback({
   userRecord,
   key
 } = {}) {
@@ -106,7 +109,7 @@ async function getQQCacheFallback ({
   return qqCache && qqCache[key]
 }
 
-async function getQQCache ({
+async function getQQCache({
   uid,
   userRecord,
   key

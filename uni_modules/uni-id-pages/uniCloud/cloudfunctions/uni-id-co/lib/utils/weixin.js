@@ -78,7 +78,7 @@ async function saveWeixinUserKey ({
         access_token: accessToken,
         refresh_token: refreshToken,
         access_token_expired: accessTokenExpired
-      }, 30 * 24 * 3600)
+      }, 30 * 24 * 60 * 60)
       break
     default:
       break
