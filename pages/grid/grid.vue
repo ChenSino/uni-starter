@@ -52,13 +52,12 @@
 			return {
 				gridList: [],
 				current: 0,
-				swiperDotIndex: 0
+				swiperDotIndex: 0,
+				hasLogin:false
 			}
 		},
-		computed: {
-			hasLogin(){
-				return uniCloud.getCurrentUserInfo().tokenExpired > Date.now()
-			}
+		onShow() {
+			this.hasLogin = uniCloud.getCurrentUserInfo().tokenExpired > Date.now()
 		},
 		onLoad() {
 			let gridList = []
