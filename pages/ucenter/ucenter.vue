@@ -2,7 +2,7 @@
 	<view class="center">
 		<uni-sign-in ref="signIn"></uni-sign-in>
 		<view class="userInfo" @click.capture="toUserInfo">
-			<cloud-image width="150rpx" height="150rpx" v-if="userInfo.avatar_file&&userInfo.avatar_file.url" :src="userInfo.avatar_file.url"></cloud-image>
+			<cloud-image width="150rpx" height="150rpx" v-if="hasLogin&&userInfo.avatar_file&&userInfo.avatar_file.url" :src="userInfo.avatar_file.url"></cloud-image>
 			<image v-else class="logo-img" src="@/static/uni-center/defaultAvatarUrl.png"></image>
 			<view class="logo-title">
 				<text class="uer-name" v-if="hasLogin">{{userInfo.nickname||userInfo.username||userInfo.mobile}}</text>
@@ -133,7 +133,8 @@
 						"radius": "100%" // 边框圆角，支持百分比
 					}
 				},
-				userInfo:{}
+				userInfo:{},
+				hasLogin:false
 			}
 		},
 		onLoad() {
@@ -148,12 +149,22 @@
 			//#endif
 		},
 		onShow() {
-			console.log('this.hasLogin',this.hasLogin);
+			this.hasLogin = uniCloud.getCurrentUserInfo().tokenExpired > Date.now()
 			if(this.hasLogin){
 				this.getUserInfo()
 			}
 		},
 		computed: {
+			test:{
+				get(){
+					console.log(this._test,Date.now());
+					this._test = Date.now()
+					return ''
+				},
+				set(){
+					
+				}
+			},
 			// #ifdef APP-PLUS
 			appVersion() {
 				return getApp().appVersion
@@ -161,19 +172,10 @@
 			// #endif
 			appConfig() {
 				return getApp().globalData.config
-			},
-			hasLogin(){
-				return uniCloud.getCurrentUserInfo().tokenExpired > Date.now()
 			}
 		},
 		methods: {
-			setUserInfo(data){
-				
-			},
 			getUserInfo(e) {
-				uni.showLoading({
-					mask: true
-				});
 				const db = uniCloud.database();
 				db.collection('uni-id-users').where("'_id' == $cloudEnv_uid").field('mobile,nickname,avatar_file').get().then(res => {
 					console.log({res});
@@ -184,7 +186,6 @@
 					console.log(e.message, e.errCode);
 				}).finally(e => {
 					// console.log(e);
-					uni.hideLoading()
 				})
 			},
 			toSettings() {

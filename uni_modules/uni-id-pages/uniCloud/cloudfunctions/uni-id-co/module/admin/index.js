@@ -1,3 +1,4 @@
 module.exports = {
-  addUser: require('./add-user')
+  addUser: require('./add-user'),
+  updateUser: require('./update-user')
 }

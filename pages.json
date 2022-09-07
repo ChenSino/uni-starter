@@ -122,12 +122,13 @@
 			"style": {
 				"navigationBarTitleText": "注销账号"
 			}
-		}, {
+		},
+		{
 			"path": "uni_modules/uni-id-pages/pages/userinfo/userinfo",
 			"style": {
 				"navigationBarTitleText": "个人资料"
 			}
-		}, {
+		},{
 			"path": "uni_modules/uni-id-pages/pages/userinfo/bind-mobile/bind-mobile",
 			"style": {
 				"navigationBarTitleText": "绑定手机号码"

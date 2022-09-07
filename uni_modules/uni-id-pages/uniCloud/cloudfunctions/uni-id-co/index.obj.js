@@ -18,7 +18,8 @@ const {
   registerUser
 } = require('./module/register/index')
 const {
-  addUser
+  addUser,
+  updateUser
 } = require('./module/admin/index')
 const {
   login,
@@ -109,7 +110,7 @@ module.exports = {
     this.hooks = this.configUtils.getHooks()
 
     this.validator = new Validator({
-      passwordStrength: this.config.passwordStrength || 'medium'
+      passwordStrength: this.config.passwordStrength
     })
     /**
      * 示例：覆盖密码验证规则
@@ -216,6 +217,23 @@ module.exports = {
    * @returns
    */
   addUser,
+  /**
+   * 修改用户
+   * @tutorial https://uniapp.dcloud.net.cn/uniCloud/uni-id-pages.html#update-user
+   * @param {Object}  params
+   * @param {String} params.id              要更新的用户id
+   * @param {String}  params.username       用户名
+   * @param {String}  params.password       密码
+   * @param {String}  params.nickname       昵称
+   * @param {Array}   params.authorizedApp  允许登录的AppID列表
+   * @param {Array}   params.role           用户角色列表
+   * @param {String} params.mobile          手机号
+   * @param {String} params.email           邮箱
+   * @param {Array}  params.tags            用户标签
+   * @param {Number} params.status          用户状态
+   * @returns
+   */
+  updateUser,
   /**
    * 授权用户登录应用
    * @tutorial https://uniapp.dcloud.net.cn/uniCloud/uni-id-pages.html#authorize-app-login
