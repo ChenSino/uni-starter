@@ -12,10 +12,13 @@ const {
   getValidInviteCode,
   generateInviteInfo
 } = require('./fission')
+const {
+  logout
+} = require('./logout')
 const PasswordUtils = require('./password')
 const merge = require('lodash.merge')
 
-async function realPreRegister (params = {}) {
+async function realPreRegister(params = {}) {
   const {
     user
   } = params
@@ -30,7 +33,7 @@ async function realPreRegister (params = {}) {
   }
 }
 
-async function preRegister (params = {}) {
+async function preRegister(params = {}) {
   try {
     await realPreRegister.call(this, params)
   } catch (error) {
@@ -42,7 +45,7 @@ async function preRegister (params = {}) {
   }
 }
 
-async function preRegisterWithPassword (params = {}) {
+async function preRegisterWithPassword(params = {}) {
   const {
     user,
     password
@@ -69,7 +72,7 @@ async function preRegisterWithPassword (params = {}) {
   }
 }
 
-async function thirdPartyRegister ({
+async function thirdPartyRegister({
   user = {}
 } = {}) {
   return {
@@ -78,7 +81,7 @@ async function thirdPartyRegister ({
   }
 }
 
-async function postRegister (params = {}) {
+async function postRegister(params = {}) {
   const {
     user,
     extraData = {},
@@ -93,7 +96,8 @@ async function postRegister (params = {}) {
     channel,
     scene,
     clientIP,
-    osName
+    osName,
+    uniIdToken
   } = this.getClientInfo()
 
   merge(user, extraData)
@@ -145,6 +149,12 @@ async function postRegister (params = {}) {
     })
     user.inviter_uid = inviterUid
     user.invite_time = inviteTime
+  }
+
+  if (uniIdToken) {
+    try {
+      await logout.call(this)
+    } catch (error) {}
   }
 
   const beforeRegister = this.hooks.beforeRegister

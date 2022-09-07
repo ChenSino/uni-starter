@@ -108,7 +108,7 @@ export default {
 	},
 	settings:{
 		navigationBarTitle:"设置",
-		userInfo: "个人资料",
+		userInfo: "账号资料",
 		changePassword: "修改密码",
 		clearTmp: "清理缓存",
 		pushServer: "推送功能",

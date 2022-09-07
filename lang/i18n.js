@@ -87,12 +87,6 @@ console.log(`
 				})
 			})
 		},1)
-		//更新 uni-starter.config agreements
-		let agreementsTitle = $i18n('agreementsTitle').split(',')
-		let agreements = uniStarterConfig.about.agreements
-		agreements[0].title = agreementsTitle[0]
-		agreements[1].title = agreementsTitle[1]
-		uniStarterConfig.about.agreements = agreements
 	}
 	initLanguageAfter()
 	uni.$on('changeLanguage', e => {

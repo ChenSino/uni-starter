@@ -512,8 +512,15 @@
 		width: 750rpx;
 		justify-content: space-around;
 		position: fixed;
-		bottom: 10rpx;
 		left: 0;
+	}
+	
+	.item {
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		height: 200rpx;
+		cursor: pointer;
 	}
 
 	/* #ifndef APP-NVUE */
@@ -522,17 +529,20 @@
 			max-width: 500px;
 			margin-left: calc(50% - 250px);
 		}
+		.item {
+			height: 160rpx;
+		}
+	}
+	
+	@media screen and (max-width: 690px) {
+		.fab-login-box {
+			bottom: 10rpx;
+		}
 	}
 
 	/* #endif */
 
-	.item {
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		height: 200rpx;
-		cursor: pointer;
-	}
+	
 
 	.logo {
 		width: 60rpx;

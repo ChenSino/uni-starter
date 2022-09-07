@@ -18,12 +18,8 @@
 			<uni-list-item v-if="i18nEnable" :title="$t('settings.changeLanguage')" @click="changeLanguage" :rightText="currentLanguage" link></uni-list-item>
 		</uni-list>
 		
-		<uni-list class="mt10" :border="false">
-			<uni-list-item @click="deactivate" :title="$t('settings.deactivate')" link="navigateTo"></uni-list-item>
-		</uni-list>
-		
 		<!-- 退出/登录 按钮 -->
-		<view class="bottom-back" @click="clickLogout">
+		<view class="bottom-back" @click="changeLoginState">
 			<text class="bottom-back-text" v-if="hasLogin">{{$t('settings.logOut')}}</text>
 			<text class="bottom-back-text" v-else>{{$t('settings.login')}}</text>
 		</view>
@@ -32,6 +28,7 @@
 
 <script>
 	import pushServer from './dc-push/push.js';
+	import common from '@/uni_modules/uni-id-pages/common/common.js';
 	export default {
 		data() {
 			return {
@@ -77,15 +74,14 @@
 			//#endif
 		},
 		methods: {
-			toEdit() {
-				uni.navigateTo({
-					url: '/pages/ucenter/userinfo/userinfo'
-				});
-			},
-			deactivate(){
-				uni.navigateTo({
-					url:"/uni_modules/uni-id-pages/pages/userinfo/deactivate/deactivate"
-				})
+			async changeLoginState(){
+				if(this.hasLogin){
+					await common.logout()
+				}else{
+					uni.redirectTo({
+						url: '/uni_modules/uni-id-pages/pages/login/login-withoutpwd',
+					});
+				}
 			},
 			/**
 			 * 开始生物认证
@@ -162,32 +158,6 @@
 						}
 					})
 				})
-			},
-			clickLogout() {
-				if (this.hasLogin) {
-					uni.showModal({
-						title: this.$t('settings.tips'),
-						content: this.$t('settings.exitLogin'),
-						cancelText: this.$t('settings.cancelText'),
-						confirmText: this.$t('settings.confirmText'),
-						success: res => {
-							if (res.confirm) {
-								uni.removeStorageSync('uni_id_token');
-								uni.setStorageSync('uni_id_token_expired', 0)
-								uni.redirectTo({
-									url: '/uni_modules/uni-id-pages/pages/login/login-withoutpwd',
-								});
-							}
-						}
-					});
-				} else {
-					uni.navigateTo({
-						url: '/uni_modules/uni-id-pages/pages/login/login-withoutpwd',
-						complete: (e) => {
-							console.log(6369696,e);
-						}
-					});
-				}
 			},
 			clearTmp() {
 				uni.showLoading({

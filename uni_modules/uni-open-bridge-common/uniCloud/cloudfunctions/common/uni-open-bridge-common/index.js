@@ -1,7 +1,8 @@
 'use strict';
 
 const {
-  PlatformType
+  PlatformType,
+  ErrorCodeType
 } = require('./consts.js')
 
 const {
@@ -31,8 +32,15 @@ class AccessToken extends Storage {
 
   async fallback(parameters) {
     const oauthConfig = appConfig.get(parameters.dcloudAppid, parameters.platform)
-    const methodName = (parameters.platform === PlatformType.WEIXIN_MP) ? 'GetMPAccessTokenData' :
-      'GetH5AccessTokenData'
+    let methodName
+    if (parameters.platform === PlatformType.WEIXIN_MP) {
+      methodName = 'GetMPAccessTokenData'
+    } else if (parameters.platform === PlatformType.WEIXIN_H5) {
+      methodName = 'GetH5AccessTokenData'
+    } else {
+      throw new BridgeError(ErrorCodeType.SYSTEM_ERROR, "platform invalid")
+    }
+
     const responseData = await WeixinServer[methodName](oauthConfig)
 
     const duration = responseData.expires_in
@@ -206,5 +214,6 @@ module.exports = {
   setTicket,
   removeTicket,
   PlatformType,
-  WeixinServer
+  WeixinServer,
+  ErrorCodeType
 }

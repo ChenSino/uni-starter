@@ -1,19 +1,8 @@
 // 导入配置
 import config from '@/uni_modules/uni-id-pages/config.js'
 
-const passwordLength = config.password.length
-const passwordStrength = config.password.strength
+const {passwordStrength} = config
 
-let minPasswordLength = 6
-let maxPasswordLength = 20
-if (passwordLength) {
-	if (passwordLength[0]) {
-		minPasswordLength = passwordLength[0]
-	}
-	if (passwordLength[1]) {
-		maxPasswordLength = passwordLength[1]
-	}
-}
 // 密码强度表达式
 const passwordRules = {
 	// 密码必须包含大小写字母、数字和特殊符号
@@ -33,15 +22,10 @@ const ERROR = {
 		rePwdErr: '两次输入密码不一致'
 	},
 	passwordStrengthError: {
-		superstrong: '密码必须包含大小写字母、数字和特殊符号',
-		strong: '密码必须包含字母、数字和特殊符号',
-		medium: '密码必须为字母、数字和特殊符号任意两种的组合',
-		weak: '密码必须包含字母'
-	},
-	passwordLengthError: {
-		normal: '密码长度必须在' + minPasswordLength + '-' + maxPasswordLength + '位之间',
-		minLimit: '密码长度不得少于' + minPasswordLength + '位',
-		maxLimit: '密码长度不得超过' + maxPasswordLength + '位'
+		super: '密码必须包含大小写字母、数字和特殊符号，密码长度必须在8-16位之间',
+		strong: '密码必须包含字母、数字和特殊符号，密码长度必须在8-16位之间',
+		medium: '密码必须为字母、数字和特殊符号任意两种的组合，密码长度必须在8-16位之间',
+		weak: '密码必须包含字母，密码长度必须在6-16位之间'
 	}
 }
 
@@ -52,16 +36,6 @@ function validPwd(password) {
 			return ERROR.passwordStrengthError[passwordStrength]
 		}
 	}
-	//长度校验
-	if (passwordLength) {
-		if (passwordLength[0] && password.length < passwordLength[0]) {
-			return ERROR.passwordLengthError.minLimit
-		}
-		if (passwordLength[1] && password.length > passwordLength[1]) {
-			return ERROR.passwordLengthError.maxLimit
-		}
-	}
-
 	return true
 }
 
@@ -106,8 +80,6 @@ function getPwdRules(pwdName = 'password', rePwdName = 'password2') {
 
 export default {
 	ERROR,
-	minPasswordLength,
-	maxPasswordLength,
 	validPwd,
 	getPwdRules
 }

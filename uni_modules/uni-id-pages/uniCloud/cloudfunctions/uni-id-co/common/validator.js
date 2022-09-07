@@ -29,6 +29,21 @@ baseValidator.username = function (username) {
   }
 }
 
+baseValidator.password = function (password) {
+  const errCode = ERROR.INVALID_PASSWORD
+  if (!isValidString(password)) {
+    return {
+      errCode
+    }
+  }
+  if (password.length < 6) {
+    // 密码长度不能小于6
+    return {
+      errCode
+    }
+  }
+}
+
 baseValidator.mobile = function (mobile) {
   const errCode = ERROR.INVALID_MOBILE
   if (!isValidString(mobile)) {
@@ -92,7 +107,7 @@ baseType.forEach((type) => {
   }
 })
 
-function tokenize (name) {
+function tokenize(name) {
   let i = 0
   const result = []
   let token = ''
@@ -122,7 +137,7 @@ function tokenize (name) {
  * 处理validator名
  * @param {string} name
  */
-function parseValidatorName (name) {
+function parseValidatorName(name) {
   const tokenList = tokenize(name)
   let i = 0
   let currentToken = tokenList[i]
@@ -172,7 +187,7 @@ function parseValidatorName (name) {
   return result
 }
 
-function getRuleCategory (rule) {
+function getRuleCategory(rule) {
   switch (rule.type) {
     case 'array':
       return 'array'
@@ -183,7 +198,7 @@ function getRuleCategory (rule) {
   }
 }
 
-function isMatchUnionType (val, rule) {
+function isMatchUnionType(val, rule) {
   if (!rule.children || rule.children.length === 0) {
     return true
   }
@@ -209,7 +224,7 @@ function isMatchUnionType (val, rule) {
   return false
 }
 
-function isMatchBaseType (val, rule) {
+function isMatchBaseType(val, rule) {
   if (typeof baseValidator[rule.type] !== 'function') {
     throw new Error(`invalid schema type: ${rule.type}`)
   }
@@ -220,7 +235,7 @@ function isMatchBaseType (val, rule) {
   return true
 }
 
-function isMatchArrayType (arr, rule) {
+function isMatchArrayType(arr, rule) {
   if (getType(arr) !== 'array') {
     return false
   }
@@ -249,11 +264,12 @@ const passwordRules = {
   // 密码必须为字母、数字和特殊符号任意两种的组合
   medium: /^(?![0-9]+$)(?![a-zA-Z]+$)(?![~!@#$%^&*_\-+=`|\\(){}[\]:;"'<>,.?/]+$)[0-9a-zA-Z~!@#$%^&*_\-+=`|\\(){}[\]:;"'<>,.?/]{8,16}$/,
   // 密码必须包含字母和数字
-  weak: /^(?=.*[0-9])(?=.*[a-zA-Z])[0-9a-zA-Z~!@#$%^&*_\-+=`|\\(){}[\]:;"'<>,.?/]{6,16}$/
+  weak: /^(?=.*[0-9])(?=.*[a-zA-Z])[0-9a-zA-Z~!@#$%^&*_\-+=`|\\(){}[\]:;"'<>,.?/]{6,16}$/,
+
 }
 
-function createPasswordVerifier ({
-  passwordStrength = 'medium'
+function createPasswordVerifier({
+  passwordStrength = ''
 } = {}) {
   return function (password) {
     const passwordRegExp = passwordRules[passwordStrength]
@@ -275,28 +291,30 @@ function createPasswordVerifier ({
 }
 
 class Validator {
-  constructor ({
-    passwordStrength = 'medium'
+  constructor({
+    passwordStrength = ''
   } = {}) {
     this.baseValidator = baseValidator
     this.customValidator = Object.create(null)
-    this.mixin(
-      'password',
-      createPasswordVerifier({
-        passwordStrength
-      })
-    )
+    if (passwordStrength) {
+      this.mixin(
+        'password',
+        createPasswordVerifier({
+          passwordStrength
+        })
+      )
+    }
   }
 
-  mixin (type, handler) {
+  mixin(type, handler) {
     this.customValidator[type] = handler
   }
 
-  getRealBaseValidator (type) {
+  getRealBaseValidator(type) {
     return this.customValidator[type] || this.baseValidator[type]
   }
 
-  get validator () {
+  get validator() {
     return new Proxy({}, {
       get: (_, prop) => {
         if (typeof prop !== 'string') {
@@ -318,7 +336,7 @@ class Validator {
     })
   }
 
-  validate (value = {}, schema = {}) {
+  validate(value = {}, schema = {}) {
     for (const schemaKey in schema) {
       let schemaValue = schema[schemaKey]
       if (getType(schemaValue) === 'string') {
@@ -358,7 +376,7 @@ class Validator {
   }
 }
 
-function checkClientInfo (clientInfo) {
+function checkClientInfo(clientInfo) {
   const stringNotRequired = {
     required: false,
     type: 'string'
