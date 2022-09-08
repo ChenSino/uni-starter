@@ -1,6 +1,4 @@
-::: warning 注意 
- 您正在浏览的是老版uni-starter v1的文档，为旧项目保留。新项目推荐直接使用[uni-starter v2](https://uniapp.dcloud.io/uniCloud/uni-starter.html)
-:::
+## 您正在浏览的是老版uni-starter v1的文档，为旧项目保留。新项目推荐直接使用[uni-starter v2](https://uniapp.dcloud.io/uniCloud/uni-starter.html)
 
 ## 视频介绍
 <a target="_blank" href="https://www.bilibili.com/video/BV17p4y1a71x?p=12">
