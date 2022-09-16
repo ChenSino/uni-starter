@@ -43,7 +43,7 @@ class AccessToken extends Storage {
 
     const responseData = await WeixinServer[methodName](oauthConfig)
 
-    const duration = responseData.expires_in
+    const duration = responseData.expires_in || (60 * 60 * 2)
     delete responseData.expires_in
 
     return {

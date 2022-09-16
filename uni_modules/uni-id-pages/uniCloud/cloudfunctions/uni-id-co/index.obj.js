@@ -15,7 +15,8 @@ const middleware = require('./middleware/index')
 
 const {
   registerAdmin,
-  registerUser
+  registerUser,
+  registerUserByEmail
 } = require('./module/register/index')
 const {
   addUser,
@@ -45,13 +46,15 @@ const {
 const {
   updatePwd,
   resetPwdBySms,
+  resetPwdByEmail,
   closeAccount,
   getAccountInfo
 } = require('./module/account/index')
 const {
   createCaptcha,
   refreshCaptcha,
-  sendSmsCode
+  sendSmsCode,
+  sendEmailCode
 } = require('./module/verify/index')
 const {
   refreshToken,
@@ -274,6 +277,17 @@ module.exports = {
    */
   registerUser,
   /**
+   * 通过邮箱+验证码注册用户
+   * @param {Object} params
+   * @param {String} params.email    邮箱
+   * @param {String} params.password      密码
+   * @param {String} params.nickname    昵称
+   * @param {String} params.code  邮箱验证码
+   * @param {String} params.inviteCode  邀请码
+   * @returns
+   */
+  registerUserByEmail,
+  /**
    * 用户名密码登录
    * @tutorial https://uniapp.dcloud.net.cn/uniCloud/uni-id-pages.html#login
    * @param {Object} params
@@ -434,6 +448,16 @@ module.exports = {
    */
   resetPwdBySms,
   /**
+   * 通过邮箱验证码重置密码
+   * @param {object} params
+   * @param {string} params.email   邮箱
+   * @param {string} params.code   邮箱验证码
+   * @param {string} params.password 密码
+   * @param {string} params.captcha  图形验证码
+   * @returns {object}
+   */
+  resetPwdByEmail,
+  /**
    * 注销账户
    * @tutorial https://uniapp.dcloud.net.cn/uniCloud/uni-id-pages.html#close-account
    * @returns
@@ -470,6 +494,16 @@ module.exports = {
    * @returns
    */
   sendSmsCode,
+  /**
+   * 发送邮箱验证码
+   * @tutorial 需自行实现功能
+   * @param {Object} params
+   * @param {String} params.email    邮箱
+   * @param {String} params.captcha   图形验证码
+   * @param {String} params.scene     短信验证码使用场景
+   * @returns
+   */
+  sendEmailCode,
   /**
    * 刷新token
    * @tutorial https://uniapp.dcloud.net.cn/uniCloud/uni-id-pages.html#refresh-token

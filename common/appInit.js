@@ -4,7 +4,7 @@ import uniStarterConfig from '@/uni-starter.config.js';
 import checkUpdate from '@/uni_modules/uni-upgrade-center-app/utils/check-update';
 import callCheckVersion from '@/uni_modules/uni-upgrade-center-app/utils/call-check-version';
 
-// 实现，路由拦截。当应用无访问摄像头/相册权限，引导跳到设置界面
+// 实现，路由拦截。当应用无访问摄像头/相册权限，引导跳到设置界面 https://ext.dcloud.net.cn/plugin?id=5095
 import interceptorChooseImage from '@/uni_modules/json-interceptor-chooseImage/js_sdk/main.js';
 interceptorChooseImage()
 
@@ -82,7 +82,7 @@ export default async function() {
 						}
 					});
 				})
-				console.log(7897897897899,params);
+				// console.log(params);
 			}
 			console.log(params);
 		},
@@ -93,12 +93,17 @@ export default async function() {
 
 		},
 		fail(e){
+			console.error(e);
 			if (debug) {
 				uni.showModal({
 					content: JSON.stringify(e),
 					showCancel: false
 				});
-				console.error(e);
+			}else{
+				uni.showToast({
+					title: '系统错误请稍后再试',
+					icon:'error'
+				});
 			}
 		}
 	})
@@ -155,78 +160,4 @@ function initAppVersion() {
 	});
 	// 检查更新
 	// #endif
-}
-
-async function getDeviceInfo() {
-	let deviceInfo = {
-		"uuid": '',
-		"vendor": '',
-		"push_clientid": '',
-		"imei": '',
-		"oaid": '',
-		"idfa": '',
-		"model": '',
-		"platform": '',
-	}
-	const {
-		model,
-		platform,
-	} = uni.getSystemInfoSync();
-	Object.assign(deviceInfo, {
-		model,
-		platform
-	});
-
-	// #ifdef APP-PLUS
-	const oaid = await new Promise((callBack, fail) => {
-			if (deviceInfo.platform == "android") {
-				plus.device.getOAID({
-					success: function(e) {
-						callBack(e.oaid)
-						// console.log('getOAID success: '+JSON.stringify(e));
-					},
-					fail: function(e) {
-						callBack()
-						console.log('getOAID failed: ' + JSON.stringify(e));
-					}
-				});
-			} else {
-				callBack()
-			}
-		}),
-		{
-			imei,
-			uuid
-		} = await new Promise((callBack, fail) => {
-			plus.device.getInfo({
-				success: function(e) {
-					callBack(e)
-					// console.log('getOAID success: '+JSON.stringify(e));
-				},
-				fail: function(e) {
-					callBack()
-					console.log('getOAID failed: ' + JSON.stringify(e));
-				}
-			});
-		}),
-		idfa = plus.storage.getItem('idfa') || '', //idfa有需要的用户在应用首次启动时自己获取存储到storage中
-		vendor = plus.device.vendor;
-	try {
-		deviceInfo.push_clientid = plus.push.getClientInfo().clientid
-	} catch (e) {
-		uni.showModal({
-			content: '获取推送标识失败。如果你的应用不需要推送功能，请注释掉本代码块',
-			showCancel: false,
-			confirmText: "好的"
-		});
-		console.log(e)
-	}
-	Object.assign(deviceInfo, {
-		imei,
-		uuid,
-		idfa,
-		vendor
-	});
-	// #endif
-	return deviceInfo
 }
