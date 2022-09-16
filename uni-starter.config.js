@@ -41,8 +41,8 @@ export default {
 	},
 	//用于打开应用市场评分界面
 	"marketId":{
-		"ios":"id1417078253",
-		"android":"123456"
+		"ios":"",
+		"android":""
 	},
 	//配置多语言国际化。i18n为英文单词 internationalization的首末字符i和n，18为中间的字符数 是“国际化”的简称
 	"i18n":{

@@ -2,7 +2,7 @@
 	"bsonType": "object",
 	"permission": {
 		"update": "doc._id == auth.uid",
-		"read": true
+		"read": "doc._id == auth.uid"
 	},
 	"properties": {
 		"_id": {

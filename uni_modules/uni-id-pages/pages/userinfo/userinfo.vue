@@ -9,6 +9,8 @@
 			</uni-list-item>
 			<uni-list-item class="item" @click="bindMobile" title="手机号" :rightText="userInfo.mobile||'未绑定'" link>
 			</uni-list-item>
+			<uni-list-item v-if="userInfo.email" class="item" title="电子邮箱" :rightText="userInfo.email">
+			</uni-list-item>
 			<uni-list-item v-if="hasPwd" class="item" @click="changePassword" title="修改密码" link>
 			</uni-list-item>
 		</uni-list>
@@ -87,7 +89,7 @@
 				uni.showLoading({
 					mask: true
 				});
-				usersTable.where("'_id' == $cloudEnv_uid").field('mobile,nickname').get().then(res => {
+				usersTable.where("'_id' == $cloudEnv_uid").field('mobile,nickname,email').get().then(res => {
 					console.log({res});
 					this.userInfo = res.result.data[0]
 					console.log('this.userInfo', this.userInfo);

@@ -61,7 +61,7 @@ class DatabaseCache {
     value = this._serializeValue(value)
     await this.collection.doc(key).set({
       value,
-      expired: duration && duration !== -1 ? Date.now() + duration : -1
+      expired: duration && duration !== -1 ? Date.now() + (duration * 1000) : -1
     })
   }
 
