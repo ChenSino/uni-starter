@@ -1,5 +1,8 @@
-## 2.0.0（2022-08-10）
-- 重要：应用`uni-id-pages`、`uniIdRouter`
+## 2.0.1（2022-09-16）
+- 更改默认值
+## 2.0.0（2022-09-16）
+- 【重要】 v2版正式发布 应用`uni-id-pages`、`uniIdRouter`；（注意：此版本更新内容较多，升级请注意备份）
+- 考虑到部分旧项目不想升级，保留`uni-starter v1`版源码，托管在仓库的[v1分支](https://gitcode.net/dcloud/uni-starter/-/blob/v1/README.md)；继续使用v1版，遇到问题可以提交[Issue](https://gitcode.net/dcloud/uni-starter/-/issues/new?issue%5Bassignee_id%5D=&issue%5Bmilestone_id%5D=)有bug仍然会修复，但v1版本不再新增功能。
 ## 1.2.7（2022-08-10）
 - 修复微信小程序绑定手机号失败的问题
 ## 1.2.6（2022-06-29）
