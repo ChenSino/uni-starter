@@ -20,8 +20,7 @@
 				</swiper>
 			</uni-swiper-dot>
 		</unicloud-db>
-		
-		
+
 	<!-- 宫格 -->
 		<uni-section :title="$t('grid.grid')" style="margin: 0;" type="line"></uni-section>
 		<view class="example-body">
