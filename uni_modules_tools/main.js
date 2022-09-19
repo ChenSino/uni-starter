@@ -4,19 +4,19 @@
 //配置文件
 const fs = require('fs'),
 	Hjson = require('hjson'),
-	config = Hjson.rt.parse(fs.readFileSync(__dirname+'/config.js', 'utf-8'))
+	config = Hjson.rt.parse(fs.readFileSync(__dirname + '/config.js', 'utf-8'))
 const change_after = require('./change_after')
 
-if(process.argv[2] == 'change'){
-	change(config,()=>{
+if (process.argv[2] == 'change') {
+	change(config, () => {
 		console.log('脚本change已经执行成功');
 		change_after()
 	})
-}else{
+} else {
 	recovery(config)
 }
 
-function change(config,callback){
+function change(config, callback) {
 	const total = Object.keys(config).length
 	let index = 0;
 	for (let fileName in config) {
@@ -31,8 +31,8 @@ function change(config,callback){
 			//改写
 			let HfileObj = Hjson.rt.parse(fileText)
 			//递归合并,为了保留注释内容
-			mergeJSON(HfileObj,config[fileName])
-			
+			mergeJSON(HfileObj, config[fileName])
+
 			fs.writeFile(path, Hjson.rt.stringify(HfileObj, {
 				quotes: 'all',
 				separator: true,
@@ -43,7 +43,7 @@ function change(config,callback){
 					return console.log(err);
 				}
 				index++
-				if(index == total){
+				if (index == total) {
 					callback()
 				}
 			})
@@ -54,10 +54,10 @@ function change(config,callback){
 
 
 
-function recovery(){
+function recovery() {
 	let paths = Object.keys(config)
 	console.log(paths);
-	paths.forEach(path=>{
+	paths.forEach(path => {
 		console.log(__dirname + '/copy' + path);
 		let oldFile = fs.readFileSync(__dirname + '/copy' + path)
 		console.log(process.cwd() + path);
@@ -93,11 +93,15 @@ function writeFileRecursive(path, buffer, callback) {
 //递归合并,为了保留注释内容
 function mergeJSON(minor, main) {
 	for (var key in main) {
-		if (typeof(main[key]) != 'object' ) {
+		if (typeof(main[key]) != 'object') {
 			minor[key] = main[key];
-		}else{
-      console.log('[',minor[key], main[key],']');
-			mergeJSON(minor[key], main[key]);
+		} else {
+			if(minor&&main){
+				console.log('[', minor[key], main[key], ']');
+				mergeJSON(minor[key], main[key]);
+			}else{
+				console.log({minor,main});
+			}
 		}
 	}
 }
