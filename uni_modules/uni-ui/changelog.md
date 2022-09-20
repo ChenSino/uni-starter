@@ -1,3 +1,66 @@
+## 1.4.22（2022-09-19）
+- 优化 部分组件适配 uni-scss 主题色
+- uni-badge 修复 当 text 超过 max-num 时，badge 的宽度计算是根据 text 的长度计算，更改为 css 计算实际展示宽度，详见:[https://ask.dcloud.net.cn/question/150473](https://ask.dcloud.net.cn/question/150473)
+- uni-calendar 修复 表头年月切换，导致改变当前日期为选择月1号，且未触发change事件
+- uni-data-select 修复 微信小程序下拉框出现后选择会点击到蒙板后面的输入框
+- uni-data-select 修复 点击的位置不准确
+- uni-data-select 新增 支持 disabled 属性
+- uni-datetime-picker 修复，反向选择日期范围，日期显示异常，[详情](https://ask.dcloud.net.cn/question/153401?item_id=212892&rf=false)
+- uni-datetime-picker 修复 close事件无效的 bug
+- uni-datetime-picker 修复 移动端 maskClick 无效的 bug，详见:[https://ask.dcloud.net.cn/question/140824?item_id=209458&rf=false](https://ask.dcloud.net.cn/question/140824?item_id=209458&rf=false)
+- uni-fab 修复 小程序端由于 style 使用了对象导致报错，[详情](https://ask.dcloud.net.cn/question/152790?item_id=211778&rf=false)
+- uni-fab 修复 nvue 环境下，具有 tabBar 时，fab 组件下部位置无法正常获取 --window-bottom 的bug，详见：[https://ask.dcloud.net.cn/question/110638?notification_id=826310](https://ask.dcloud.net.cn/question/110638?notification_id=826310)
+- uni-forms 优化 根据 rules 自动添加 required 的问题
+- uni-forms 修复 item 未设置 require 属性，rules 设置 require 后，星号也显示的 bug，详见：[https://ask.dcloud.net.cn/question/151540](https://ask.dcloud.net.cn/question/151540)
+- uni-nav-bar 修复 nvue 环境下 fixed 为 true 的情况下，无法置顶的 bug
+- uni-notice-bar 新增 属性 fontSize，可修改文字大小。
+- uni-pagination 修复，未对主题色设置默认色，导致未引入 uni-scss 变量文件报错。
+- uni-pagination 修复，未对移动端当前页文字做主题色适配。
+- uni-pagination 修复 es 语言 i18n 错误
+## 1.4.21（2022-09-19）
+- 修复，安装时未导入 uni-data-select 和 uni-tooltip 的问题。
+## 1.4.20（2022-07-25）
+- uni-section 新增组件
+- uni-forms 修复 model 需要校验的值没有声明对应字段时，导致第一次不触发校验的bug
+
+## 1.4.19（2022-07-07）
+- uni-data-picker 优化 pc端图标位置不正确的问题
+- uni-data-select 修复 pc端宽度异常的bug
+## 1.4.18（2022-07-06）
+- uni-forms 【重要】组件逻辑重构，部分用法旧版本不兼容，请注意兼容问题
+- uni-forms 【重要】组件使用 Provide/Inject 方式注入依赖，提供了自定义表单组件调用 uni-forms 校验表单的能力
+- uni-forms 新增 更多表单示例
+- uni-forms 新增 model 属性，等同于原 value/modelValue 属性，旧属性即将废弃
+- uni-forms 新增 validateTrigger 属性的 blur 值，仅 uni-easyinput 生效
+- uni-forms 新增 onFieldChange 方法，可以对子表单进行校验，可替代binddata方法
+- uni-forms 新增 子表单的 setRules 方法，配合自定义校验函数使用
+- uni-forms 新增 uni-forms-item 的 setRules 方法，配置动态表单使用可动态更新校验规则
+- uni-forms 修复 由 1.4.0 引发的 label 插槽不生效的bug
+- uni-forms 修复 子组件找不到 setValue 报错的bug
+- uni-forms 修复 uni-data-picker 在 uni-forms-item 中报错的bug
+- uni-forms 修复 uni-data-picker 在 uni-forms-item 中宽度不正确的bug
+- uni-forms 修复 表单校验顺序无序问题
+- uni-forms 优化 子表单组件uni-datetime-picker、uni-data-select、uni-data-picker的显示样式
+- uni-forms 优化 动态表单校验方式，废弃拼接name的方式
+- uni-breadcrumb 修复 微信小程序 separator 不显示问题
+- uni-data-checkbox 优化 在 uni-forms 中的依赖注入方式
+- uni-data-picker 修复 uni-data-picker 在 uni-forms-item 中宽度不正确的bug
+- uni-data-picker 优化 显示样式
+- uni-data-select 优化 显示样式
+- uni-datetime-picker 修复 日历顶部年月及底部确认未国际化 bug
+- uni-datetime-picker 优化 组件样式，调整了组件图标大小、高度、颜色等，与uni-ui风格保持一致
+- uni-easyinput 新增 在 uni-forms 1.4.0 中使用可以在 blur 时校验内容
+- uni-easyinput 新增 clear 事件，点击右侧叉号图标触发
+- uni-easyinput 新增 change 事件 ，仅在输入框失去焦点或用户按下回车时触发
+- uni-easyinput 优化 组件样式，组件获取焦点时高亮显示，图标颜色调整等
+- uni-easyinput 优化 clearable 显示策略
+- uni-file-picker 修复 在uni-forms下样式不生效的bug
+- uni-nav-bar 修复 组件示例中插槽用法无法显示内容的bug
+- uni-swipe-action 修复 vue3 下使用组件不能正常运行的Bug
+- uni-swipe-action 修复 h5端点击click触发两次的Bug
+- uni-table 修复 微信小程序存在无使用组件的问题
+## 1.4.17（2022-06-30）
+- 支持 ios 安全区
 ## 1.4.16（2022-06-06）
 - uni-breadcrumb 新增 支持 uni.scss 修改颜色
 - uni-data-select 修复 localdata 赋值不生效的 bug
@@ -93,7 +156,7 @@
 - uni-badge 修改 type 属性，默认值调整为 error，info 替换 default
 - uni-badge 修复 在字节小程序上样式不生效的 bug
 - uni-calendar 修复 弹出层被 tabbar 遮盖 bug
-- uni-card 重构插槽的用法 ，header 替换为 title 
+- uni-card 重构插槽的用法 ，header 替换为 title
 - uni-card 新增 actions 插槽
 - uni-card 新增 cover 封面图属性和插槽
 - uni-card 新增 padding 内容默认内边距离
@@ -146,7 +209,7 @@
 - uni-search-bar 修复 value 属性与 modelValue 属性不兼容的Bug
 - uni-swipe-action 新增 close-all 方法，关闭所有已打开的组件
 - uni-swipe-action 新增 resize() 方法，在非微信小程序、h5、app-vue端出现不能滑动的问题的时候，重置组件
-- uni-swipe-action 修复 app 端偶尔出现类似 Page[x][-x,xx;-x,xx,x,x-x] 的问题 
+- uni-swipe-action 修复 app 端偶尔出现类似 Page[x][-x,xx;-x,xx,x,x-x] 的问题
 - uni-swipe-action 优化 微信小程序、h5、app-vue 滑动逻辑，避免出现动态新增组件后不能滑动的问题
 - uni-tag 新增 提供组件设计资源，组件样式调整
 - uni-tag 移除 插槽
@@ -163,7 +226,7 @@
 - uni-file-picker 修复 v-model 值设为 null 报错的Bug
 - uni-swipe-action 新增 close-all 方法，关闭所有已打开的组件
 - uni-swipe-action 新增 resize() 方法，在非微信小程序、h5、app-vue端出现不能滑动的问题的时候，重置组件
-- uni-swipe-action 修复 app 端偶尔出现类似 Page[x][-x,xx;-x,xx,x,x-x] 的问题 
+- uni-swipe-action 修复 app 端偶尔出现类似 Page[x][-x,xx;-x,xx,x,x-x] 的问题
 - uni-swipe-action 优化 微信小程序、h5、app-vue 滑动逻辑，避免出现动态新增组件后不能滑动的问题
 ## 1.4.0（2021-08-13）
 - uni-calendar 修复 弹出层被 tabbar 遮盖 bug
@@ -364,8 +427,8 @@
 - uni-table 新增 sortable 属性，是否开启单列排序
 - uni-table 优化 表格多选逻辑
 ## 1.2.12（2021-03-23）
-- uni-ui 新增 uni-datetime-picker 的 hide-second 属性、border 属性; 
-- uni-ui 修复 uni-datetime-picker 选择跟显示的日期不一样的 bug， 
+- uni-ui 新增 uni-datetime-picker 的 hide-second 属性、border 属性;
+- uni-ui 修复 uni-datetime-picker 选择跟显示的日期不一样的 bug，
 - uni-ui 修复 uni-datetime-picker change事件触发2次的 bug
 - uni-ui 修复 uni-datetime-picker 分、秒 end 范围错误的 bug
 - uni-ui 新增 uni-tr selectable 属性，用于 type=selection 时，设置某行是否可由全选按钮控制

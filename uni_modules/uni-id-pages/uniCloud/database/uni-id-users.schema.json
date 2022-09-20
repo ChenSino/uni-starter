@@ -1,8 +1,11 @@
 {
 	"bsonType": "object",
+	"required": ["username", "password"],
 	"permission": {
-		"update": "doc._id == auth.uid",
-		"read": true
+		"read": true,
+		"create": "'CREATE_UNI_ID_USERS' in auth.permission",
+		"update": "doc._id == auth.uid || 'UPDATE_UNI_ID_USERS' in auth.permission",
+		"delete": "'DELETE_UNI_ID_USERS' in auth.permission"
 	},
 	"properties": {
 		"_id": {
@@ -425,6 +428,5 @@
 				"read": "doc._id == auth.uid"
 			}
 		}
-	},
-	"required": []
+	}
 }
