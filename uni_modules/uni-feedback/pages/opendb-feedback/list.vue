@@ -51,7 +51,7 @@
       fabClick() {
         // 打开新增页面
         uni.navigateTo({
-          url: './add',
+          url: './opendb-feedback',
           events: {
             // 监听新增数据成功后, 刷新当前页面数据
             refreshData: () => {

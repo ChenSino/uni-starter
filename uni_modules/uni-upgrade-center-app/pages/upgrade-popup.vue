@@ -20,7 +20,7 @@
 					</scroll-view>
 				</view>
 				<view class="footer flex-center">
-					<template v-if="isiOS">
+					<template v-if="isAppStore">
 						<button class="content-button" style="border: none;color: #fff;" plain @click="jumpToAppStore">
 							{{downLoadBtnTextiOS}}
 						</button>
@@ -37,7 +37,7 @@
 							</view>
 
 							<button v-else class="content-button" style="border: none;color: #fff;" plain
-								@click="downloadPackage">
+								@click="updateApp">
 								{{downLoadBtnText}}
 							</button>
 						</template>
@@ -62,9 +62,10 @@
 </template>
 
 <script>
-	const localFilePathKey = '__localFilePath__'
+	const localFilePathKey = 'UNI_ADMIN_UPGRADE_CENTER_LOCAL_FILE_PATH'
 	const platform_iOS = 'iOS';
 	let downloadTask = null;
+	let openSchemePromise
 
 	/**
 	 * 对比版本号，如需要，请自行修改判断规则
@@ -88,7 +89,7 @@
 			if (curV1 > curV2) {
 				result = 1
 				break;
-			} else if(curV1 < curV2) {
+			} else if (curV1 < curV2) {
 				result = -1
 				break;
 			}
@@ -177,12 +178,18 @@
 
 			downloadTask && downloadTask.abort()
 		},
+		onHide() {
+			openSchemePromise = null
+		},
 		computed: {
 			isWGT() {
 				return this.type === 'wgt'
 			},
 			isiOS() {
 				return !this.isWGT ? this.platform.includes(platform_iOS) : false;
+			},
+			isAppStore() {
+				return this.isiOS || (!this.isiOS && !this.isWGT && this.url.indexOf('.apk') === -1)
 			}
 		},
 		methods: {
@@ -195,7 +202,7 @@
 						savedFilePath,
 						installed
 					} = localFilePathRecord
-					
+
 					// 比对版本
 					if (!installed && compare(version, this.version) === 0) {
 						this.downloadSuccess = true;
@@ -239,6 +246,33 @@
 
 				uni.navigateBack()
 			},
+			updateApp() {
+				this.checkStoreScheme().catch(() => {
+					this.downloadPackage()
+				})
+			},
+			// 跳转应用商店
+			checkStoreScheme() {
+				const storeList = (this.store_list || []).filter(item => item.enable)
+				if (storeList && storeList.length) {
+					storeList
+						.sort((cur, next) => next.priority - cur.priority)
+						.map(item => item.scheme)
+						.reduce((promise, cur, curIndex) => {
+							openSchemePromise = (promise || (promise = Promise.reject())).catch(() => {
+								return new Promise((resolve, reject) => {
+									plus.runtime.openURL(cur, (err) => {
+										reject(err)
+									})
+								})
+							})
+							return openSchemePromise
+						}, openSchemePromise)
+					return openSchemePromise
+				}
+
+				return Promise.reject()
+			},
 			downloadPackage() {
 				this.downloading = true;
 
@@ -279,7 +313,6 @@
 				if (this.isWGT) {
 					this.installing = true;
 				}
-
 				plus.runtime.install(this.tempFilePath, {
 					force: false
 				}, async res => {
@@ -319,14 +352,14 @@
 					this.installed = false;
 
 					uni.showModal({
-						title: `更新失败${this.isWGT ? '' : '，APK文件不存在'}，请重新下载`,
+						title: '更新失败，请重新下载',
 						content: err.message,
 						showCancel: false
 					});
 				});
 
 				// 非wgt包，安装跳出覆盖安装，此处直接返回上一页
-				if (!this.isWGT) {
+				if (!this.isWGT && !this.is_mandatory) {
 					uni.navigateBack()
 				}
 				// #endif
@@ -338,16 +371,22 @@
 				plus.runtime.restart();
 				// #endif
 			},
-			async saveFile(tempFilePath, version) {
-				const [err, res] = await uni.saveFile({
-					tempFilePath
-				})
-				if (err) {
-					return;
-				}
-				uni.setStorageSync(localFilePathKey, {
-					version,
-					savedFilePath: res.savedFilePath
+			saveFile(tempFilePath, version) {
+				return new Promise((resolve, reject) => {
+					uni.saveFile({
+						tempFilePath,
+						success({
+							savedFilePath
+						}) {
+							uni.setStorageSync(localFilePathKey, {
+								version,
+								savedFilePath
+							})
+						},
+						complete() {
+							resolve()
+						}
+					})
 				})
 			},
 			deleteSavedFile(filePath) {

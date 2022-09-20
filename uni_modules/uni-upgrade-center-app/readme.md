@@ -1,10 +1,14 @@
+## 升级中心 - app插件与 `uni-admin` 版本关系
+
+### `uni-admin >= 1.9.3`：云函数 `checkVersion` 废弃，使用 uni-admin 自带的 `uni-upgrade-center` 云函数。
+
 # uni-upgrade-center - App
 
 ### 概述
 
 > 统一管理App及App在`Android`、`iOS`平台上`App安装包`和`wgt资源包`的发布升级
 
-> 本插件为uni升级中心客户端检查更新，后台管理系统请点击查看 [uni-upgrade-center - Admin](https://ext.dcloud.net.cn/plugin?id=4470)
+> uni升级中心分为业务插件和后台管理插件。本插件为业务插件，包括uni升级中心客户端检查更新的前后端逻辑。后台管理系统另见 [uni-upgrade-center - Admin](https://ext.dcloud.net.cn/plugin?id=4470)
 
 ### uni升级中心 - 客户端检查更新插件
   - 一键式检查更新，同时支持整包升级与wgt资源包更新
@@ -18,9 +22,9 @@
 
 3. 在插件市场打开本插件页面，在右侧点击`使用 HBuilderX 导入插件`，选择要导入的项目点击确定
 
-4. 绑定一个服务空间
+4. 绑定一个服务空间。自 `0.6.0` 起，依赖 `uni-admin 1.9.3+` 的 `uni-upgrade-center 云函数`，请和 uni-admin 项目关联同一个服务空间
 
-5. 找到`/uni_modules/uni-upgrade-center-app/uniCloud/cloudfunctions/check-version`，右键上传部署
+5. 找到`/uni_modules/uni-upgrade-center-app/uniCloud/cloudfunctions/check-version`，右键上传部署。自 `0.6.0` 起，依赖 `uni-admin 1.9.3+` 的 `uni-upgrade-center 云函数`，插件不再单独提供云函数，这样可以省下一个云函数名额。
 
 6. 在`pages.json`中添加页面路径。**注：请不要设置为pages.json中第一项**
 ```json
@@ -46,6 +50,7 @@
 ```
 
 7. 将`@/uni_modules/uni-upgrade-center-app/utils/check-update`import到需要用到的地方，调用一下即可
+	1. 默认使用当前绑定的服务空间，如果要请求其他服务空间，可以使用其他服务空间的 `callFunction`。[详情](https://uniapp.dcloud.io/uniCloud/cf-functions.html#call-by-function-cross-space)
 
 8. 升级弹框可自行编写，也可以使用`uni.showModal`，或使用现有的升级弹框样式，如果不满足UI需求请自行替换资源文件。在`utils/check-update.js`中都有实例。
 
