@@ -4,8 +4,11 @@
 			<image class="logoImg" :src="about.logo"></image>
 			<text class="tip appName">{{about.appName}}</text>
 			<text class="tip">Version {{version}}</text>
-			<!--Sansnn-uQRCode组件来源，插件市场：https://ext.dcloud.net.cn/plugin?id=1287 微调后-->
-			<Sansnn-uQRCode :text="about.download" :makeOnLoad="true" class="qrcode"></Sansnn-uQRCode>
+			<view class="qrcode">
+				<!--uqrcode 组件来源，插件Sansnn-uQRCode 链接地址：https://ext.dcloud.net.cn/plugin?id=1287-->
+				<uqrcode :size="100" canvas-id="qrcode" :value="about.download"></uqrcode>
+			</view>
+			
 			<text class="tip">{{$t('about.sacnQR')}} {{about.appName}} {{$t('about.client')}}</text>
 		</view>
 		<view class="copyright">
@@ -24,7 +27,11 @@
 	const uniShare = new UniShare()
 // #endif
 	import uniIdPagesConfig from '@/uni_modules/uni-id-pages/config.js';
+	import uqrcode from "@/uni_modules/Sansnn-uQRCode/components/uqrcode/uqrcode"
 	export default {
+		components:{
+			uqrcode
+		},
 		// #ifdef APP
 		onBackPress({from}) {
 			if(from=='backbutton'){
@@ -154,7 +161,7 @@
 </script>
 <style lang="scss" scoped>
 	/* #ifndef APP-NVUE */
-	view {
+	view{
 		display: flex;
 		box-sizing: border-box;
 		flex-direction: column;
@@ -193,8 +200,13 @@
 		font-weight: 500;
 	}
 
-	.qrcode {
-		margin-top: 60rpx;
+	.qrcode ,.qrcode .uqrcode{
+		margin: 10px 0;
+		width: 100px;
+		height: 100px;
+		/* #ifndef APP-NVUE */
+		display: block;
+		/* #endif */
 	}
 
 	.copyright {
