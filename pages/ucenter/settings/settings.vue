@@ -28,7 +28,10 @@
 
 <script>
 	import pushServer from './dc-push/push.js';
-	import common from '@/uni_modules/uni-id-pages/common/common.js';
+	import {
+		store,
+		mutations
+	} from '@/uni_modules/uni-id-pages/common/store.js'
 	export default {
 		data() {
 			return {
@@ -41,7 +44,7 @@
 		},
 		computed: {
 			hasLogin(){
-				return uniCloud.getCurrentUserInfo().tokenExpired > Date.now()
+				return store.hasLogin
 			},
 			i18nEnable(){
 				return getApp().globalData.config.i18n.enable
@@ -76,7 +79,7 @@
 		methods: {
 			async changeLoginState(){
 				if(this.hasLogin){
-					await common.logout()
+					await mutations.logout()
 				}else{
 					uni.redirectTo({
 						url: '/uni_modules/uni-id-pages/pages/login/login-withoutpwd',
@@ -290,10 +293,10 @@
 		margin-top: 10px;
 	}
 	/* #ifndef APP-NVUE  || VUE3 */
-	.content /deep/ .uni-list {
+	.content ::v-deep .uni-list {
 		background-color: #F9F9F9;
 	}
-	.content /deep/ .uni-list-item--disabled,.list-item {
+	.content ::v-deep .uni-list-item--disabled,.list-item {
 		height: 50px;
 		margin-bottom: 1px;
 	}

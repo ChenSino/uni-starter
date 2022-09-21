@@ -38,6 +38,10 @@
 	const uniShare = new UniShare()
 	// #endif
 	const db = uniCloud.database();
+	import {
+		store,
+		mutations
+	} from '@/uni_modules/uni-id-pages/common/store.js'
 	export default {
 		// #ifdef APP
 		onBackPress({from}) {
@@ -132,9 +136,7 @@
 						"style": "solid", // 边框样式
 						"radius": "100%" // 边框圆角，支持百分比
 					}
-				},
-				userInfo:{},
-				hasLogin:false
+				}
 			}
 		},
 		onLoad() {
@@ -149,21 +151,13 @@
 			//#endif
 		},
 		onShow() {
-			this.hasLogin = uniCloud.getCurrentUserInfo().tokenExpired > Date.now()
-			if(this.hasLogin){
-				this.getUserInfo()
-			}
 		},
 		computed: {
-			test:{
-				get(){
-					console.log(this._test,Date.now());
-					this._test = Date.now()
-					return ''
-				},
-				set(){
-					
-				}
+			userInfo() {
+				return store.userInfo
+			},
+			hasLogin(){
+				return store.hasLogin
 			},
 			// #ifdef APP-PLUS
 			appVersion() {
@@ -175,19 +169,6 @@
 			}
 		},
 		methods: {
-			getUserInfo(e) {
-				const db = uniCloud.database();
-				db.collection('uni-id-users').where("'_id' == $cloudEnv_uid").field('mobile,nickname,avatar_file').get().then(res => {
-					console.log({res});
-					this.userInfo = res.result.data[0]
-					console.log('this.userInfo', this.userInfo);
-				}).catch(e => {
-					this.userInfo = {}
-					console.log(e.message, e.errCode);
-				}).finally(e => {
-					// console.log(e);
-				})
-			},
 			toSettings() {
 				uni.navigateTo({
 					url: "/pages/ucenter/settings/settings"

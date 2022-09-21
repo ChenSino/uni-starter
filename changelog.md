@@ -1,3 +1,5 @@
+## 2.0.4（2022-09-21）
+- 新增 使用uni-id-pages的账号信息的状态管理功能
 ## 2.0.3（2022-09-20）
 - 更新 依赖的`uni-ui`组件为最新版本（注意：该版本的`uni-form`相关组件将自定义节点设置成[虚拟节点](https://uniapp.dcloud.net.cn/tutorial/vue-api.html#%E5%85%B6%E4%BB%96%E9%85%8D%E7%BD%AE))）
 - 更新 依赖的`uni_module`-> `uni-id-pages`为 v1.0.19版 修复 小程序端，使用将自定义节点设置成虚拟节点的uni-ui组件，导致的样式错乱问题
