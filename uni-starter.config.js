@@ -31,7 +31,7 @@ export default {
 		//口号
 		"slogan": "云端一体应用快速开发模版",
 		//应用的链接，用于分享到第三方平台和生成关于我们页的二维码
-		"download": "",
+		"download": "https://itunes.apple.com/cn/app/hello-uni-app/id1417078253?mt=8",
 		//version
 		"version":"1.0.0" //用于非app端显示，app端自动获取
 	},

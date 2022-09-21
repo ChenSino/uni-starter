@@ -56,8 +56,8 @@
 		},
 		async onLoad(e) {
 			console.log(e);
-			let type = e.type
-			// console.log({type});
+			//获取通过url传递的参数type设置当前登录方式，如果没传递直接默认以配置的登录
+			let type = e.type || config.loginTypes[0]
 			this.type = type
 			if(type != 'univerify'){
 				this.focusPhone = true
@@ -65,8 +65,7 @@
 			this.$nextTick(() => {
 				//关闭重复显示的登录快捷方式
 				if (['weixin', 'apple'].includes(type)) {
-					this.$refs.uniFabLogin.servicesList = this.$refs.uniFabLogin.servicesList.filter(item =>
-						item.id != type)
+					this.$refs.uniFabLogin.servicesList = this.$refs.uniFabLogin.servicesList.filter(item =>item.id != type)
 				}
 			})
 			uni.$on('uni-id-pages-set-login-type', type => {

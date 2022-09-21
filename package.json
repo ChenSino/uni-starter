@@ -1,7 +1,7 @@
 {
 	"id": "uni-starter",
 	"displayName": "uni-starter",
-	"version": "2.0.3",
+	"version": "2.0.4",
 	"description": "云端一体应用快速开发基本项目模版",
 	"keywords": [
         "login",
@@ -14,8 +14,8 @@
 	"engines": {
 		"HBuilderX": "^3.2.6"
 	},
-    "dcloudext": {
-        "sale": {
+	"dcloudext": {
+		"sale": {
 			"regular": {
 				"price": "0.00"
 			},
@@ -31,8 +31,8 @@
 			"data": "无",
 			"permissions": "无"
 		},
-        "npmurl": "",
-        "type": "unicloud-template-project"
+		"npmurl": "",
+		"type": "unicloud-template-project"
 	},
 	"uni_modules": {
 		"dependencies": [
@@ -67,8 +67,8 @@
 					"阿里": "u",
 					"百度": "u",
 					"字节跳动": "u",
-                    "QQ": "u",
-                    "京东": "u"
+					"QQ": "u",
+					"京东": "u"
 				},
 				"快应用": {
 					"华为": "u",
@@ -81,5 +81,7 @@
 			}
 		}
 	},
-	"dependencies": {}
+	"dependencies": {
+		"qrcodejs2": "^0.0.2"
+	}
 }
