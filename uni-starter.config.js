@@ -1,7 +1,5 @@
 //这是应用的配置页面，App.vue挂载到getApp().globalData.config
 export default {
-	//是否打开调试模式
-	"debug":false,
 	"h5": {
 		"url": "https://uni-starter.dcloud.net.cn", //	前端网页托管的域名	
 		 // 在h5端全局悬浮引导用户下载app的功能 更多自定义要求在/common/openApp.js中修改	
@@ -17,7 +15,7 @@ export default {
 	"mp": {
 		"weixin": {
 			//微信小程序原始id，微信小程序分享时
-			"id": "gh_33446d7f7a26"
+			"id": ""
 		}
 	},
 	//关于应用

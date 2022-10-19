@@ -177,10 +177,22 @@ async function getWeixinCache ({
   })
 }
 
+async function getWeixinAccessToken () {
+  const weixinPlatform = getWeixinPlatform.call(this)
+  const appId = this.getClientInfo().appId
+
+  const cache = await this.uniOpenBridge.getAccessToken({
+    dcloudAppid: appId,
+    platform: 'weixin-' + weixinPlatform
+  })
+
+  return cache.access_token
+}
 module.exports = {
   decryptWeixinData,
   getWeixinPlatform,
   generateWeixinCache,
   getWeixinCache,
-  saveWeixinUserKey
+  saveWeixinUserKey,
+  getWeixinAccessToken
 }

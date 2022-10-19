@@ -5,6 +5,7 @@
 		openApp() //创建在h5端全局悬浮引导用户下载app的功能
 	// #endif
 	import checkIsAgree from '@/pages/uni-agree/utils/uni-agree.js';
+	import uniIdPageInit from '@/uni_modules/uni-id-pages/init.js';
 	export default {
 		globalData: {
 			searchText: '',
@@ -17,9 +18,11 @@
 			console.log('App Launch')
 			this.globalData.$i18n = this.$i18n
 			this.globalData.$t = str => this.$t(str)
-
-			initApp();
 			
+			console.log('uni.getPushClientId',uni.getPushClientId);
+			
+			initApp();
+			uniIdPageInit()
 			
 			// #ifdef APP-PLUS
 			//checkIsAgree(); APP端暂时先用原生默认生成的。目前，自定义方式启动vue界面时，原生层已经请求了部分权限这并不符合国家的法规

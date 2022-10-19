@@ -56,6 +56,7 @@ export default async function() {
 	}
 	// #endif
 
+/* 注释此代码块原因：与uni-starter中的appinit逻辑一致
 	//3. 绑定clientDB错误事件
 	// clientDB对象
 	const db = uniCloud.database()
@@ -72,9 +73,9 @@ export default async function() {
 	}
 	// 解绑clientDB错误事件
 	//db.off('error', onDBError)
+*/
 
-
-	//4. 同步客户端push_clientid至device表
+	//4. 同步客户端push_clientid至uni-id-device表
 	if (uniCloud.onRefreshToken) {
 		uniCloud.onRefreshToken(() => {
 			console.log('onRefreshToken');
@@ -90,7 +91,11 @@ export default async function() {
 						console.log('getPushClientId', res);
 					},
 					fail(e) {
-						console.log(e)
+						console.error(e,
+						"uni-id-pages 默认在刷新token（登录、注销、切换用户）后获取push客户端标识同步至uni-id-device表;", 
+						"\n",
+						"如果你不使用push模块，请注释或删除，路径：/uni-starter/uni_modules/uni-id-pages/init.js 第79-103行代码"
+						)
 					}
 				})
 			}
