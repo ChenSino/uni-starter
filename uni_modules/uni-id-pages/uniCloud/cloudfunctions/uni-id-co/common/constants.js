@@ -52,7 +52,11 @@ const LOG_TYPE = {
   BIND_WEIXIN: 'bind-weixin',
   BIND_QQ: 'bind-qq',
   BIND_APPLE: 'bind-apple',
-  BIND_ALIPAY: 'bind-alipay'
+  BIND_ALIPAY: 'bind-alipay',
+  UNBIND_WEIXIN: 'unbind-weixin',
+  UNBIND_QQ: 'unbind-qq',
+  UNBIND_ALIPAY: 'unbind-alipay',
+  UNBIND_APPLE: 'unbind-apple'
 }
 
 const SMS_SCENE = {

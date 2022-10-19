@@ -12,7 +12,7 @@ const sentence = {
   'uni-id-account-audit-failed': 'Account audit failed',
   'uni-id-account-closed': 'Account has been closed',
   'uni-id-captcha-required': 'Captcha required',
-  'uni-id-password-error': 'Username or password error',
+  'uni-id-password-error': 'Password error',
   'uni-id-password-error-exceed-limit': 'The number of password errors is excessive',
   'uni-id-invalid-username': 'Invalid username',
   'uni-id-invalid-password': 'invalid password',
@@ -35,7 +35,12 @@ const sentence = {
   'uni-id-set-invite-code-failed': 'Set invite code failed',
   'uni-id-invalid-invite-code': 'Invalid invite code',
   'uni-id-change-inviter-forbidden': 'Change inviter is not allowed',
-  'uni-id-bind-conflict': 'This account has been bound'
+  'uni-id-bind-conflict': 'This account has been bound',
+  'uni-id-admin-exist-in-other-apps': 'Administrator is registered in other consoles',
+  'uni-id-unbind-failed': 'Please bind first and then unbind',
+  'uni-id-unbind-not-supported': 'Unbinding is not supported',
+  'uni-id-unbind-mobile-not-exists': 'This is the only way to login at the moment, please bind your phone number and then try to unbind',
+  'uni-id-unbind-password-not-exists': 'Please set a password first'
 }
 
 module.exports = {

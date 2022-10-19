@@ -219,7 +219,8 @@ async function postLogin (params = {}) {
           user
         })
         : {}
-    )
+    ),
+    passwordConfirmed: !!user.password
   }
 }
 
