@@ -91,11 +91,7 @@ export default async function() {
 						console.log('getPushClientId', res);
 					},
 					fail(e) {
-						console.error(e,
-						"uni-id-pages 默认在刷新token（登录、注销、切换用户）后获取push客户端标识同步至uni-id-device表;", 
-						"\n",
-						"如果你不使用push模块，请注释或删除，路径：/uni-starter/uni_modules/uni-id-pages/init.js 第79-103行代码"
-						)
+						console.error(e,'更多详情：https://uniapp.dcloud.net.cn/uniCloud/uni-starter.html#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9')
 					}
 				})
 			}
