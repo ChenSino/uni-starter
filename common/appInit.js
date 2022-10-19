@@ -47,11 +47,11 @@ export default async function() {
 			methodName, // 云对象的方法名称
 			params // 参数列表
 		}) {
-			console.log('interceptObject',{
-				objectName, // 云对象名称
-				methodName, // 云对象的方法名称
-				params // 参数列表
-			});
+			// console.log('interceptObject',{
+			// 	objectName, // 云对象名称
+			// 	methodName, // 云对象的方法名称
+			// 	params // 参数列表
+			// });
 			if(objectName == "uni-id-co" && (methodName.includes('loginBy') ||  ['login','registerUser'].includes(methodName) )){
 				console.log('执行登录相关云对象');
 				params[0].inviteCode = await new Promise((callBack) => {
@@ -84,7 +84,7 @@ export default async function() {
 				})
 				// console.log(params);
 			}
-			console.log(params);
+			// console.log(params);
 		},
 		success(e) {
 			console.log(e);
@@ -94,17 +94,17 @@ export default async function() {
 		},
 		fail(e){
 			console.error(e);
-			if (debug) {
-				uni.showModal({
-					content: JSON.stringify(e),
-					showCancel: false
-				});
-			}else{
-				uni.showToast({
-					title: '系统错误请稍后再试',
-					icon:'error'
-				});
-			}
+			// if (debug) {
+			// 	uni.showModal({
+			// 		content: JSON.stringify(e),
+			// 		showCancel: false
+			// 	});
+			// }else{
+			// 	uni.showToast({
+			// 		title: '系统错误请稍后再试',
+			// 		icon:'error'
+			// 	});
+			// }
 		}
 	})
 

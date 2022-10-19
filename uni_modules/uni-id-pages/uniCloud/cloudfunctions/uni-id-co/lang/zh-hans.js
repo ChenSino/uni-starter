@@ -12,7 +12,7 @@ const sentence = {
   'uni-id-account-audit-failed': '此账号审核失败',
   'uni-id-account-closed': '此账号已注销',
   'uni-id-captcha-required': '请输入图形验证码',
-  'uni-id-password-error': '用户名或密码错误',
+  'uni-id-password-error': '密码错误',
   'uni-id-password-error-exceed-limit': '密码错误次数过多，请稍后再试',
   'uni-id-invalid-username': '用户名不合法',
   'uni-id-invalid-password': '密码不合法',
@@ -35,7 +35,12 @@ const sentence = {
   'uni-id-set-invite-code-failed': '设置邀请码失败',
   'uni-id-invalid-invite-code': '邀请码不可用',
   'uni-id-change-inviter-forbidden': '禁止修改邀请人',
-  'uni-id-bind-conflict': '此账号已被绑定'
+  'uni-id-bind-conflict': '此账号已被绑定',
+  'uni-id-admin-exist-in-other-apps': '超级管理员已在其他控制台注册',
+  'uni-id-unbind-failed': '请先绑定后再解绑',
+  'uni-id-unbind-not-supported': '不支持解绑',
+  'uni-id-unbind-mobile-not-exists': '这是当前唯一登录方式，请绑定手机号后再尝试解绑',
+  'uni-id-unbind-password-not-exists': '请先设置密码在尝试解绑'
 }
 
 module.exports = {

@@ -40,6 +40,9 @@
       "ios": {
       },
       "sdkConfigs": {
+        "push": {
+          "unipush": null
+        }
       }
     }
   },
