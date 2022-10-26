@@ -44,7 +44,7 @@ describe('pages/ucenter/login-page/pwd-retrieve/pwd-retrieve.vue', () => {
 						// expect(submitRes.errMsg).toBe('密码重置成功')
 						break;
 					case 10202:
-						expect(submitRes.errMsg).toBe('此手机号尚未注册')
+						expect(submitRes.errMsg).toBe('此账号尚未注册')
 						break;
 					case 50202:
 						expect(submitRes.errCode).toBe("uni-id-invalid-verify-code")
