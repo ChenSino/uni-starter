@@ -47,6 +47,13 @@
 				}
 			}
 		},
+		data() {
+			return {
+				focusCaptchaInput: false,
+				captchaBase64: "",
+				loging: false
+			};
+		},
 		watch: {
 			scene: {
 				handler(scene) {
@@ -103,16 +110,6 @@
 	}
 
 	.captcha-img-box,
-	.captcha {
-		height: 44px;
-		line-height: 44px;
-	}
-
-	.captcha-img-box {
-		position: relative;
-		background-color: #FEFAE7;
-	}
-
 	.captcha {
 		height: 44px;
 		line-height: 44px;
