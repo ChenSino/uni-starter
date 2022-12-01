@@ -81,16 +81,14 @@
 			/**
 			 * 完成并提交
 			 */
-			submit() {
+			async submit() {
 				console.log("formData", this.formData);
 				console.log('rules', this.rules);
-				this.$refs.form.validate()
-					.then(res => {
-						let {
-							oldPassword,
-							newPassword
-						} = this.formData
-						uniIdCo.updatePwd({
+				return await this.$refs.form.validate()
+					.then( async res => {
+						console.log("res:---------- ",res);
+						let {oldPassword,newPassword} = this.formData
+						return await uniIdCo.updatePwd({
 								oldPassword,
 								newPassword
 							}).then(e => {
@@ -100,17 +98,23 @@
 								uni.redirectTo({
 									url:'/uni_modules/uni-id-pages/pages/login/login-withpwd'
 								})
+								return e
 							}).catch(e => {
-								uni.showModal({
-									content: e.message,
-									showCancel: false
-								});
+								console.log("e:------------ ",e);
+								// uni.showModal({
+								// 	content: e.message,
+								// 	showCancel: false
+								// });
+								return e
 							})
+						
 					}).catch(errors => {
+						console.log("errors: ------------",errors);
 						let key = errors[0].key
 						key = key.replace(key[0], key[0].toUpperCase())
 						console.log(key, 'focus' + key);
 						this['focus' + key] = true
+						return errors
 					})
 			}
 		}

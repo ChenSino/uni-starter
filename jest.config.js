@@ -23,7 +23,7 @@ module.exports = {
 			}
 		}
 	}, */
-	testMatch: ["<rootDir>/pages/**/*test.[jt]s?(x)"],
+	testMatch: ["<rootDir>/pages/**/*test.[jt]s?(x)","<rootDir>/uni_modules/uni-id-pages/**/*test.[jt]s?(x)"],
 	testPathIgnorePatterns: ['/node_modules/'],
 	testSequencer: path.join(__dirname, "testSequencer.js")
 }

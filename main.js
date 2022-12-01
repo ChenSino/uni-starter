@@ -1,7 +1,7 @@
 import App from './App'
 import i18n from './lang/i18n'
 
-uni.showModal = ()=>{};
+// uni.showModal = ()=>{};
 
 // #ifndef VUE3
 import Vue from 'vue'

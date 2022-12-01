@@ -39,7 +39,8 @@
 				supportMode:[],
 				pushIsOn:"wait",
 				currentLanguage:"",
-				userInfo:{}
+				userInfo:{},
+				uniToken:''
 			}
 		},
 		computed: {

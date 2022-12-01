@@ -1,0 +1,98 @@
+// uni-app自动化测试教程: uni-app自动化测试教程: https://uniapp.dcloud.io/collocation/auto/hbuilderx-extension/index
+
+describe('uni_modules/uni-id-pages/pages/login/login-withpwd.vue', () => {
+
+	let page;
+	beforeAll(async () => {
+		page = await program.navigateTo('/uni_modules/uni-id-pages/pages/login/login-withpwd')
+		await page.waitFor(500)
+		page = await program.currentPage()
+		
+	});
+
+	it('账号密码登录', async () => {
+		// expect.assertions(1);
+		await page.setData({
+			"username": "DCloud",
+			// "password": "dcloud2022",
+			"password": "unistarter2022",
+			// "captcha":"1234",
+			"agree": true
+		})
+		
+		const needCaptcha = await page.data('needCaptcha')
+		console.log("needCaptcha---1: : ",needCaptcha);
+		
+		if(needCaptcha){
+			await page.setData({
+				"captcha":"1234"
+			})
+			console.log("needCaptcha---2: ",await page.data('needCaptcha'));
+		}
+		
+		
+		const resLogin = await page.callMethod('pwdLogin')
+		console.log("resLogin: ", resLogin);
+		
+		
+		switch (resLogin.errCode){
+			case 0:
+				console.log('登录成功')
+				expect(resLogin.uid).toHaveLength(24);
+				break;
+			case "uni-id-account-not-exists":
+				expect(resLogin.errMsg).toBe("此账号未注册");
+				await page.callMethod('toRegister')
+				break;
+			case "uni-id-password-error":
+				expect(resLogin.errMsg).toBe("密码错误");
+				await page.setData({
+					"username": "DCloud",
+					"password": "dcloud2022",
+					"agree": true,
+				})
+				const resLoginA = await page.callMethod('pwdLogin')
+				console.log("resLoginA: ", resLoginA);
+				
+				break;
+			case "uni-id-captcha-required":
+				expect(resLogin.errMsg).toBe("请输入图形验证码");
+				await page.setData({
+					"captcha":"1234"
+				})
+				// console.log("needCaptcha---3: ",await page.data('needCaptcha'));
+				const resLoginaa = await page.callMethod('pwdLogin')
+				console.log("resLoginaa: ", resLoginaa);
+				if(resLoginaa.errCode == 0){
+					console.log('登录成功');
+				}else{
+					await page.setData({
+						"username": "DCloud",
+						"password": "dcloud2022",
+						"captcha":"1234",
+						"agree": true
+					})
+					
+					const resLoginbb = await page.callMethod('pwdLogin')
+					console.log("resLoginbb: ", resLoginbb);
+				}
+				break;
+			case "uni-captcha-verify-fail":
+				expect(resLogin.errMsg).toBe("验证码错误");
+				break;
+			case 10103:
+				expect(resLogin.errMsg).toBe("密码错误次数过多");
+				break;
+			case 10002:
+				expect(resLogin.errMsg).toBe("验证码不可为空");
+				break;
+			case "SYS_ERR":
+				console.log("未知错误---SYS_ERR",resLogin)//[uni-id-co]: request:fail
+				break;
+			default:
+				// console.log(await program.currentPage(),"currentPage---------");
+				break;
+		}
+	})
+	
+});

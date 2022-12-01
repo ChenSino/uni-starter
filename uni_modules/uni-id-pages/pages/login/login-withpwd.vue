@@ -79,7 +79,7 @@
 			/**
 			 * 密码登录
 			 */
-			pwdLogin() {
+			async pwdLogin() {
 				if (!this.password.length) {
 					this.focusPassword = true
 					return uni.showToast({
@@ -94,6 +94,7 @@
 						icon: 'none'
 					});
 				}
+				console.log("this.needCaptcha: ",this.needCaptcha);
 				if (this.needCaptcha && this.captcha.length != 4) {
 					this.$refs.captcha.getImageCaptcha()
 					return uni.showToast({
@@ -119,8 +120,9 @@
 					data.username = this.username
 				}
 
-				uniIdCo.login(data).then(e => {
+				return await uniIdCo.login(data).then(e => {
 					this.loginSuccess(e)
+					return e
 				}).catch(e => {
 					if (e.errCode == 'uni-id-captcha-required') {
 						this.needCaptcha = true
@@ -128,6 +130,7 @@
 						//登录失败，自动重新获取验证码
 						this.$refs.captcha.getImageCaptcha()
 					}
+					return e
 				})
 			},
 			/* 前往注册 */

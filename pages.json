@@ -211,15 +211,15 @@
 	},
 	"condition": {
 		"list": [{
-				"path": "pages/list/detail"
-			}, {
 				"path": "pages/list/list"
+			}, {
+				"path": "pages/list/detail"
 			},
 			{
 				"path": "pages/ucenter/settings/settings"
 			}
 		],
-		"current": 1
+		"current": 0
 	},
 	"tabBar": {
 		"color": "#7A7E83",

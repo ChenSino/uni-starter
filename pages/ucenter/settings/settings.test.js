@@ -22,18 +22,24 @@ describe('pages/ucenter/settings/settings', () => {
 			if (pushRes == "wait") {
 				await page.callMethod('pushServer.off')
 			}
+		}else{
+			const el = await page.$('.content')
+			const elList = await el.$$('.mt10')
+			console.log("elList: ",elList.length);
+			
+			expect.assertions(1);
+			expect(elList.length).toBe(2)
 		}
-		await page.callMethod('deactivate')
 		await page.waitFor(300)
-		await program.navigateBack()
+		
 	})
 
-	it('退出登录', async () => {
+	// it('退出登录', async () => {
 		
-		if(uniToken){
-			await page.callMethod('clickLogout')
-		}
-		// console.log(await program.currentPage(),"333333");
-	})
+	// 	if(uniToken){
+	// 		await page.callMethod('clickLogout')
+	// 	}
+	// 	console.log(await program.currentPage(),"333333");
+	// })
 
 });

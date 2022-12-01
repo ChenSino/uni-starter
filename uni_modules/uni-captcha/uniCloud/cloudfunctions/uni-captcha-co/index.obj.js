@@ -5,7 +5,17 @@ const uniCaptcha = require('uni-captcha')
 const db = uniCloud.database();
 //获取数据表opendb-verify-codes对象
 const verifyCodes = db.collection('opendb-verify-codes')
+
+
+const createConfig = require('uni-config-center')
+const captchaConfig = createConfig({ // 获取配置实例
+    pluginId: 'captcha-config' // common/uni-config-center下的插件配置目录名
+})
+const Config = captchaConfig.config() // 获取common/uni-config-center/share-config/config.json的内容
+
+console.log(Config,"15----------");
 module.exports = {
+	
 	async getImageCaptcha({
 		scene
 	}) {
@@ -25,6 +35,7 @@ module.exports = {
 		//执行并返回结果
 		//导入配置，配置优先级说明：此处配置 > uni-config-center
 		return await uniCaptcha[action]({
+			text: Config.text,
 			scene, //来源客户端传递，表示：使用场景值，用于防止不同功能的验证码混用
 			uniPlatform: platform
 		})

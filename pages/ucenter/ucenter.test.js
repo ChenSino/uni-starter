@@ -20,7 +20,7 @@ describe('pages/ucenter/ucenter.vue', () => {
 	it('宫格', async () => {
 		const getGrid = await page.data('gridList')
 		console.log("getGrid: ",getGrid);
-		// expect(getGrid.length).toBe(4)
+		expect(getGrid.length).toBe(4)
 	})
 
 	it('列表', async () => {
@@ -74,7 +74,7 @@ describe('pages/ucenter/ucenter.vue', () => {
 		}else{
 			console.log("getScoreRes: 未登录");
 			try{
-				await program.navigateTo('/pages/ucenter/login-page/pwd-login/pwd-login')
+				await program.navigateTo('/uni_modules/uni-id-pages/pages/login/login-withpwd')
 				await page.waitFor(500)
 			}catch(e){
 				console.log("e: ",e);
