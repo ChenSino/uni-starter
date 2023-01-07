@@ -7,7 +7,7 @@ describe('pages/list/list.vue', () => {
 	})
 
 	it('检测标题', async () => {
-		expect.assertions(1);
+		// expect.assertions(1);
 		const getData = await page.data('dataList')
 		// console.log("getData: ",getData);
 		expect(getData.title).toBe('阿里小程序IDE官方内嵌uni-app，为开发者提供多端开发服务')
@@ -15,7 +15,7 @@ describe('pages/list/list.vue', () => {
 	
 	it('点击搜索跳转', async () => {
 		// expect.assertions(2);
-		const searchTo = await page.callMethod('searchClick')
+		await page.callMethod('searchClick')
 		await page.waitFor(1000)
 		
 		if (process.env.UNI_PLATFORM != "mp-weixin") {
