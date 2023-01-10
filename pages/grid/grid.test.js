@@ -27,7 +27,9 @@ describe('pages/grid/grid.vue', () => {
 		}
 		if (process.env.UNI_PLATFORM === "mp-weixin") {
 			const uniGrid = await page.$('uni-grid')
+			await page.waitFor(300)
 			await uniGrid.callMethod('change')
+			await page.waitFor(500)
 		}
 	})
 });

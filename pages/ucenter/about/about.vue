@@ -78,7 +78,6 @@
 		},
 		created() {
 			this.about = this.uniStarterConfig.about
-			console.log("this.about: ",this.about);
 			uni.setNavigationBarTitle({
 				title: this.$t('about.about')+ " " + this.about.appName
 			})

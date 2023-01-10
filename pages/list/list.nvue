@@ -11,18 +11,19 @@
 			<view class="cover-search-bar" @click="searchClick"></view>
 		</view>
 
-		<unicloud-db ref='udb' @load="loadData" v-slot:default="{data,pagination,hasMore, loading, error, options}" @error="onqueryerror"
-			:collection="colList" :page-size="10">
-			<!-- 基于 uni-list 的页面布局 field="user_id.username"-->
+		<unicloud-db ref='udb' v-slot:default="{data,pagination,hasMore, loading, error, options}" @error="onqueryerror"
+			:collection="colList" :page-size="10" @load="loadData">
+			<!-- 基于 uni-list 的页面布局 field="user_id.nickname"-->
 			<uni-list class="uni-list" :border="false" :style="{height:listHight}">
 
 				<!-- 作用于app端nvue页面的下拉加载 -->
 				<!-- #ifdef APP-NVUE -->
 				<refreshBox @refresh="refresh" :loading="loading"></refreshBox>
 				<!-- #endif -->
-				
+
 				<!-- 列表渲染 -->
-				<uni-list-item :to="'/pages/list/detail?id='+item._id+'&title='+item.title" v-for="(item,index) in data" :key="index">
+				<uni-list-item :to="'/pages/list/detail?id='+item._id+'&title='+item.title" v-for="(item,index) in data"
+					:key="index">
 					<!-- 通过header插槽定义列表左侧图片 -->
 					<template v-slot:header>
 						<image class="avatar" :src="item.avatar" mode="aspectFill"></image>
@@ -32,7 +33,7 @@
 						<view class="main">
 							<text class="title">{{item.title}}</text>
 							<view class="info">
-								<text class="author">{{item.user_id[0]?item.user_id[0].username:''}}</text>
+								<text class="author">{{item.user_id[0]?item.user_id[0].nickname:''}}</text>
 								<uni-dateformat class="last_modify_date" :date="item.last_modify_date"
 									format="yyyy-MM-dd" :threshold="[60000, 2592000000]" />
 							</view>
@@ -53,6 +54,7 @@
 				<!-- #endif -->
 			</uni-list>
 		</unicloud-db>
+
 	</view>
 </template>
 
@@ -80,7 +82,7 @@
 				return [
 					db.collection('opendb-news-articles').where(this.where).field(
 						'avatar,title,last_modify_date,user_id').getTemp(),
-					db.collection('uni-id-users').field('_id,username').getTemp()
+					db.collection('uni-id-users').field('_id,nickname').getTemp()
 				]
 			}
 		},
@@ -90,7 +92,7 @@
 				keyword: "",
 				showRefresh: false,
 				listHight: 0,
-				dataList:[]
+				dataList: []
 			}
 		},
 		watch: {
@@ -169,7 +171,7 @@
 				cdbRef.loadMore()
 			},
 			onqueryerror(e) {
-				console.error("失败--",e);
+				console.error(e);
 			},
 			onpullingdown(e) {
 				console.log(e);
