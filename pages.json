@@ -192,7 +192,14 @@
 				"navigationBarTitleText": "注册管理员账号"
 			}
 		}
-	],
+	,{
+    "path": "uni_modules/uni-id-pages/pages/userinfo/set-pwd/set-pwd",
+    "style": {
+        "enablePullDownRefresh": false,
+        "navigationBarTitleText": "设置密码"
+    }
+}
+],
 	"globalStyle": {
 		// #ifdef H5
 		"h5": {

@@ -52,7 +52,8 @@
 					this.focusMobile = true 
 					return uni.showToast({
 						title: '手机号码格式不正确',
-						icon: 'none'
+						icon: 'none',
+						duration: 3000
 					});
 				}
 				console.log("this.formData.code: ",this.formData.code);
@@ -60,20 +61,20 @@
 					this.$refs.smsForm.focusSmsCodeInput = true 
 					return uni.showToast({
 						title: '验证码格式不正确',
-						icon: 'none'
+						icon: 'none',
+						duration: 3000
 					});
 				}
 				
-				console.log(this.formData,"1------------");
-				const uniIdCo = uniCloud.importObject("uni-id-co",{
-					customUI:true
-				})
-				return await uniIdCo.bindMobileBySms(this.formData).then(e => {
-					console.log(e);
-					// uni.showToast({
-					// 	title: e.errMsg,
-					// 	icon: 'none'
-					// });
+				// console.log(this.formData);
+				const uniIdCo = uniCloud.importObject("uni-id-co")
+				uniIdCo.bindMobileBySms(this.formData).then(e => {
+					// console.log(e);
+					uni.showToast({
+						title: e.errMsg,
+						icon: 'none',
+						duration: 3000
+					});
 					// #ifdef APP-NVUE
 					const eventChannel = this.$scope.eventChannel; // 兼容APP-NVUE
 					// #endif

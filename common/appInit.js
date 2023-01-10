@@ -155,6 +155,7 @@ function initAppVersion() {
 				getApp({
 					allowDefault: true
 				}).appVersion.hasNew = true;
+				console.log(checkUpdate());
 			}
 		})
 	});

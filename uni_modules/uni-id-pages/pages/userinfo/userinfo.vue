@@ -79,7 +79,7 @@
 				uni.navigateTo({
 					url: '/uni_modules/uni-id-pages/pages/login/login-withoutpwd',
 					complete: (e) => {
-						console.log(e);
+						// console.log(e);
 					}
 				})
 			},
@@ -93,7 +93,7 @@
 				uni.navigateTo({
 					url: '/uni_modules/uni-id-pages/pages/userinfo/change_pwd/change_pwd',
 					complete: (e) => {
-						console.log(e);
+						// console.log(e);
 					}
 				})
 			},
@@ -124,14 +124,14 @@
 					"provider": 'univerify',
 					"univerifyStyle": this.univerifyStyle,
 					success: async e => {
-						console.log(e.authResult);
+						// console.log(e.authResult);
 						uniIdCo.bindMobileByUniverify(e.authResult).then(res => {
-							console.log(res);
+							// console.log(res);
 							mutations.updateUserInfo()
 						}).catch(e => {
 							console.log(e);
-						}).finally(e => {
-							console.log(e);
+						}).finally(e=>{
+							// console.log(e);
 							uni.closeAuthView()
 						})
 					},
@@ -149,11 +149,9 @@
 				})
 			},
 			setNickname(nickname) {
-				console.log(nickname);
+				// console.log(nickname);
 				if (nickname) {
-					mutations.updateUserInfo({
-						nickname
-					})
+					mutations.updateUserInfo({nickname})
 					this.$refs.dialog.close()
 				} else {
 					this.$refs.dialog.open()
@@ -171,7 +169,7 @@
 					alipay: 'ali_openid',
 					apple: 'apple_openid',
 					qq: 'qq_openid'
-				} [provider.toLowerCase()]
+				}[provider.toLowerCase()]
 
 				if (this.userInfo[bindField]) {
 					await uniIdCo['unbind' + provider]()
@@ -181,12 +179,11 @@
 						provider: provider.toLowerCase(),
 						onlyAuthorize: true,
 						success: async e => {
-							const res = await uniIdCo['bind' + provider]({
-								code: e.code
-							})
+							const res = await uniIdCo['bind' + provider]({code: e.code})
 							if (res.errCode) {
 								uni.showToast({
-									title: res.errMsg || '绑定失败'
+									title: res.errMsg || '绑定失败',
+									duration: 3000
 								})
 							}
 							await mutations.updateUserInfo()
@@ -197,7 +194,6 @@
 						}
 					})
 				}
-
 			}
 		}
 	}
