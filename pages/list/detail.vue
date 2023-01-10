@@ -20,7 +20,7 @@
 						<!-- 通过body插槽定义作者信息内容 -->
 						<template v-slot:body>
 							<view class="header-content">
-								<view class="uni-title">{{data.user_id && data.user_id[0].username}}</view>
+								<view class="uni-title">{{data.user_id && data.user_id[0] && data.user_id[0].nickname || '未知'}}</view>
 							</view>
 						</template>
 						<template v-slot:footer>
@@ -77,7 +77,7 @@
 				title: 'title',
 				// 数据表名
 				// 查询字段，多个字段用 , 分割
-				field: 'user_id.username,user_id._id,avatar,excerpt,last_modify_date,comment_count,like_count,title,content',
+				field: 'user_id.nickname,user_id._id,avatar,excerpt,last_modify_date,comment_count,like_count,title,content',
 				formData: {
 					noData: '<p style="text-align:center;color:#666">详情加载中...</p>'
 				}
@@ -93,7 +93,7 @@
 			}
 		},
 		onLoad(event) {
-			console.log(event);
+			// console.log(event);
 			// event = {"id":"60783c5cb781700001375672","title":"阿里小程序IDE官方内嵌uni-app，为开发者提供多端开发服务","excerpt":"阿里小程序IDE官方内嵌uni-app，为开发者提供多端开发服务","avatar":"https://vkceyugu.cdn.bspapp.com/VKCEYUGU-aliyun-gacrhzeynhss7c6d04/249516a0-3941-11eb-899d-733ae62bed2f.jpg"}
 			//获取真实新闻id，通常 id 来自上一个页面
 			if (event.id) {

@@ -14,7 +14,7 @@
 		<unicloud-db ref='udb' v-slot:default="{data,pagination,hasMore, loading, error, options}" @error="onqueryerror"
 			:collection="colList" :page-size="10"
 			>
-			<!-- 基于 uni-list 的页面布局 field="user_id.username"-->
+			<!-- 基于 uni-list 的页面布局 field="user_id.nickname"-->
 			<uni-list class="uni-list" :border="false" :style="{height:listHight}">
 				
 				<!-- 作用于app端nvue页面的下拉加载 -->
@@ -33,7 +33,7 @@
 						<view class="main">
 							<text class="title">{{item.title}}</text>
 							<view class="info">
-								<text class="author">{{item.user_id[0]?item.user_id[0].username:''}}</text>
+								<text class="author">{{item.user_id[0]?item.user_id[0].nickname:''}}</text>
 								<uni-dateformat class="last_modify_date" :date="item.last_modify_date"
 									format="yyyy-MM-dd" :threshold="[60000, 2592000000]" />
 							</view>
@@ -54,6 +54,7 @@
 				<!-- #endif -->
 			</uni-list>
 		</unicloud-db>
+		
 	</view>
 </template>
 
@@ -79,7 +80,7 @@
 			colList(){
 				return [
 					db.collection('opendb-news-articles').where(this.where).field('avatar,title,last_modify_date,user_id').getTemp(),
-					db.collection('uni-id-users').field('_id,username').getTemp()
+					db.collection('uni-id-users').field('_id,nickname').getTemp()
 				]
 			}
 		},
