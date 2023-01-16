@@ -62,7 +62,14 @@ export const mutations = {
 		return data
 	},
 	async logout() {
-		await uniIdCo.logout()
+		// 1. 已经过期就不需要调用服务端的注销接口	2.即使调用注销接口失败，不能阻塞客户端
+		if(uniCloud.getCurrentUserInfo().tokenExpired > Date.now()){
+			try{
+				await uniIdCo.logout()
+			}catch(e){
+				console.error(e);
+			}
+		}
 		uni.removeStorageSync('uni_id_token');
 		uni.setStorageSync('uni_id_token_expired', 0)
 		uni.redirectTo({
