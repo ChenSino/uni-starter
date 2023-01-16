@@ -1,3 +1,10 @@
+## 2.1.0（2023-01-17）
+- 重要 新增uni-admin需要的相关依赖和初始化数据（方便uni-admin关联uni-starter后可直接运行）  
+- 升级依赖的 [uni-id-pages](https://ext.dcloud.net.cn/plugin?name=uni-id-pages) 修复如下问题：
+	1. 优化 压缩依赖的文件资源大小 
+	2. 更新依赖的 验证码插件`uni-captcha`版本的版本为 0.6.4 修复 部分情况下APP端无法获取验证码的问题 [详情参考](https://ext.dcloud.net.cn/plugin?id=4048)
+	3. 修复 客户端token过期后，点击退出登录按钮报错的问题
+	4. uni-id-co 修复 updateUser 接口`手机号`和`邮箱`参数值为空字符串时，修改无效的问题
 ## 2.0.6（2022-10-19）
 - 更新 文件路径：`/uni_modules/uni-id-pages/init.js`内uni-push客户端推送标识获取失败的提示
 ## 2.0.5（2022-10-19）
