@@ -68,7 +68,7 @@
 				
 				// console.log(this.formData);
 				const uniIdCo = uniCloud.importObject("uni-id-co")
-				uniIdCo.bindMobileBySms(this.formData).then(e => {
+				return await uniIdCo.bindMobileBySms(this.formData).then(e => {
 					// console.log(e);
 					uni.showToast({
 						title: e.errMsg,

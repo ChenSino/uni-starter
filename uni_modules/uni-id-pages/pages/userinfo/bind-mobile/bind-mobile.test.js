@@ -21,7 +21,7 @@ describe('uni_modules/uni-id-pages/pages/userinfo/bind-mobile/bind-mobile.vue', 
 				mobile: "17769516019",
 				code: "123456",
 				captcha: "1234"
-			}
+			},
 		})
 		
 		await page.waitFor(300)

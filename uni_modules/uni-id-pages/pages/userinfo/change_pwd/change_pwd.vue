@@ -81,16 +81,16 @@
 			/**
 			 * 完成并提交
 			 */
-			submit() {
+			async submit() {
 				// console.log("formData", this.formData);
 				// console.log('rules', this.rules);
-				this.$refs.form.validate()
-					.then(res => {
+				return await this.$refs.form.validate()
+					.then(async res => {
 						let {
 							oldPassword,
 							newPassword
 						} = this.formData
-						uniIdCo.updatePwd({
+						return await uniIdCo.updatePwd({
 								oldPassword,
 								newPassword
 							}).then(e => {
