@@ -65,7 +65,6 @@
 					});
 				}
 				
-				// console.log(this.formData);
 				const uniIdCo = uniCloud.importObject("uni-id-co")
 				return await uniIdCo.bindMobileBySms(this.formData).then(e => {
 					// console.log(e);

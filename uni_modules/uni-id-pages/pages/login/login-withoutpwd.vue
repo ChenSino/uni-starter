@@ -52,14 +52,14 @@
 				return /^1\d{10}$/.test(this.phone);
 			},
 			imgSrc() { //大快捷登录按钮图
-				return '/uni_modules/uni-id-pages/static/login/' + this.type + '.png'
+				return this.type == 'weixin'? '/uni_modules/uni-id-pages/static/login/weixin.png' : '/uni_modules/uni-id-pages/static/app-plus/apple.png'
 			}
 		},
 		async onLoad(e) {
-			// console.log(e);
 			//获取通过url传递的参数type设置当前登录方式，如果没传递直接默认以配置的登录
 			let type = e.type || config.loginTypes[0]
 			this.type = type
+			// console.log("this.type: -----------",this.type);
 			if(type != 'univerify'){
 				this.focusPhone = true
 			}
@@ -111,7 +111,6 @@
 				this.$refs.uniFabLogin.login_before(this.type, true, options)
 			},
 			toSmsPage() {
-				// console.log('toSmsPage',this.agree);
 				if (!this.isPhone) {
 					this.focusPhone = true
 					return uni.showToast({
@@ -201,7 +200,6 @@
 	}
 
 	.quickLogin {
-		// width: 650rpx;
 		height: 350px;
 		align-items: center;
 		justify-content: center;
