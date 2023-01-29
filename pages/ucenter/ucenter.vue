@@ -2,9 +2,12 @@
 	<view class="center">
 		<uni-sign-in ref="signIn"></uni-sign-in>
 		<view class="userInfo" @click.capture="toUserInfo">
-			<cloud-image width="150rpx" height="150rpx" v-if="hasLogin&&userInfo.avatar_file&&userInfo.avatar_file.url"
-				:src="userInfo.avatar_file.url"></cloud-image>
-			<image v-else class="logo-img" src="@/static/uni-center/defaultAvatarUrl.png"></image>
+			<cloud-image width="150rpx" height="150rpx" v-if="hasLogin&&userInfo.avatar_file&&userInfo.avatar_file.url" :src="userInfo.avatar_file.url"></cloud-image>
+			
+			<view v-else class="defaultAvatarUrl">
+				<uni-icons color="#ffffff" size="50" type="person-filled" />
+			</view>
+			
 			<view class="logo-title">
 				<text class="uer-name" v-if="hasLogin">{{userInfo.nickname||userInfo.username||userInfo.mobile}}</text>
 				<text class="uer-name" v-else>{{$t('mine.notLogged')}}</text>
@@ -45,11 +48,9 @@
 	} from '@/uni_modules/uni-id-pages/common/store.js'
 	export default {
 		// #ifdef APP
-		onBackPress({
-			from
-		}) {
-			if (from == 'backbutton') {
-				this.$nextTick(function() {
+		onBackPress({from}) {
+			if(from=='backbutton'){
+				this.$nextTick(function(){
 					uniShare.hide()
 				})
 				return uniShare.isShow;
@@ -93,11 +94,11 @@
 						{
 							"title": this.$t('mine.toEvaluate'),
 							"event": 'gotoMarket',
-							"icon": "hand-thumbsup"
+							"icon": "star"
 						},
 						//#endif
 						{
-							"title": this.$t('mine.readArticles'),
+							"title":this.$t('mine.readArticles'),
 							"to": '/pages/ucenter/read-news-log/read-news-log',
 							"icon": "flag"
 						},
@@ -124,11 +125,13 @@
 						"to": '/pages/ucenter/settings/settings',
 						"icon": "gear"
 					}],
+					// #ifdef APP-PLUS
 					[{
 						"title": this.$t('mine.about'),
 						"to": '/pages/ucenter/about/about',
 						"icon": "info"
 					}]
+					// #endif
 				],
 				listStyles: {
 					"height": "150rpx", // 边框高度
@@ -139,14 +142,13 @@
 						"style": "solid", // 边框样式
 						"radius": "100%" // 边框圆角，支持百分比
 					}
-				},
-				uniToken: ''
+				}
 			}
 		},
 		onLoad() {
 			//#ifdef APP-PLUS
 			this.ucenterList[this.ucenterList.length - 2].unshift({
-				title: this.$t('mine.checkUpdate'), // this.this.$t('mine.checkUpdate')"检查更新"
+				title:this.$t('mine.checkUpdate'),// this.this.$t('mine.checkUpdate')"检查更新"
 				rightText: this.appVersion.version + '-' + this.appVersion.versionCode,
 				event: 'checkVersion',
 				icon: 'loop',
@@ -286,9 +288,7 @@
 						icon: 'none'
 					});
 				}
-				console.log({
-					myInviteCode
-				});
+				console.log({myInviteCode});
 				let {
 					appName,
 					logo,
@@ -368,9 +368,8 @@
 	page {
 		background-color: #f8f8f8;
 	}
-
 	/* #endif*/
-
+	
 	.center {
 		flex: 1;
 		flex-direction: column;
@@ -378,17 +377,19 @@
 	}
 
 	.userInfo {
-		padding: 20rpx;
-		padding-top: 50px;
+		// padding: 20rpx;
+		padding-top: 60px;
 		background-image: url(../../static/uni-center/headers.png);
 		flex-direction: column;
 		align-items: center;
 	}
-
-	.logo-img {
+	.defaultAvatarUrl{
 		width: 150rpx;
 		height: 150rpx;
-		border-radius: 150rpx;
+		background-color: rgb(0, 122, 255);
+		border-radius: 100%;
+		justify-content: center;
+		align-items: center;
 	}
 
 	.logo-title {

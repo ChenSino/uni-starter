@@ -62,7 +62,6 @@
 			// #ifdef APP-PLUS || MP-WEIXIN
 			uni.checkIsSupportSoterAuthentication({
 				success: (res) => {
-					console.log(res);
 					this.supportMode = res.supportMode
 				},
 				fail: (err) => {

@@ -54,12 +54,10 @@
 				this.$refs.udb.loadData({
 					clear: true
 				}, (res) => {
-					console.log(res);
 					uni.stopPullDownRefresh()
 				})
 			},
 			handleItemClick(item) {
-				console.log(item);
 				uni.navigateTo({
 					url: '/pages/list/detail?id=' + item._id + '&title=' + item.title
 				})

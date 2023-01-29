@@ -50,14 +50,14 @@ const { about } = config
         methods: {
             openprotocol(e) {
                 uni.navigateTo({
-                    url: "/pages/common/webview/webview?url="+about.agreements[0].url
+                    url: "/uni_modules/uni-id-pages/pages/common/webview/webview?url="+about.agreements[0].url
                 })
             },
-			openPrivacyPolicy(e) {
-			    uni.navigateTo({
-			        url: "/pages/common/webview/webview?url="+about.agreements[1].url
-			    })
-			},
+				openPrivacyPolicy(e) {
+					 uni.navigateTo({
+						  url: "/uni_modules/uni-id-pages/pages/common/webview/webview?url="+about.agreements[1].url
+					 })
+				},
             agree(e) {
                 var saveStatus = uni.setStorageSync("userprotocol", 1);
                 this._canBack = true;
@@ -68,22 +68,22 @@ const { about } = config
                 }, 100)
             },
             disagree() {
-				// #ifdef APP-PLUS
-				plus.runtime.quit();
-				// #endif
-				// #ifdef H5
-				uni.showModal({
-					content: '确定退出本应用？',
-					cancelText:"退出",
-					confirmText:"取消",
-					success: (e) => {
-						if(!e.confirm){
-							window.location.href="about:blank";
-							window.close();
+					// #ifdef APP-PLUS
+					plus.runtime.quit();
+					// #endif
+					// #ifdef H5
+					uni.showModal({
+						content: '确定退出本应用？',
+						cancelText:"退出",
+						confirmText:"取消",
+						success: (e) => {
+							if(!e.confirm){
+								window.location.href="about:blank";
+								window.close();
+							}
 						}
-					}
-				});
-				// #endif
+					});
+					// #endif
             }
         }
     }

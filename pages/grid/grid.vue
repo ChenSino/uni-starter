@@ -1,28 +1,30 @@
 <template>
 	<view class="warp">
 		<!-- #ifdef APP-PLUS -->
-		<status-bar />
+		<statusBar></statusBar>
 		<!-- #endif -->
 		
 		<!-- banner -->
 		<unicloud-db ref="bannerdb" v-slot:default="{data, loading, error, options}" collection="opendb-banner"
 			field="_id,bannerfile,open_url,title" @load="onqueryload">
 			<!-- 当无banner数据时显示占位图 -->
-			<image v-if="!(loading||data.length)" class="banner-image" src="/static/grid/empty.png" mode="aspectFill" :draggable="false" />
-			<uni-swiper-dot v-else class="uni-swiper-dot-box" @clickItem="clickItem" :info="data" 
-				:current="current" field="content">
-				<swiper class="swiper-box" @change="changeSwiper" :current="swiperDotIndex">
-					<swiper-item v-for="(item, index) in data" :key="item._id">
-						<view class="swiper-item" @click="clickBannerItem(item)">
-							<image class="banner-image" :src="item.bannerfile.url" mode="aspectFill" :draggable="false" />
-						</view>
-					</swiper-item>
-				</swiper>
-			</uni-swiper-dot>
+			<image v-if="!(loading||data.length)" class="banner-image" src="/static/uni-center/headers.png" mode="aspectFill" :draggable="false" />
+			
+			<swiper v-else class="swiper-box" @change="changeSwiper" :current="current" indicator-dots>
+				<swiper-item v-for="(item, index) in data" :key="item._id">
+					<view class="swiper-item" @click="clickBannerItem(item)">
+						<image class="banner-image" :src="item.bannerfile.url" mode="aspectFill" :draggable="false" />
+					</view>
+				</swiper-item>
+			</swiper>
 		</unicloud-db>
 
-	<!-- 宫格 -->
-		<uni-section :title="$t('grid.grid')" style="margin: 0;" type="line"></uni-section>
+		<!-- 宫格 -->
+		<view class="section-box">
+			<text class="decoration"></text>
+			<text class="section-text">{{$t('grid.grid')}}</text>
+		</view>
+		
 		<view class="example-body">
 			<uni-grid :column="3" :highlight="true" @change="change">
 				<template v-for="(item,i) in gridList">
@@ -42,16 +44,19 @@
 </template>
 
 <script>
+	// #ifdef APP-PLUS
 	import statusBar from "@/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar";
+	// #endif
 	export default {
+		// #ifdef APP-PLUS
 		components: {
 			statusBar
 		},
+		// #endif
 		data() {
 			return {
 				gridList: [],
 				current: 0,
-				swiperDotIndex: 0,
 				hasLogin:false
 			}
 		},
@@ -86,9 +91,6 @@
 			changeSwiper(e) {
 				this.current = e.detail.current
 			},
-			clickItem(e) {
-				this.swiperDotIndex = e
-			},
 			/**
 			 * 点击banner的处理
 			 */
@@ -96,7 +98,7 @@
 				// 有外部链接-跳转url
 				if (item.open_url) {
 					uni.navigateTo({
-						url: '/pages/common/webview/webview?url=' + item.open_url + '&title=' + item.title,
+						url: '/uni_modules/uni-id-pages/pages/common/webview/webview?url=' + item.open_url + '&title=' + item.title,
 						success: res => {},
 						fail: () => {},
 						complete: () => {}
@@ -134,6 +136,23 @@
 		background-color: #ffffff;
 	}
 	/* #endif */
+	
+	.section-box{
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		padding: 20rpx;
+	}
+	.decoration{
+		width: 4px;
+		height: 12px;
+		border-radius: 10px;
+		background-color: #2979ff;
+	}
+	.section-text{
+		color: #333;
+		margin-left: 15rpx;
+	}
 
 	/* #ifdef APP-NVUE */
 	.warp {
