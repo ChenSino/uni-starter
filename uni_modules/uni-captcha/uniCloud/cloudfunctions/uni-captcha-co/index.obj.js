@@ -6,16 +6,13 @@ const db = uniCloud.database();
 //获取数据表opendb-verify-codes对象
 const verifyCodes = db.collection('opendb-verify-codes')
 
-
 const createConfig = require('uni-config-center')
 const captchaConfig = createConfig({ // 获取配置实例
     pluginId: 'captcha-config' // common/uni-config-center下的插件配置目录名
 })
 const Config = captchaConfig.config() // 获取common/uni-config-center/share-config/config.json的内容
-
-console.log(Config,"15----------");
+// console.log(Config,"15----------");
 module.exports = {
-	
 	async getImageCaptcha({
 		scene
 	}) {
