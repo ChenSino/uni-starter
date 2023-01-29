@@ -56,7 +56,6 @@
 						duration: 3000
 					});
 				}
-				console.log("this.formData.code: ",this.formData.code);
 				if(! /^\d{6}$/.test(this.formData.code)){
 					this.$refs.smsForm.focusSmsCodeInput = true 
 					return uni.showToast({
@@ -85,7 +84,7 @@
 					uni.navigateBack()
 					return e
 				}).catch(e => {
-					console.log(e);
+					console.log(e,"bindMobileBySms++++++++++");
 					if (e.errCode == 'uni-id-captcha-required') {
 						this.$refs.popup.open()
 					}

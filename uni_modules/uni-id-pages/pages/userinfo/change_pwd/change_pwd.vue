@@ -94,7 +94,7 @@
 								oldPassword,
 								newPassword
 							}).then(e => {
-								// console.log(e);
+								console.log("e:------------- ",e);
 								uni.removeStorageSync('uni_id_token');
 								uni.setStorageSync('uni_id_token_expired', 0)
 								uni.redirectTo({
@@ -102,16 +102,14 @@
 								})
 								return e
 							}).catch(e => {
-								console.log("e:------------ ",e);
-								// uni.showModal({
-								// 	content: e.message,
-								// 	showCancel: false
-								// });
+								uni.showModal({
+									content: e.message,
+									showCancel: false
+								});
 								return e
 							})
-						
 					}).catch(errors => {
-						console.log("errors: ------------",errors);
+						console.log("errors: ",errors);
 						let key = errors[0].key
 						key = key.replace(key[0], key[0].toUpperCase())
 						// console.log(key, 'focus' + key);

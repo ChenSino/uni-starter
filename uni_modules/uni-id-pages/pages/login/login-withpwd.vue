@@ -96,7 +96,6 @@
 						duration: 3000
 					});
 				}
-				console.log("this.needCaptcha: ",this.needCaptcha);
 				if (this.needCaptcha && this.captcha.length != 4) {
 					this.$refs.captcha.getImageCaptcha()
 					return uni.showToast({

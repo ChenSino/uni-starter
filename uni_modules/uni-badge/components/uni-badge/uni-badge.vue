@@ -192,12 +192,11 @@
 		display: flex;
 		overflow: hidden;
 		box-sizing: border-box;
-		min-width: 20px;
-		font-feature-settings: "tnum";
 		/* #endif */
 		justify-content: center;
 		flex-direction: row;
 		height: 20px;
+		min-width: 20px;
 		padding: 0 4px;
 		line-height: 18px;
 		color: #fff;
@@ -207,6 +206,7 @@
 		border: 1px solid #fff;
 		text-align: center;
 		font-family: 'Helvetica Neue', Helvetica, sans-serif;
+		font-feature-settings: "tnum";
 		font-size: $bage-size;
 		/* #ifdef H5 */
 		z-index: 999;

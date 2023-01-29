@@ -9,3 +9,4 @@ package-lock.json
 /manifest.json
 /env.js
 /vue.config.js
+/uni_modules/uni-config-center/uniCloud/cloudfunctions/common/uni-config-center/captcha-config/
