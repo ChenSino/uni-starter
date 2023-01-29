@@ -3,7 +3,11 @@
 		<uni-sign-in ref="signIn"></uni-sign-in>
 		<view class="userInfo" @click.capture="toUserInfo">
 			<cloud-image width="150rpx" height="150rpx" v-if="hasLogin&&userInfo.avatar_file&&userInfo.avatar_file.url" :src="userInfo.avatar_file.url"></cloud-image>
-			<image v-else class="logo-img" src="@/static/uni-center/defaultAvatarUrl.png"></image>
+			
+			<view v-else class="defaultAvatarUrl">
+				<uni-icons color="#ffffff" size="50" type="person-filled" />
+			</view>
+			
 			<view class="logo-title">
 				<text class="uer-name" v-if="hasLogin">{{userInfo.nickname||userInfo.username||userInfo.mobile}}</text>
 				<text class="uer-name" v-else>{{$t('mine.notLogged')}}</text>
@@ -90,7 +94,7 @@
 						{
 							"title": this.$t('mine.toEvaluate'),
 							"event": 'gotoMarket',
-							"icon": "hand-thumbsup"
+							"icon": "star"
 						},
 						//#endif
 						{
@@ -121,11 +125,13 @@
 						"to": '/pages/ucenter/settings/settings',
 						"icon": "gear"
 					}],
+					// #ifdef APP-PLUS
 					[{
 						"title": this.$t('mine.about'),
 						"to": '/pages/ucenter/about/about',
 						"icon": "info"
 					}]
+					// #endif
 				],
 				listStyles: {
 					"height": "150rpx", // 边框高度
@@ -355,7 +361,7 @@
 		background-color: #f8f8f8;
 	}
 	/* #endif*/
-
+	
 	.center {
 		flex: 1;
 		flex-direction: column;
@@ -363,17 +369,19 @@
 	}
 
 	.userInfo {
-		padding: 20rpx;
-		padding-top: 50px;
+		// padding: 20rpx;
+		padding-top: 60px;
 		background-image: url(../../static/uni-center/headers.png);
 		flex-direction: column;
 		align-items: center;
 	}
-
-	.logo-img {
+	.defaultAvatarUrl{
 		width: 150rpx;
 		height: 150rpx;
-		border-radius: 150rpx;
+		background-color: rgb(0, 122, 255);
+		border-radius: 100%;
+		justify-content: center;
+		align-items: center;
 	}
 
 	.logo-title {

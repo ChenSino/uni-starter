@@ -44,12 +44,12 @@
 			"style": {
 				"navigationStyle": "custom"
 			}
-		}, {
+		},
+		// #ifdef APP-PLUS
+		{
 			"path": "pages/ucenter/about/about",
 			"style": {
-				"navigationBarTitleText": "关于"
-					// #ifdef APP-PLUS
-					,
+				"navigationBarTitleText": "关于",
 				"app-plus": {
 					"titleNView": {
 						"buttons": [{
@@ -57,11 +57,8 @@
 						}]
 					}
 				}
-				// #endif
 			}
-
 		},
-		// #ifdef APP-PLUS
 		{
 			"path": "uni_modules/uni-upgrade-center-app/pages/upgrade-popup",
 			"style": {
@@ -78,6 +75,34 @@
 				}
 			}
 		},
+		{
+			"path": "pages/ucenter/invite/invite",
+			"style": {
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "uni_modules/uni-id-pages/pages/userinfo/deactivate/deactivate",
+			"style": {
+				"navigationBarTitleText": "注销账号"
+			}
+		},
+		// #endif
+		// #ifdef H5
+		{
+			"path": "uni_modules/uni-id-pages/pages/userinfo/cropImage/cropImage",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "uni_modules/uni-id-pages/pages/register/register-admin",
+			"style": {
+				"enablePullDownRefresh": false,
+				"navigationBarTitleText": "注册管理员账号"
+			}
+		},
 		// #endif
 		{
 			"path": "pages/uni-agree/uni-agree",
@@ -92,14 +117,6 @@
 			"style": {
 				"navigationBarTitleText": "设置"
 			}
-
-		}, {
-			"path": "pages/common/webview/webview",
-			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false
-			}
-
 		},
 		{
 			"path": "pages/ucenter/read-news-log/read-news-log",
@@ -107,23 +124,12 @@
 				"navigationBarTitleText": "阅读记录",
 				"enablePullDownRefresh": true
 			}
-		}, {
-			"path": "pages/ucenter/invite/invite",
-			"style": {
-				"navigationStyle": "custom",
-				"enablePullDownRefresh": false
-			}
-
-		}, {
+		},
+		{
 			"path": "uni_modules/uni-feedback/pages/opendb-feedback/opendb-feedback",
 			"style": {
 				"navigationBarTitleText": "意见反馈",
 				"enablePullDownRefresh": false
-			}
-		}, {
-			"path": "uni_modules/uni-id-pages/pages/userinfo/deactivate/deactivate",
-			"style": {
-				"navigationBarTitleText": "注销账号"
 			}
 		},
 		{
@@ -135,11 +141,6 @@
 			"path": "uni_modules/uni-id-pages/pages/userinfo/bind-mobile/bind-mobile",
 			"style": {
 				"navigationBarTitleText": "绑定手机号码"
-			}
-		}, {
-			"path": "uni_modules/uni-id-pages/pages/userinfo/cropImage/cropImage",
-			"style": {
-				"navigationBarTitleText": ""
 			}
 		}, {
 			"path": "uni_modules/uni-id-pages/pages/login/login-withoutpwd",
@@ -188,20 +189,14 @@
 			"style": {
 				"navigationBarTitleText": "通过邮箱重置密码"
 			}
-		}, {
-			"path": "uni_modules/uni-id-pages/pages/register/register-admin",
-			"style": {
-				"enablePullDownRefresh": false,
-				"navigationBarTitleText": "注册管理员账号"
-			}
+		},
+		{
+			 "path": "uni_modules/uni-id-pages/pages/userinfo/set-pwd/set-pwd",
+			 "style": {
+				  "enablePullDownRefresh": false,
+				  "navigationBarTitleText": "设置密码"
+			 }
 		}
-	,{
-    "path": "uni_modules/uni-id-pages/pages/userinfo/set-pwd/set-pwd",
-    "style": {
-        "enablePullDownRefresh": false,
-        "navigationBarTitleText": "设置密码"
-    }
-}
 ],
 	"globalStyle": {
 		// #ifdef H5

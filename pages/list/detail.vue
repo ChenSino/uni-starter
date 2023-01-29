@@ -52,12 +52,16 @@
 <script>
 	// #ifdef APP
 	import UniShare from '@/uni_modules/uni-share/js_sdk/uni-share.js';
+	import uniNavBar from '@/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar.vue';
 	const uniShare = new UniShare()
 	// #endif
 	const db = uniCloud.database();
 	const readNewsLog = db.collection('read-news-log')
 	export default {
 		// #ifdef APP
+		components:{
+			"uni-nav-bar":uniNavBar
+		},
 		onBackPress({from}) {
 			if(from == 'backbutton'){
 				if(uniShare.isShow){
