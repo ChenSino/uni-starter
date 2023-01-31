@@ -386,7 +386,7 @@
 	.defaultAvatarUrl{
 		width: 150rpx;
 		height: 150rpx;
-		background-color: rgb(0, 122, 255);
+		background-color: #007aff;
 		border-radius: 100%;
 		justify-content: center;
 		align-items: center;
