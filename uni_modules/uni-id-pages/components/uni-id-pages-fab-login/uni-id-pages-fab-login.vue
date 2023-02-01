@@ -2,7 +2,7 @@
 	<view>
 		<view class="fab-login-box">
 			<view class="item" v-for="(item,index) in servicesList" :key="index"
-				@click="item.path?navigateTo(item.path):login_before(item.id,false)">
+				@click="item.path?toPage(item.path):login_before(item.id,false)">
 				<image class="logo" :src="item.logo" mode="scaleToFill"></image>
 				<text class="login-title">{{item.text}}</text>
 			</view>
@@ -17,7 +17,6 @@
 	//前一个窗口的页面地址。控制点击切换快捷登录方式是创建还是返回
 	import {store,mutations} from '@/uni_modules/uni-id-pages/common/store.js'
 	let allServicesList = []
-
 	export default {
 		computed: {
 			agreements() {
@@ -66,6 +65,7 @@
 						"text": "微信登录",
 						"logo": "/uni_modules/uni-id-pages/static/login/uni-fab-login/weixin.png",
 					},
+					// #ifndef MP-WEIXIN
 					{
 						"id": "apple",
 						"text": "苹果登录",
@@ -111,6 +111,7 @@
 						"text": "新浪微博", //暂未提供该登录方式的接口示例
 						"logo": "/uni_modules/uni-id-pages/static/app-plus/uni-fab-login/sinaweibo.png",
 					}
+					// #endif
 				],
 				univerifyStyle: { //一键登录弹出窗的样式配置参数
 					"fullScreen": true, // 是否全屏显示，true表示全屏模式，false表示非全屏模式，默认值为false。
@@ -203,17 +204,18 @@
 				}
 				return '/' + pages[pages.length - n].route
 			},
-			navigateTo(path) {
+			toPage(path,index = 0) {
+				let type = ['navigateTo','redirectTo'][index]
 				//console.log('比较', this.getRoute(1),this.getRoute(2), path)
 				if (this.getRoute(1) == path.split('?')[0] && this.getRoute(1) ==
 					'/uni_modules/uni-id-pages/pages/login/login-withoutpwd') {
 					//如果要被打开的页面已经打开，且这个页面是 /uni_modules/uni-id-pages/pages/index/index 则把类型参数传给他
-					let type = path.split('?')[1].split('=')[1]
-					uni.$emit('uni-id-pages-set-login-type', type)
+					let loginType = path.split('?')[1].split('=')[1]
+					uni.$emit('uni-id-pages-setLoginType', loginType)
 				} else if (this.getRoute(2) == path) { // 如果上一个页面就是，马上要打开的页面，直接返回。防止重复开启
 					uni.navigateBack();
 				} else if (this.getRoute(1) != path) {
-					uni.navigateTo({
+					uni[type]({
 						url: path,
 						animationType: 'slide-in-left',
 						complete(e) {
@@ -321,18 +323,24 @@
 				uni.showLoading({
 					mask: true
 				})
+
 				if (type == 'univerify') {
 					let univerifyManager = uni.getUniverifyManager()
+					let clickAnotherButtons = false
 					let onButtonsClickFn = async res => {
-						// console.log('点击了第三方登录，provider：', res, res.provider, this.univerifyStyle.buttons.list);
-						//同步一键登录弹出层隐私协议框是否打勾
+						console.log('点击了第三方登录，provider：', res, res.provider, this.univerifyStyle.buttons.list);
+						clickAnotherButtons = true
+						// 同步一键登录弹出层隐私协议框是否打勾
 						let agree = (await uni.getCheckBoxState())[1].state
 						this.agree = agree
 						let {
 							path
 						} = this.univerifyStyle.buttons.list[res.index]
 						if (path) {
-							this.navigateTo(path)
+							if( this.getRoute(1).includes('login-withoutpwd') && path.includes('login-withoutpwd') ){
+								this.getParentComponent().showCurrentWebview()
+							}
+							this.toPage(path,1)
 							closeUniverify()
 						} else {
 							if (agree) {
@@ -365,16 +373,20 @@
 							this.login(res.authResult, 'univerify')
 						},
 						fail(err) {
-							uni.showToast({
-								title: JSON.stringify(err),
-								icon: 'none',
-								duration: 3000
-							});
+							console.log(err)
+							if(!clickAnotherButtons){
+								uni.navigateBack()
+							}
+							// uni.showToast({
+							// 	title: JSON.stringify(err),
+							// 	icon: 'none',
+							// 	duration: 3000
+							// });
 						},
 						complete: async e => {
 							uni.hideLoading()
 							//同步一键登录弹出层隐私协议框是否打勾
-							this.agree = (await uni.getCheckBoxState())[1].state
+							// this.agree = (await uni.getCheckBoxState())[1].state
 							// 取消订阅自定义按钮点击事件
 							univerifyManager.offButtonsClick(onButtonsClickFn)
 						}
