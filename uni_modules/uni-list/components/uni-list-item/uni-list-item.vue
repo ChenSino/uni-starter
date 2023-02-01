@@ -15,7 +15,7 @@
 							<image :src="thumb" class="uni-list-item__icon-img" :class="['uni-list--' + thumbSize]" />
 						</view>
 						<view v-else-if="showExtraIcon" class="uni-list-item__icon">
-							<uni-icons :color="extraIcon.color" :size="extraIcon.size" :type="extraIcon.type" />
+							<uni-icons :customPrefix="extraIcon.customPrefix" :color="extraIcon.color" :size="extraIcon.size" :type="extraIcon.type" />
 						</view>
 					</view>
 				</slot>
@@ -86,6 +86,104 @@
 			direction: {
 				type: String,
 				default: 'row'
+			},
+			title: {
+				type: String,
+				default: ''
+			},
+			note: {
+				type: String,
+				default: ''
+			},
+			ellipsis: {
+				type: [Number, String],
+				default: 0
+			},
+			disabled: {
+				type: [Boolean, String],
+				default: false
+			},
+			clickable: {
+				type: Boolean,
+				default: false
+			},
+			showArrow: {
+				type: [Boolean, String],
+				default: false
+			},
+			link: {
+				type: [Boolean, String],
+				default: false
+			},
+			to: {
+				type: String,
+				default: ''
+			},
+			showBadge: {
+				type: [Boolean, String],
+				default: false
+			},
+			showSwitch: {
+				type: [Boolean, String],
+				default: false
+			},
+			switchChecked: {
+				type: [Boolean, String],
+				default: false
+			},
+			badgeText: {
+				type: String,
+				default: ''
+			},
+			badgeType: {
+				type: String,
+				default: 'success'
+			},
+			badgeStyle: {
+				type: Object,
+				default () {
+					return {}
+				}
+			},
+			rightText: {
+				type: String,
+				default: ''
+			},
+			thumb: {
+				type: String,
+				default: ''
+			},
+			thumbSize: {
+				type: String,
+				default: 'base'
+			},
+			showExtraIcon: {
+				type: [Boolean, String],
+				default: false
+			},
+			extraIcon: {
+				type: Object,
+				default () {
+					return {
+						type: '',
+						color: '#000000',
+						size: 20,
+						customPrefix: ''
+					};
+				}
+			},
+			border: {
+				type: Boolean,
+				default: true
+			},
+			customStyle: {
+				type: Object,
+				default () {
+					return {
+						padding: '',
+						backgroundColor: '#FFFFFF'
+					}
+				}
 			},
 			title: {
 				type: String,
@@ -348,7 +446,7 @@
 	}
 
 	.uni-list-item--hover {
-		background-color: $uni-bg-color-hover;
+		background-color: $uni-bg-color-hover !important;
 	}
 
 	.uni-list-item__container {
