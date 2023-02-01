@@ -123,7 +123,14 @@
 								},
 								fail(e){
 									console.error(e)
-									callback(filePath)
+									uni.showModal({
+										content: 'wx.cropImage ' + e.errMsg,
+										showCancel: false,
+										confirmText:"跳过裁剪",
+										complete() {
+											callback(filePath)
+										}
+									});
 								}
 							})
 							// #endif
