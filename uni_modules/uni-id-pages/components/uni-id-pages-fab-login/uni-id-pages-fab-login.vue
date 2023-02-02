@@ -330,8 +330,16 @@
 					let onButtonsClickFn = async res => {
 						console.log('点击了第三方登录，provider：', res, res.provider, this.univerifyStyle.buttons.list);
 						clickAnotherButtons = true
+						let checkBoxState = await uni.getCheckBoxState();
 						// 同步一键登录弹出层隐私协议框是否打勾
-						let agree = (await uni.getCheckBoxState())[1].state
+						// #ifdef VUE2
+						let agree = checkBoxState[1].state
+						// #endif
+						
+						// #ifdef VUE3
+						let agree = checkBoxState.state
+						// #endif
+						
 						this.agree = agree
 						let {
 							path
