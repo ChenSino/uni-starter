@@ -7,9 +7,6 @@
 				<text class="login-title">{{item.text}}</text>
 			</view>
 		</view>
-		<!-- #ifdef MP-WEIXIN -->
-		<uni-id-pages-user-profile @next="doUserProfileNext" ref="userProfile"></uni-id-pages-user-profile>
-		<!-- #endif -->
 	</view>
 </template>
 <script>
@@ -333,14 +330,11 @@
 						let checkBoxState = await uni.getCheckBoxState();
 						// 同步一键登录弹出层隐私协议框是否打勾
 						// #ifdef VUE2
-						let agree = checkBoxState[1].state
+						this.agree = checkBoxState[1].state
 						// #endif
-						
 						// #ifdef VUE3
-						let agree = checkBoxState.state
+						this.agree = checkBoxState.state
 						// #endif
-						
-						this.agree = agree
 						let {
 							path
 						} = this.univerifyStyle.buttons.list[res.index]
@@ -351,7 +345,7 @@
 							this.toPage(path,1)
 							closeUniverify()
 						} else {
-							if (agree) {
+							if (this.agree) {
 								closeUniverify()
 								setTimeout(() => {
 									this.login_before(res.provider)
@@ -445,17 +439,6 @@
 						icon: 'none',
 						duration: 2000
 					});
-					// #ifdef MP-WEIXIN
-					//如果是微信小程序端的微信登录，且为首次登录，就弹出获取微信昵称+头像用于绑定资料
-					if (['weixin', 'weixinMobile'].includes(type) && result.type == "register") {
-						mutations.loginSuccess({
-							...result,
-							showToast: false,
-							autoBack: false
-						})
-						return this.$refs.userProfile.open(result.uid)
-					}
-					// #endif
 					// #ifdef H5
 					result.loginType = type
 					// #endif
@@ -474,13 +457,6 @@
 					}
 					uni.hideLoading()
 				})
-			},
-			doUserProfileNext() {
-				try {
-					mutations.loginSuccess()
-				} catch (e) {
-					console.log(e);
-				}
 			},
 			async getUserInfo(e) {
 				return new Promise((resolve, reject) => {
