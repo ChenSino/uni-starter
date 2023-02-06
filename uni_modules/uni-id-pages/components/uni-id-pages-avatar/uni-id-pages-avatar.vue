@@ -71,8 +71,31 @@
 				let avatar_file = {
 					extname: avatarUrl.split('.')[avatarUrl.split('.').length - 1],
 					name:'',
-					url:''
+					url:avatarUrl
 				}
+				
+				// 裁剪
+				let filePath = await new Promise((callback) => {
+					wx.cropImage({
+						src:avatarUrl,
+						cropScale:"1:1",
+						success: res => {
+							callback(res.tempFilePath)
+						},
+						fail(e){
+							console.error(e)
+							uni.showModal({
+								content: 'wx.cropImage ' + e.errMsg,
+								showCancel: false,
+								confirmText:"跳过裁剪",
+								complete() {
+									callback(avatarUrl)
+								}
+							});
+						}
+					})
+				})
+				
 				//上传到服务器
 				let cloudPath = this.userInfo._id + '' + Date.now()
 				avatar_file.name = cloudPath
@@ -84,7 +107,7 @@
 					let {
 						fileID
 					} = await uniCloud.uploadFile({
-						filePath:avatarUrl,
+						filePath,
 						cloudPath,
 						fileType: "image"
 					});
@@ -93,20 +116,20 @@
 				}catch(e){
 					console.error(e);
 				}
-				console.log('avatar_file',avatar_file);
 				this.setAvatarFile(avatar_file)
 			},
 			uploadAvatarImg(res) {
+				
 				// #ifdef MP-WEIXIN
 				return false // 微信小程序走 bindchooseavatar方法
 				// #endif
 				
-				// #ifndef MP-WEIXIN
 				if(!this.hasLogin){
 					return uni.navigateTo({
 						url:'/uni_modules/uni-id-pages/pages/login/login-withoutpwd'
 					})
 				}
+				
 				const crop = {
 					quality: 100,
 					width: 600,
@@ -169,7 +192,6 @@
 						this.setAvatarFile(avatar_file)
 					}
 				})
-				// #endif
 			}
 		}
 	}

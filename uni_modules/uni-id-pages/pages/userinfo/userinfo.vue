@@ -11,11 +11,6 @@
 			</uni-list-item>
 			<uni-list-item v-if="userInfo.email" class="item" title="电子邮箱" :rightText="userInfo.email">
 			</uni-list-item>
-			<!-- #ifdef APP -->
-      <!-- 如未开通实人认证服务，可以将实名认证入口注释 -->
-			<uni-list-item class="item" @click="realNameVerify" title="实名认证" :rightText="realNameStatus !== 2 ? '未认证': '已认证'" link>
-			</uni-list-item>
-			<!-- #endif -->
 			<uni-list-item v-if="hasPwd" class="item" @click="changePassword" title="修改密码" link>
 			</uni-list-item>
 		</uni-list>
@@ -37,24 +32,17 @@
 	</view>
 </template>
 <script>
-const uniIdCo = uniCloud.importObject("uni-id-co")
-  import {
-    store,
-    mutations
-  } from '@/uni_modules/uni-id-pages/common/store.js'
+	const uniIdCo = uniCloud.importObject("uni-id-co")
+	import {
+		store,
+		mutations
+	} from '@/uni_modules/uni-id-pages/common/store.js'
 	export default {
-    computed: {
-      userInfo() {
-        return store.userInfo
-      },
-	  realNameStatus () {
-		  if (!this.userInfo.realNameAuth) {
-			  return 0
-		  }
-
-		  return this.userInfo.realNameAuth.authStatus
-	  }
-    },
+		computed: {
+			userInfo() {
+				return store.userInfo
+			}
+		},
 		data() {
 			return {
 				univerifyStyle: {
@@ -71,8 +59,7 @@ const uniIdCo = uniCloud.importObject("uni-id-co")
 				// },
 				hasPwd: false,
 				showLoginManage: false ,//通过页面传参隐藏登录&退出登录按钮
-				setNicknameIng:false,
-				uniToken:''
+				setNicknameIng:false
 			}
 		},
 		async onShow() {
@@ -86,10 +73,6 @@ const uniIdCo = uniCloud.importObject("uni-id-co")
 			//判断当前用户是否有密码，否则就不显示密码修改功能
 			let res = await uniIdCo.getAccountInfo()
 			this.hasPwd = res.isPasswordSet
-		},
-		onReady() {
-			this.uniToken = uni.getStorageSync('uni_id_token')
-			console.log("uniToken: ----", this.uniToken);
 		},
 		methods: {
 			login() {
@@ -171,12 +154,13 @@ const uniIdCo = uniCloud.importObject("uni-id-co")
 					this.setNicknameIng = false
 					this.$refs.dialog.close()
 				} else {
+					this.setNicknameIng = true
 					this.$refs.dialog.open()
 				}
 			},
-			deactivate(){
+			deactivate() {
 				uni.navigateTo({
-					url:"/uni_modules/uni-id-pages/pages/userinfo/deactivate/deactivate"
+					url: "/uni_modules/uni-id-pages/pages/userinfo/deactivate/deactivate"
 				})
 			},
 			async bindThirdAccount(provider) {
@@ -186,7 +170,7 @@ const uniIdCo = uniCloud.importObject("uni-id-co")
 					alipay: 'ali_openid',
 					apple: 'apple_openid',
 					qq: 'qq_openid'
-				}[provider.toLowerCase()]
+				} [provider.toLowerCase()]
 
 				if (this.userInfo[bindField]) {
 					await uniIdCo['unbind' + provider]()
@@ -213,11 +197,6 @@ const uniIdCo = uniCloud.importObject("uni-id-co")
 						}
 					})
 				}
-			},
-			realNameVerify () {
-				uni.navigateTo({
-					url: "/uni_modules/uni-id-pages/pages/userinfo/realname-verify/realname-verify"
-				})
 			}
 		}
 	}
