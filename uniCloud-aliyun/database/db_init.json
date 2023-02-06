@@ -6,7 +6,7 @@
 			"_id": "_uni_starter_test_user_id",
 			"username": "uni-starter预置用户名",
 			"nickname": "测试用户昵称",
-			"avatar": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png",
+			"avatar": "https://web-assets.dcloud.net.cn/ext/uni-starter-user-logo.png",
 			"mobile": "18888888888",
 			"mobile_confirmed": 1
 		}]
@@ -18,14 +18,14 @@
 					"name": "094a9dc0-50c0-11eb-b680-7980c8a877b8.jpg",
 					"extname": "jpg",
 					"fileType": "image",
-					"url": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/b88a7e17-35f0-4d0d-bc32-93f8909baf03.jpg",
+					"url": "https://web-assets.dcloud.net.cn/ext/uni-satrter-01.jpg",
 					"size": 70880,
 					"image": {
 						"width": 500,
 						"height": 333,
 						"location": "blob:http://localhost:8081/a3bfaab4-7ee6-44d5-a171-dc8225d83598"
 					},
-					"path": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/b88a7e17-35f0-4d0d-bc32-93f8909baf03.jpg"
+					"path": "https://web-assets.dcloud.net.cn/ext/uni-satrter-01.jpg"
 				},
 				"open_url": "https://www.dcloud.io/",
 				"title": "测试",
@@ -39,14 +39,14 @@
 					"name": "094a9dc0-50c0-11eb-b680-7980c8a877b8.jpg",
 					"extname": "jpg",
 					"fileType": "image",
-					"url": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/9db94cb4-a5e0-4ed9-b356-b42a392b3112.jpg",
+					"url": "https://web-assets.dcloud.net.cn/ext/uni-satrter-01.jpg",
 					"size": 70880,
 					"image": {
 						"width": 500,
 						"height": 333,
 						"location": "blob:http://localhost:8081/1a6f718a-4012-476a-9172-590fef2cc518"
 					},
-					"path": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-76ce2c5e-31c7-4d81-8fcf-ed1541ecbc6e/9db94cb4-a5e0-4ed9-b356-b42a392b3112.jpg"
+					"path": "https://web-assets.dcloud.net.cn/ext/uni-satrter-01.jpg"
 				},
 				"open_url": "https://www.dcloud.io/",
 				"title": "",
