@@ -1,5 +1,7 @@
 // 在本文件中可配置云数据库初始化，数据格式见：https://uniapp.dcloud.io/uniCloud/hellodb?id=db-init
+
 // 编写完毕后对本文件点右键，可按配置规则创建表和添加数据
+
 {
 	"uni-id-users": {
 		"data": [{
@@ -9,6 +11,15 @@
 			"avatar": "https://unicloud.dcloud.net.cn/assets/logo.dca09351.png",
 			"mobile": "18888888888",
 			"mobile_confirmed": 1
+		}]
+	},
+	"uni-id-roles": {
+		"data": [{
+			"role_id": "admin",
+			"role_name": "超级管理员",
+			"permission": [],
+			"comment": "超级管理员拥有所有权限",
+			"create_date": 0
 		}]
 	},
 	"opendb-banner": {
@@ -22,8 +33,7 @@
 					"size": 70880,
 					"image": {
 						"width": 500,
-						"height": 333,
-						"location": "blob:http://localhost:8081/a3bfaab4-7ee6-44d5-a171-dc8225d83598"
+						"height": 333
 					},
 					"path": "https://web-assets.dcloud.net.cn/unidoc/zh/shuijiao.jpg"
 				},
@@ -43,8 +53,7 @@
 					"size": 70880,
 					"image": {
 						"width": 500,
-						"height": 333,
-						"location": "blob:http://localhost:8081/1a6f718a-4012-476a-9172-590fef2cc518"
+						"height": 333
 					},
 					"path": "https://web-assets.dcloud.net.cn/unidoc/zh/shuijiao.jpg"
 				},
@@ -71,95 +80,6 @@
 			"last_modify_date": 1616092303031,
 			"create_date": 1616092287006
 		}]
-	},
-	"opendb-app-versions": {
-		"data": [{
-			"is_silently": false,
-			"is_mandatory": false,
-			"appid": "__UNI__03B096E",
-			"name": "uni-starter",
-			"title": "新增升级中心",
-			"contents": "新增升级中心",
-			"platform": [
-				"Android"
-			],
-			"version": "1.0.1",
-			"url": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-3469aac7-a663-4c5d-8ee8-94275f8c09ab/3128d010-01c5-4121-a1d6-f3f919944a23.apk",
-			"stable_publish": false,
-			"type": "native_app",
-			"create_date": 1616771628150
-		}],
-		"index": [{
-			"IndexName": "appid",
-			"MgoKeySchema": {
-				"MgoIndexKeys": [{
-					"Name": "appid",
-					"Direction": "1"
-				}, {
-					"Name": "uni_platform",
-					"Direction": "1"
-				}, {
-					"Name": "create_env",
-					"Direction": "1"
-				}],
-				"MgoIsUnique": false
-			}
-		}, {
-			"IndexName": "查找上线发行应用",
-			"MgoKeySchema": {
-				"MgoIndexKeys": [{
-					"Name": "appid",
-					"Direction": "1"
-				}, {
-					"Name": "platform",
-					"Direction": "1"
-				}, {
-					"Name": "stable_publish",
-					"Direction": "1"
-				}, {
-					"Name": "uni_platform",
-					"Direction": "1"
-				}, {
-					"Name": "create_env",
-					"Direction": "1"
-				}],
-				"MgoIsUnique": false
-			}
-		}]
-	},
-	"opendb-verify-codes": {
-		"data": []
-	},
-	"opendb-app-list": {
-		"data": [],
-		"index": [{
-			"IndexName": "appid",
-			"MgoKeySchema": {
-				"MgoIndexKeys": [{
-					"Name": "appid",
-					"Direction": "1"
-				}],
-				"MgoIsUnique": true
-			}
-		}, {
-			"IndexName": "name",
-			"MgoKeySchema": {
-				"MgoIndexKeys": [{
-					"Name": "name",
-					"Direction": "1"
-				}],
-				"MgoIsUnique": false
-			}
-		}]
-	},
-	"uni-id-roles": {
-		"data": []
-	},
-	"uni-id-permissions": {
-		"data": []
-	},
-	"uni-id-log": {
-		"data": []
 	},
 	"opendb-admin-menus": {
 		"data": [{
@@ -579,8 +499,14 @@
 			}
 		]
 	},
+	"uni-id-permissions": {},
+	"uni-id-log": {},
 	"uni-id-tag": {},
 	"uni-id-device": {},
+	"uni-id-scores": {},
+	"opendb-verify-codes": {},
+	"opendb-app-list": {},
+	"opendb-app-versions": {},
 	"opendb-device": {},
 	"opendb-department": {},
 	"opendb-sms-task": {},
@@ -595,6 +521,7 @@
 	"uni-stat-app-platforms": {},
 	"uni-stat-error-logs": {},
 	"uni-stat-error-result": {},
+	"uni-stat-error-source-map": {},
 	"uni-stat-event-logs": {},
 	"uni-stat-event-result": {},
 	"uni-stat-events": {},
@@ -608,8 +535,8 @@
 	"uni-stat-session-logs": {},
 	"uni-stat-share-logs": {},
 	"uni-stat-user-session-logs": {},
-	"uni-pay-orders": {},
 	"uni-stat-pay-result": {},
+	"uni-pay-orders": {},
 	"opendb-tempdata": {},
 	"opendb-feedback": {},
 	"opendb-news-categories": {},
@@ -618,6 +545,5 @@
 	"opendb-search-hot": {},
 	"opendb-search-log": {},
 	"opendb-sign-in": {},
-	"read-news-log": {},
-	"uni-id-scores": {}
+	"read-news-log": {}
 }

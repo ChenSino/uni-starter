@@ -83,7 +83,8 @@ const {
 
 const {
   externalRegister,
-  externalLogin
+  externalLogin,
+  updateUserInfoByExternal
 } = require('./module/external')
 
 module.exports = {
@@ -602,15 +603,35 @@ module.exports = {
    */
   setPwd,
   /**
-   * 外部用户注册，将自身系统的用户账号导入uniId，为其创建一个对应uniId的账号(unieid)，使得该账号可以使用依赖uniId的系统及功能。
+   * 外部注册用户
    * @tutorial https://uniapp.dcloud.net.cn/uniCloud/uni-id-pages.html#external-register
-   * @returns
+   * @param {object} params
+   * @param {string} params.externalUid   业务系统的用户id
+   * @param {string} params.nickname  昵称
+   * @param {string} params.gender  性别
+   * @param {string} params.avatar  头像
+   * @returns {object}
    */
   externalRegister,
   /**
-   * 外部用户登录，使用unieid即可登录
+   * 外部用户登录
    * @tutorial https://uniapp.dcloud.net.cn/uniCloud/uni-id-pages.html#external-login
-   * @returns
-   * */
-  externalLogin
+   * @param {object} params
+   * @param {string} params.userId  uni-id体系用户id
+   * @param {string} params.externalUid   业务系统的用户id
+   * @returns {object}
+   */
+  externalLogin,
+  /**
+   * 使用 userId 或 externalUid 获取用户信息
+   * @tutorial https://uniapp.dcloud.net.cn/uniCloud/uni-id-pages.html#external-update-userinfo
+   * @param {object} params
+   * @param {string} params.userId   uni-id体系的用户id
+   * @param {string} params.externalUid   业务系统的用户id
+   * @param {string} params.nickname  昵称
+   * @param {string} params.gender  性别
+   * @param {string} params.avatar  头像
+   * @returns {object}
+   */
+  updateUserInfoByExternal
 }

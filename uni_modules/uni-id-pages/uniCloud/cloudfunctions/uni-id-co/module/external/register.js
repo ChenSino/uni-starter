@@ -1,8 +1,19 @@
 const { preRegister, postRegister } = require('../../lib/utils/register')
+const { EXTERNAL_DIRECT_CONNECT_PROVIDER } = require('../../common/constants')
 
+/**
+ * 外部注册用户
+ * @tutorial https://uniapp.dcloud.net.cn/uniCloud/uni-id-pages.html#external-register
+ * @param {object} params
+ * @param {string} params.externalUid   业务系统的用户id
+ * @param {string} params.nickname  昵称
+ * @param {string} params.gender  性别
+ * @param {string} params.avatar  头像
+ * @returns {object}
+ */
 module.exports = async function (params = {}) {
   const schema = {
-    unieid: 'username',
+    externalUid: 'string',
     nickname: {
       required: false,
       type: 'nickname'
@@ -20,7 +31,7 @@ module.exports = async function (params = {}) {
   this.middleware.validate(params, schema)
 
   const {
-    unieid,
+    externalUid,
     avatar,
     gender,
     nickname
@@ -28,25 +39,39 @@ module.exports = async function (params = {}) {
 
   await preRegister.call(this, {
     user: {
-      username: unieid
+      identities: {
+        provider: EXTERNAL_DIRECT_CONNECT_PROVIDER,
+        uid: externalUid
+      }
     }
   })
 
   const result = await postRegister.call(this, {
     user: {
-      username: unieid,
       avatar,
       gender,
-      nickname
+      nickname,
+      identities: [
+        {
+          provider: EXTERNAL_DIRECT_CONNECT_PROVIDER,
+          userInfo: {
+            avatar,
+            gender,
+            nickname
+          },
+          uid: externalUid
+        }
+      ]
     }
   })
 
   return {
     errCode: result.errCode,
     newToken: result.newToken,
-    unieid,
+    externalUid,
     avatar,
     gender,
-    nickname
+    nickname,
+    uid: result.uid
   }
 }

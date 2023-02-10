@@ -46,6 +46,11 @@ let mixin = {
 		if (e.uniIdRedirectUrl) {
 			this.uniIdRedirectUrl = decodeURIComponent(e.uniIdRedirectUrl)
 		}
+		
+		if(getCurrentPages().length === 1){
+			uni.hideHomeButton()
+			console.log('已隐藏：返回首页按钮');
+		}
 	},
 	computed: {
 		needAgreements() {

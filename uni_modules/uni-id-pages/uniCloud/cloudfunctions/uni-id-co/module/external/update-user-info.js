@@ -1,34 +1,33 @@
-const {
-  findUser
-} = require('../../lib/utils/account')
-const {
-  ERROR
-} = require('../../common/error')
-const {
-  userCollection
-} = require('../../common/constants')
+const { userCollection, EXTERNAL_DIRECT_CONNECT_PROVIDER } = require('../../common/constants')
+const { ERROR } = require('../../common/error')
+const { findUser } = require('../../lib/utils/account')
 const PasswordUtils = require('../../lib/utils/password')
 
 /**
- * 修改用户
- * @tutorial https://uniapp.dcloud.net.cn/uniCloud/uni-id-pages.html#update-user
- * @param {Object}  params
- * @param {String}  params.uid            要更新的用户id
- * @param {String}  params.username       用户名
- * @param {String}  params.password       密码
- * @param {String}  params.nickname       昵称
- * @param {Array}   params.authorizedApp  允许登录的AppID列表
- * @param {Array}   params.role           用户角色列表
- * @param {String}  params.mobile         手机号
- * @param {String}  params.email          邮箱
- * @param {Array}   params.tags           用户标签
- * @param {Number}  params.status         用户状态
- * @returns
+ * 使用 uid 或 externalUid 获取用户信息
+ * @tutorial https://uniapp.dcloud.net.cn/uniCloud/uni-id-pages.html#external-update-userinfo
+ * @param {object} params
+ * @param {string} params.uid   uni-id体系的用户id
+ * @param {string} params.externalUid   业务系统的用户id
+ * @param {string} params.nickname  昵称
+ * @param {string} params.gender  性别
+ * @param {string} params.avatar  头像
+ * @returns {object}
  */
 module.exports = async function (params = {}) {
   const schema = {
-    uid: 'string',
-    username: 'username',
+    uid: {
+      required: false,
+      type: 'string'
+    },
+    externalUid: {
+      required: false,
+      type: 'string'
+    },
+    username: {
+      required: false,
+      type: 'string'
+    },
     password: {
       required: false,
       type: 'password'
@@ -67,6 +66,7 @@ module.exports = async function (params = {}) {
 
   const {
     uid,
+    externalUid,
     username,
     password,
     authorizedApp,
@@ -77,6 +77,29 @@ module.exports = async function (params = {}) {
     tags,
     status
   } = params
+
+  if (!uid && !externalUid) {
+    throw {
+      errCode: ERROR.PARAM_REQUIRED,
+      errMsgVal: {
+        param: 'uid or externalUid'
+      }
+    }
+  }
+
+  let query
+  if (uid) {
+    query = {
+      _id: uid
+    }
+  } else {
+    query = {
+      identities: {
+        provider: EXTERNAL_DIRECT_CONNECT_PROVIDER,
+        uid: externalUid
+      }
+    }
+  }
 
   // 更新的用户数据字段
   const data = {
@@ -130,7 +153,7 @@ module.exports = async function (params = {}) {
     realData.password_secret_version = version
   }
 
-  await userCollection.doc(uid).update(realData)
+  await userCollection.where(query).update(realData)
 
   return {
     errCode: 0
