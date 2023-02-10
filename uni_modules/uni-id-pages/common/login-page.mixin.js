@@ -45,13 +45,11 @@ const mixin = {
 		if (e.uniIdRedirectUrl) {
 			this.uniIdRedirectUrl = decodeURIComponent(e.uniIdRedirectUrl)
 		}
-
-		// #ifdef MP-WEIXIN
-		if (getCurrentPages().length === 1) {
+		
+		if(getCurrentPages().length === 1){
 			uni.hideHomeButton()
 			console.log('已隐藏：返回首页按钮');
 		}
-		// #endif
 	},
 	computed: {
 		needAgreements() {

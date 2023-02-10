@@ -1,4 +1,3 @@
-const url = require('url')
 const { userCollection, EXTERNAL_DIRECT_CONNECT_PROVIDER } = require('../../common/constants')
 const { ERROR } = require('../../common/error')
 const { findUser } = require('../../lib/utils/account')
@@ -60,14 +59,6 @@ module.exports = async function (params = {}) {
     status: {
       required: false,
       type: 'number'
-    },
-    gender: {
-      required: false,
-      type: 'number'
-    },
-    avatar: {
-      required: false,
-      type: 'string'
     }
   }
 
@@ -84,15 +75,13 @@ module.exports = async function (params = {}) {
     mobile,
     email,
     tags,
-    status,
-    avatar,
-    gender
+    status
   } = params
 
   if (!uid && !externalUid) {
     throw {
       errCode: ERROR.PARAM_REQUIRED,
-      errMsgValue: {
+      errMsgVal: {
         param: 'uid or externalUid'
       }
     }
@@ -112,14 +101,6 @@ module.exports = async function (params = {}) {
     }
   }
 
-  const users = await userCollection.where(query).get()
-  const user = users.data && users.data[0]
-  if (!user) {
-    throw {
-      errCode: ERROR.ACCOUNT_NOT_EXISTS
-    }
-  }
-
   // 更新的用户数据字段
   const data = {
     username,
@@ -129,9 +110,7 @@ module.exports = async function (params = {}) {
     mobile,
     email,
     tags,
-    status,
-    avatar,
-    gender
+    status
   }
 
   const realData = Object.keys(data).reduce((res, key) => {
@@ -172,32 +151,6 @@ module.exports = async function (params = {}) {
 
     realData.password = passwordHash
     realData.password_secret_version = version
-  }
-
-  if (avatar) {
-    // eslint-disable-next-line n/no-deprecated-api
-    const avatarPath = url.parse(avatar).pathname
-    const extName = avatarPath.indexOf('.') > -1 ? avatarPath.split('.').pop() : ''
-
-    realData.avatar_file = {
-      name: avatarPath,
-      extname: extName,
-      url: avatar
-    }
-  }
-
-  if (user.identities.length) {
-    const identity = user.identities.find(item => item.provider === EXTERNAL_DIRECT_CONNECT_PROVIDER)
-
-    if (identity) {
-      identity.userInfo = {
-        avatar,
-        gender,
-        nickname
-      }
-    }
-
-    realData.identities = user.identities
   }
 
   await userCollection.where(query).update(realData)

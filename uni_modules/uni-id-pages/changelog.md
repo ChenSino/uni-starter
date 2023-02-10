@@ -1,3 +1,7 @@
+## 1.1.2（2023-02-10）
+- 新增 微信小程序端 首页需强制登录时，隐藏返回首页按钮
+- uni-id-co 新增 外部联登后修改用户信息接口(updateUserInfoByExternal) [文档](https://uniapp.dcloud.net.cn/uniCloud/uni-id-pages.html#external-update-userinfo)
+- uni-id-co 优化外部联登接口（登录、注册）逻辑
 ## 1.1.1（2023-02-02）
 - 新增 微信小程序端 支持选择使用微信资料的“头像”和“昵称” 设置用户资料 [详情参考](https://wdoc-76491.picgzc.qpic.cn/MTY4ODg1MDUyNzQyMDUxNw_21263_rTNhg68FTngQGdvQ_1647431233?w=1280&h=695.7176470588236)
 ## 1.1.0（2023-01-31）

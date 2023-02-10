@@ -8,7 +8,7 @@ const { EXTERNAL_DIRECT_CONNECT_PROVIDER } = require('../../common/constants')
  * @param {object} params
  * @param {string} params.externalUid   业务系统的用户id
  * @param {string} params.nickname  昵称
- * @param {number} params.gender  性别
+ * @param {string} params.gender  性别
  * @param {string} params.avatar  头像
  * @returns {object}
  */
@@ -77,8 +77,7 @@ module.exports = async function (params = {}) {
           uid: externalUid
         }
       ]
-    },
-    extraData
+    }
   })
 
   return {
