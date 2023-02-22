@@ -7,17 +7,14 @@ describe('pages/grid/grid.vue', () => {
 		try{
 			page = await program.switchTab('/pages/grid/grid')
 			await page.waitFor(500)
-			console.log("page: ",page);
-		}catch(e){
-			console.log("e: ",e);
+		}catch(err){
+			console.log("err: ",err);
 		}
 	})
 	
 	it('检测宫格', async () => {
-		// expect.assertions(1);
-		const getData = await page.data('gridList')
-		console.log("getData: ",getData);
-		// expect(getData.length).toBe(9)
+		expect.assertions(1);
+		expect((await page.data('gridList')).length).toBe(9)
 	})
 	
 	it('点击宫格', async () => {

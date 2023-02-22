@@ -4,7 +4,7 @@ describe('uni_modules/uni-id-pages/pages/register/register.vue', () => {
 	beforeAll(async () => {
 		page = await program.navigateTo('/uni_modules/uni-id-pages/pages/register/register')
 		await page.waitFor(500)
-		// console.log("program.pageStack: ", await program.pageStack());
+		console.log(await program.pageStack());
 	})
 
 	it('注册账号', async () => {
@@ -69,7 +69,8 @@ describe('uni_modules/uni-id-pages/pages/register/register.vue', () => {
 				expect(resLogin.errMsg).toBe("验证码错误");
 				break;
 			default:
-				console.log(await program.currentPage(), "----------");
+				// console.log(await program.currentPage(), "----------");
+				console.log(123)
 				break;
 		}
 	})

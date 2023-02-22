@@ -66,7 +66,7 @@
 				"enablePullDownRefresh": true
 			}
 		}
-		// #ifdef APP-PLUS
+		// #ifndef MP-WEIXIN
 		, {
 			"path": "pages/ucenter/about/about",
 			"style": {

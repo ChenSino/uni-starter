@@ -125,7 +125,7 @@
 						"to": '/pages/ucenter/settings/settings',
 						"icon": "gear"
 					}],
-					// #ifdef APP-PLUS
+					// #ifndef MP-WEIXIN
 					[{
 						"title": this.$t('mine.about'),
 						"to": '/pages/ucenter/about/about',
@@ -142,7 +142,8 @@
 						"style": "solid", // 边框样式
 						"radius": "100%" // 边框圆角，支持百分比
 					}
-				}
+				},
+				uniToken:''
 			}
 		},
 		onLoad() {
@@ -159,7 +160,7 @@
 		onShow() {},
 		onReady() {
 			this.uniToken = uni.getStorageSync('uni_id_token')
-			console.log("uniToken: ", this.uniToken);
+			console.log("uniToken: ----", this.uniToken);
 		},
 		computed: {
 			userInfo() {
@@ -250,7 +251,7 @@
 			/**
 			 * 获取积分信息
 			 */
-			getScore() {
+			async getScore() {
 				if (!this.userInfo) return uni.showToast({
 					title: this.$t('mine.checkScore'),
 					icon: 'none'
@@ -258,7 +259,7 @@
 				uni.showLoading({
 					mask: true
 				})
-				db.collection("uni-id-scores")
+				return await db.collection("uni-id-scores")
 					.where('"user_id" == $env.uid')
 					.field('score,balance')
 					.orderBy("create_date", "desc")
@@ -273,8 +274,10 @@
 							title: msg,
 							icon: 'none'
 						});
-					}).finally(() => {
+						return res
+					}).finally((err) => {
 						uni.hideLoading()
+						return err
 					})
 			},
 			async share() {

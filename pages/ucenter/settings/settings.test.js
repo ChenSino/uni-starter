@@ -6,11 +6,11 @@ describe('pages/ucenter/settings/settings', () => {
 		try {
 			page = await program.navigateTo('/pages/ucenter/settings/settings')
 			await page.waitFor(1000)
-			console.log("pageStack: ",await program.pageStack());
+			// console.log(await program.pageStack());
 			uniToken = await page.data('uniToken')
 			console.log('uniToken:',uniToken);
-		} catch (e) {
-			console.log("e: ",e);
+		} catch (err) {
+			console.log("err: ",err);
 		}
 	})
 
@@ -26,7 +26,6 @@ describe('pages/ucenter/settings/settings', () => {
 			const el = await page.$('.content')
 			const elList = await el.$$('.mt10')
 			console.log("elList: ",elList.length);
-			
 			expect.assertions(1);
 			expect(elList.length).toBe(2)
 		}

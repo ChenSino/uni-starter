@@ -15,6 +15,4 @@ describe('pages/list/detail.vue', () => {
 		expect(await page.scrollTop()).toBe(100)
 	})
 
-
-
 });

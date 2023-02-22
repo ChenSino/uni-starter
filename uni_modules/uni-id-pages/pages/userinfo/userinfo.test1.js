@@ -2,17 +2,22 @@
 
 describe('uni_modules/uni-id-pages/pages/userinfo/userinfo.vue', () => {
 
-	let page;
+	let page,uniToken;
 	beforeAll(async () => {
 		page = await program.navigateTo('/uni_modules/uni-id-pages/pages/userinfo/userinfo')
 		await page.waitFor(500)
-		console.log("program.pageStack: ", await program.pageStack());
+		console.log(await program.pageStack());
+		uniToken = await page.data('uniToken')
+		console.log("uniToken: ",uniToken);
 	});
 
 	it("昵称", async () => {
-		const nickname = "数字天堂DCloud" + Math.round(Math.random() * 10);
-		await page.waitFor(300)
-		await page.callMethod("setNickname", nickname)
+		if(uniToken){
+			const nickname = "数字天堂DCloud" + Math.round(Math.random() * 10);
+			await page.waitFor(300)
+			await page.callMethod("setNickname", nickname)
+		}
+		
 	})
 	
 	it("头像", async () => {
@@ -27,9 +32,9 @@ describe('uni_modules/uni-id-pages/pages/userinfo/userinfo.vue', () => {
 		}
 		console.log("avatar_file: ",avatar_file);
 		
-		if (process.env.UNI_PLATFORM != "mp-weixin") {
+		if (uniToken && process.env.UNI_PLATFORM != "mp-weixin") {
 			const elBox = await page.$('.box')
-			console.log("elBox: ",elBox);
+			// console.log("elBox: ",elBox);
 			await elBox.callMethod('setAvatarFile',avatar_file)
 		}else{
 			await page.waitFor(500)

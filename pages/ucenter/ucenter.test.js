@@ -8,31 +8,31 @@ describe('pages/ucenter/ucenter.vue', () => {
 			
 			uniToken = await page.data('uniToken')
 			console.log("uniToken: ",uniToken);
-			
-			const pageStack = await program.pageStack()
-			console.log("pageStack: ",pageStack);
-		}catch(e){
-			console.log("e: ",e);
+			console.log(await program.pageStack());
+		}catch(err){
+			console.log("err: ",err);
 		}
 		
 	})
 	
 	it('宫格', async () => {
+		expect.assertions(1);
 		const getGrid = await page.data('gridList')
-		console.log("getGrid: ",getGrid);
 		expect(getGrid.length).toBe(4)
 	})
 
 	it('列表', async () => {
 		const getUcenterList = await page.data('ucenterList')
 		console.log("getUcenterList: ",getUcenterList);
-		// expect(getUcenterList.length).toBe(3)
+		if(process.env.UNI_PLATFORM === "app-plus"){
+			expect(getUcenterList.length).toBe(3)
+		}
+		
 	})
 	
 
 	it('普通签到', async () => {
-		console.log(await program.currentPage(),"1-----------");
-		console.log("process.env.UNI_PLATFORM: ",process.env.UNI_PLATFORM);
+		
 		if(uniToken){
 			if(process.env.UNI_PLATFORM === "app-plus"){
 					console.log('app-plus----普通签到');
@@ -40,7 +40,7 @@ describe('pages/ucenter/ucenter.vue', () => {
 					console.log("signInByAdRes: ",signInByAdRes);
 					await page.waitFor(300)
 					
-					const shareRes = await page.callMethod('share')
+					await page.callMethod('share')
 					
 					await program.screenshot({
 						path: "static/screenshot/sign-app.png" 
@@ -58,8 +58,6 @@ describe('pages/ucenter/ucenter.vue', () => {
 	})
 
 	it('我的积分', async () => {
-		// expect.assertions(1);
-		
 		if(uniToken){
 			const getScoreRes = await page.callMethod('getScore')
 			console.log("getScoreRes: ", getScoreRes);

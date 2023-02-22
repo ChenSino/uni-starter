@@ -32,7 +32,8 @@
 					captcha: ""
 				},
 				focusMobile:true,
-				logo: "/static/logo.png"
+				logo: "/static/logo.png",
+				uniToken:''
 			}
 		},
 		computed: {
@@ -40,8 +41,13 @@
 				return `验证码已通过短信发送至 ${this.formData.mobile}。密码为6 - 20位`
 			}
 		},
-		onLoad(event) {},
-		onReady() {},
+		onLoad(event) {
+			
+		},
+		onReady() {
+			this.uniToken = uni.getStorageSync('uni_id_token')
+			console.log("uniToken: ", this.uniToken);
+		},
 
 		methods: {
 			/**

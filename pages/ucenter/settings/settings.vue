@@ -52,8 +52,7 @@
 			}
 		},
 		onLoad() {
-			this.uniToken = uni.getStorageSync('uni_id_token')
-			console.log("uniToken: ",this.uniToken);
+			
 			this.currentLanguage = uni.getStorageSync('CURRENT_LANG') == "en"?'English':'简体中文'
 			
 			uni.setNavigationBarTitle({
@@ -69,6 +68,10 @@
 				}
 			})
 			// #endif
+		},
+		onReady() {
+			this.uniToken = uni.getStorageSync('uni_id_token')
+			console.log("uniToken: ",this.uniToken);
 		},
 		onShow() {
 			// 检查手机端获取推送是否开启

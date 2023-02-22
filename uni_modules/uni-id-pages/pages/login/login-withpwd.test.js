@@ -14,8 +14,8 @@ describe('uni_modules/uni-id-pages/pages/login/login-withpwd.vue', () => {
 		// expect.assertions(1);
 		await page.setData({
 			"username": "DCloud",
-			// "password": "dcloud2022",
-			"password": "unistarter2022",
+			"password": "dcloud2022",
+			// "password": "unistarter2022",
 			// "captcha":"1234",
 			"agree": true
 		})

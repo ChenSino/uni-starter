@@ -58,7 +58,8 @@
 				// 	nickname:''
 				// },
 				hasPwd:false,
-				showLoginManage:false//通过页面传参隐藏登录&退出登录按钮
+				showLoginManage:false,//通过页面传参隐藏登录&退出登录按钮
+				uniToken:''
 			}
 		},
 		async onShow() {
@@ -72,6 +73,10 @@
 			//判断当前用户是否有密码，否则就不显示密码修改功能
 			let res = await uniIdCo.getAccountInfo()
 			this.hasPwd = res.isPasswordSet
+		},
+		onReady() {
+			this.uniToken = uni.getStorageSync('uni_id_token')
+			console.log("uniToken: ----", this.uniToken);
 		},
 		methods: {
 			login() {
