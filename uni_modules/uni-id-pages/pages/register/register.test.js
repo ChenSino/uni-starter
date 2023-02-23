@@ -54,7 +54,8 @@ describe('uni_modules/uni-id-pages/pages/register/register.vue', () => {
 				expect(resLogin.uid).toHaveLength(24);
 				break;
 			case "uni-id-account-exists":
-				expect(resLogin.errMsg).toBe("此账号已注册");
+				const expectAccountStr = ["此账号已注册","Account exists"]
+				expect(expectAccountStr).toContain(resLogin.errMsg);
 				await page.waitFor(300)
 				await page.callMethod('toLogin')
 				break;
@@ -68,9 +69,11 @@ describe('uni_modules/uni-id-pages/pages/register/register.vue', () => {
 			case "uni-captcha-verify-fail":
 				expect(resLogin.errMsg).toBe("验证码错误");
 				break;
+			case "SYS_ERR":
+				console.log("未知错误---SYS_ERR")//[uni-id-co]: request:ok
+				break;
 			default:
 				// console.log(await program.currentPage(), "----------");
-				console.log(123)
 				break;
 		}
 	})

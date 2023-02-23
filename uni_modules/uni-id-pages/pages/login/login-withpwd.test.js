@@ -45,10 +45,11 @@ describe('uni_modules/uni-id-pages/pages/login/login-withpwd.vue', () => {
 				await page.callMethod('toRegister')
 				break;
 			case "uni-id-password-error":
-				expect(resLogin.errMsg).toBe("密码错误");
+				const expectPasswordStr = ["密码错误","Password error"]
+				expect(expectPasswordStr).toContain(resLogin.errMsg);
 				await page.setData({
 					"username": "DCloud",
-					"password": "dcloud2022",
+					"password": "unistarter2022",
 					"agree": true,
 				})
 				const resLoginA = await page.callMethod('pwdLogin')
