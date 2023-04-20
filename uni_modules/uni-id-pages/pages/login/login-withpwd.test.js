@@ -41,7 +41,8 @@ describe('uni_modules/uni-id-pages/pages/login/login-withpwd.vue', () => {
 				expect(resLogin.uid).toHaveLength(24);
 				break;
 			case "uni-id-account-not-exists":
-				expect(resLogin.errMsg).toBe("此账号未注册");
+				const expectAccountStr = ["此账号未注册","Account does not exists"]
+				expect(expectAccountStr).toContain(resLogin.errMsg);
 				await page.callMethod('toRegister')
 				break;
 			case "uni-id-password-error":
