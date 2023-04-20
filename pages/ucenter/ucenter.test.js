@@ -45,13 +45,19 @@ describe('pages/ucenter/ucenter.vue', () => {
 					await program.screenshot({
 						path: "static/screenshot/sign-app.png" 
 					})
-			}else{
+			}else if(process.env.UNI_PLATFORM === "h5"){
 				console.log('else----普通签到');
 				await page.callMethod('signIn')
-				// await page.waitFor(1000)
-				// await program.screenshot({
-				// 	path: "static/screenshot/sign-weixin-h5.png" 
-				// })
+				await program.screenshot({
+					path: "static/screenshot/sign-h5.png" 
+				})
+
+			}else{
+				await page.callMethod('signIn')
+				await page.waitFor(1000)
+				await program.screenshot({
+					path: "static/screenshot/sign-weixin.png" 
+				})
 			}
 		}
 

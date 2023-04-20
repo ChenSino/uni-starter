@@ -18,9 +18,9 @@ describe('pages/ucenter/about/about.vue', () => {
 	
 	it('screenshot', async () => {
 		console.log("process.env.UNI_PLATFORM: ",process.env.UNI_PLATFORM);
-		if (!isWX) {
+		if (process.env.UNI_PLATFORM === "app-plus") {
 			await program.screenshot({
-				path: "static/screenshot/about.png" // 默认项目根目录
+				path: "static/screenshot/about-app.png" // 默认项目根目录
 			})
 			
 			expect.assertions(1);
@@ -29,6 +29,14 @@ describe('pages/ucenter/about/about.vue', () => {
 			await page.callMethod('navigateTo', {
 				url: "https://ask.dcloud.net.cn/protocol.html",
 				title: "用户服务条款"
+			})
+		}else if(process.env.UNI_PLATFORM === "mp-weixin"){
+			await program.screenshot({
+				path: "static/screenshot/about-weixin.png" // 默认项目根目录
+			})
+		}else if(process.env.UNI_PLATFORM === "h5"){
+			await program.screenshot({
+				path: "static/screenshot/about-h5.png" // 默认项目根目录
 			})
 		}
 	})
