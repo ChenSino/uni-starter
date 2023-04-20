@@ -58,7 +58,7 @@ describe('uni_modules/uni-id-pages/pages/login/login-withpwd.vue', () => {
 				break;
 			case "uni-id-captcha-required":
 				const expectCaptchaStr = ["请输入图形验证码","Captcha required"]
-				expect(expectCaptchaStr).toBe(resLogin.errMsg);
+				expect(expectCaptchaStr).toContain(resLogin.errMsg);
 				await page.setData({
 					"captcha":"1234"
 				})
