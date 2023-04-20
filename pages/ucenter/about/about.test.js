@@ -18,13 +18,13 @@ describe('pages/ucenter/about/about.vue', () => {
 	
 	it('screenshot', async () => {
 		console.log("process.env.UNI_PLATFORM: ",process.env.UNI_PLATFORM);
+		expect.assertions(1);
+		expect((await page.data('about')).appName).toBe('uni-starter')
+		
 		if (process.env.UNI_PLATFORM === "app-plus") {
 			await program.screenshot({
 				path: "static/screenshot/about-app.png" // 默认项目根目录
 			})
-			
-			expect.assertions(1);
-			expect((await page.data('about')).appName).toBe('uni-starter')
 			
 			await page.callMethod('navigateTo', {
 				url: "https://ask.dcloud.net.cn/protocol.html",
