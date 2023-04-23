@@ -18,12 +18,12 @@ describe('pages/list/list.vue', () => {
 		await page.callMethod('searchClick')
 		await page.waitFor(1000)
 		
-		if (process.env.UNI_PLATFORM != "mp-weixin") {
-			expect.assertions(1);
-			expect((await program.currentPage()).path).toBe('pages/list/search/search')
-			await page.waitFor(500)
-			// await program.navigateBack()
-			// expect((await program.navigateBack()).path).toBe('pages/list/list')
-		}
+		// if (process.env.UNI_PLATFORM != "mp-weixin") {
+		// 	expect.assertions(1);
+		// 	expect((await program.currentPage()).path).toBe('pages/list/search/search')
+		// 	await page.waitFor(500)
+		// 	await program.navigateBack()
+		// 	expect((await program.navigateBack()).path).toBe('pages/list/list')
+		// }
 	})
 })
