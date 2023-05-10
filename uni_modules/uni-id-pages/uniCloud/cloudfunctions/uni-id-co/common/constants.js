@@ -80,6 +80,13 @@ const EMAIL_SCENE = {
   BIND_EMAIL: 'bind-email'
 }
 
+const REAL_NAME_STATUS = {
+  NOT_CERTIFIED: 0,
+  WAITING_CERTIFIED: 1,
+  CERTIFIED: 2,
+  CERTIFY_FAILED: 3
+}
+
 const EXTERNAL_DIRECT_CONNECT_PROVIDER = 'externalDirectConnect'
 
 module.exports = {
@@ -96,5 +103,6 @@ module.exports = {
   LOG_TYPE,
   SMS_SCENE,
   EMAIL_SCENE,
+  REAL_NAME_STATUS,
   EXTERNAL_DIRECT_CONNECT_PROVIDER
 }

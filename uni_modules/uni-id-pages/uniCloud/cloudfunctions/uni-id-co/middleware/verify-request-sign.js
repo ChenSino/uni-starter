@@ -15,15 +15,9 @@ const needSignFunctions = new Set([
 module.exports = function () {
   const methodName = this.getMethodName()
   const { source } = this.getUniversalClientInfo()
+
   // 指定接口需要鉴权
   if (!needSignFunctions.has(methodName)) return
-  
-  // 非 HTTP 方式请求不需要鉴权
-  if (source !== 'http') {
-    throw {
-      errCode: ERROR.ILLEGAL_REQUEST
-    }
-  }
 
   // 非 HTTP 方式请求拒绝访问
   if (source !== 'http') {

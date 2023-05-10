@@ -180,21 +180,21 @@ module.exports = {
     //   }
     // })
     // // 新增规则同样可以在数组验证规则中使用
-    // this.validator.validate({
+    // this.validator.valdate({
     //   timestamp: 123456789
     // }, {
     //   timestamp: 'timestamp'
     // })
-    // this.validator.validate({
+    // this.validator.valdate({
     //   timestampList: [123456789, 123123123123]
     // }, {
     //   timestampList: 'array<timestamp>'
     // })
     // // 甚至更复杂的写法
-    // this.validator.validate({
-    //   timestamp: [123456789123123123, 123123123123]
+    // this.validator.valdate({
+    //   timestamp: [123456789, 123123123123]
     // }, {
-    //   timestamp: 'timestamp|array<timestamp|number>'
+    //   timestamp: 'timestamp|array<timestamp>'
     // })
 
     // 挂载uni-captcha到this上，方便后续调用
@@ -664,5 +664,31 @@ module.exports = {
    * @param {string} params.avatar  头像
    * @returns {object}
    */
-  updateUserInfoByExternal
+  updateUserInfoByExternal,
+  /**
+   * 获取认证ID
+   * @tutorial https://uniapp.dcloud.net.cn/uniCloud/uni-id-pages.html#get-frv-certify-id
+   * @param {Object} params
+   * @param {String} params.realName  真实姓名
+   * @param {String} params.idCard    身份证号码
+   * @returns
+   */
+  getFrvCertifyId,
+  /**
+   * 查询认证结果
+   * @tutorial https://uniapp.dcloud.net.cn/uniCloud/uni-id-pages.html#get-frv-auth-result
+   * @param {Object} params
+   * @param {String} params.certifyId       认证ID
+   * @param {String} params.needAlivePhoto  是否获取认证照片，Y_O （原始图片）、Y_M（虚化，背景马赛克）、N（不返图）
+   * @returns
+   */
+  getFrvAuthResult,
+  /**
+   * 获取实名信息
+   * @tutorial https://uniapp.dcloud.net.cn/uniCloud/uni-id-pages.html#get-realname-info
+   * @param {Object} params
+   * @param {Boolean} params.decryptData 是否解密数据
+   * @returns
+   */
+  getRealNameInfo
 }
