@@ -1,3 +1,4 @@
+const url = require('url')
 const { preRegister, postRegister } = require('../../lib/utils/register')
 const { EXTERNAL_DIRECT_CONNECT_PROVIDER } = require('../../common/constants')
 
@@ -7,7 +8,7 @@ const { EXTERNAL_DIRECT_CONNECT_PROVIDER } = require('../../common/constants')
  * @param {object} params
  * @param {string} params.externalUid   业务系统的用户id
  * @param {string} params.nickname  昵称
- * @param {string} params.gender  性别
+ * @param {number} params.gender  性别
  * @param {string} params.avatar  头像
  * @returns {object}
  */
@@ -46,6 +47,20 @@ module.exports = async function (params = {}) {
     }
   })
 
+  const extraData = {}
+
+  if (avatar) {
+    // eslint-disable-next-line n/no-deprecated-api
+    const avatarPath = url.parse(avatar).pathname
+    const extName = avatarPath.indexOf('.') > -1 ? avatarPath.split('.').pop() : ''
+
+    extraData.avatar_file = {
+      name: avatarPath,
+      extname: extName,
+      url: avatar
+    }
+  }
+
   const result = await postRegister.call(this, {
     user: {
       avatar,
@@ -62,7 +77,8 @@ module.exports = async function (params = {}) {
           uid: externalUid
         }
       ]
-    }
+    },
+    extraData
   })
 
   return {

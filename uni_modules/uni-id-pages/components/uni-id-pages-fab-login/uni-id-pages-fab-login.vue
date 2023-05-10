@@ -202,7 +202,6 @@
 				return '/' + pages[pages.length - n].route
 			},
 			toPage(path,index = 0) {
-				let type = ['navigateTo','redirectTo'][index]
 				//console.log('比较', this.getRoute(1),this.getRoute(2), path)
 				if (this.getRoute(1) == path.split('?')[0] && this.getRoute(1) ==
 					'/uni_modules/uni-id-pages/pages/login/login-withoutpwd') {
@@ -212,13 +211,23 @@
 				} else if (this.getRoute(2) == path) { // 如果上一个页面就是，马上要打开的页面，直接返回。防止重复开启
 					uni.navigateBack();
 				} else if (this.getRoute(1) != path) {
-					uni[type]({
-						url: path,
-						animationType: 'slide-in-left',
-						complete(e) {
-							// console.log(e);
-						}
-					})
+					if(index === 0){
+						uni.navigateTo({
+							url: path,
+							animationType: 'slide-in-left',
+							complete(e) {
+								// console.log(e);
+							}
+						})
+					}else{
+						uni.redirectTo({
+							url: path,
+							animationType: 'slide-in-left',
+							complete(e) {
+								// console.log(e);
+							}
+						})
+					}
 				} else {
 					console.log('出乎意料的情况,path：' + path);
 				}
@@ -294,10 +303,25 @@
 				// #ifdef H5
 					if(type == 'weixin'){
 						// console.log('开始微信网页登录');
-						let redirectUrl = location.protocol +'//'+
-										document.domain +
-										(window.location.href.includes('#')?'/#':'') +
-										'/uni_modules/uni-id-pages/pages/login/login-withoutpwd?is_weixin_redirect=true&type=weixin'
+						// let redirectUrl = location.protocol +'//'+
+						// 				document.domain +
+						// 				(window.location.href.includes('#')?'/#':'') +
+						// 				'/uni_modules/uni-id-pages/pages/login/login-withoutpwd?is_weixin_redirect=true&type=weixin'
+            // #ifdef VUE2
+            const baseUrl = process.env.BASE_URL
+            // #endif
+            // #ifdef VUE3
+            const baseUrl = import.meta.env.BASE_URL
+            // #endif
+
+            let redirectUrl = location.protocol +
+                '//' +
+                location.host +
+                baseUrl.replace(/\/$/, '') +
+                (window.location.href.includes('#')?'/#':'') +
+                '/uni_modules/uni-id-pages/pages/login/login-withoutpwd?is_weixin_redirect=true&type=weixin'
+
+						// console.log('redirectUrl----',redirectUrl);
 						let ua = window.navigator.userAgent.toLowerCase();
 						if (ua.match(/MicroMessenger/i) == 'micromessenger'){
 							// console.log('在微信公众号内');

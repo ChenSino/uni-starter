@@ -8,6 +8,8 @@ const deviceCollectionName = 'uni-id-device'
 const deviceCollection = db.collection(deviceCollectionName)
 const openDataCollectionName = 'opendb-open-data'
 const openDataCollection = db.collection(openDataCollectionName)
+const frvLogsCollectionName = 'opendb-frv-logs'
+const frvLogsCollection = db.collection(frvLogsCollectionName)
 
 const USER_IDENTIFIER = {
   _id: 'uid',
@@ -78,6 +80,13 @@ const EMAIL_SCENE = {
   BIND_EMAIL: 'bind-email'
 }
 
+const REAL_NAME_STATUS = {
+  NOT_CERTIFIED: 0,
+  WAITING_CERTIFIED: 1,
+  CERTIFIED: 2,
+  CERTIFY_FAILED: 3
+}
+
 const EXTERNAL_DIRECT_CONNECT_PROVIDER = 'externalDirectConnect'
 
 module.exports = {
@@ -87,11 +96,13 @@ module.exports = {
   verifyCollection,
   deviceCollection,
   openDataCollection,
+  frvLogsCollection,
   USER_IDENTIFIER,
   USER_STATUS,
   CAPTCHA_SCENE,
   LOG_TYPE,
   SMS_SCENE,
   EMAIL_SCENE,
+  REAL_NAME_STATUS,
   EXTERNAL_DIRECT_CONNECT_PROVIDER
 }

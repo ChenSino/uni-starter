@@ -11,6 +11,11 @@
 			</uni-list-item>
 			<uni-list-item v-if="userInfo.email" class="item" title="电子邮箱" :rightText="userInfo.email">
 			</uni-list-item>
+			<!-- #ifdef APP -->
+      <!-- 如未开通实人认证服务，可以将实名认证入口注释 -->
+			<uni-list-item class="item" @click="realNameVerify" title="实名认证" :rightText="realNameStatus !== 2 ? '未认证': '已认证'" link>
+			</uni-list-item>
+			<!-- #endif -->
 			<uni-list-item v-if="hasPwd" class="item" @click="changePassword" title="修改密码" link>
 			</uni-list-item>
 		</uni-list>
@@ -32,17 +37,24 @@
 	</view>
 </template>
 <script>
-	const uniIdCo = uniCloud.importObject("uni-id-co")
-	import {
-		store,
-		mutations
-	} from '@/uni_modules/uni-id-pages/common/store.js'
+const uniIdCo = uniCloud.importObject("uni-id-co")
+  import {
+    store,
+    mutations
+  } from '@/uni_modules/uni-id-pages/common/store.js'
 	export default {
-		computed: {
-			userInfo() {
-				return store.userInfo
-			}
-		},
+    computed: {
+      userInfo() {
+        return store.userInfo
+      },
+	  realNameStatus () {
+		  if (!this.userInfo.realNameAuth) {
+			  return 0
+		  }
+
+		  return this.userInfo.realNameAuth.authStatus
+	  }
+    },
 		data() {
 			return {
 				univerifyStyle: {
@@ -154,13 +166,12 @@
 					this.setNicknameIng = false
 					this.$refs.dialog.close()
 				} else {
-					this.setNicknameIng = true
 					this.$refs.dialog.open()
 				}
 			},
-			deactivate() {
+			deactivate(){
 				uni.navigateTo({
-					url: "/uni_modules/uni-id-pages/pages/userinfo/deactivate/deactivate"
+					url:"/uni_modules/uni-id-pages/pages/userinfo/deactivate/deactivate"
 				})
 			},
 			async bindThirdAccount(provider) {
@@ -170,7 +181,7 @@
 					alipay: 'ali_openid',
 					apple: 'apple_openid',
 					qq: 'qq_openid'
-				} [provider.toLowerCase()]
+				}[provider.toLowerCase()]
 
 				if (this.userInfo[bindField]) {
 					await uniIdCo['unbind' + provider]()
@@ -197,6 +208,11 @@
 						}
 					})
 				}
+			},
+			realNameVerify () {
+				uni.navigateTo({
+					url: "/uni_modules/uni-id-pages/pages/userinfo/realname-verify/realname-verify"
+				})
 			}
 		}
 	}
