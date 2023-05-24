@@ -66,6 +66,7 @@ describe('pages/ucenter/ucenter.vue', () => {
 	it('我的积分', async () => {
 		if(uniToken){
 			const getScoreRes = await page.callMethod('getScore')
+			await page.waitFor(500)
 			console.log("getScoreRes: ", getScoreRes);
 			if (getScoreRes && getScoreRes.score) {
 				console.log("已登录--今日已签到");
