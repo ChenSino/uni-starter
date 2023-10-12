@@ -18,7 +18,7 @@ describe('pages/grid/grid.vue', () => {
 	})
 	
 	it('点击宫格', async () => {
-		if (process.env.UNI_PLATFORM === "h5" || process.env.UNI_PLATFORM === "app-plus") {
+		if (process.env.UNI_PLATFORM === "h5" || process.env.UNI_PLATFORM.startsWith("app")) {
 			const perPage = await page.$('.uni-grid-wrap')
 			await perPage.callMethod('change')
 		}

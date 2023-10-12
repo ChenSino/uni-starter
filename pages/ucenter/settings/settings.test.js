@@ -15,7 +15,7 @@ describe('pages/ucenter/settings/settings', () => {
 	})
 
 	it('settings', async () => {
-		if (process.env.UNI_PLATFORM == "app-plus") {
+		if (process.env.UNI_PLATFORM.startsWith("app")) {
 			await page.callMethod('clearTmp')
 			// console.log(await page.data('pushIsOn'), "pushIsOn-------------");
 			const pushRes = await page.data('pushIsOn')

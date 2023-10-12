@@ -24,7 +24,7 @@ describe('pages/ucenter/ucenter.vue', () => {
 	it('列表', async () => {
 		const getUcenterList = await page.data('ucenterList')
 		console.log("getUcenterList: ",getUcenterList);
-		if(process.env.UNI_PLATFORM === "app-plus"){
+		if(process.env.UNI_PLATFORM.startsWith("app")){
 			expect(getUcenterList.length).toBe(3)
 		}
 		
@@ -34,7 +34,7 @@ describe('pages/ucenter/ucenter.vue', () => {
 	it('普通签到', async () => {
 		
 		if(uniToken){
-			if(process.env.UNI_PLATFORM === "app-plus"){
+			if(process.env.UNI_PLATFORM.startsWith("app")){
 					console.log('app-plus----普通签到');
 					const signInByAdRes = await page.callMethod('signInByAd')
 					console.log("signInByAdRes: ",signInByAdRes);
