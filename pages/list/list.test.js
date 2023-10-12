@@ -7,23 +7,12 @@ describe('pages/list/list.vue', () => {
 	})
 
 	it('检测标题', async () => {
-		// expect.assertions(1);
-		const getData = await page.data('dataList')
-		console.log("getData: ",getData);
-		// expect(getData.title).toBe('阿里小程序IDE官方内嵌uni-app，为开发者提供多端开发服务')
+		expect.assertions(1);
+		expect((await page.data('dataList')).title).toBe('阿里小程序IDE官方内嵌uni-app，为开发者提供多端开发服务')
 	})
 	
 	it('点击搜索跳转', async () => {
-		
 		await page.callMethod('searchClick')
-		await page.waitFor(1000)
-		
-		// if (process.env.UNI_PLATFORM != "mp-weixin") {
-		// 	expect.assertions(1);
-		// 	expect((await program.currentPage()).path).toBe('pages/list/search/search')
-		// 	await page.waitFor(500)
-		// 	await program.navigateBack()
-		// 	expect((await program.navigateBack()).path).toBe('pages/list/list')
-		// }
+		await page.waitFor(300)
 	})
 })

@@ -9,36 +9,19 @@ describe('pages/ucenter/about/about.vue', () => {
 			if(!isWX){
 				page = await program.reLaunch('/pages/ucenter/about/about')
 				await page.waitFor(500)
-				console.log(await program.pageStack());
 			}
 		} catch (err) {
 			console.log("err: ",err);
 		}
 	})
-	
-	it('screenshot', async () => {
-		if(isWX){
-			return
-		}
-		console.log("process.env.UNI_PLATFORM: ",process.env.UNI_PLATFORM);
+	it('navigateTo-protocol', async () => {
+		if(isWX){return}
 		expect.assertions(1);
 		expect((await page.data('about')).appName).toBe('uni-starter')
-		await page.waitFor(1000)
-		
-		if (process.env.UNI_PLATFORM.startsWith("app")) {
-			await program.screenshot({
-				path: "static/screenshot/about-app.png" // 默认项目根目录
-			})
-			await page.waitFor(1000)
-			await page.callMethod('navigateTo', {
-				url: "https://ask.dcloud.net.cn/protocol.html",
-				title: "用户服务条款"
-			})
-		}else if(process.env.UNI_PLATFORM === "h5"){
-			await program.screenshot({
-				path: "static/screenshot/about-h5.png" // 默认项目根目录
-			})
-		}
+		await page.waitFor(500)
+		await page.callMethod('navigateTo', {
+			url: "https://ask.dcloud.net.cn/protocol.html",
+			title: "用户服务条款"
+		})
 	})
-
 });

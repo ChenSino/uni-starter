@@ -1,18 +1,21 @@
 describe('pages/ucenter/ucenter.vue', () => {
 
-	let page,uniToken;
+	let page,uniToken,platform;
 	beforeAll(async () => {
 		try{
 			page = await program.switchTab('/pages/ucenter/ucenter')
 			await page.waitFor(300)
-			
 			uniToken = await page.data('uniToken')
-			console.log("uniToken: ",uniToken);
-			console.log(await program.pageStack());
+			platform = process.env.UNI_PLATFORM
+			console.log("uniToken: ",platform,uniToken);
+			
+			if(!uniToken){
+				console.log("未登录");
+				// await program.navigateTo('/uni_modules/uni-id-pages/pages/login/login-withpwd')
+			}
 		}catch(err){
 			console.log("err: ",err);
 		}
-		
 	})
 	
 	it('宫格', async () => {
@@ -23,56 +26,45 @@ describe('pages/ucenter/ucenter.vue', () => {
 
 	it('列表', async () => {
 		const getUcenterList = await page.data('ucenterList')
-		console.log("getUcenterList: ",getUcenterList);
-		if(process.env.UNI_PLATFORM.startsWith("app")){
+		if(platform.startsWith("app") || platform === "h5"){
 			expect(getUcenterList.length).toBe(3)
+		}else if(platform === "mp-weixin"){
+			expect(getUcenterList.length).toBe(2)
 		}
-		
 	})
 	
-
 	it('普通签到', async () => {
 		
-		if(uniToken){
-			if(process.env.UNI_PLATFORM.startsWith("app")){
-					console.log('app-plus----普通签到');
-					const signInByAdRes = await page.callMethod('signInByAd')
-					console.log("signInByAdRes: ",signInByAdRes);
-					await page.waitFor(300)
-					
-					await page.callMethod('share')
-					
-					await program.screenshot({
-						path: "static/screenshot/sign-app.png" 
-					})
-			}else if(process.env.UNI_PLATFORM === "h5"){
-				console.log('else----普通签到');
-				await page.callMethod('signIn')
+		if(uniToken && platform.startsWith("app")){
+				await page.callMethod('signInByAd')
+				await page.waitFor(300)
+				await page.callMethod('share')
 				await program.screenshot({
-					path: "static/screenshot/sign-h5.png" 
+					path: "static/screenshot/sign-app.png" 
 				})
-
-			}else{
-				await page.callMethod('signIn')
-				await page.waitFor(1000)
-				await program.screenshot({
-					path: "static/screenshot/sign-weixin.png" 
-				})
-			}
+		}else if(uniToken && platform === "h5"){
+			await page.callMethod('signIn')
+			await program.screenshot({
+				path: "static/screenshot/sign-h5.png" 
+			})
+		}else{
+			await page.callMethod('signIn')
+			await page.waitFor(1000)
+			await program.screenshot({
+				path: "static/screenshot/sign-weixin.png" 
+			})
 		}
-
 	})
 
 	it('我的积分', async () => {
 		if(uniToken){
 			const getScoreRes = await page.callMethod('getScore')
+			let scoreInfo = getScoreRes && getScoreRes.result.data[0]
 			await page.waitFor(500)
-			console.log("getScoreRes: ", getScoreRes);
-			if (getScoreRes && getScoreRes.score) {
-				console.log("已登录--今日已签到");
+			if (scoreInfo) {
 				expect.assertions(2);
-				expect(getScoreRes.score).not.toBeUndefined();
-				expect(getScoreRes.balance).toBeGreaterThanOrEqual(getScoreRes.score);
+				expect(scoreInfo.score).not.toBeUndefined();
+				expect(scoreInfo.balance).toBeGreaterThanOrEqual(scoreInfo.score);
 			} else {
 				console.log("签到失败");
 			}

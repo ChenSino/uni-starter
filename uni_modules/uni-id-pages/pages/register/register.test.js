@@ -4,7 +4,6 @@ describe('uni_modules/uni-id-pages/pages/register/register.vue', () => {
 	beforeAll(async () => {
 		page = await program.navigateTo('/uni_modules/uni-id-pages/pages/register/register')
 		await page.waitFor(500)
-		console.log(await program.pageStack());
 	})
 
 	it('注册账号', async () => {
@@ -26,7 +25,6 @@ describe('uni_modules/uni-id-pages/pages/register/register.vue', () => {
 				needPopupAgreements:false
 			},
 		})
-		console.log(await page.data('formData'), "setData----formData");
 		
 		// expect(username).toMatch(/^1\d{10}$/);
 		expect(password).toMatch(/^.{6,20}$/);
@@ -35,10 +33,8 @@ describe('uni_modules/uni-id-pages/pages/register/register.vue', () => {
 		
 		
 		if (process.env.UNI_PLATFORM != "mp-weixin") {
-			console.log(process.env.UNI_PLATFORM);
 			const element = await page.$('.uni-content')
 			const agreeEl = await element.$('.root')
-			console.log(await agreeEl.data('isAgree'), "isAgree----")
 			await agreeEl.setData({
 				isAgree: true
 			})
@@ -63,7 +59,6 @@ describe('uni_modules/uni-id-pages/pages/register/register.vue', () => {
 				expect(resLogin.errMsg).toBe("[uni-id-co]: 请求云函数超时");
 				await page.waitFor(300)
 				const captchaEl = await page.$('.captcha-box')
-				console.log('captchaEl',captchaEl)
 				await captchaEl.callMethod('getImageCaptcha')
 				break;
 			case "uni-captcha-verify-fail":
@@ -73,7 +68,7 @@ describe('uni_modules/uni-id-pages/pages/register/register.vue', () => {
 				console.log("未知错误---SYS_ERR")//[uni-id-co]: request:ok
 				break;
 			default:
-				// console.log(await program.currentPage(), "----------");
+				console.log(await program.currentPage());
 				break;
 		}
 	})

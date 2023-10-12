@@ -7,11 +7,9 @@ describe('uni_modules/uni-id-pages/pages/login/login-withpwd.vue', () => {
 		page = await program.navigateTo('/uni_modules/uni-id-pages/pages/login/login-withpwd')
 		await page.waitFor(500)
 		page = await program.currentPage()
-		
 	});
 
 	it('账号密码登录', async () => {
-		// expect.assertions(1);
 		await page.setData({
 			"username": "DCloud",
 			"password": "dcloud2022",
@@ -21,15 +19,11 @@ describe('uni_modules/uni-id-pages/pages/login/login-withpwd.vue', () => {
 		})
 		
 		const needCaptcha = await page.data('needCaptcha')
-		console.log("needCaptcha---1: : ",needCaptcha);
-		
 		if(needCaptcha){
 			await page.setData({
 				"captcha":"1234"
 			})
-			console.log("needCaptcha---2: ",await page.data('needCaptcha'));
 		}
-		
 		
 		const resLogin = await page.callMethod('pwdLogin')
 		console.log("resLogin: ", resLogin);
@@ -53,9 +47,7 @@ describe('uni_modules/uni-id-pages/pages/login/login-withpwd.vue', () => {
 					"password": "unistarter2022",
 					"agree": true,
 				})
-				const resLoginA = await page.callMethod('pwdLogin')
-				console.log("resLoginA: ", resLoginA);
-				
+				await page.callMethod('pwdLogin')
 				break;
 			case "uni-id-captcha-required":
 				const expectCaptchaStr = ["请输入图形验证码","Captcha required"]
@@ -63,9 +55,7 @@ describe('uni_modules/uni-id-pages/pages/login/login-withpwd.vue', () => {
 				await page.setData({
 					"captcha":"1234"
 				})
-				// console.log("needCaptcha---3: ",await page.data('needCaptcha'));
 				const resLoginaa = await page.callMethod('pwdLogin')
-				console.log("resLoginaa: ", resLoginaa);
 				if(resLoginaa.errCode == 0){
 					console.log('登录成功');
 				}else{
@@ -75,9 +65,7 @@ describe('uni_modules/uni-id-pages/pages/login/login-withpwd.vue', () => {
 						"captcha":"1234",
 						"agree": true
 					})
-					
-					const resLoginbb = await page.callMethod('pwdLogin')
-					console.log("resLoginbb: ", resLoginbb);
+					await page.callMethod('pwdLogin')
 				}
 				break;
 			case "uni-captcha-verify-fail":
@@ -93,7 +81,7 @@ describe('uni_modules/uni-id-pages/pages/login/login-withpwd.vue', () => {
 				console.log("未知错误---SYS_ERR",resLogin)//[uni-id-co]: request:fail
 				break;
 			default:
-				// console.log(await program.currentPage(),"currentPage---------");
+				console.log(await program.currentPage());
 				break;
 		}
 	})

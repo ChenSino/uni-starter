@@ -6,7 +6,6 @@ describe('pages/ucenter/settings/settings', () => {
 		try {
 			page = await program.navigateTo('/pages/ucenter/settings/settings')
 			await page.waitFor(1000)
-			// console.log(await program.pageStack());
 			uniToken = await page.data('uniToken')
 			console.log('uniToken:',uniToken);
 		} catch (err) {
@@ -17,28 +16,19 @@ describe('pages/ucenter/settings/settings', () => {
 	it('settings', async () => {
 		if (process.env.UNI_PLATFORM.startsWith("app")) {
 			await page.callMethod('clearTmp')
-			// console.log(await page.data('pushIsOn'), "pushIsOn-------------");
 			const pushRes = await page.data('pushIsOn')
-			if (pushRes == "wait") {
-				await page.callMethod('pushServer.off')
-			}
+			if (pushRes == "wait") {await page.callMethod('pushServer.off')}
 		}else{
 			const el = await page.$('.content')
-			const elList = await el.$$('.mt10')
-			console.log("elList: ",elList.length);
 			expect.assertions(1);
-			expect(elList.length).toBe(2)
+			expect((await el.$$('.mt10')).length).toBe(2)
 		}
-		await page.waitFor(300)
 		
 	})
-
-	// it('退出登录', async () => {
-		
-	// 	if(uniToken){
-	// 		await page.callMethod('clickLogout')
-	// 	}
-	// 	console.log(await program.currentPage(),"333333");
-	// })
+	it('退出登录', async () => {
+		if(uniToken){await page.callMethod('changeLoginState')}
+		await page.waitFor(300)
+		console.log(await program.currentPage());
+	})
 
 });
