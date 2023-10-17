@@ -8,7 +8,7 @@
 			<!-- 顶部文字 -->
 			<text class="title title-box">用户名密码注册</text>
 		</match-media>
-		<uni-forms ref="form" :value="formData" :rules="rules" validate-trigger="submit" err-show-type="undertext">
+		<uni-forms ref="form" :value="formData" :rules="rules" validate-trigger="submit" err-show-type="toast">
 			<uni-forms-item name="username" required>
 				<uni-easyinput :inputBorder="false" :focus="focusUsername" @blur="focusUsername = false"
 					class="input-box" placeholder="请输入用户名" v-model="formData.username" trim="both" />
@@ -53,9 +53,7 @@
 		mutations
 	} from '@/uni_modules/uni-id-pages/common/store.js'
 
-	const uniIdCo = uniCloud.importObject("uni-id-co",{
-		customUI: true 
-	})
+	const uniIdCo = uniCloud.importObject("uni-id-co")
 	export default {
 		mixins: [mixin],
 		data() {
@@ -92,7 +90,7 @@
 			/**
 			 * 触发表单提交
 			 */
-			 submit() {
+			submit() {
 				return this.$refs.form.validate().then(async(res) => {
 					if (this.formData.captcha.length != 4) {
 						this.$refs.captcha.focusCaptchaInput = true
@@ -102,15 +100,13 @@
 							duration: 3000
 						});
 					}
-					// close
+					//close
 					// if (this.needAgreements && !this.agree) {
 					// 	return this.$refs.agreements.popup(() => {
 					// 		this.submitForm(res)
 					// 	})
 					// }
-					// this.submitForm(res)
 					return await this.submitForm(res)
-
 				}).catch((errors) => {
 					let key = errors[0].key
 					key = key.replace(key[0], key[0].toUpperCase())
@@ -119,7 +115,6 @@
 				})
 			},
 			async submitForm(params) {
-				console.log("params: ", params);
 				return await uniIdCo.registerUser(this.formData).then(e => {
 						this.loginSuccess(e)
 						return e
@@ -129,7 +124,7 @@
 						return e
 						//更好的体验：登录错误，直接刷新验证码
 						//close
-						// this.$refs.captcha.getImageCaptcha()
+						//this.$refs.captcha.getImageCaptcha()
 					})
 			},
 			navigateBack() {

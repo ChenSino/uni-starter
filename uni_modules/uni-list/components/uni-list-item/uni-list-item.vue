@@ -185,103 +185,6 @@
 					}
 				}
 			},
-			title: {
-				type: String,
-				default: ''
-			},
-			note: {
-				type: String,
-				default: ''
-			},
-			ellipsis: {
-				type: [Number, String],
-				default: 0
-			},
-			disabled: {
-				type: [Boolean, String],
-				default: false
-			},
-			clickable: {
-				type: Boolean,
-				default: false
-			},
-			showArrow: {
-				type: [Boolean, String],
-				default: false
-			},
-			link: {
-				type: [Boolean, String],
-				default: false
-			},
-			to: {
-				type: String,
-				default: ''
-			},
-			showBadge: {
-				type: [Boolean, String],
-				default: false
-			},
-			showSwitch: {
-				type: [Boolean, String],
-				default: false
-			},
-			switchChecked: {
-				type: [Boolean, String],
-				default: false
-			},
-			badgeText: {
-				type: String,
-				default: ''
-			},
-			badgeType: {
-				type: String,
-				default: 'success'
-			},
-			badgeStyle: {
-				type: Object,
-				default () {
-					return {}
-				}
-			},
-			rightText: {
-				type: String,
-				default: ''
-			},
-			thumb: {
-				type: String,
-				default: ''
-			},
-			thumbSize: {
-				type: String,
-				default: 'base'
-			},
-			showExtraIcon: {
-				type: [Boolean, String],
-				default: false
-			},
-			extraIcon: {
-				type: Object,
-				default () {
-					return {
-						type: '',
-						color: '#000000',
-						size: 20
-					};
-				}
-			},
-			border: {
-				type: Boolean,
-				default: true
-			},
-			customStyle: {
-				type: Object,
-				default () {
-					return {
-						padding: '',
-						backgroundColor: '#FFFFFF'
-					}
-				}
-			},
 			keepScrollPosition: {
 				type: Boolean,
 				default: false
@@ -295,26 +198,29 @@
 					}
 					let paddingArr = padding.split(' ')
 					if (paddingArr.length === 1) {
+						const allPadding = paddingArr[0]
 						this.padding = {
-							"top": padding,
-							"right": padding,
-							"bottom": padding,
-							"left": padding
+							"top": allPadding,
+							"right": allPadding,
+							"bottom": allPadding,
+							"left": allPadding
 						}
 					} else if (paddingArr.length === 2) {
+						const [verticalPadding, horizontalPadding] = paddingArr;
 						this.padding = {
-							"top": padding[0],
-							"right": padding[1],
-							"bottom": padding[0],
-							"left": padding[1]
+							"top": verticalPadding,
+							"right": horizontalPadding,
+							"bottom": verticalPadding,
+							"left": horizontalPadding
 						}
 					} else if (paddingArr.length === 4) {
-						this.padding = {
-							"top": padding[0],
-							"right": padding[1],
-							"bottom": padding[2],
-							"left": padding[3]
-						}
+							const [topPadding, rightPadding, bottomPadding, leftPadding] = paddingArr;
+							this.padding = {
+								"top": topPadding,
+								"right": rightPadding,
+								"bottom": bottomPadding,
+								"left": leftPadding
+							}
 					}
 				},
 				immediate: true

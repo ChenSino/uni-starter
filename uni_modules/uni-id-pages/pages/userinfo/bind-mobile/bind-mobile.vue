@@ -32,8 +32,7 @@
 					captcha: ""
 				},
 				focusMobile:true,
-				logo: "/static/logo.png",
-				uniToken:''
+				logo: "/static/logo.png"
 			}
 		},
 		computed: {
@@ -41,14 +40,11 @@
 				return `验证码已通过短信发送至 ${this.formData.mobile}。密码为6 - 20位`
 			}
 		},
-		onLoad(event) {
-			
-		},
+		onLoad(event) {},
 		onReady() {
 			this.uniToken = uni.getStorageSync('uni_id_token')
 			console.log("uniToken: ", this.uniToken);
 		},
-
 		methods: {
 			/**
 			 * 完成并提交
@@ -73,7 +69,6 @@
 				
 				const uniIdCo = uniCloud.importObject("uni-id-co")
 				return await uniIdCo.bindMobileBySms(this.formData).then(e => {
-					// console.log(e);
 					uni.showToast({
 						title: e.errMsg,
 						icon: 'none',
@@ -89,7 +84,7 @@
 					uni.navigateBack()
 					return e
 				}).catch(e => {
-					console.log(e,"bindMobileBySms++++++++++");
+					console.log(e);
 					if (e.errCode == 'uni-id-captcha-required') {
 						this.$refs.popup.open()
 					}

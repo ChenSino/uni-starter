@@ -82,8 +82,6 @@
 			 * 完成并提交
 			 */
 			async submit() {
-				// console.log("formData", this.formData);
-				// console.log('rules', this.rules);
 				return await this.$refs.form.validate()
 					.then(async res => {
 						let {
@@ -94,7 +92,6 @@
 								oldPassword,
 								newPassword
 							}).then(e => {
-								console.log("e:------------- ",e);
 								uni.removeStorageSync('uni_id_token');
 								uni.setStorageSync('uni_id_token_expired', 0)
 								uni.redirectTo({
@@ -109,7 +106,6 @@
 								return e
 							})
 					}).catch(errors => {
-						console.log("errors: ",errors);
 						let key = errors[0].key
 						key = key.replace(key[0], key[0].toUpperCase())
 						this['focus' + key] = true

@@ -124,7 +124,6 @@
 
 				return await uniIdCo.login(data).then(e => {
 					this.loginSuccess(e)
-					return e
 				}).catch(e => {
 					if (e.errCode == 'uni-id-captcha-required') {
 						this.needCaptcha = true
@@ -154,7 +153,7 @@
 
 	@media screen and (min-width: 690px) {
 		.uni-content {
-			height: 600px;
+			height: auto;
 		}
 	}
 

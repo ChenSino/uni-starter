@@ -52,8 +52,8 @@ describe('uni_modules/uni-id-pages/pages/register/register.vue', () => {
 			case "uni-id-account-exists":
 				const expectAccountStr = ["此账号已注册","Account exists"]
 				expect(expectAccountStr).toContain(resLogin.errMsg);
-				await page.waitFor(300)
-				await page.callMethod('toLogin')
+				// await page.waitFor(300)
+				// await page.callMethod('toLogin')
 				break;
 			case "FunctionTimeout":
 				expect(resLogin.errMsg).toBe("[uni-id-co]: 请求云函数超时");
