@@ -104,14 +104,7 @@
 			}
 		}
 		// #endif
-	,{
-    "path": "uni_modules/uni-id-pages/pages/userinfo/realname-verify/realname-verify",
-    "style": {
-        "enablePullDownRefresh": false,
-        "navigationBarTitleText": "实名认证"
-    }
-}
-],
+	],
 	"subPackages": [{
 			"root": "uni_modules/uni-feedback",
 			"pages": [{
@@ -124,10 +117,18 @@
 		},
 		{
 			"root": "uni_modules/uni-id-pages/pages",
-			"pages": [{
+			"pages": [
+				{
 					"path": "userinfo/userinfo",
 					"style": {
 						"navigationBarTitleText": "个人资料"
+					}
+				},
+				{
+					"path": "userinfo/realname-verify/realname-verify",
+					"style": {
+						"enablePullDownRefresh": false,
+						"navigationBarTitleText": "实名认证"
 					}
 				},
 				{
