@@ -180,21 +180,21 @@ module.exports = {
     //   }
     // })
     // // 新增规则同样可以在数组验证规则中使用
-    // this.validator.validate({
+    // this.validator.valdate({
     //   timestamp: 123456789
     // }, {
     //   timestamp: 'timestamp'
     // })
-    // this.validator.validate({
+    // this.validator.valdate({
     //   timestampList: [123456789, 123123123123]
     // }, {
     //   timestampList: 'array<timestamp>'
     // })
     // // 甚至更复杂的写法
-    // this.validator.validate({
-    //   timestamp: [123456789123123123, 123123123123]
+    // this.validator.valdate({
+    //   timestamp: [123456789, 123123123123]
     // }, {
-    //   timestamp: 'timestamp|array<timestamp|number>'
+    //   timestamp: 'timestamp|array<timestamp>'
     // })
 
     // 挂载uni-captcha到this上，方便后续调用

@@ -41,15 +41,13 @@
 			}
 		},
 		onLoad(event) {},
-		onReady() {
-			this.uniToken = uni.getStorageSync('uni_id_token')
-			console.log("uniToken: ", this.uniToken);
-		},
+		onReady() {},
+
 		methods: {
 			/**
 			 * 完成并提交
 			 */
-			async submit() {
+			submit() {
 				if(! /^1\d{10}$/.test(this.formData.mobile)){
 					this.focusMobile = true 
 					return uni.showToast({
@@ -68,7 +66,7 @@
 				}
 				
 				const uniIdCo = uniCloud.importObject("uni-id-co")
-				return await uniIdCo.bindMobileBySms(this.formData).then(e => {
+				uniIdCo.bindMobileBySms(this.formData).then(e => {
 					uni.showToast({
 						title: e.errMsg,
 						icon: 'none',
@@ -82,16 +80,13 @@
 					// #endif
 					mutations.setUserInfo(this.formData)
 					uni.navigateBack()
-					return e
 				}).catch(e => {
 					console.log(e);
 					if (e.errCode == 'uni-id-captcha-required') {
 						this.$refs.popup.open()
 					}
-					return e
 				}).finally(e => {
 					this.formData.captcha = ""
-					return e
 				})
 			}
 		}
