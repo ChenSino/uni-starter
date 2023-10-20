@@ -14,7 +14,7 @@ describe('uni_modules/uni-id-pages/pages/register/register.vue', () => {
 		let password = "dcloud2022"
 		let password2 = "dcloud2022"
 
-		const setInput = await page.setData({
+		await page.setData({
 			formData: {
 				"username": username,
 				"nickname": nickname,
