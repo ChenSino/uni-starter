@@ -1,3 +1,5 @@
+## 2.1.5（2023-10-20）
+- 更新 依赖的uni-id-pages的版本为1.1.16
 ## 2.1.4（2023-07-11）
 - 纠正`opendb-news-articles.schema.json`错误的权限表达式`doc.uid`为`doc.user_id`
 ## 2.1.3（2023-05-10）
