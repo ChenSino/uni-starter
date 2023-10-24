@@ -39,7 +39,7 @@ describe('uni_modules/uni-id-pages/pages/register/register.vue', () => {
 				isAgree: true
 			})
 		}
-		await page.waitFor(300)
+		await page.waitFor(800)
 		
 		const resLogin = await page.callMethod('submit')
 		console.log("resLogin: ", resLogin);

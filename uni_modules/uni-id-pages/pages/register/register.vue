@@ -53,7 +53,9 @@
 		mutations
 	} from '@/uni_modules/uni-id-pages/common/store.js'
 
-	const uniIdCo = uniCloud.importObject("uni-id-co")
+	const uniIdCo = uniCloud.importObject("uni-id-co",{
+		customUI:true
+	})
 	export default {
 		mixins: [mixin],
 		data() {
@@ -116,16 +118,16 @@
 			},
 			async submitForm(params) {
 				return await uniIdCo.registerUser(this.formData).then(e => {
-						this.loginSuccess(e)
-						return e
-					})
-					.catch(e => {
-						console.log(e.message);
-						return e
-						//更好的体验：登录错误，直接刷新验证码
-						//close
-						//this.$refs.captcha.getImageCaptcha()
-					})
+					this.loginSuccess(e)
+					return e
+				})
+				.catch(e => {
+					console.log(e.message);
+					return e
+					//更好的体验：登录错误，直接刷新验证码
+					//close
+					//this.$refs.captcha.getImageCaptcha()
+				})
 			},
 			navigateBack() {
 				uni.navigateBack()

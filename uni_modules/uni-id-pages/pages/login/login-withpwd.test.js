@@ -44,7 +44,8 @@ describe('uni_modules/uni-id-pages/pages/login/login-withpwd.vue', () => {
 				expect(expectPasswordStr).toContain(resLogin.errMsg);
 				await page.setData({
 					"username": "DCloud",
-					"password": "unistarter2022",
+					"password": "dcloud2022",
+					// "password": "unistarter2022",
 					"agree": true,
 				})
 				await page.callMethod('pwdLogin')
