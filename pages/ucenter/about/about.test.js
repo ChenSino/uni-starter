@@ -8,7 +8,7 @@ describe('pages/ucenter/about/about.vue', () => {
 			isWX = process.env.UNI_PLATFORM === "mp-weixin"
 			if(!isWX){
 				page = await program.reLaunch('/pages/ucenter/about/about')
-				await page.waitFor(500)
+				await page.waitFor('view')
 			}
 		} catch (err) {
 			console.log("err: ",err);
@@ -18,7 +18,7 @@ describe('pages/ucenter/about/about.vue', () => {
 		if(isWX){return}
 		expect.assertions(1);
 		expect((await page.data('about')).appName).toBe('uni-starter')
-		await page.waitFor(500)
+		// await page.waitFor(500)
 		await page.callMethod('navigateTo', {
 			url: "https://ask.dcloud.net.cn/protocol.html",
 			title: "用户服务条款"

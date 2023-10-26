@@ -3,7 +3,7 @@ describe('pages/list/list.vue', () => {
 	let page
 	beforeAll(async () => {
 		page = await program.switchTab('/pages/list/list')
-		await page.waitFor(500)
+		await page.waitFor('view')
 	})
 
 	it('检测标题', async () => {

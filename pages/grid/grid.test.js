@@ -6,7 +6,7 @@ describe('pages/grid/grid.vue', () => {
 	beforeAll(async () => {
 		try{
 			page = await program.switchTab('/pages/grid/grid')
-			await page.waitFor(500)
+			await page.waitFor('view')
 		}catch(err){
 			console.log("err: ",err);
 		}
@@ -24,7 +24,7 @@ describe('pages/grid/grid.vue', () => {
 		}
 		if (process.env.UNI_PLATFORM === "mp-weixin") {
 			const uniGrid = await page.$('uni-grid')
-			await page.waitFor(300)
+			await page.waitFor('uni-grid')
 			await uniGrid.callMethod('change')
 			await page.waitFor(500)
 		}

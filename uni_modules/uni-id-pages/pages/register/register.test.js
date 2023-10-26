@@ -3,7 +3,7 @@ describe('uni_modules/uni-id-pages/pages/register/register.vue', () => {
 	let page
 	beforeAll(async () => {
 		page = await program.navigateTo('/uni_modules/uni-id-pages/pages/register/register')
-		await page.waitFor(500)
+		await page.waitFor('view')
 	})
 
 	it('注册账号', async () => {
@@ -39,7 +39,7 @@ describe('uni_modules/uni-id-pages/pages/register/register.vue', () => {
 				isAgree: true
 			})
 		}
-		await page.waitFor(800)
+		await page.waitFor(300)
 		
 		const resLogin = await page.callMethod('submit')
 		console.log("resLogin: ", resLogin);
@@ -57,7 +57,6 @@ describe('uni_modules/uni-id-pages/pages/register/register.vue', () => {
 				break;
 			case "FunctionTimeout":
 				expect(resLogin.errMsg).toBe("[uni-id-co]: 请求云函数超时");
-				await page.waitFor(300)
 				const captchaEl = await page.$('.captcha-box')
 				await captchaEl.callMethod('getImageCaptcha')
 				break;

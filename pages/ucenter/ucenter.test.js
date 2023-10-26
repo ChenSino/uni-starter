@@ -4,7 +4,7 @@ describe('pages/ucenter/ucenter.vue', () => {
 	beforeAll(async () => {
 		try{
 			page = await program.switchTab('/pages/ucenter/ucenter')
-			await page.waitFor(300)
+			await page.waitFor('view')
 			uniToken = await page.data('uniToken')
 			platform = process.env.UNI_PLATFORM
 			console.log("uniToken: ",platform,uniToken);

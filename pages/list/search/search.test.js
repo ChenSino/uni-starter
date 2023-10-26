@@ -5,7 +5,7 @@ describe('pages/list/search/search.vue', () => {
 	let page
 	beforeAll(async () => {
 		page = await program.navigateTo('/pages/list/search/search')
-		await page.waitFor(500)
+		await page.waitFor('view')
 	})
 	it('搜索发现-显示-隐藏', async () => {
 		expect.assertions(2);

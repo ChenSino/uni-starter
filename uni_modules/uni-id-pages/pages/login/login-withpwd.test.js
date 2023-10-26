@@ -5,7 +5,7 @@ describe('uni_modules/uni-id-pages/pages/login/login-withpwd.vue', () => {
 	let page;
 	beforeAll(async () => {
 		page = await program.navigateTo('/uni_modules/uni-id-pages/pages/login/login-withpwd')
-		await page.waitFor(500)
+		await page.waitFor('view')
 		page = await program.currentPage()
 	});
 

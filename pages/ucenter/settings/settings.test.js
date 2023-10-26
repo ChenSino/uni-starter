@@ -5,7 +5,7 @@ describe('pages/ucenter/settings/settings', () => {
 	beforeAll(async () => {
 		try {
 			page = await program.navigateTo('/pages/ucenter/settings/settings')
-			await page.waitFor(1000)
+			await page.waitFor('view')
 			uniToken = await page.data('uniToken')
 			console.log('uniToken:',uniToken);
 		} catch (err) {
