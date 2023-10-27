@@ -7,7 +7,7 @@ describe('pages/ucenter/settings/settings', () => {
 			page = await program.navigateTo('/pages/ucenter/settings/settings')
 			await page.waitFor('view')
 			uniToken = await page.data('uniToken')
-			console.log('uniToken:',uniToken);
+			// console.log('uniToken:',uniToken);
 		} catch (err) {
 			console.log("err: ",err);
 		}
@@ -20,6 +20,7 @@ describe('pages/ucenter/settings/settings', () => {
 			if (pushRes == "wait") {await page.callMethod('pushServer.off')}
 		}else{
 			const el = await page.$('.content')
+			await page.waitFor('view')
 			expect.assertions(1);
 			expect((await el.$$('.mt10')).length).toBe(2)
 		}
@@ -27,7 +28,6 @@ describe('pages/ucenter/settings/settings', () => {
 	})
 	it('退出登录', async () => {
 		if(uniToken){await page.callMethod('changeLoginState')}
-		await page.waitFor(300)
 		console.log(await program.currentPage());
 	})
 

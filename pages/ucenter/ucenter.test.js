@@ -21,6 +21,7 @@ describe('pages/ucenter/ucenter.vue', () => {
 	it('宫格', async () => {
 		expect.assertions(1);
 		const getGrid = await page.data('gridList')
+		await page.waitFor(300)
 		expect(getGrid.length).toBe(4)
 	})
 
@@ -34,7 +35,7 @@ describe('pages/ucenter/ucenter.vue', () => {
 	})
 	
 	it('普通签到', async () => {
-		
+		await page.waitFor('uni-sign-in')
 		if(uniToken && platform.startsWith("app")){
 				await page.callMethod('signInByAd')
 				await page.waitFor(300)
@@ -72,7 +73,6 @@ describe('pages/ucenter/ucenter.vue', () => {
 			console.log("getScoreRes: 未登录");
 			try{
 				await program.navigateTo('/uni_modules/uni-id-pages/pages/login/login-withpwd')
-				await page.waitFor(500)
 			}catch(e){
 				console.log("e: ",e);
 			}
