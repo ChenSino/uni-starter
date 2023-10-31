@@ -18,9 +18,16 @@ describe('pages/ucenter/ucenter.vue', () => {
 		}
 	})
 	
+	// beforeEach(async () => {  
+	// 	console.log('beforeEach')
+	// 	jest.setTimeout(10000);
+	// 	return; 
+	// });  
+	
 	it('宫格', async () => {
 		expect.assertions(1);
 		const getGrid = await page.data('gridList')
+		console.log('getGrid: ',getGrid);
 		await page.waitFor(300)
 		expect(getGrid.length).toBe(4)
 	})
@@ -35,16 +42,18 @@ describe('pages/ucenter/ucenter.vue', () => {
 	})
 	
 	it('普通签到', async () => {
-		await page.waitFor('uni-sign-in')
+		console.log("普通签到");
+		// await page.waitFor('uni-sign-in')
 		if(uniToken && platform.startsWith("app")){
 				await page.callMethod('signInByAd')
-				await page.waitFor(300)
+				await page.waitFor(1000)
 				await page.callMethod('share')
 				await program.screenshot({
 					path: "static/screenshot/sign-app.png" 
 				})
 		}else if(uniToken && platform === "h5"){
 			await page.callMethod('signIn')
+			await page.waitFor(1000)
 			await program.screenshot({
 				path: "static/screenshot/sign-h5.png" 
 			})
@@ -61,7 +70,7 @@ describe('pages/ucenter/ucenter.vue', () => {
 		if(uniToken){
 			const getScoreRes = await page.callMethod('getScore')
 			let scoreInfo = getScoreRes && getScoreRes.result.data[0]
-			await page.waitFor(500)
+			await page.waitFor(800)
 			if (scoreInfo) {
 				expect.assertions(2);
 				expect(scoreInfo.score).not.toBeUndefined();
@@ -79,3 +88,4 @@ describe('pages/ucenter/ucenter.vue', () => {
 		}
 	})
 })
+

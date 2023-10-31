@@ -93,7 +93,7 @@
 			 * 触发表单提交
 			 */
 			submit() {
-				return this.$refs.form.validate().then(async(res) => {
+				return this.$refs.form.validate().then(async (res) => {
 					if (this.formData.captcha.length != 4) {
 						this.$refs.captcha.focusCaptchaInput = true
 						return uni.showToast({
@@ -102,12 +102,11 @@
 							duration: 3000
 						});
 					}
-					//close
-					// if (this.needAgreements && !this.agree) {
-					// 	return this.$refs.agreements.popup(() => {
-					// 		this.submitForm(res)
-					// 	})
-					// }
+					if (this.needAgreements && !this.agree) {
+						return this.$refs.agreements.popup(() => {
+							this.submitForm(res)
+						})
+					}
 					return await this.submitForm(res)
 				}).catch((errors) => {
 					let key = errors[0].key
@@ -118,16 +117,15 @@
 			},
 			async submitForm(params) {
 				return await uniIdCo.registerUser(this.formData).then(e => {
-					this.loginSuccess(e)
-					return e
-				})
-				.catch(e => {
-					console.log(e.message);
-					return e
-					//更好的体验：登录错误，直接刷新验证码
-					//close
-					//this.$refs.captcha.getImageCaptcha()
-				})
+						this.loginSuccess(e)
+						return e
+					})
+					.catch(e => {
+						console.log(e.message);
+						//更好的体验：登录错误，直接刷新验证码
+						this.$refs.captcha.getImageCaptcha()
+						return e
+					})
 			},
 			navigateBack() {
 				uni.navigateBack()

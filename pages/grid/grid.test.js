@@ -4,12 +4,8 @@
 describe('pages/grid/grid.vue', () => {
 	let page
 	beforeAll(async () => {
-		try{
-			page = await program.switchTab('/pages/grid/grid')
-			await page.waitFor('view')
-		}catch(err){
-			console.log("err: ",err);
-		}
+		page = await program.switchTab('/pages/grid/grid')
+		await page.waitFor('view')
 	})
 	
 	it('检测宫格', async () => {
@@ -23,10 +19,10 @@ describe('pages/grid/grid.vue', () => {
 			await perPage.callMethod('change')
 		}
 		if (process.env.UNI_PLATFORM === "mp-weixin") {
-			const uniGrid = await page.$('uni-grid')
 			await page.waitFor('uni-grid')
+			const uniGrid = await page.$('uni-grid')
 			await uniGrid.callMethod('change')
-			await page.waitFor(500)
 		}
+		await page.waitFor(500)
 	})
 });
