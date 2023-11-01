@@ -60,6 +60,9 @@ describe('uni_modules/uni-id-pages/pages/register/register.vue', () => {
 				const captchaEl = await page.$('.captcha-box')
 				await captchaEl.callMethod('getImageCaptcha')
 				break;
+			case "uni-captcha-verify-overdue":
+				expect(resLogin.errMsg).toBe("验证码已失效");
+				break;
 			case "uni-captcha-verify-fail":
 				expect(resLogin.errMsg).toBe("验证码错误");
 				break;

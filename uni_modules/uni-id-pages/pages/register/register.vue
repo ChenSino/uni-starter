@@ -102,11 +102,11 @@
 							duration: 3000
 						});
 					}
-					if (this.needAgreements && !this.agree) {
-						return this.$refs.agreements.popup(() => {
-							this.submitForm(res)
-						})
-					}
+					// if (this.needAgreements && !this.agree) {
+					// 	return this.$refs.agreements.popup(() => {
+					// 		this.submitForm(res)
+					// 	})
+					// }
 					return await this.submitForm(res)
 				}).catch((errors) => {
 					let key = errors[0].key
