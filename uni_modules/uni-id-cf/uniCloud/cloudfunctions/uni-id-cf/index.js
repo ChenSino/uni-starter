@@ -325,6 +325,10 @@ exports.main = async (event, context) => {
 				nickname,
 				inviteCode
 			});
+      if(typeof(res.userInfo) == 'object'){
+        const {inviteCode,nickname,username,_id} = res.userInfo;
+        res.userInfo = {inviteCode,nickname,username,_id};
+      }
 			if (res.code === 0) {
 				await registerSuccess(res)
 			}
@@ -355,7 +359,10 @@ exports.main = async (event, context) => {
 				await uniIdLog(res);
 				needCaptcha = await isNeedCaptcha();
 			}
-
+      if(typeof(res.userInfo) == 'object'){
+        const {inviteCode,nickname,username,_id} = res.userInfo;
+        res.userInfo = {inviteCode,nickname,username,_id};
+      }
 			res.needCaptcha = needCaptcha;
 			break;
 		case 'loginByWeixin':
@@ -635,6 +642,7 @@ exports.main = async (event, context) => {
 			} = await uniID.getUserInfo({
 				uid: params.uid
 			})
+      console.error('getUserInfo',userInfo);
 			if (userInfo.role.indexOf('admin') === -1) {
 				res = {
 					code: 403,
