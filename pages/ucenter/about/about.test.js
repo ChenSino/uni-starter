@@ -18,7 +18,6 @@ describe('pages/ucenter/about/about.vue', () => {
 		if(isWX){return}
 		expect.assertions(1);
 		expect((await page.data('about')).appName).toBe('uni-starter')
-		// await page.waitFor(500)
 		await page.callMethod('navigateTo', {
 			url: "https://ask.dcloud.net.cn/protocol.html",
 			title: "用户服务条款"

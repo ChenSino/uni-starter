@@ -7,12 +7,10 @@ describe('pages/ucenter/settings/settings', () => {
 			page = await program.navigateTo('/pages/ucenter/settings/settings')
 			await page.waitFor('view')
 			uniToken = await page.data('uniToken')
-			// console.log('uniToken:',uniToken);
 		} catch (err) {
 			console.log("err: ",err);
 		}
 	})
-
 	it('settings', async () => {
 		if (process.env.UNI_PLATFORM.startsWith("app")) {
 			await page.callMethod('clearTmp')
@@ -24,7 +22,6 @@ describe('pages/ucenter/settings/settings', () => {
 			expect.assertions(1);
 			expect((await el.$$('.mt10')).length).toBe(2)
 		}
-		
 	})
 	it('退出登录', async () => {
 		if(uniToken){await page.callMethod('changeLoginState')}

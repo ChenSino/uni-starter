@@ -92,7 +92,7 @@
 				keyword: "",
 				showRefresh: false,
 				listHight: 0,
-				dataList: []
+				dataList:{}
 			}
 		},
 		watch: {
