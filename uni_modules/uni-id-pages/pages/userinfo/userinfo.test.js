@@ -32,14 +32,13 @@ describe('uni_modules/uni-id-pages/pages/userinfo/userinfo.vue', () => {
 			// console.log("elBox: ",elBox);
 			await elBox.callMethod('setAvatarFile',avatar_file)
 			await page.waitFor(500)
-			await program.screenshot({
-				path: "static/screenshot/userinfo.png" // 默认项目根目录
-			})
-		}else{
-			await page.waitFor(500)
-			await program.screenshot({
-				path: "static/screenshot/userinfo-mp.png" // 默认项目根目录
-			})
 		}
+	})
+	it("screenshot", async () => {
+		if(!uniToken)return;
+		await program.screenshot({
+			path: "static/screenshot/userinfo.png" // 默认项目根目录
+		})
+		await page.waitFor(500)
 	})
 });

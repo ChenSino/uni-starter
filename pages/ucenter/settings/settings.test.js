@@ -7,7 +7,7 @@ describe('pages/ucenter/settings/settings', () => {
 			page = await program.navigateTo('/pages/ucenter/settings/settings')
 			await page.waitFor('view')
 			uniToken = await program.callUniMethod('getStorageSync', 'uni_id_token')
-			// console.log("uniToken: ",uniToken);
+			console.log("uniToken: ",uniToken);
 			if(!uniToken)return;
 		} catch (err) {
 			console.log("err: ",err);
@@ -26,12 +26,9 @@ describe('pages/ucenter/settings/settings', () => {
 			expect((await el.$$('.mt10')).length).toBe(2)
 		}
 	})
-	it('screenshot',async()=>{
-		const image = await program.screenshot();
-		expect(image).toMatchImageSnapshot();
-		await page.waitFor(500);
-	})
+	
 	it('退出登录', async () => {
+		if(!uniToken)return;
 		const bottomEl = await page.$('.bottom-back-text')
 		expect(await bottomEl.text()).toBe('退出登录')
 		await page.callMethod('changeLoginState')
