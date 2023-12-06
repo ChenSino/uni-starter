@@ -1,14 +1,16 @@
 // uni-app自动化测试教程: uni-app自动化测试教程: https://uniapp.dcloud.io/collocation/auto/hbuilderx-extension/index
 
 describe('uni_modules/uni-id-pages/pages/login/login-withpwd.vue', () => {
-
 	let page;
 	beforeAll(async () => {
 		page = await program.navigateTo('/uni_modules/uni-id-pages/pages/login/login-withpwd')
 		await page.waitFor('view')
-		page = await program.currentPage()
 	});
-
+	it('screenshot',async()=>{
+		const image = await program.screenshot();
+		expect(image).toMatchImageSnapshot();
+		await page.waitFor(500);
+	})
 	it('账号密码登录', async () => {
 		await page.setData({
 			"username": "DCloud",
@@ -17,16 +19,15 @@ describe('uni_modules/uni-id-pages/pages/login/login-withpwd.vue', () => {
 			// "captcha":"1234",
 			"agree": true
 		})
-		
 		const needCaptcha = await page.data('needCaptcha')
 		if(needCaptcha){
 			await page.setData({
 				"captcha":"1234"
 			})
 		}
-		
 		const resLogin = await page.callMethod('pwdLogin')
 		console.log("resLogin: ", resLogin);
+		
 		
 		
 		switch (resLogin.errCode){
@@ -86,5 +87,4 @@ describe('uni_modules/uni-id-pages/pages/login/login-withpwd.vue', () => {
 				break;
 		}
 	})
-	
 });

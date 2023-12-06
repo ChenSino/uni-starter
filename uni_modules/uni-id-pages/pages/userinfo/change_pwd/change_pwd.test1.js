@@ -11,9 +11,7 @@ describe('uni_modules/uni-id-pages/pages/userinfo/change_pwd/change_pwd.vue', ()
 		} catch (e) {
 			console.log("e: ",e);
 		}
-		
 	})
-	
 	it('修改密码', async () => {
 		await page.setData({
 			formData: {
@@ -26,7 +24,6 @@ describe('uni_modules/uni-id-pages/pages/userinfo/change_pwd/change_pwd.vue', ()
 		await page.waitFor(300)
 		const submitRes = await page.callMethod('submit')
 		console.log("submitRes: ",submitRes);
-		
 		switch (submitRes.errCode){
 			case 0:
 				console.log('修改成功')
@@ -41,8 +38,5 @@ describe('uni_modules/uni-id-pages/pages/userinfo/change_pwd/change_pwd.vue', ()
 				console.log(await program.currentPage(),"currentPage---------");
 				break;
 		}
-		
 	})
-
-
 });

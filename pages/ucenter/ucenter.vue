@@ -142,8 +142,7 @@
 						"style": "solid", // 边框样式
 						"radius": "100%" // 边框圆角，支持百分比
 					}
-				},
-				uniToken:''
+				}
 			}
 		},
 		onLoad() {
@@ -158,10 +157,6 @@
 			//#endif
 		},
 		onShow() {},
-		onReady() {
-			this.uniToken = uni.getStorageSync('uni_id_token')
-			console.log("uniToken: ----", this.uniToken);
-		},
 		computed: {
 			userInfo() {
 				return store.userInfo

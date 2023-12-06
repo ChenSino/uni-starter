@@ -1,9 +1,9 @@
 describe('pages/list/list.vue', () => {
-
 	let page
 	beforeAll(async () => {
 		page = await program.switchTab('/pages/list/list')
 		await page.waitFor('view')
+		if(process.env.UNI_PLATFORM === "mp-weixin"){await page.waitFor(2000)}
 	})
 	it('检测标题', async () => {
 		// expect.assertions(1);

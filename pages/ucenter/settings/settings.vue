@@ -39,8 +39,7 @@
 				supportMode:[],
 				pushIsOn:"wait",
 				currentLanguage:"",
-				userInfo:{},
-				uniToken:''
+				userInfo:{}
 			}
 		},
 		computed: {
@@ -68,10 +67,6 @@
 				}
 			})
 			// #endif
-		},
-		onReady() {
-			this.uniToken = uni.getStorageSync('uni_id_token')
-			console.log("uniToken: ",this.uniToken);
 		},
 		onShow() {
 			// 检查手机端获取推送是否开启

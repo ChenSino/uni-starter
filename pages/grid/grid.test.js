@@ -7,22 +7,18 @@ describe('pages/grid/grid.vue', () => {
 		page = await program.switchTab('/pages/grid/grid')
 		await page.waitFor('view')
 	})
-	
 	it('检测宫格', async () => {
-		expect.assertions(1);
+		expect.assertions(2);
 		expect((await page.data('gridList')).length).toBe(9)
+		expect(await page.data('hasLogin')).toBeFalsy()
 	})
-	
 	it('点击宫格', async () => {
-		if (process.env.UNI_PLATFORM === "h5" || process.env.UNI_PLATFORM.startsWith("app")) {
-			const perPage = await page.$('.uni-grid-wrap')
-			await perPage.callMethod('change')
+		const perPage = await page.$$('.grid-item-box')
+		// console.log('perPage: ',perPage);
+		expect(perPage.length).toBe(3)
+		for (var i = 0; i < perPage.length; i++) {
+			await perPage[i].tap()
+			await page.waitFor(300)
 		}
-		if (process.env.UNI_PLATFORM === "mp-weixin") {
-			await page.waitFor('uni-grid')
-			const uniGrid = await page.$('uni-grid')
-			await uniGrid.callMethod('change')
-		}
-		await page.waitFor(500)
 	})
 });
