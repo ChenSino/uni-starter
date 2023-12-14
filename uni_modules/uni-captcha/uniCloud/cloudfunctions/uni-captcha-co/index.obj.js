@@ -5,16 +5,9 @@ const uniCaptcha = require('uni-captcha')
 const db = uniCloud.database();
 //获取数据表opendb-verify-codes对象
 const verifyCodes = db.collection('opendb-verify-codes')
-
-const createConfig = require('uni-config-center')
-const captchaConfig = createConfig({ // 获取配置实例
-    pluginId: 'captcha-config' // common/uni-config-center下的插件配置目录名
-})
-const Config = captchaConfig.config() // 获取common/uni-config-center/share-config/config.json的内容
-
 module.exports = {
 	async getImageCaptcha({
-		scene
+		scene,isUniAppX
 	}) {
 		//获取设备id
 		let {
@@ -30,10 +23,13 @@ module.exports = {
 		//如果已存在则调用刷新接口，反之调用插件接口
 		let action = res.data.length ? 'refresh' : 'create'
 		//执行并返回结果
-		return await uniCaptcha[action]({
-			text: Config.text,//用于测试
+    let option = {
 			scene, //来源客户端传递，表示：使用场景值，用于防止不同功能的验证码混用
 			uniPlatform: platform
-		})
+		}
+    if(isUniAppX){
+      option.mode = "bmp"
+    }
+		return await uniCaptcha[action](option)
 	}
 }
