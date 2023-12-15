@@ -42,11 +42,11 @@
 		},
 		"web": {
 		  "oauth": {
-		    "h5-weixin": {
+		    "weixin-h5": {
 		      "appid": "微信浏览器内微信登录，所用的微信公众号appid",
 		      "appsecret": "微信公众号后台获取的appsecret"
 		    },
-		    "web-weixin": {
+		    "weixin-web": {
 		      "appid": "手机微信扫码登录，所用的微信开放平台（https://open.weixin.qq.com/）-网站应用的appid",
 		      "appsecret": "微信开放平台-网站应用的appsecret"
 		    }
