@@ -1,9 +1,7 @@
 let pageIndex = 0
 const pages = [
-	'/uni_modules/uni-id-pages/pages/login/login-withoutpwd',
-	'/pages/ucenter/settings/settings',
-	'/pages/ucenter/ucenter',
-	'/uni_modules/uni-id-pages/pages/userinfo/userinfo',
+	'/uni_modules/uni-id-pages/pages/login/login-withpwd',
+	'/pages/ucenter/ucenter'
 ]
 
 let page;
