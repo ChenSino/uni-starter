@@ -1,9 +1,10 @@
 jest.setTimeout(20000);
-describe('pages/ucenter/ucenter.vue', () => {
+const PAGE_PATH = '/pages/ucenter/ucenter'
+describe('ucenter', () => {
 	let page,uniToken,platform;
 	beforeAll(async () => {
 		try{
-			page = await program.switchTab('/pages/ucenter/ucenter')
+			page = await program.switchTab(PAGE_PATH)
 			await page.waitFor('view')
 			console.log('page: ',page);
 			console.log('pageStack: ',await program.pageStack());

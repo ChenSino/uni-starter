@@ -1,10 +1,10 @@
 // jest官方文档: https://www.jestjs.cn/
 // uniapp自动化测试教程: https://uniapp.dcloud.io/collocation/auto/quick-start
-
-describe('pages/list/search/search.vue', () => {
+const PAGE_PATH = '/pages/list/search/search'
+describe('search', () => {
 	let page
 	beforeAll(async () => {
-		page = await program.navigateTo('/pages/list/search/search')
+		page = await program.navigateTo(PAGE_PATH)
 		await page.waitFor('view')
 	})
 	it('搜索发现-显示-隐藏', async () => {

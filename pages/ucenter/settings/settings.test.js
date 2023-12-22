@@ -1,10 +1,10 @@
 // uniapp自动化测试教程: https://uniapp-test.dcloud.net.cn/docs/testcase/start
-
-describe('pages/ucenter/settings/settings', () => {
+const PAGE_PATH = '/pages/ucenter/settings/settings'
+describe('settings', () => {
 	let page,uniToken;
 	beforeAll(async () => {
 		try {
-			page = await program.navigateTo('/pages/ucenter/settings/settings')
+			page = await program.navigateTo(PAGE_PATH)
 			await page.waitFor('view')
 			uniToken = await program.callUniMethod('getStorageSync', 'uni_id_token')
 			console.log("uniToken: ",uniToken);
@@ -22,7 +22,6 @@ describe('pages/ucenter/settings/settings', () => {
 			const el = await page.$('.content')
 			await page.waitFor('view')
 			expect.assertions(1);
-			let res = await el.$$('.mt10')
 			expect((await el.$$('.mt10')).length).toBe(2)
 		}
 	})

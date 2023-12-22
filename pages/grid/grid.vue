@@ -78,7 +78,6 @@
 		},
 		methods: {
 			change(e) {
-				console.log("e: ",e);
 				uni.showToast({
 					title:this.$t('grid.clickTip') + " " + `${e.detail.index + 1}` + " " + this.$t('grid.clickTipGrid'),
 					icon: 'none'
@@ -90,7 +89,6 @@
 			onqueryload(data) {
 			},
 			changeSwiper(e) {
-				console.log("e: ",e);
 				this.current = e.detail.current
 			},
 			/**

@@ -1,9 +1,9 @@
 // uni-app自动化测试教程: uni-app自动化测试教程: https://uniapp.dcloud.io/collocation/auto/hbuilderx-extension/index
-
-describe('uni_modules/uni-id-pages/pages/userinfo/userinfo.vue', () => {
+const PAGE_PATH = '/uni_modules/uni-id-pages/pages/userinfo/userinfo'
+describe('userinfo', () => {
 	let page,uniToken;
 	beforeAll(async () => {
-		page = await program.navigateTo('/uni_modules/uni-id-pages/pages/userinfo/userinfo')
+		page = await program.navigateTo(PAGE_PATH)
 		await page.waitFor("view")
 		uniToken = await program.callUniMethod('getStorageSync', 'uni_id_token')
 		console.log("uniToken: ",uniToken);
@@ -29,7 +29,6 @@ describe('uni_modules/uni-id-pages/pages/userinfo/userinfo.vue', () => {
 		console.log("avatar_file: ",avatar_file);
 		if (process.env.UNI_PLATFORM != "mp-weixin") {
 			const elBox = await page.$('.box')
-			// console.log("elBox: ",elBox);
 			await elBox.callMethod('setAvatarFile',avatar_file)
 			await page.waitFor(500)
 		}

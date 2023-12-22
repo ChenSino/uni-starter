@@ -1,32 +1,22 @@
-describe('uni_modules/uni-id-pages/pages/register/register.vue', () => {
-
+const PAGE_PATH = '/uni_modules/uni-id-pages/pages/register/register'
+describe('register', () => {
 	let page
 	beforeAll(async () => {
-		page = await program.navigateTo('/uni_modules/uni-id-pages/pages/register/register')
+		page = await program.navigateTo(PAGE_PATH)
 		await page.waitFor('view')
 	})
-
 	it('注册账号', async () => {
-		// expect.assertions(1);
-		let username = "DCloud"
-		let nickname = "DCloud"
-		let password = "dcloud2022"
-		let password2 = "dcloud2022"
 		await page.setData({
 			formData: {
-				"username": username,
-				"nickname": nickname,
-				'password': password,
-				'password2': password2,
+				"username": "DCloud",
+				"nickname": "DCloud",
+				'password': "dcloud2022",
+				'password2': "dcloud2022",
 				"captcha": "1234",
 				isAgree: true,
 				needPopupAgreements:false
 			},
 		})
-		// expect(username).toMatch(/^1\d{10}$/);
-		expect(password).toMatch(/^.{6,20}$/);
-		expect(password2).toMatch(/^.{6,20}$/);
-		expect(password2).toEqual(password);
 		if (process.env.UNI_PLATFORM != "mp-weixin") {
 			const element = await page.$('.uni-content')
 			const agreeEl = await element.$('.root')

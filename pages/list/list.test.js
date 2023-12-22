@@ -1,7 +1,8 @@
-describe('pages/list/list.vue', () => {
+const PAGE_PATH = '/pages/list/list'
+describe('list', () => {
 	let page
 	beforeAll(async () => {
-		page = await program.switchTab('/pages/list/list')
+		page = await program.switchTab(PAGE_PATH)
 		await page.waitFor('view')
 	})
 	it('检测标题', async () => {

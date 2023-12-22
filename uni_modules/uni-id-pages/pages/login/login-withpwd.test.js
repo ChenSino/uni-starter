@@ -1,16 +1,11 @@
 // uni-app自动化测试教程: uni-app自动化测试教程: https://uniapp.dcloud.io/collocation/auto/hbuilderx-extension/index
-
-describe('uni_modules/uni-id-pages/pages/login/login-withpwd.vue', () => {
+const PAGE_PATH = '/uni_modules/uni-id-pages/pages/login/login-withpwd'
+describe('login-withpwd', () => {
 	let page;
 	beforeAll(async () => {
-		page = await program.navigateTo('/uni_modules/uni-id-pages/pages/login/login-withpwd')
+		page = await program.navigateTo(PAGE_PATH)
 		await page.waitFor('view')
 	});
-	// it('screenshot',async()=>{
-	// 	const image = await program.screenshot();
-	// 	expect(image).toMatchImageSnapshot();
-	// 	await page.waitFor(500);
-	// })
 	it('账号密码登录', async () => {
 		await page.setData({
 			"username": "DCloud",
@@ -30,7 +25,6 @@ describe('uni_modules/uni-id-pages/pages/login/login-withpwd.vue', () => {
 		
 		switch (resLogin.errCode){
 			case 0:
-				console.log('登录成功')
 				expect(resLogin.uid).toHaveLength(24);
 				break;
 			case "uni-id-account-not-exists":
