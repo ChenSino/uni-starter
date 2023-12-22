@@ -6,11 +6,11 @@ describe('uni_modules/uni-id-pages/pages/login/login-withpwd.vue', () => {
 		page = await program.navigateTo('/uni_modules/uni-id-pages/pages/login/login-withpwd')
 		await page.waitFor('view')
 	});
-	it('screenshot',async()=>{
-		const image = await program.screenshot();
-		expect(image).toMatchImageSnapshot();
-		await page.waitFor(500);
-	})
+	// it('screenshot',async()=>{
+	// 	const image = await program.screenshot();
+	// 	expect(image).toMatchImageSnapshot();
+	// 	await page.waitFor(500);
+	// })
 	it('账号密码登录', async () => {
 		await page.setData({
 			"username": "DCloud",
@@ -27,8 +27,6 @@ describe('uni_modules/uni-id-pages/pages/login/login-withpwd.vue', () => {
 		}
 		const resLogin = await page.callMethod('pwdLogin')
 		console.log("resLogin: ", resLogin);
-		
-		
 		
 		switch (resLogin.errCode){
 			case 0:

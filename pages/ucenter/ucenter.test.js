@@ -57,13 +57,12 @@ describe('pages/ucenter/ucenter.vue', () => {
 	it('我的积分', async () => {
 		if(!uniToken)return;
 		const getScoreRes = await page.callMethod('getScore')
-		let scoreInfo = getScoreRes && getScoreRes.result.data[0]
-		console.log('scoreInfo: ',scoreInfo);
+		console.log('getScoreRes: ',getScoreRes);
 		await page.waitFor(500)
-		if (scoreInfo) {
+		if (getScoreRes.score) {
 			expect.assertions(2);
-			expect(scoreInfo.score).not.toBeUndefined();
-			expect(scoreInfo.balance).toBeGreaterThanOrEqual(scoreInfo.score);
+			expect(getScoreRes.score).not.toBeUndefined();
+			expect(getScoreRes.balance).toBeGreaterThanOrEqual(getScoreRes.score);
 		} else {
 			console.log("签到失败");
 		}

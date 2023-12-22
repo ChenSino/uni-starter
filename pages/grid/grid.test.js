@@ -14,7 +14,6 @@ describe('pages/grid/grid.vue', () => {
 	})
 	it('点击宫格', async () => {
 		const perPage = await page.$$('.grid-item-box')
-		// console.log('perPage: ',perPage);
 		expect(perPage.length).toBe(3)
 		for (var i = 0; i < perPage.length; i++) {
 			await perPage[i].tap()

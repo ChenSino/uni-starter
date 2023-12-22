@@ -269,7 +269,7 @@
 							title: msg,
 							icon: 'none'
 						});
-						return res
+						return res.result.data[0]
 					}).finally((err) => {
 						uni.hideLoading()
 						return err
