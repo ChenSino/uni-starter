@@ -2,18 +2,15 @@ jest.setTimeout(20000);
 describe('pages/ucenter/ucenter.vue', () => {
 	let page,uniToken,platform;
 	beforeAll(async () => {
-		try{
-			page = await program.switchTab('/pages/ucenter/ucenter')
-			await page.waitFor('view')
-			uniToken = await program.callUniMethod('getStorageSync', 'uni_id_token')
-			platform = process.env.UNI_PLATFORM
-			console.log("uniToken: ",platform,uniToken);
-			if(!uniToken){
-				console.log("未登录");
-				await program.navigateTo('/uni_modules/uni-id-pages/pages/login/login-withpwd')
-			}
-		}catch(err){
-			console.log("err: ",err);
+		page = await program.switchTab('/pages/ucenter/ucenter')
+		await page.waitFor('view')
+		console.log('page: ',page);
+		uniToken = await program.callUniMethod('getStorageSync', 'uni_id_token')
+		platform = process.env.UNI_PLATFORM
+		console.log("uniToken: ",platform,uniToken);
+		if(!uniToken){
+			console.log("未登录");
+			await program.navigateTo('/uni_modules/uni-id-pages/pages/login/login-withpwd')
 		}
 	})
 	it('宫格', async () => {
@@ -67,12 +64,12 @@ describe('pages/ucenter/ucenter.vue', () => {
 			console.log("签到失败");
 		}
 	})
-	it('screenshot',async()=>{
-		await program.screenshot({
-			path: "static/screenshot/ucenter.png" 
-		})
-		await page.waitFor(500);
-	})
+	// it('screenshot',async()=>{
+	// 	await program.screenshot({
+	// 		path: "static/screenshot/ucenter.png" 
+	// 	})
+	// 	await page.waitFor(500);
+	// })
 	
 })
 
