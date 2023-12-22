@@ -2,15 +2,16 @@ jest.setTimeout(20000);
 describe('pages/ucenter/ucenter.vue', () => {
 	let page,uniToken,platform;
 	beforeAll(async () => {
-		page = await program.switchTab('/pages/ucenter/ucenter')
-		await page.waitFor('view')
-		console.log('page: ',page);
-		uniToken = await program.callUniMethod('getStorageSync', 'uni_id_token')
-		platform = process.env.UNI_PLATFORM
-		console.log("uniToken: ",platform,uniToken);
-		if(!uniToken){
-			console.log("未登录");
-			await program.navigateTo('/uni_modules/uni-id-pages/pages/login/login-withpwd')
+		try{
+			page = await program.switchTab('/pages/ucenter/ucenter')
+			await page.waitFor('view')
+			console.log('page: ',page);
+			console.log('pageStack: ',await program.pageStack());
+			uniToken = await program.callUniMethod('getStorageSync', 'uni_id_token')
+			platform = process.env.UNI_PLATFORM
+			console.log("uniToken: ",platform,uniToken);
+		}catch(err){
+			console.log('err: ',err);
 		}
 	})
 	it('宫格', async () => {
@@ -27,8 +28,6 @@ describe('pages/ucenter/ucenter.vue', () => {
 		}
 	})
 	it('普通签到', async () => {
-		console.log("普通签到");
-		// await page.waitFor('uni-sign-in')
 		if(!uniToken)return;
 		if(platform.startsWith("app")){
 			await page.callMethod('signInByAd')
@@ -37,18 +36,8 @@ describe('pages/ucenter/ucenter.vue', () => {
 			// await program.screenshot({
 			// 	path: "static/screenshot/sign-app.png" 
 			// })
-		}else if(platform === "h5"){
-			await page.callMethod('signIn')
-			// await page.waitFor(500)
-			// await program.screenshot({
-			// 	path: "static/screenshot/sign-h5.png" 
-			// })
 		}else{
 			await page.callMethod('signIn')
-			// await page.waitFor(500)
-			// await program.screenshot({
-			// 	path: "static/screenshot/sign-weixin.png" 
-			// })
 		}
 	})
 	it('我的积分', async () => {
