@@ -51,7 +51,8 @@
 				"needCaptcha": false,
 				"focusUsername": false,
 				"focusPassword": false,
-				"logo": "/static/logo.png"
+				"logo": "/static/logo.png",
+				"isTest":false
 			}
 		},
 		onShow() {
@@ -104,9 +105,10 @@
 						duration: 3000
 					});
 				}
-
-				if (this.needAgreements && !this.agree) {
-					return this.$refs.agreements.popup(this.pwdLogin)
+				if(!this.isTest){
+					if (this.needAgreements && !this.agree) {
+						return this.$refs.agreements.popup(this.pwdLogin)
+					}
 				}
 
 				let data = {

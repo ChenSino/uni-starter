@@ -72,7 +72,8 @@
 				focusNickname: false,
 				focusPassword: false,
 				focusPassword2: false,
-				logo: "/static/logo.png"
+				logo: "/static/logo.png",
+				isTest:false
 			}
 		},
 		onReady() {
@@ -102,11 +103,13 @@
 							duration: 3000
 						});
 					}
-					// if (this.needAgreements && !this.agree) {
-					// 	return this.$refs.agreements.popup(() => {
-					// 		this.submitForm(res)
-					// 	})
-					// }
+					if(this.isTest){
+						if (this.needAgreements && !this.agree) {
+							return this.$refs.agreements.popup(() => {
+								this.submitForm(res)
+							})
+						}
+					}
 					return await this.submitForm(res)
 				}).catch((errors) => {
 					let key = errors[0].key
@@ -123,7 +126,7 @@
 					.catch(e => {
 						console.log(e.message);
 						//更好的体验：登录错误，直接刷新验证码
-						// this.$refs.captcha.getImageCaptcha()
+						this.$refs.captcha.getImageCaptcha()
 						return e
 					})
 			},

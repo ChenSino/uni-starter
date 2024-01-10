@@ -14,19 +14,13 @@ describe('register', () => {
 				'password2': "dcloud2022",
 				"captcha": "1234",
 				isAgree: true,
-				needPopupAgreements:false
+				needPopupAgreements:false,
+				isTest:true
 			},
 		})
-		if (process.env.UNI_PLATFORM != "mp-weixin") {
-			const element = await page.$('.uni-content')
-			const agreeEl = await element.$('.root')
-			await agreeEl.setData({
-				isAgree: true
-			})
-		}
-		await page.waitFor(300)
 		const resLogin = await page.callMethod('submit')
 		console.log("resLogin: ", resLogin);
+		
 		switch (resLogin.errCode) {
 			case 0:
 				console.log('注册成功')

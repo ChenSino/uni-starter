@@ -12,7 +12,8 @@ describe('login-withpwd', () => {
 			"password": "dcloud2022",
 			// "password": "unistarter2022",
 			// "captcha":"1234",
-			"agree": true
+			"agree": true,
+			"isTest":true
 		})
 		const needCaptcha = await page.data('needCaptcha')
 		if(needCaptcha){
@@ -20,6 +21,7 @@ describe('login-withpwd', () => {
 				"captcha":"1234"
 			})
 		}
+		
 		const resLogin = await page.callMethod('pwdLogin')
 		console.log("resLogin: ", resLogin);
 		
