@@ -2,7 +2,7 @@ const PAGE_PATH = '/uni_modules/uni-id-pages/pages/register/register'
 describe('register', () => {
 	let page
 	beforeAll(async () => {
-		page = await program.navigateTo(PAGE_PATH)
+		page = await program.reLaunch(PAGE_PATH)
 		await page.waitFor('view')
 	})
 	it('注册账号', async () => {

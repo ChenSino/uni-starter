@@ -22,5 +22,7 @@ describe('about', () => {
 			url: "https://ask.dcloud.net.cn/protocol.html",
 			title: "用户服务条款"
 		})
+		await program.navigateBack()
+		console.log("currentPage ",await program.currentPage());
 	})
 });
