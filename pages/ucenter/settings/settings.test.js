@@ -8,12 +8,12 @@ describe('settings', () => {
 			await page.waitFor('view')
 			uniToken = await program.callUniMethod('getStorageSync', 'uni_id_token')
 			console.log("uniToken: ",uniToken);
-			if(!uniToken)return;
 		} catch (err) {
 			console.log("err: ",err);
 		}
 	})
 	it('settings', async () => {
+		if(!uniToken)return;
 		if (process.env.UNI_PLATFORM.startsWith("app")) {
 			await page.callMethod('clearTmp')
 			const pushRes = await page.data('pushIsOn')

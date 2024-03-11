@@ -5,6 +5,7 @@ describe('userinfo', () => {
 	beforeAll(async () => {
 		page = await program.navigateTo(PAGE_PATH)
 		await page.waitFor("view")
+		console.log("page: ",page);
 		uniToken = await program.callUniMethod('getStorageSync', 'uni_id_token')
 		console.log("uniToken: ",uniToken);
 		console.log("pageStack: ",await program.pageStack());

@@ -32,7 +32,7 @@ describe('ucenter', () => {
 		if(!uniToken)return;
 		if(platform.startsWith("app")){
 			await page.callMethod('signInByAd')
-			await page.waitFor(500)
+			await page.waitFor(1000)
 			await page.callMethod('share')
 			// await program.screenshot({
 			// 	path: "static/screenshot/sign-app.png" 
@@ -45,7 +45,7 @@ describe('ucenter', () => {
 		if(!uniToken)return;
 		const getScoreRes = await page.callMethod('getScore')
 		console.log('getScoreRes: ',getScoreRes);
-		await page.waitFor(500)
+		await page.waitFor(1000)
 		if (getScoreRes.score) {
 			expect.assertions(2);
 			expect(getScoreRes.score).not.toBeUndefined();
