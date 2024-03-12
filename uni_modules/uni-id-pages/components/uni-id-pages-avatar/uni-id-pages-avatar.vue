@@ -18,6 +18,7 @@
 	* @property {String} height	图片的高，默认为：50px
 	*/
 	export default {
+		name: "uni-id-pages-avatar",
 		data() {
 			return {
 				isPC: false

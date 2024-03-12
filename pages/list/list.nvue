@@ -92,7 +92,8 @@
 				keyword: "",
 				showRefresh: false,
 				listHight: 0,
-				dataList:{}
+				dataList:{},
+				isTest:false
 			}
 		},
 		watch: {
@@ -126,9 +127,11 @@
 			// });
 			//默认h5端不获取定位
 			// #ifndef H5
-			let location = await gps.getLocation({
-				geocode: true
-			})
+			if(isTest){
+				let location = await gps.getLocation({
+					geocode: true
+				})
+			}
 			// console.log(location);
 			// #endif
 			// if(location){

@@ -16,7 +16,6 @@ describe('userinfo', () => {
 		await page.waitFor(300)
 		await page.callMethod("setNickname", nickname)
 	})
-	
 	it("头像", async () => {
 		if(!uniToken)return;
 		const imgs = [
@@ -28,11 +27,17 @@ describe('userinfo', () => {
 			url:imgs[Math.floor(Math.random()*imgs.length)]
 		}
 		console.log("avatar_file: ",avatar_file);
-		if (process.env.UNI_PLATFORM != "mp-weixin") {
-			const elBox = await page.$('.box')
-			await elBox.callMethod('setAvatarFile',avatar_file)
-			await page.waitFor(500)
-		}
+		
+		console.log("process.env.UNI_PLATFORM: ",process.env.UNI_PLATFORM);
+		// if (process.env.UNI_PLATFORM != "mp-weixin") {
+		// 	const avatarCom = await page.$('.avatar')
+		// 	console.log("avatarCom: ",avatarCom);
+		// 	const elBox = await avatarCom.$('.box')
+		// 	console.log("elBox: ",elBox);
+		// 	// const elBox = await page.$('.box')
+		// 	await elBox.callMethod('setAvatarFile',avatar_file)
+		// 	await elBox.waitFor(500)
+		// }
 	})
 	it("screenshot", async () => {
 		if(!uniToken)return;
