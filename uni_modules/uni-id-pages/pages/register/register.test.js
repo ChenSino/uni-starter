@@ -20,7 +20,7 @@ describe('register', () => {
 		})
 		const resLogin = await page.callMethod('submit')
 		console.log("resLogin: ", resLogin);
-		
+		expect.assertions(1);
 		switch (resLogin.errCode) {
 			case 0:
 				console.log('注册成功')

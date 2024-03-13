@@ -9,14 +9,13 @@ describe('grid', () => {
 	})
 	it('检测宫格', async () => {
 		hasLogin = await page.data('hasLogin')
-		console.log("hasLogin", hasLogin)
 		let gridList = await page.data('gridList')
-		console.log("gridList", gridList)
+		console.log("gridList", hasLogin,gridList.length)
 		expect(gridList.length).toBe(9)
 	})
 	it('点击宫格', async () => {
 		const perPage = await page.$$('.grid-item-box')
-		console.log("perPage", perPage)
+		console.log("perPage", perPage.length)
 		for (var i = 0; i < perPage.length; i++) {
 			await perPage[i].tap()
 			await page.waitFor(300)

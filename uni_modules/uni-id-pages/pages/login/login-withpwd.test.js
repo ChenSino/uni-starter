@@ -24,7 +24,7 @@ describe('login-withpwd', () => {
 		
 		const resLogin = await page.callMethod('pwdLogin')
 		console.log("resLogin: ", resLogin);
-		
+		expect.assertions(1);
 		switch (resLogin.errCode){
 			case 0:
 				expect(resLogin.uid).toHaveLength(24);
@@ -80,7 +80,6 @@ describe('login-withpwd', () => {
 				console.log(await program.currentPage());
 				break;
 		}
-		
 		console.log('login-end')
 		await page.waitFor(300)
 	})

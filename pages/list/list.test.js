@@ -11,9 +11,7 @@ describe('list', () => {
 		beforeAll(async () => {
 			page = await program.switchTab(PAGE_PATH)
 			await page.waitFor('view')
-			console.log('page: ',page);
 			await page.setData({'isTest':true})
-			console.log('isTest',await page.data({'isTest':true}));
 		})
 		it('检测标题', async () => {
 			expect.assertions(1);
