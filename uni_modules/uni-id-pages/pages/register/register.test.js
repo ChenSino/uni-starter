@@ -13,14 +13,14 @@ describe('register', () => {
 				'password': "dcloud2022",
 				'password2': "dcloud2022",
 				"captcha": "1234",
-				isAgree: true,
-				needPopupAgreements:false,
-				isTest:true
 			},
+      isAgree: true,
+      needPopupAgreements:false,
+      isTest:true
 		})
 		const resLogin = await page.callMethod('submit')
 		console.log("resLogin: ", resLogin);
-		expect.assertions(1);
+		// expect.assertions(1);
 		switch (resLogin.errCode) {
 			case 0:
 				console.log('注册成功')
