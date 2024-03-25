@@ -103,7 +103,7 @@
 							duration: 3000
 						});
 					}
-					if(this.isTest){
+					if(!this.isTest){
 						if (this.needAgreements && !this.agree) {
 							return this.$refs.agreements.popup(() => {
 								this.submitForm(res)
