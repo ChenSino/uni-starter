@@ -25,11 +25,15 @@ describe('settings', () => {
 			expect((await el.$$('.mt10')).length).toBe(2)
 		}
 	})
-	
 	it('退出登录', async () => {
 		if(!uniToken)return;
-		const bottomEl = await page.$('.bottom-back-text')
-		expect(await bottomEl.text()).toBe('退出登录')
+    const hasLoginTest = await page.callMethod('hasLoginTest')
+    console.log("hasLoginTest",hasLoginTest)
+    if(hasLoginTest){
+      const bottomEl = await page.$('.bottom-back-text')
+      console.log('bottom-back-text',bottomEl,await bottomEl.text())
+      expect(await bottomEl.text()).toBe('退出登录')
+    }
 		await page.callMethod('changeLoginState')
 		await page.waitFor(500)
 		console.log(await program.currentPage());

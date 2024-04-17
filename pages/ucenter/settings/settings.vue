@@ -77,6 +77,10 @@
 			//#endif
 		},
 		methods: {
+      // 自动化测试专用
+      hasLoginTest(){
+      	return store.hasLogin
+      },
 			async changeLoginState(){
 				if(this.hasLogin){
 					await mutations.logout()
