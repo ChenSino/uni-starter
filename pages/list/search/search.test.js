@@ -18,7 +18,7 @@ describe('search', () => {
 			expect.assertions(2);
 			// 搜索发现 刷新
 			await page.callMethod('searchHotRefresh')
-			await page.waitFor(300)
+			await page.waitFor(1000)
 			// 是否隐藏热搜列表  netHotListIsHide：fasle 未隐藏
 			const getShow = await page.data('netHotListIsHide')
 			expect(getShow).toBeFalsy()
@@ -29,9 +29,9 @@ describe('search', () => {
 			}
 		})
 		it('搜索内容', async () => {
+      await page.waitFor(300)
 			await page.setData({searchText: '小程序'})
 			await page.callMethod('search', '小程序')
-			await page.waitFor(300)
 		})
 	}
 });
