@@ -127,7 +127,7 @@
 			// });
 			//默认h5端不获取定位
 			// #ifndef H5
-			if(this.isTest){
+			if(!this.isTest){
 				let location = await gps.getLocation({
 					geocode: true
 				})
