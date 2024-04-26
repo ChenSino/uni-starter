@@ -1,19 +1,23 @@
 // uniapp自动化测试教程: https://uniapp-test.dcloud.net.cn/docs/testcase/start
+jest.setTimeout(20000);
 const PAGE_PATH = '/pages/ucenter/settings/settings'
 describe('settings', () => {
-	let page,uniToken;
+	let page,hasLogin;
 	beforeAll(async () => {
 		try {
 			page = await program.navigateTo(PAGE_PATH)
 			await page.waitFor('view')
-			uniToken = await program.callUniMethod('getStorageSync', 'uni_id_token')
-			console.log("uniToken: ",uniToken);
+      hasLogin = await page.callMethod('hasLoginTest')
+      console.log("登录状态",hasLogin)
+      if(!hasLogin){
+        console.log("未登录测试失败")
+        return
+      }
 		} catch (err) {
 			console.log("err: ",err);
 		}
 	})
 	it('settings', async () => {
-		if(!uniToken)return;
 		if (process.env.UNI_PLATFORM.startsWith("app")) {
 			await page.callMethod('clearTmp')
 			const pushRes = await page.data('pushIsOn')
@@ -26,17 +30,11 @@ describe('settings', () => {
 		}
 	})
 	it('退出登录', async () => {
-		if(!uniToken)return;
-    const hasLoginTest = await page.callMethod('hasLoginTest')
-    console.log("hasLoginTest",hasLoginTest)
-    if(hasLoginTest){
-      const bottomEl = await page.$('.bottom-back-text')
-      console.log('bottom-back-text',bottomEl,await bottomEl.text())
-      expect(await bottomEl.text()).toBe('退出登录')
-    }
+    const bottomEl = await page.$('.bottom-back-text')
+    console.log('bottom-back-text',bottomEl,await bottomEl.text())
+    expect(await bottomEl.text()).toBe('退出登录')
 		await page.callMethod('changeLoginState')
 		await page.waitFor(500)
 		console.log(await program.currentPage());
 	})
-
 });

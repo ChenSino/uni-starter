@@ -80,7 +80,6 @@ describe('login-withpwd', () => {
 				console.log(await program.currentPage());
 				break;
 		}
-		console.log('login-end')
 		await page.waitFor(300)
 	})
 });

@@ -1,14 +1,14 @@
 jest.setTimeout(20000);
 const PAGE_PATH = '/pages/ucenter/ucenter'
 describe('ucenter', () => {
-	let page,uniToken,platform;
+	let page,platform,hasLogin;
 	platform = process.env.UNI_PLATFORM
 	beforeAll(async () => {
 		try{
 			page = await program.switchTab(PAGE_PATH)
 			await page.waitFor('view')
-			uniToken = await program.callUniMethod('getStorageSync', 'uni_id_token')
-			console.log("uniToken: ",platform,uniToken);
+      hasLogin = await page.callMethod('hasLoginTest')
+      console.log("登录状态",hasLogin,platform)
 		}catch(err){
 			console.log('err: ',err);
 		}
@@ -16,17 +16,19 @@ describe('ucenter', () => {
 	it('宫格', async () => {
 		expect.assertions(1);
 		const getGrid = await page.data('gridList')
+    console.log('getGrid',getGrid.length)
 		expect(getGrid.length).toBe(4)
 	})
 	it('列表', async () => {
 		const getUcenterList = await page.data('ucenterList')
+    console.log('getUcenterList',getUcenterList.length)
 		if(platform === "mp-weixin"){
-			expect(getUcenterList).toHaveLength(2);
+			expect(getUcenterList.length).toBe(2);
 		}else{
-			expect(getUcenterList).toHaveLength(3);
+			expect(getUcenterList.length).toBe(3);
 		}
 	})
-	if(uniToken){
+	if(hasLogin){
 		it('普通签到', async () => {
 			if(platform.startsWith("app")){
 				await page.callMethod('signInByAd')
@@ -52,12 +54,11 @@ describe('ucenter', () => {
 			}
 		})
 	}
-	// it('screenshot',async()=>{
-	// 	await program.screenshot({
-	// 		path: "static/screenshot/ucenter.png" 
-	// 	})
-	// 	await page.waitFor(500);
-	// })
-	
+	it('screenshot',async()=>{
+		await program.screenshot({
+			path: "static/screenshot/ucenter.png" 
+		})
+		await page.waitFor(500);
+	})
 })
 
