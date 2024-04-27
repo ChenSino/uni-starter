@@ -11,7 +11,7 @@ describe('search', () => {
 		})
 	}else{
 		beforeAll(async () => {
-			page = await program.navigateTo(PAGE_PATH)
+			page = await program.reLaunch(PAGE_PATH)
 			await page.waitFor('view')
 		})
 		it('搜索发现-显示-隐藏', async () => {
