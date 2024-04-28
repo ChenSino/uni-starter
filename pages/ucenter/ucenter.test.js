@@ -60,9 +60,12 @@ describe('ucenter', () => {
 		// })
     const savePath = process.env.saveImageSnapshotDir
     console.log('savePath',savePath)
-    await program.screenshot({
-    	path: savePath 
+    const image = await program.screenshot({
+    	path: savePath,
+      fullPage: true
     })
+    expect(image).toSaveImageSnapshot();
+    await page.waitFor(500);
 	})
 })
 
