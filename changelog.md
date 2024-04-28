@@ -1,3 +1,5 @@
+## 2.2.0（2024-04-28）
+更新 依赖的uni-id-pages的版本为1.1.20
 ## 2.1.9（2024-01-15）
 更新 db_init.json 按collection拆分，每个collection由schema.json、index.json、init_data.json三个文件描述[详情](https://doc.dcloud.net.cn/uniCloud/hellodb.html#init-db-2)
 ## 2.1.8（2023-12-15）
