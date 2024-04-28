@@ -19,8 +19,13 @@ describe('page screenshot test', () => {
 		console.log("page screenshot test finish");
 	});
 	test.each(pages)('%s', async () => {
-		const image = await program.screenshot();
-		expect(image).toMatchImageSnapshot();
-		await page.waitFor(500);
+		// const image = await program.screenshot();
+		// expect(image).toMatchImageSnapshot();
+		// await page.waitFor(500);
+    const image = await program.screenshot({
+    	fullPage: true
+    });
+    expect(image).toSaveImageSnapshot();
+    await page.waitFor(500);
 	})
 })

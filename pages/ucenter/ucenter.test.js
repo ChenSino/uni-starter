@@ -55,10 +55,14 @@ describe('ucenter', () => {
 		})
 	}
 	it('screenshot',async()=>{
-		await program.screenshot({
-			path: "static/screenshot/ucenter.png" 
-		})
-		await page.waitFor(500);
+		// await program.screenshot({
+		// 	path: "static/screenshot/ucenter.png" 
+		// })
+    const savePath = process.env.saveImageSnapshotDir
+    console.log('savePath',savePath)
+    await program.screenshot({
+    	path: savePath 
+    })
 	})
 })
 
