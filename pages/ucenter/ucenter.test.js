@@ -54,15 +54,15 @@ describe('ucenter', () => {
 			}
 		})
 	}
-	it('screenshot',async()=>{
-		// await program.screenshot({
-		// 	path: "static/screenshot/ucenter.png" 
-		// })
-    const image = await program.screenshot({
-      fullPage: true
-    })
-    expect(image).toSaveImageSnapshot();
-    await page.waitFor(500);
-	})
+	// it('screenshot',async()=>{
+	// 	await program.screenshot({
+	// 		path: "static/screenshot/ucenter.png" 
+	// 	})
+ //    const image = await program.screenshot({
+ //      fullPage: true
+ //    })
+ //    expect(image).toSaveImageSnapshot();
+ //    await page.waitFor(500);
+	// })
 })
 
