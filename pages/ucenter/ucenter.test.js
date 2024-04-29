@@ -3,6 +3,13 @@ const PAGE_PATH = '/pages/ucenter/ucenter'
 describe('ucenter', () => {
 	let page,platform,hasLogin;
 	platform = process.env.UNI_PLATFORM
+  console.log('uniTestPlatformInfo',process.env.uniTestPlatformInfo,process.env.uniTestPlatformInfo == 'ios_simulator 13.7')
+  if(process.env.uniTestPlatformInfo == 'ios_simulator 13.7'){
+    it('ios', async () => {
+    	expect(1).toBe(1)
+      return
+    })
+  }
 	beforeAll(async () => {
 		try{
 			page = await program.switchTab(PAGE_PATH)

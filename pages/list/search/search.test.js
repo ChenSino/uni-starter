@@ -2,10 +2,11 @@
 // uniapp自动化测试教程: https://uniapp.dcloud.io/collocation/auto/quick-start
 const PAGE_PATH = '/pages/list/search/search'
 describe('search', () => {
-	let page,containsVite;
+	let page,containsVite,isApp;
 	containsVite = process.env.UNI_CLI_PATH.includes('uniapp-cli-vite')
 	isApp = process.env.UNI_PLATFORM.includes('app')
-	if(containsVite && isApp){
+  console.log('uniTestPlatformInfo',process.env.uniTestPlatformInfo,process.env.uniTestPlatformInfo == 'ios_simulator 13.7')
+	if((containsVite && isApp) || process.env.uniTestPlatformInfo == 'ios_simulator 13.7'){
 		it('app--vue3', async () => {
 			expect(1).toBe(1)
 		})

@@ -5,6 +5,12 @@ const pages = [
 
 let page;
 describe('page screenshot test', () => {
+  if(process.env.uniTestPlatformInfo == 'ios_simulator 13.7'){
+    it('ios', async () => {
+    	expect(1).toBe(1)
+      return
+    })
+  }
 	beforeAll(async () => {
 		console.log("page screenshot test start");
 	});
