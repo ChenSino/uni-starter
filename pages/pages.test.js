@@ -10,28 +10,29 @@ describe('page screenshot test', () => {
     	expect(1).toBe(1)
       return
     })
-  }
-	beforeAll(async () => {
-		console.log("page screenshot test start");
-	});
-	beforeEach(async () => {
-		page = await program.reLaunch(pages[pageIndex]);
-		await page.waitFor(1000);
-	});
-	afterEach(() => {
-		pageIndex++;
-	});
-	afterAll(() => {
-		console.log("page screenshot test finish");
-	});
-	test.each(pages)('%s', async () => {
-		// const image = await program.screenshot();
-		// expect(image).toMatchImageSnapshot();
-		// await page.waitFor(500);
-    const image = await program.screenshot({
-    	fullPage: true
+  }else{
+    beforeAll(async () => {
+    	console.log("page screenshot test start");
     });
-    expect(image).toSaveImageSnapshot();
-    await page.waitFor(500);
-	})
+    beforeEach(async () => {
+    	page = await program.reLaunch(pages[pageIndex]);
+    	await page.waitFor(1000);
+    });
+    afterEach(() => {
+    	pageIndex++;
+    });
+    afterAll(() => {
+    	console.log("page screenshot test finish");
+    });
+    test.each(pages)('%s', async () => {
+    	// const image = await program.screenshot();
+    	// expect(image).toMatchImageSnapshot();
+    	// await page.waitFor(500);
+      const image = await program.screenshot({
+      	fullPage: true
+      });
+      expect(image).toSaveImageSnapshot();
+      await page.waitFor(500);
+    })
+  }
 })
