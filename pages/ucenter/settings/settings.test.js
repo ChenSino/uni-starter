@@ -34,7 +34,6 @@ describe('settings', () => {
     console.log('bottom-back-text',bottomEl,await bottomEl.text())
     expect(await bottomEl.text()).toBe('退出登录')
 		await page.callMethod('changeLoginState')
-		await page.waitFor(500)
-		console.log(await program.currentPage());
+		await page.waitFor(1000)
 	})
 });
