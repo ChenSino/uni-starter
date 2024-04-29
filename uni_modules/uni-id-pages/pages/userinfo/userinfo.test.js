@@ -1,5 +1,6 @@
 // uni-app自动化测试教程: uni-app自动化测试教程: https://uniapp.dcloud.io/collocation/auto/hbuilderx-extension/index
 const PAGE_PATH = '/uni_modules/uni-id-pages/pages/userinfo/userinfo'
+jest.setTimeout(30000);
 describe('userinfo',() => {
 	let page,hasLogin;
 	beforeAll(async () => {

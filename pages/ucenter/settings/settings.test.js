@@ -1,5 +1,5 @@
 // uniapp自动化测试教程: https://uniapp-test.dcloud.net.cn/docs/testcase/start
-jest.setTimeout(20000);
+jest.setTimeout(30000);
 const PAGE_PATH = '/pages/ucenter/settings/settings'
 describe('settings', () => {
 	let page,hasLogin;

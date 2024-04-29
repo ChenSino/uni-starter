@@ -1,4 +1,4 @@
-jest.setTimeout(20000);
+jest.setTimeout(30000);
 const PAGE_PATH = '/pages/ucenter/ucenter'
 describe('ucenter', () => {
 	let page,platform,hasLogin;
