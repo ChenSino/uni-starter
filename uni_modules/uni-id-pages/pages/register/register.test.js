@@ -14,9 +14,9 @@ describe('register', () => {
 				'password2': "dcloud2022",
 				"captcha": "1234",
 			},
-      isAgree: true,
-      needPopupAgreements:false,
-      isTest:true
+			isAgree: true,
+			needPopupAgreements: false,
+			isTest: true
 		})
 		const resLogin = await page.callMethod('submit')
 		console.log("resLogin: ", resLogin);
@@ -27,7 +27,7 @@ describe('register', () => {
 				expect(resLogin.uid).toHaveLength(24);
 				break;
 			case "uni-id-account-exists":
-				const expectAccountStr = ["此账号已注册","Account exists"]
+				const expectAccountStr = ["此账号已注册", "Account exists"]
 				expect(expectAccountStr).toContain(resLogin.errMsg);
 				break;
 			case "FunctionTimeout":
@@ -42,7 +42,7 @@ describe('register', () => {
 				expect(resLogin.errMsg).toBe("验证码错误");
 				break;
 			case "SYS_ERR":
-				console.log("未知错误---SYS_ERR")//[uni-id-co]: request:ok
+				console.log("未知错误---SYS_ERR") //[uni-id-co]: request:ok
 				break;
 			default:
 				console.log(await program.currentPage());

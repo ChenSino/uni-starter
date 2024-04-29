@@ -8,31 +8,30 @@ describe('page screenshot test', () => {
   if(process.env.uniTestPlatformInfo == 'ios_simulator 13.7'){
     it('ios', async () => {
     	expect(1).toBe(1)
-      return
     })
-  }else{
-    beforeAll(async () => {
-    	console.log("page screenshot test start");
-    });
-    beforeEach(async () => {
-    	page = await program.reLaunch(pages[pageIndex]);
-    	await page.waitFor(1000);
-    });
-    afterEach(() => {
-    	pageIndex++;
-    });
-    afterAll(() => {
-    	console.log("page screenshot test finish");
-    });
-    test.each(pages)('%s', async () => {
-    	// const image = await program.screenshot();
-    	// expect(image).toMatchImageSnapshot();
-    	// await page.waitFor(500);
-      const image = await program.screenshot({
-      	fullPage: true
-      });
-      expect(image).toSaveImageSnapshot();
-      await page.waitFor(500);
-    })
+	return
   }
+  beforeAll(async () => {
+  	console.log("page screenshot test start");
+  });
+  beforeEach(async () => {
+  	page = await program.reLaunch(pages[pageIndex]);
+  	await page.waitFor(1000);
+  });
+  afterEach(() => {
+  	pageIndex++;
+  });
+  afterAll(() => {
+  	console.log("page screenshot test finish");
+  });
+  test.each(pages)('%s', async () => {
+  	// const image = await program.screenshot();
+  	// expect(image).toMatchImageSnapshot();
+  	// await page.waitFor(500);
+    const image = await program.screenshot({
+    	fullPage: true
+    });
+    expect(image).toSaveImageSnapshot();
+    await page.waitFor(500);
+  })
 })
