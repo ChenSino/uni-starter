@@ -35,7 +35,6 @@ describe('settings', () => {
 	})
 	it('退出登录', async () => {
 		const bottomEl = await page.$('.bottom-back-text')
-		console.log('bottom-back-text', bottomEl, await bottomEl.text())
 		expect(await bottomEl.text()).toBe('退出登录')
 		await page.callMethod('changeLoginState')
 		await page.waitFor(1000)

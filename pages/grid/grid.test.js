@@ -6,14 +6,13 @@ describe('grid', () => {
 	let page, hasLogin;
 	beforeAll(async () => {
 		page = await program.switchTab(PAGE_PATH)
-		console.log('page',page)
 		await page.waitFor('view')
 	})
 	it('检测宫格', async () => {
 		await page.waitFor(2000)
 		hasLogin = await page.data('hasLogin')
 		let gridList = await page.data('gridList')
-		console.log("gridList", hasLogin,gridList.length)
+		console.log("gridList", gridList.length,hasLogin)
 		expect(gridList.length).toBe(9)
 	})
 	it('点击宫格', async () => {

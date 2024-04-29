@@ -5,8 +5,6 @@ describe('search', () => {
 	let page, containsVite, isApp;
 	containsVite = process.env.UNI_CLI_PATH.includes('uniapp-cli-vite')
 	isApp = process.env.UNI_PLATFORM.includes('app')
-	console.log('uniTestPlatformInfo', process.env.uniTestPlatformInfo)
-	console.log((containsVite && isApp) ,process.env.uniTestPlatformInfo == 'ios_simulator 13.7')
 	if ((containsVite && isApp) || process.env.uniTestPlatformInfo == 'ios_simulator 13.7') {
 		it('app--vue3', async () => {
 			expect(1).toBe(1)
@@ -15,7 +13,6 @@ describe('search', () => {
 	}
 	beforeAll(async () => {
 		page = await program.reLaunch(PAGE_PATH)
-		console.log('page', page)
 		console.log('page', await program.pageStack())
 		await page.waitFor('view')
 	})

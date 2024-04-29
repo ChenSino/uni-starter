@@ -2,7 +2,7 @@
 const PAGE_PATH = '/uni_modules/uni-id-pages/pages/userinfo/userinfo'
 jest.setTimeout(30000);
 describe('userinfo', () => {
-	let page, hasLogin;
+	let page, userInfo;
 	if (process.env.uniTestPlatformInfo == 'ios_simulator 13.7') {
 		it('userinfo-ios', async () => {
 			expect(1).toBe(1)
@@ -12,18 +12,29 @@ describe('userinfo', () => {
 	beforeAll(async () => {
 		page = await program.navigateTo(PAGE_PATH)
 		await page.waitFor("view")
-		hasLogin = await page.callMethod('hasLoginTest')
-		console.log("登录状态", hasLogin)
-		if (!hasLogin) {
+		userInfo = await page.callMethod('userInfoTest')
+		console.log("userInfo---1", userInfo)
+		if (!userInfo._id) {
 			console.log("未登录测试失败")
 			return
 		}
 	});
 	it("昵称", async () => {
 		const nickname = "数字天堂DCloud" + Math.round(Math.random() * 10);
+		console.log('nickname',nickname)
 		await page.waitFor(300)
 		await page.callMethod("setNickname", nickname)
+		await page.waitFor(5000)
+		userInfo = await page.callMethod('userInfoTest')
+		console.log("update--nickname---2", userInfo.nickname)
+		expect(userInfo.nickname).toBe(nickname)
 	})
+	// it("screenshot", async () => {
+	// 	await program.screenshot({
+	// 		path: "static/screenshot/userinfo.png" // 默认项目根目录
+	// 	})
+	// 	await page.waitFor(500)
+	// })
 	// it("头像", async () => {
 	// 	const imgs = [
 	// 		"https://vkceyugu.cdn.bspapp.com/VKCEYUGU-52b18b34-3a3e-4861-89a0-c362c7634787/5105c383-8d83-4f40-938e-7c32c5983f8d.png",
@@ -45,12 +56,5 @@ describe('userinfo', () => {
 	// 		await elBox.callMethod('setAvatarFile',avatar_file)
 	// 		await elBox.waitFor(500)
 	// 	}
-	// })
-
-	// it("screenshot", async () => {
-	// 	await program.screenshot({
-	// 		path: "static/screenshot/userinfo.png" // 默认项目根目录
-	// 	})
-	// 	await page.waitFor(500)
 	// })
 });

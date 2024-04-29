@@ -93,7 +93,7 @@
 				showRefresh: false,
 				listHight: 0,
 				dataList:{},
-				isTest:false
+				isTest:true
 			}
 		},
 		watch: {
