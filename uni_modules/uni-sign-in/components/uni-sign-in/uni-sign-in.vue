@@ -80,9 +80,12 @@
 			//看激励视频广告签到
 			async showRewardedVideoAd() {
 				let res = await this.getSignedInInfo();
-				console.log("showRewardedVideoAd: ",res);
+				console.log(res);
 				if (res && res.length == 0) {
-					let userId= uniCloud.getCurrentUserInfo().uid
+					let {
+						_id: userId
+					} = uni.getStorageSync('userInfo')
+					console.log(userId, uni.getStorageSync('userInfo'));
 					if (!userId) {
 						return uni.navigateTo({
 							url: "/pages/ucenter/login-page/index/index"
@@ -181,7 +184,7 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	view {
 		display: flex;
 		box-sizing: border-box;
