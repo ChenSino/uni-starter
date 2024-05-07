@@ -19,8 +19,8 @@ export default {
     // #ifdef APP
     'univerify',
     // #endif
-    'weixin',
     'username',
+    'weixin',
     // #ifdef APP
     'apple',
     // #endif
