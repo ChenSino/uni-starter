@@ -9,7 +9,7 @@ describe('page screenshot test', () => {
     it('ios', async () => {
     	expect(1).toBe(1)
     })
-	return
+    return
   }
   beforeAll(async () => {
   	console.log("page screenshot test start");

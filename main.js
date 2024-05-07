@@ -1,6 +1,6 @@
 import App from './App'
 import i18n from './lang/i18n'
-
+// 自动化测试时，不弹出提示框
 uni.showModal = ()=>{};
 
 // #ifndef VUE3

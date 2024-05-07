@@ -13,7 +13,7 @@ describe('search', () => {
 	}
 	beforeAll(async () => {
 		page = await program.reLaunch(PAGE_PATH)
-		console.log('page', await program.pageStack())
+		console.log('pageStack', await program.pageStack())
 		await page.waitFor('view')
 	})
 	it('搜索发现-显示-隐藏', async () => {

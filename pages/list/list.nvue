@@ -143,6 +143,7 @@
 			// uni.hideLoading()
 		},
 		methods: {
+      // 自动化测试
 			loadData(e) {
 				console.log("e: ----", e);
 				this.dataList = e[0]
