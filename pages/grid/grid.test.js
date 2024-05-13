@@ -9,7 +9,11 @@ describe('grid', () => {
 		await page.waitFor('view')
 	})
 	it('检测宫格', async () => {
-		await page.waitFor(2000)
+    if(process.env.UNI_PLATFORM === "mp-weixin"){
+      await page.waitFor(5000)
+    }else{
+      await page.waitFor(2000)
+    }
 		hasLogin = await page.data('hasLogin')
 		let gridList = await page.data('gridList')
 		console.log("gridList", gridList.length,hasLogin)
