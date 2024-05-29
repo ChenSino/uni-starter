@@ -26,7 +26,7 @@ describe('page screenshot test', () => {
   	console.log("page screenshot test finish");
   });
   test.each(pages)('%s', async () => {
-  	const image = await program.screenshot({deviceShot:true,fullPage:true});
+  	const image = await program.screenshot();
   	expect(image).toSaveImageSnapshot();
   	await page.waitFor(500);
   })

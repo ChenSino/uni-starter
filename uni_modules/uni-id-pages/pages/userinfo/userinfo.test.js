@@ -30,7 +30,7 @@ describe('userinfo', () => {
 		expect(userInfo.nickname).toBe(nickname)
 	})
   it('screenshot', async () => {
-    const image = await program.screenshot({deviceShot:true,fullPage:true});
+    const image = await program.screenshot();
     expect(image).toSaveImageSnapshot();
     await page.waitFor(500);
   })
