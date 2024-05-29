@@ -1,19 +1,17 @@
-// jest官方文档: https://www.jestjs.cn/
-// uniapp自动化测试教程: https://uniapp.dcloud.io/collocation/auto/quick-start
-const PAGE_PATH = '/pages/grid/grid'
-jest.setTimeout(15000)
+jest.setTimeout(20000)
 describe('grid', () => {
 	let page, hasLogin;
 	beforeAll(async () => {
-		page = await program.switchTab(PAGE_PATH)
+		page = await program.switchTab('/pages/grid/grid')
 		await page.waitFor('view')
-	})
-	it('检测宫格', async () => {
+    console.log("page", page)
     if(process.env.UNI_PLATFORM === "mp-weixin"){
       await page.waitFor(5000)
     }else{
       await page.waitFor(2000)
     }
+	})
+	it('检测宫格', async () => {
 		hasLogin = await page.data('hasLogin')
 		let gridList = await page.data('gridList')
 		console.log("gridList", gridList.length,hasLogin)

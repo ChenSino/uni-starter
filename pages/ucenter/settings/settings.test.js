@@ -1,6 +1,4 @@
-// uniapp自动化测试教程: https://uniapp-test.dcloud.net.cn/docs/testcase/start
 jest.setTimeout(30000);
-const PAGE_PATH = '/pages/ucenter/settings/settings'
 describe('settings', () => {
 	let page, hasLogin;
 	if (process.env.uniTestPlatformInfo == 'ios_simulator 13.7') {
@@ -10,7 +8,7 @@ describe('settings', () => {
 		return
 	}
 	beforeAll(async () => {
-		page = await program.navigateTo(PAGE_PATH)
+		page = await program.navigateTo('/pages/ucenter/settings/settings')
 		await page.waitFor('view')
 		hasLogin = await page.callMethod('hasLoginTest')
 		console.log("登录状态", hasLogin)
@@ -33,6 +31,11 @@ describe('settings', () => {
 			expect((await el.$$('.mt10')).length).toBe(2)
 		}
 	})
+  it('screenshot', async () => {
+    const image = await program.screenshot({deviceShot:true,fullPage:true});
+    expect(image).toSaveImageSnapshot();
+    await page.waitFor(500);
+  })
 	it('退出登录', async () => {
 		const bottomEl = await page.$('.bottom-back-text')
 		expect(await bottomEl.text()).toBe('退出登录')

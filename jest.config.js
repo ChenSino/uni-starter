@@ -1,9 +1,7 @@
 const path = require('path');
 module.exports = {
 	testTimeout: 50000,
-	reporters: [
-		'default'
-	],
+	reporters: ['default'],
 	watchPathIgnorePatterns: ['/node_modules/', '/dist/', '/.git/'],
 	moduleFileExtensions: ['js', 'json'],
 	rootDir: __dirname,

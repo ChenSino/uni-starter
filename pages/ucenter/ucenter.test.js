@@ -1,5 +1,4 @@
 jest.setTimeout(30000);
-const PAGE_PATH = '/pages/ucenter/ucenter'
 describe('ucenter', () => {
 	let page, platform, hasLogin;
 	platform = process.env.UNI_PLATFORM
@@ -11,7 +10,7 @@ describe('ucenter', () => {
 		return
 	}
 	beforeAll(async () => {
-		page = await program.switchTab(PAGE_PATH)
+		page = await program.switchTab('/pages/ucenter/ucenter')
 		await page.waitFor('view')
 		hasLogin = await page.callMethod('hasLoginTest')
 		console.log("登录状态", hasLogin, platform)
@@ -57,14 +56,9 @@ describe('ucenter', () => {
 			console.log("签到失败");
 		}
 	})
-	// it('screenshot',async()=>{
-	// 	await program.screenshot({
-	// 		path: "static/screenshot/ucenter.png" 
-	// 	})
-	//    const image = await program.screenshot({
-	//      fullPage: true
-	//    })
-	//    expect(image).toSaveImageSnapshot();
-	//    await page.waitFor(500);
-	// })
+  it('screenshot', async () => {
+    const image = await program.screenshot({deviceShot:true,fullPage:true});
+    expect(image).toSaveImageSnapshot();
+    await page.waitFor(500);
+  })
 })

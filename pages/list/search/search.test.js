@@ -1,6 +1,3 @@
-// jest官方文档: https://www.jestjs.cn/
-// uniapp自动化测试教程: https://uniapp.dcloud.io/collocation/auto/quick-start
-const PAGE_PATH = '/pages/list/search/search'
 describe('search', () => {
 	let page, containsVite, isApp;
 	containsVite = process.env.UNI_CLI_PATH.includes('uniapp-cli-vite')
@@ -12,8 +9,7 @@ describe('search', () => {
 		return
 	}
 	beforeAll(async () => {
-		page = await program.reLaunch(PAGE_PATH)
-		console.log('pageStack', await program.pageStack())
+		page = await program.reLaunch('/pages/list/search/search')
 		await page.waitFor('view')
 	})
 	it('搜索发现-显示-隐藏', async () => {

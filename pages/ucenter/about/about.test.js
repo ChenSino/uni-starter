@@ -1,6 +1,3 @@
-// jest官方文档: https://www.jestjs.cn/
-// uniapp自动化测试教程: https://uniapp.dcloud.io/collocation/auto/quick-start
-const PAGE_PATH = '/pages/ucenter/about/about'
 describe('about', () => {
 	let page;
 	if(process.env.UNI_PLATFORM === "mp-weixin"){
@@ -10,7 +7,7 @@ describe('about', () => {
 		return
 	}
   beforeAll(async () => {
-  	page = await program.reLaunch(PAGE_PATH)
+  	page = await program.reLaunch('/pages/ucenter/about/about')
   	await page.waitFor('view')
   })
   it('appName', async () => {
