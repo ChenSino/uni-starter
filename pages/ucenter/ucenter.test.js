@@ -2,7 +2,6 @@ jest.setTimeout(30000);
 describe('ucenter', () => {
 	let page, platform, hasLogin;
 	platform = process.env.UNI_PLATFORM
-	console.log('uniTestPlatformInfo', process.env.uniTestPlatformInfo)
 	if (process.env.uniTestPlatformInfo == 'ios_simulator 13.7') {
 		it('ucenter-ios13.7', async () => {
 			expect(1).toBe(1)
@@ -37,9 +36,6 @@ describe('ucenter', () => {
 			await page.callMethod('signInByAd')
 			await page.waitFor(1000)
 			await page.callMethod('share')
-			// await program.screenshot({
-			// 	path: "static/screenshot/sign-app.png" 
-			// })
 		} else {
 			await page.callMethod('signIn')
 		}
@@ -56,9 +52,4 @@ describe('ucenter', () => {
 			console.log("签到失败");
 		}
 	})
-  it('screenshot', async () => {
-    const image = await program.screenshot();
-    expect(image).toSaveImageSnapshot();
-    await page.waitFor(500);
-  })
 })

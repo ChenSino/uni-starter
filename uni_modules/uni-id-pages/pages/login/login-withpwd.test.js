@@ -21,7 +21,6 @@ describe('login-withpwd', () => {
 				"captcha":"1234"
 			})
 		}
-		
 		const resLogin = await page.callMethod('pwdLogin')
 		console.log("resLogin: ", resLogin);
 		expect.assertions(1);

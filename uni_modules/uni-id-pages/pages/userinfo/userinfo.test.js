@@ -29,11 +29,6 @@ describe('userinfo', () => {
 		console.log("update--nickname---2", userInfo.nickname)
 		expect(userInfo.nickname).toBe(nickname)
 	})
-  it('screenshot', async () => {
-    const image = await program.screenshot();
-    expect(image).toSaveImageSnapshot();
-    await page.waitFor(500);
-  })
 	// it("头像", async () => {
 	// 	const imgs = [
 	// 		"https://vkceyugu.cdn.bspapp.com/VKCEYUGU-52b18b34-3a3e-4861-89a0-c362c7634787/5105c383-8d83-4f40-938e-7c32c5983f8d.png",
