@@ -17,7 +17,11 @@ describe('list', () => {
   })
   it('检测标题', async () => {
     expect.assertions(1);
-    await page.waitFor(5000)
+    if(process.env.UNI_PLATFORM === "mp-weixin"){
+      await page.waitFor(8000)
+    }else{
+      await page.waitFor(3000)
+    }
     const getTitle = await page.data('dataList')
     console.log('getTitle: ', getTitle);
     expect(getTitle.title).toBe('阿里小程序IDE官方内嵌uni-app，为开发者提供多端开发服务')
