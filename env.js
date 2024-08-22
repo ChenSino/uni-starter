@@ -14,7 +14,7 @@ module.exports = {
         "launch": true,
         "teardown": "disconnect",
         "remote": false,
-        "executablePath": "D:/software/weixin-10-12/微信web开发者工具/cli.bat"
+        "executablePath": "D:/software/minprogram/weixin/cli.bat"
     },
     "app-plus": {
         "android": {
