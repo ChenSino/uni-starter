@@ -1,3 +1,5 @@
+## 1.1.21（2024-08-02）
+- uni-id-co 修复联登更新用户信息接口存在手机号或者邮箱时没有设置认证状态
 ## 1.1.20（2024-04-28）
 - uni-id-co 兼容uni-app-x对客户端uniPlatform的调整（uni-app-x内uniPlatform区分app-android、app-ios）
 ## 1.1.19（2024-03-20）
